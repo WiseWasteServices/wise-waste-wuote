@@ -1,1 +1,1 @@
-# wise-waste-wuote
+# wise-waste-quote
