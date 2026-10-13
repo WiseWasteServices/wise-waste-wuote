@@ -1,351 +1,303 @@
 
 #ww-quote {
-  --green:#263A2D;
-  --light:#D5DFCE;
-  --cream:#F4F7F4;
-  --ink:#1E2C22;
-  --muted:#647267;
-  font-family:"Segoe UI",Arial,sans-serif;
-  color:var(--ink);
-  max-width:760px;
-  margin:auto;
-  font-size:15px;
-  line-height:1.5;
+--green:#263A2D; --light:#D5DFCE; --cream:#F4F7F4;
+--ink:#1E2C22; --muted:#647267;
+font-family:"Segoe UI",Arial,sans-serif;color:var(--ink);
+max-width:760px;margin:auto;font-size:15px;line-height:1.5;
 }
 
 #ww-quote * {
-  box-sizing:border-box;
+box-sizing:border-box;
 }
 
 #ww-quote .ww-panel {
-  background:#fff;
-  border:1px solid #dce4da;
-  border-radius:14px;
-  padding:20px;
-  margin:0 0 16px;
+background:#fff;
+border:1px solid #dce4da;
+border-radius:14px;
+padding:20px;
+margin:0 0 16px;
 }
 
 #ww-quote h2 {
-  font-size:27px;
-  line-height:1.2;
-  color:var(--green);
-  margin:0 0 8px;
+font-size:27px;
+line-height:1.2;
+color:var(--green);
+margin:0 0 8px;
 }
 
 #ww-quote h3 {
-  font-size:18px;
-  color:var(--green);
-  margin:0 0 14px;
+font-size:18px;
+color:var(--green);
+margin:0 0 14px;
 }
 
 #ww-quote p {
-  margin:0 0 14px;
+margin:0 0 14px;
 }
 
 #ww-quote .ww-muted {
-  color:var(--muted);
-  font-size:13px;
+color:var(--muted);
+font-size:13px;
 }
 
 #ww-quote .ww-label {
-  display:block;
-  font-weight:600;
-  margin:15px 0 6px;
+display:block;
+font-weight:600;
+margin:15px 0 6px;
 }
 
 #ww-quote select,
 #ww-quote input,
 #ww-quote textarea {
-  width:100%;
-  min-height:44px;
-  border:1px solid #cbd6c9;
-  border-radius:8px;
-  padding:10px 12px;
-  background:#fff;
-  color:var(--ink);
-  font:inherit;
+width:100%;
+min-height:44px;
+border:1px solid #cbd6c9;
+border-radius:8px;
+padding:10px 12px;
+background:#fff;
+color:var(--ink);
+font:inherit;
 }
 
 #ww-quote input[type=checkbox],
 #ww-quote input[type=radio] {
-  width:18px;
-  min-height:18px;
-  height:18px;
-  accent-color:var(--green);
-  margin:2px 9px 0 0;
-  flex-shrink:0;
+width:18px;
+min-height:18px;
+height:18px;
+accent-color:var(--green);
+margin:2px 9px 0 0;
+flex-shrink:0;
 }
 
 #ww-quote .ww-choice {
-  display:flex;
-  align-items:flex-start;
-  padding:12px;
-  border:1px solid #dce4da;
-  border-radius:9px;
-  margin:8px 0;
-  cursor:pointer;
+display:flex;
+align-items:flex-start;
+padding:12px;
+border:1px solid #dce4da;
+border-radius:9px;
+margin:8px 0;
+cursor:pointer;
 }
 
 #ww-quote .ww-choice:has(input:checked) {
-  border-color:var(--green);
-  background:var(--cream);
+border-color:var(--green);
+background:var(--cream);
 }
 
 #ww-quote .ww-choice span {
-  flex:1;
+flex:1;
 }
 
 #ww-quote .ww-choice.ww-disabled {
-  background:#f1f3f0;
-  border-color:#dce4da;
-  opacity:.8;
-  cursor:not-allowed;
+background:#f1f3f0;
+border-color:#dce4da;
+opacity:.8;
+cursor:not-allowed;
 }
 
 #ww-quote .ww-choice.ww-disabled:has(input:checked) {
-  background:#f1f3f0;
-  border-color:#dce4da;
+background:#f1f3f0;
+border-color:#dce4da;
 }
 
 #ww-quote .ww-choice.ww-disabled input {
-  cursor:not-allowed;
+cursor:not-allowed;
 }
 
 #ww-quote .ww-grid {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
 }
 
 #ww-quote .ww-hidden {
-  display:none!important;
+display:none!important;
 }
 
 #ww-quote .ww-tabs {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin:16px 0;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+margin:16px 0;
 }
 
 #ww-quote .ww-tab {
-  padding:12px;
-  border:1px solid #cbd6c9;
-  border-radius:9px;
-  background:white;
-  color:var(--green);
-  font:inherit;
-  font-weight:600;
-  cursor:pointer;
+padding:12px;
+border:1px solid #cbd6c9;
+border-radius:9px;
+background:white;
+color:var(--green);
+font:inherit;
+font-weight:600;
+cursor:pointer;
 }
 
 #ww-quote .ww-tab[aria-pressed=true] {
-  background:var(--green);
-  color:white;
-  border-color:var(--green);
+background:var(--green);
+color:white;
+border-color:var(--green);
 }
 
-/* Main pricing summary */
 #ww-quote .ww-total {
-  background:var(--green);
-  color:white;
-  border-radius:14px;
-  padding:22px;
-  margin-top:16px;
-  text-align:left!important;
+background:var(--green);
+color:white;
+border-radius:14px;
+padding:22px;
+margin-top:16px;
 }
 
 #ww-quote .ww-total h3 {
-  color:white;
-  margin-bottom:5px;
+color:white;
+margin-bottom:5px;
 }
 
 #ww-quote .ww-big {
-  font-size:32px;
-  font-weight:700;
-  line-height:1.2;
+font-size:32px;
+font-weight:700;
+line-height:1.2;
 }
 
-/* Price breakdown rows */
 #ww-quote .ww-line {
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px;
-  padding:9px 0;
-  border-bottom:1px solid #ffffff35;
+display:flex;
+justify-content:space-between;
+gap:12px;
+padding:9px 0;
+border-bottom:1px solid #ffffff35;
 }
 
 #ww-quote .ww-line:last-child {
-  border-bottom:0;
+border-bottom:0;
 }
 
-#ww-quote .ww-line span {
-  text-align:left!important;
-}
-
-#ww-quote .ww-line strong {
-  text-align:right!important;
-  margin-left:auto;
-}
-
-/* Notes and secondary text */
 #ww-quote .ww-total .ww-muted {
-  color:#e0e8df;
+color:#e0e8df;
 }
 
 #ww-quote .ww-note {
-  background:var(--cream);
-  border-radius:8px;
-  padding:12px;
-  font-size:13px;
-  margin-top:12px;
+background:var(--cream);
+border-radius:8px;
+padding:12px;
+font-size:13px;
+margin-top:12px;
 }
 
-/* Number controls */
 #ww-quote .ww-number {
-  display:grid;
-  grid-template-columns:44px 1fr 44px;
-  gap:8px;
-  align-items:center;
+display:grid;
+grid-template-columns:44px 1fr 44px;
+gap:8px;
+align-items:center;
 }
 
 #ww-quote .ww-number button {
-  height:44px;
-  border:1px solid #cbd6c9;
-  border-radius:8px;
-  background:var(--cream);
-  font-size:22px;
-  color:var(--green);
-  cursor:pointer;
+height:44px;
+border:1px solid #cbd6c9;
+border-radius:8px;
+background:var(--cream);
+font-size:22px;
+color:var(--green);
+cursor:pointer;
 }
 
 #ww-quote .ww-number input {
-  text-align:center;
+text-align:center;
 }
 
-/* Commercial service section */
 #ww-quote .ww-commercial {
-  background:var(--cream);
-  border-radius:10px;
-  padding:20px;
+background:var(--cream);
+border-radius:10px;
+padding:20px;
 }
 
-/* Contact buttons */
 #ww-quote .ww-contact-actions {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:20px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:20px;
 }
 
 #ww-quote .ww-contact-btn {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:9px;
-  min-height:52px;
-  padding:13px 16px;
-  border-radius:9px;
-  font:inherit;
-  font-weight:600;
-  text-align:center;
-  text-decoration:none;
-  transition:opacity .15s ease;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:9px;
+min-height:52px;
+padding:13px 16px;
+border-radius:9px;
+font:inherit;
+font-weight:600;
+text-align:center;
+text-decoration:none;
+transition:opacity .15s ease;
 }
 
 #ww-quote .ww-contact-btn:hover {
-  opacity:.88;
+opacity:.88;
 }
 
 #ww-quote .ww-call-btn {
-  background:var(--green);
-  color:#fff;
-  border:1px solid var(--green);
+background:var(--green);
+color:#fff;
+border:1px solid var(--green);
 }
 
 #ww-quote .ww-email-btn {
-  background:#fff;
-  color:var(--green);
-  border:1px solid #cbd6c9;
+background:#fff;
+color:var(--green);
+border:1px solid #cbd6c9;
 }
 
 #ww-quote .ww-contact-icon {
-  width:20px;
-  height:20px;
-  flex-shrink:0;
+width:20px;
+height:20px;
+flex-shrink:0;
 }
 
 #ww-quote .ww-contact-details {
-  margin-top:18px;
-  padding-top:15px;
-  border-top:1px solid #dce4da;
+margin-top:18px;
+padding-top:15px;
+border-top:1px solid #dce4da;
 }
 
 #ww-quote .ww-contact-details p {
-  margin-bottom:7px;
+margin-bottom:7px;
 }
 
-/* Estimate section at the bottom */
 #ww-quote .ww-estimate-section {
-  margin-top:18px;
-  padding-top:15px;
-  border-top:1px solid #ffffff35;
+margin-top:18px;
+padding-top:15px;
+border-top:1px solid #ffffff35;
 }
 
 #ww-quote .ww-estimate-section h4 {
-  font-size:15px;
-  color:white;
-  margin:0 0 5px;
+font-size:15px;
+color:white;
+margin:0 0 5px;
 }
 
 #ww-quote .ww-estimate-price {
-  font-size:25px;
-  font-weight:700;
-  line-height:1.3;
+font-size:25px;
+font-weight:700;
+line-height:1.3;
 }
 
-/* Force all dynamic pricing results to the left */
-#ww-quote .ww-total,
-#ww-quote .ww-total h3,
-#ww-quote .ww-total h4,
-#ww-quote .ww-total p,
-#ww-quote .ww-total div,
-#ww-quote .ww-total label,
-#ww-quote .ww-total .ww-big,
-#ww-quote .ww-total .ww-muted,
-#ww-quote .ww-total .ww-note,
-#ww-quote .ww-total .ww-estimate-section,
-#ww-quote .ww-total .ww-estimate-price,
-#ww-quote #ww-price-lines,
-#ww-quote #ww-estimate-note {
-  text-align:left!important;
-}
-
-/* Preserve right alignment for breakdown amounts */
-#ww-quote .ww-total .ww-line strong {
-  text-align:right!important;
-}
-
-/* Mobile layout */
 @media(max-width:520px) {
-  #ww-quote .ww-panel {
-    padding:15px;
-  }
+#ww-quote .ww-panel {
+padding:15px;
+}
 
-  #ww-quote .ww-grid {
-    grid-template-columns:1fr;
-  }
+#ww-quote .ww-grid {
+grid-template-columns:1fr;
+}
 
-  #ww-quote h2 {
-    font-size:24px;
-  }
+#ww-quote h2 {
+font-size:24px;
+}
 
-  #ww-quote .ww-big {
-    font-size:29px;
-  }
+#ww-quote .ww-big {
+font-size:29px;
+}
 
-  #ww-quote .ww-contact-actions {
-    grid-template-columns:1fr;
-  }
+#ww-quote .ww-contact-actions {
+grid-template-columns:1fr;
+}
 }
