@@ -1,215 +1,375 @@
 
-(function(){
-const root=document.getElementById('ww-quote');
-if(!root || root.dataset.ready) return;
-root.dataset.ready='1';
-
-const $=id=>root.querySelector('#'+id);
-const money=n=>n.toLocaleString('en-US',{style:'currency',currency:'USD'});
-const number=id=>Math.max(1,Math.min(20,parseInt($(id).value,10)||1));
-const show=(id,yes)=>$(id).classList.toggle('ww-hidden',!yes);
-const lines=$('ww-price-lines');
-
-let previousDogFrequency=$('ww-dog-frequency').value;
-let freshBeforeRecurring=false;
-
-/* Tracks whether the initial cleanup was automatically selected by dog service. */
-let initialAddedByDogFrequency=false;
-
-/* Tracks the previous litter frequency for any future dependent behavior. */
-let previousLitterFrequency=$('ww-litter-frequency').value;
-
-function line(label,price){
-return '<div class="ww-line"><span>'+label+'</span><strong>'+price+'</strong></div>';
+#ww-quote {
+  --green:#263A2D;
+  --light:#D5DFCE;
+  --cream:#F4F7F4;
+  --ink:#1E2C22;
+  --muted:#647267;
+  font-family:"Segoe UI",Arial,sans-serif;
+  color:var(--ink);
+  max-width:760px;
+  margin:auto;
+  font-size:15px;
+  line-height:1.5;
 }
 
-function calculate(){
-const dogFreq=$('ww-dog-frequency').value;
-const recurringDog=dogFreq!=='none';
-
-/* When dog service is first selected, remember the customer's Yard Fresh choice. */
-if(recurringDog && previousDogFrequency==='none'){
-freshBeforeRecurring=$('ww-fresh').checked;
-
-/* Automatically add initial cleanup when dog waste service is selected. */
-initialAddedByDogFrequency=!$('ww-initial').checked;
-$('ww-initial').checked=true;
+#ww-quote * {
+  box-sizing:border-box;
 }
 
-/* When dog service is removed, undo the automatic initial cleanup selection. */
-if(!recurringDog && previousDogFrequency!=='none'){
-if(initialAddedByDogFrequency){
-$('ww-initial').checked=false;
-}
-initialAddedByDogFrequency=false;
-
-/* Restore the Yard Fresh choice the customer had before dog service was selected. */
-$('ww-fresh').checked=freshBeforeRecurring;
+#ww-quote .ww-panel {
+  background:#fff;
+  border:1px solid #dce4da;
+  border-radius:14px;
+  padding:20px;
+  margin:0 0 16px;
 }
 
-/* Keep initial cleanup locked while recurring dog service is active. */
-$('ww-initial').disabled=recurringDog;
-
-/* Yard Fresh Treatment is included free with recurring dog service. */
-$('ww-fresh').disabled=recurringDog;
-$('ww-fresh-choice').classList.toggle('ww-disabled',recurringDog);
-
-if(recurringDog){
-$('ww-fresh').checked=true;
-$('ww-fresh-title').textContent='Yard Fresh Treatment — FREE';
-$('ww-fresh-description').textContent='Included free with your recurring dog waste service. No additional charge.';
-}else{
-$('ww-fresh-title').textContent='Add Yard Fresh Treatment';
-$('ww-fresh-description').textContent='$15 for the first yard section, plus $5 per additional section';
+#ww-quote h2 {
+  font-size:27px;
+  line-height:1.2;
+  color:var(--green);
+  margin:0 0 8px;
 }
 
-/* The litter-box deep clean remains an independent optional one-time add-on.
-   Toggling it immediately updates the first-service price. */
-
-const dogs=number('ww-dogs');
-const litterFreq=$('ww-litter-frequency').value;
-const boxes=number('ww-boxes');
-const deepClean=$('ww-deep-clean').checked;
-const deepBoxes=number('ww-deep-boxes');
-const initial=$('ww-initial').checked;
-const condition=$('ww-condition').value;
-const fresh=$('ww-fresh').checked;
-const sections=number('ww-sections');
-
-show('ww-dog-count-wrap',recurringDog);
-show('ww-box-count-wrap',litterFreq!=='none');
-show('ww-initial-details',initial);
-show('ww-deep-clean-details',deepClean);
-show('ww-fresh-details',fresh && !recurringDog);
-
-let dogPrice=0,catPrice=0,oneTime=0;
-let items=[],notes=[],hasCustomOneTime=false;
-let dogBilling='No dog waste service selected';
-let catBilling='No litter-box service selected';
-
-/* Dog recurring pricing */
-if(dogFreq==='weekly'){
-dogPrice=15+3*(dogs-1);
-dogBilling='Billed weekly';
-}else if(dogFreq==='twice'){
-dogPrice=25+5*(dogs-1);
-dogBilling='Billed weekly · service twice per week';
-}else if(dogFreq==='biweekly'){
-dogPrice=25+5*(dogs-1);
-dogBilling='Billed every other week';
+#ww-quote h3 {
+  font-size:18px;
+  color:var(--green);
+  margin:0 0 14px;
 }
 
-/* Cat litter recurring pricing */
-if(litterFreq==='weekly'){
-catPrice=15+5*(boxes-1);
-catBilling='Billed weekly';
-}else if(litterFreq==='twice'){
-catPrice=25+10*(boxes-1);
-catBilling='Billed weekly · service twice per week';
+#ww-quote p {
+  margin:0 0 14px;
 }
 
-/* One-time litter box deep clean */
-if(deepClean){
-let p;
-if(deepBoxes===1){
-p=25;
-}else if(deepBoxes===2){
-p=40;
-}else{
-p=40+15*(deepBoxes-2);
-}
-oneTime+=p;
-items.push(line('Litter-box deep clean · '+deepBoxes+' box'+(deepBoxes===1?'':'es'),money(p)));
+#ww-quote .ww-muted {
+  color:var(--muted);
+  font-size:13px;
 }
 
-/* Initial cleanup */
-if(initial){
-if(condition==='light'){
-oneTime+=50;
-items.push(line('Initial cleanup · light',money(50)));
-}else if(condition==='moderate'){
-oneTime+=60;
-items.push(line('Initial cleanup · moderate estimate','$60–$75'));
-notes.push('Moderate cleanup is estimated at $60–$75. The first-service total uses the $60 starting estimate.');
-}else if(condition==='heavy'){
-oneTime+=75;
-items.push(line('Initial cleanup · heavy estimate','$75–$125+'));
-notes.push('Heavy cleanup is estimated at $75–$125+. The first-service total uses the $75 starting estimate.');
-}else{
-hasCustomOneTime=true;
-items.push(line('Initial cleanup','Custom quote'));
-notes.push('Your first-service total does not include a dollar amount for the initial cleanup. Please confirm the price based on your yard condition.');
-}
+#ww-quote .ww-label {
+  display:block;
+  font-weight:600;
+  margin:15px 0 6px;
 }
 
-/* Paid Yard Fresh Treatment applies when recurring dog service is not selected. */
-if(fresh && !recurringDog){
-const p=15+5*(sections-1);
-oneTime+=p;
-items.push(line('Yard Fresh Treatment · '+sections+' section'+(sections===1?'':'s'),money(p)));
-}else if(recurringDog){
-items.push(line('Yard Fresh Treatment','FREE — included with recurring dog service'));
+#ww-quote select,
+#ww-quote input,
+#ww-quote textarea {
+  width:100%;
+  min-height:44px;
+  border:1px solid #cbd6c9;
+  border-radius:8px;
+  padding:10px 12px;
+  background:#fff;
+  color:var(--ink);
+  font:inherit;
 }
 
-/* Cat litter-box service is included in the first-service total and ongoing pricing. */
-if(litterFreq!=='none'){
-items.push(line(
-'Litter-box cleaning · '+boxes+' box'+(boxes===1?'':'es')+' · '+(litterFreq==='weekly'?'weekly':'twice weekly'),
-money(catPrice)+'/week'
-));
+#ww-quote input[type=checkbox],
+#ww-quote input[type=radio] {
+  width:18px;
+  min-height:18px;
+  height:18px;
+  accent-color:var(--green);
+  margin:2px 9px 0 0;
+  flex-shrink:0;
 }
 
-/* First-service total includes one-time services and the first cat litter service charge.
-   Dog waste recurring charges remain separate. */
-const firstTotal=oneTime+catPrice;
-
-$('ww-first-total').textContent=money(firstTotal);
-$('ww-first-total-note').textContent=hasCustomOneTime
-?'Plus any custom-quoted services not yet priced.'
-:'Includes one-time services and the first cat litter-box service charge. Dog waste recurring charges are shown separately.';
-
-$('ww-dog-total').textContent=recurringDog
-?money(dogPrice)+(dogFreq==='biweekly'?'/visit':'/week')
-:'$0.00';
-$('ww-dog-billing').textContent=dogBilling;
-
-$('ww-cat-total').textContent=litterFreq==='none'?'$0.00':money(catPrice)+'/week';
-$('ww-cat-billing').textContent=catBilling;
-
-lines.innerHTML=items.length
-?items.join('')
-:'<p class="ww-muted" style="margin-top:12px">Select a service above to see your estimated price.</p>';
-
-show('ww-estimate-note',notes.length>0);
-$('ww-estimate-note').textContent=notes.join(' ');
-
-previousDogFrequency=dogFreq;
-previousLitterFrequency=litterFreq;
+#ww-quote .ww-choice {
+  display:flex;
+  align-items:flex-start;
+  padding:12px;
+  border:1px solid #dce4da;
+  border-radius:9px;
+  margin:8px 0;
+  cursor:pointer;
 }
 
-$('ww-res-tab').addEventListener('click',()=>{
-show('ww-residential',true);
-show('ww-commercial',false);
-$('ww-res-tab').setAttribute('aria-pressed','true');
-$('ww-com-tab').setAttribute('aria-pressed','false');
-});
+#ww-quote .ww-choice:has(input:checked) {
+  border-color:var(--green);
+  background:var(--cream);
+}
 
-$('ww-com-tab').addEventListener('click',()=>{
-show('ww-residential',false);
-show('ww-commercial',true);
-$('ww-res-tab').setAttribute('aria-pressed','false');
-$('ww-com-tab').setAttribute('aria-pressed','true');
-});
+#ww-quote .ww-choice span {
+  flex:1;
+}
 
-root.querySelectorAll('#ww-residential input,#ww-residential select').forEach(el=>el.addEventListener('input',calculate));
+#ww-quote .ww-choice.ww-disabled {
+  background:#f1f3f0;
+  border-color:#dce4da;
+  opacity:.8;
+  cursor:not-allowed;
+}
 
-root.querySelectorAll('#ww-residential [data-step]').forEach(btn=>btn.addEventListener('click',()=>{
-const field=$(btn.dataset.target);
-const min=parseInt(field.min,10)||1;
-const max=parseInt(field.max,10)||20;
-field.value=Math.max(min,Math.min(max,(parseInt(field.value,10)||min)+parseInt(btn.dataset.step,10)));
-calculate();
-}));
+#ww-quote .ww-choice.ww-disabled:has(input:checked) {
+  background:#f1f3f0;
+  border-color:#dce4da;
+}
 
-calculate();
-})();
+#ww-quote .ww-choice.ww-disabled input {
+  cursor:not-allowed;
+}
+
+#ww-quote .ww-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+#ww-quote .ww-hidden {
+  display:none!important;
+}
+
+#ww-quote .ww-tabs {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:16px 0;
+}
+
+#ww-quote .ww-tab {
+  padding:12px;
+  border:1px solid #cbd6c9;
+  border-radius:9px;
+  background:white;
+  color:var(--green);
+  font:inherit;
+  font-weight:600;
+  cursor:pointer;
+}
+
+#ww-quote .ww-tab[aria-pressed=true] {
+  background:var(--green);
+  color:white;
+  border-color:var(--green);
+}
+
+/* Main pricing summary */
+#ww-quote .ww-total {
+  background:var(--green);
+  color:white;
+  border-radius:14px;
+  padding:22px;
+  margin-top:16px;
+  text-align:left!important;
+}
+
+#ww-quote .ww-total h3 {
+  color:white;
+  margin-bottom:5px;
+}
+
+#ww-quote .ww-big {
+  font-size:32px;
+  font-weight:700;
+  line-height:1.2;
+}
+
+/* Price breakdown */
+#ww-quote .ww-line {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  width:100%;
+  padding:9px 0;
+  border-bottom:1px solid #ffffff35;
+}
+
+#ww-quote .ww-line:last-child {
+  border-bottom:0;
+}
+
+#ww-quote .ww-line span {
+  flex:1;
+  min-width:0;
+  text-align:left!important;
+}
+
+#ww-quote .ww-line strong {
+  flex-shrink:0;
+  margin-left:auto;
+  text-align:right!important;
+}
+
+#ww-quote .ww-total .ww-muted {
+  color:#e0e8df;
+}
+
+#ww-quote .ww-note {
+  background:var(--cream);
+  border-radius:8px;
+  padding:12px;
+  font-size:13px;
+  margin-top:12px;
+}
+
+/* Number controls */
+#ww-quote .ww-number {
+  display:grid;
+  grid-template-columns:44px 1fr 44px;
+  gap:8px;
+  align-items:center;
+}
+
+#ww-quote .ww-number button {
+  height:44px;
+  border:1px solid #cbd6c9;
+  border-radius:8px;
+  background:var(--cream);
+  font-size:22px;
+  color:var(--green);
+  cursor:pointer;
+}
+
+#ww-quote .ww-number input {
+  text-align:center;
+}
+
+/* Commercial section */
+#ww-quote .ww-commercial {
+  background:var(--cream);
+  border-radius:10px;
+  padding:20px;
+}
+
+/* Contact buttons */
+#ww-quote .ww-contact-actions {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:20px;
+}
+
+#ww-quote .ww-contact-btn {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  min-height:52px;
+  padding:13px 16px;
+  border-radius:9px;
+  font:inherit;
+  font-weight:600;
+  text-align:center;
+  text-decoration:none;
+  transition:opacity .15s ease;
+}
+
+#ww-quote .ww-contact-btn:hover {
+  opacity:.88;
+}
+
+#ww-quote .ww-call-btn {
+  background:var(--green);
+  color:#fff;
+  border:1px solid var(--green);
+}
+
+#ww-quote .ww-email-btn {
+  background:#fff;
+  color:var(--green);
+  border:1px solid #cbd6c9;
+}
+
+#ww-quote .ww-contact-icon {
+  width:20px;
+  height:20px;
+  flex-shrink:0;
+}
+
+#ww-quote .ww-contact-details {
+  margin-top:18px;
+  padding-top:15px;
+  border-top:1px solid #dce4da;
+}
+
+#ww-quote .ww-contact-details p {
+  margin-bottom:7px;
+}
+
+/* Estimate section */
+#ww-quote .ww-estimate-section {
+  margin-top:18px;
+  padding-top:15px;
+  border-top:1px solid #ffffff35;
+}
+
+#ww-quote .ww-estimate-section h4 {
+  font-size:15px;
+  color:white;
+  margin:0 0 5px;
+}
+
+#ww-quote .ww-estimate-price {
+  font-size:25px;
+  font-weight:700;
+  line-height:1.3;
+}
+
+/* Force dynamically updated pricing text to the left */
+#ww-quote #ww-price-lines,
+#ww-quote #ww-price-lines p,
+#ww-quote #ww-price-lines .ww-muted,
+#ww-quote #ww-first-total,
+#ww-quote #ww-first-total-note,
+#ww-quote #ww-dog-total,
+#ww-quote #ww-dog-billing,
+#ww-quote #ww-cat-total,
+#ww-quote #ww-cat-billing,
+#ww-quote #ww-estimate-note,
+#ww-quote .ww-total,
+#ww-quote .ww-total h3,
+#ww-quote .ww-total h4,
+#ww-quote .ww-total p,
+#ww-quote .ww-total .ww-big,
+#ww-quote .ww-total .ww-muted,
+#ww-quote .ww-total .ww-note,
+#ww-quote .ww-total .ww-estimate-section,
+#ww-quote .ww-total .ww-estimate-price {
+  text-align:left!important;
+}
+
+/* Ensure generated breakdown rows stay aligned */
+#ww-quote #ww-price-lines .ww-line {
+  display:flex!important;
+  justify-content:space-between!important;
+  align-items:flex-start;
+  width:100%;
+}
+
+#ww-quote #ww-price-lines .ww-line span {
+  flex:1;
+  min-width:0;
+  text-align:left!important;
+}
+
+#ww-quote #ww-price-lines .ww-line strong {
+  flex-shrink:0;
+  margin-left:auto;
+  text-align:right!important;
+}
+
+/* Mobile layout */
+@media(max-width:520px) {
+  #ww-quote .ww-panel {
+    padding:15px;
+  }
+
+  #ww-quote .ww-grid {
+    grid-template-columns:1fr;
+  }
+
+  #ww-quote h2 {
+    font-size:24px;
+  }
+
+  #ww-quote .ww-big {
+    font-size:29px;
+  }
+
+  #ww-quote .ww-contact-actions {
+    grid-template-columns:1fr;
+  }
+}
