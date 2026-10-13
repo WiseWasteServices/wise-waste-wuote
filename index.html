@@ -156,12 +156,17 @@
       min-width:0;
     }
 
-    /* Sticky price breakdown */
+    /*
+      Carrd embeds this calculator inside an iframe.
+      Native position:sticky cannot follow the outer Carrd
+      page scroll, so JavaScript applies a controlled transform.
+    */
     #ww-quote .ww-price-column {
       min-width:0;
-      position:sticky;
-      top:20px;
+      position:relative;
       align-self:start;
+      transform:translateY(var(--ww-sticky-shift, 0px));
+      will-change:transform;
     }
 
     #ww-quote .ww-price-column .ww-total {
@@ -379,7 +384,9 @@
       }
 
       #ww-quote .ww-price-column {
-        position:static;
+        position:relative;
+        transform:none !important;
+        will-change:auto;
       }
     }
 
@@ -676,7 +683,7 @@
       </div>
       <!-- END LEFT COLUMN -->
 
-      <!-- RIGHT COLUMN: STICKY PRICE BREAKDOWN -->
+      <!-- RIGHT COLUMN: PRICE BREAKDOWN -->
       <div class="ww-price-column">
         <div class="ww-total" aria-live="polite" aria-atomic="true">
           <h3>Estimated First-Service Total</h3>
@@ -768,6 +775,143 @@
   const number=id=>Math.max(1,Math.min(20,parseInt($(id).value,10)||1));
   const show=(id,yes)=>$(id).classList.toggle('ww-hidden',!yes);
   const lines=$('ww-price-lines');
+
+  /*
+    Carrd iframe scroll support.
+    The parent sends the iframe's viewport position.
+    This calculator adjusts the estimate panel with a
+    transform because CSS sticky cannot stick to the
+    parent page from inside an iframe.
+  */
+  let parentIframeTop=null;
+  let stickyFrame=0;
+  let stickyShift=0;
+  let lastReportedHeight=0;
+  let heightFrame=0;
+
+  function updateStickyPrice(){
+    const price=$('.ww-price-column');
+    const service=$('.ww-service-column');
+
+    if(!price || !service) return;
+
+    if(window.innerWidth<=760 || parentIframeTop===null){
+      price.style.setProperty('--ww-sticky-shift','0px');
+      stickyShift=0;
+      return;
+    }
+
+    /*
+      Recover the price panel's untransformed position
+      within this document.
+    */
+    const priceTop=
+      price.getBoundingClientRect().top+
+      window.scrollY-
+      stickyShift;
+
+    const serviceBottom=
+      service.getBoundingClientRect().bottom+
+      window.scrollY;
+
+    /*
+      Keep the estimate panel inside the vertical limits
+      of the service column.
+    */
+    const maxShift=Math.max(
+      0,
+      serviceBottom-priceTop-price.offsetHeight
+    );
+
+    /*
+      Keep the estimate about 20px below the top of the
+      user's viewport while the calculator is in view.
+    */
+    const desiredShift=Math.max(
+      0,
+      Math.min(
+        maxShift,
+        20-(parentIframeTop+priceTop)
+      )
+    );
+
+    stickyShift=desiredShift;
+    price.style.setProperty(
+      '--ww-sticky-shift',
+      desiredShift+'px'
+    );
+  }
+
+  function scheduleStickyUpdate(){
+    if(stickyFrame) return;
+
+    stickyFrame=requestAnimationFrame(()=>{
+      stickyFrame=0;
+      updateStickyPrice();
+    });
+  }
+
+  /*
+    Accept scroll-position messages only from the parent
+    window that contains this iframe.
+  */
+  window.addEventListener('message',event=>{
+    if(event.source!==window.parent) return;
+    if(!event.data) return;
+
+    if(event.data.type==='ww-quote-parent-scroll'){
+      const top=Number(event.data.iframeTop);
+      if(!Number.isFinite(top)) return;
+
+      parentIframeTop=top;
+      scheduleStickyUpdate();
+    }
+  });
+
+  window.addEventListener('resize',scheduleStickyUpdate);
+
+  /*
+    Send the calculator's content height to Carrd so the
+    iframe can resize as panels expand or collapse.
+  */
+  function reportCalculatorHeight(){
+    if(window.parent===window) return;
+    if(heightFrame) return;
+
+    heightFrame=requestAnimationFrame(()=>{
+      heightFrame=0;
+
+      const height=Math.ceil(Math.max(
+        document.documentElement.scrollHeight,
+        document.body.scrollHeight,
+        root.scrollHeight
+      ));
+
+      if(!Number.isFinite(height) || height<100) return;
+      if(Math.abs(height-lastReportedHeight)<2) return;
+
+      lastReportedHeight=height;
+
+      window.parent.postMessage({
+        type:'ww-quote-height',
+        height:height
+      },'*');
+    });
+  }
+
+  window.addEventListener('load',()=>{
+    reportCalculatorHeight();
+    scheduleStickyUpdate();
+  });
+
+  if('ResizeObserver' in window){
+    const rootObserver=new ResizeObserver(()=>{
+      reportCalculatorHeight();
+      scheduleStickyUpdate();
+    });
+
+    rootObserver.observe(root);
+  }
 
   // Show and require the email field only when email is selected.
   function updateContactMethod(){
@@ -935,6 +1079,10 @@
 
     previousDogFrequency=dogFreq;
     previousLitterFrequency=litterFreq;
+
+    // Recalculate the price panel position and report any height change.
+    scheduleStickyUpdate();
+    reportCalculatorHeight();
   }
 
   $('ww-res-tab').addEventListener('click',()=>{
@@ -942,6 +1090,9 @@
     show('ww-commercial',false);
     $('ww-res-tab').setAttribute('aria-pressed','true');
     $('ww-com-tab').setAttribute('aria-pressed','false');
+
+    reportCalculatorHeight();
+    scheduleStickyUpdate();
   });
 
   $('ww-com-tab').addEventListener('click',()=>{
@@ -949,6 +1100,9 @@
     show('ww-commercial',true);
     $('ww-res-tab').setAttribute('aria-pressed','false');
     $('ww-com-tab').setAttribute('aria-pressed','true');
+
+    reportCalculatorHeight();
+    scheduleStickyUpdate();
   });
 
   root.querySelectorAll('#ww-residential input,#ww-residential select').forEach(el=>{
@@ -970,6 +1124,7 @@
   });
 
   calculate();
+  reportCalculatorHeight();
 })();
 </script>
 
