@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -149,14 +148,14 @@
       display:grid;
       grid-template-columns:minmax(0,1.2fr) minmax(320px,0.9fr);
       gap:16px;
-      align-items:stretch;
+      align-items:start;
     }
 
     #ww-quote .ww-service-column {
       min-width:0;
     }
 
-    /* Stable desktop price breakdown */
+    /* Keep pricing and submission together on desktop */
     #ww-quote .ww-price-column {
       min-width:0;
       position:sticky;
@@ -216,6 +215,7 @@
 
     #ww-quote .ww-note {
       background:var(--cream);
+      color:var(--ink);
       border-radius:8px;
       padding:12px;
       font-size:13px;
@@ -232,6 +232,7 @@
 
     #ww-quote #ww-recurring-note {
       background:transparent !important;
+      color:white;
       padding:12px 0 0 !important;
       border-radius:0 !important;
       -webkit-appearance:none !important;
@@ -338,7 +339,7 @@
       max-width:100%;
     }
 
-    /* Section 5: Customer contact information */
+    /* Customer contact information */
     #ww-quote .ww-contact-section {
       background:var(--cream);
       border:1px solid #dce4da;
@@ -358,11 +359,9 @@
       resize:vertical;
     }
 
-    #ww-quote .ww-required {
-      color:#9b3028;
-    }
+    #ww-quote .ww-required { color:#9b3028; }
 
-    /* Section 6: Yard sign permission */
+    /* Yard sign permission */
     #ww-quote .ww-yard-sign-section {
       background:var(--cream);
       border:1px solid #dce4da;
@@ -375,7 +374,7 @@
       margin-bottom:0;
     }
 
-    /* Section 7: Anything else */
+    /* Additional notes */
     #ww-quote .ww-additional-notes-section {
       background:var(--cream);
       border:1px solid #dce4da;
@@ -394,11 +393,51 @@
       border-color:var(--green);
     }
 
+    /* Quote submission area, under the right-side estimate */
+    #ww-quote .ww-submit-panel {
+      margin-top:12px;
+      padding:18px;
+      background:#fff;
+      border:1px solid #dce4da;
+      border-radius:14px;
+    }
+
+    #ww-quote #ww-submit-quote {
+      width:100%;
+      min-height:54px;
+      padding:14px 18px;
+      border:1px solid var(--green);
+      border-radius:9px;
+      background:var(--green);
+      color:#fff;
+      font:inherit;
+      font-weight:600;
+      cursor:pointer;
+      transition:opacity .15s ease;
+    }
+
+    #ww-quote #ww-submit-quote:hover:not(:disabled) {
+      opacity:.9;
+    }
+
+    #ww-quote #ww-submit-quote:disabled {
+      opacity:.65;
+      cursor:wait;
+    }
+
+    #ww-quote #ww-submit-status {
+      overflow-wrap:anywhere;
+      font-size:14px;
+      margin:12px 0 0;
+    }
+
+    #ww-quote #ww-submit-status:empty {
+      display:none;
+    }
+
     /* Tablet and mobile improvements */
     @media (max-width:760px) {
-      body {
-        padding:12px !important;
-      }
+      body { padding:12px !important; }
 
       #ww-quote {
         font-size:15px;
@@ -417,9 +456,7 @@
         min-width:0;
       }
 
-      #ww-quote .ww-price-column {
-        position:static;
-      }
+      #ww-quote .ww-price-column { position:static; }
 
       #ww-quote .ww-panel {
         padding:16px;
@@ -450,9 +487,7 @@
         min-height:46px;
       }
 
-      #ww-quote textarea {
-        min-height:76px;
-      }
+      #ww-quote textarea { min-height:76px; }
 
       #ww-quote .ww-choice {
         padding:12px;
@@ -501,20 +536,15 @@
         border-radius:12px;
       }
 
-      #ww-quote .ww-big {
-        font-size:30px;
-      }
+      #ww-quote .ww-big { font-size:30px; }
 
       #ww-quote .ww-estimate-section {
         margin-top:15px;
         padding-top:13px;
       }
 
-      #ww-quote .ww-estimate-price {
-        font-size:23px;
-      }
+      #ww-quote .ww-estimate-price { font-size:23px; }
 
-      /* MOBILE PRICE BREAKDOWN FIX */
       #ww-quote .ww-line {
         display:grid;
         grid-template-columns:minmax(0,1fr) auto;
@@ -560,23 +590,20 @@
         margin-top:15px;
       }
 
-      #ww-quote .ww-contact-btn {
-        min-height:48px;
+      #ww-quote .ww-contact-btn { min-height:48px; }
+
+      #ww-quote .ww-submit-panel {
+        margin-top:0;
+        padding:15px;
       }
     }
 
     @media (max-width:380px) {
-      #ww-quote .ww-panel {
-        padding:13px;
-      }
+      #ww-quote .ww-panel { padding:13px; }
 
-      #ww-quote h2 {
-        font-size:22px;
-      }
+      #ww-quote h2 { font-size:22px; }
 
-      #ww-quote .ww-total {
-        padding:15px;
-      }
+      #ww-quote .ww-total { padding:15px; }
 
       #ww-quote .ww-line {
         font-size:13px;
@@ -584,9 +611,7 @@
         grid-template-columns:minmax(0,1fr) minmax(0,100px);
       }
 
-      #ww-quote .ww-line strong {
-        max-width:100px;
-      }
+      #ww-quote .ww-line strong { max-width:100px; }
     }
   </style>
 </head>
@@ -726,37 +751,17 @@
             <label class="ww-label" for="ww-customer-name">
               Full name <span class="ww-required">*</span>
             </label>
-            <input
-              id="ww-customer-name"
-              name="customer_name"
-              type="text"
-              autocomplete="name"
-              placeholder="Your full name"
-              required
-            >
+            <input id="ww-customer-name" name="customer_name" type="text" autocomplete="name" placeholder="Your full name" required>
 
             <label class="ww-label" for="ww-customer-address">
               Service address <span class="ww-required">*</span>
             </label>
-            <textarea
-              id="ww-customer-address"
-              name="service_address"
-              autocomplete="street-address"
-              placeholder="Street address, city, state, ZIP code"
-              required
-            ></textarea>
+            <textarea id="ww-customer-address" name="service_address" autocomplete="street-address" placeholder="Street address, city, state, ZIP code" required></textarea>
 
             <label class="ww-label" for="ww-customer-phone">
               Phone number <span class="ww-required">*</span>
             </label>
-            <input
-              id="ww-customer-phone"
-              name="customer_phone"
-              type="tel"
-              autocomplete="tel"
-              placeholder="(940) 555-0123"
-              required
-            >
+            <input id="ww-customer-phone" name="customer_phone" type="tel" autocomplete="tel" placeholder="(940) 555-0123" required>
 
             <label class="ww-label" for="ww-contact-method">
               Preferred contact method <span class="ww-required">*</span>
@@ -771,13 +776,7 @@
               <label class="ww-label" for="ww-customer-email">
                 Email address <span class="ww-required">*</span>
               </label>
-              <input
-                id="ww-customer-email"
-                name="customer_email"
-                type="email"
-                autocomplete="email"
-                placeholder="you@example.com"
-              >
+              <input id="ww-customer-email" name="customer_email" type="email" autocomplete="email" placeholder="you@example.com">
             </div>
 
             <label class="ww-label" for="ww-contact-time">
@@ -795,7 +794,6 @@
             </p>
           </div>
         </div>
-        <!-- END SECTION 5 -->
 
         <!-- SECTION 6: YARD SIGN PERMISSION -->
         <div class="ww-panel" id="ww-yard-sign">
@@ -815,12 +813,7 @@
 
           <div class="ww-yard-sign-section">
             <label class="ww-choice">
-              <input
-                type="radio"
-                name="yard_sign_permission"
-                id="ww-yard-sign-yes"
-                value="yes"
-              >
+              <input type="radio" name="yard_sign_permission" id="ww-yard-sign-yes" value="yes">
               <span>
                 <strong>Yes, that's fine!</strong><br>
                 <span class="ww-muted">You may place a promotional yard sign on my property.</span>
@@ -828,13 +821,7 @@
             </label>
 
             <label class="ww-choice">
-              <input
-                type="radio"
-                name="yard_sign_permission"
-                id="ww-yard-sign-no"
-                value="no"
-                checked
-              >
+              <input type="radio" name="yard_sign_permission" id="ww-yard-sign-no" value="no" checked>
               <span>
                 <strong>No, thank you</strong><br>
                 <span class="ww-muted">I'd prefer not to have a yard sign.</span>
@@ -842,7 +829,6 @@
             </label>
           </div>
         </div>
-        <!-- END SECTION 6 -->
 
         <!-- SECTION 7: ANYTHING ELSE -->
         <div class="ww-panel" id="ww-additional-notes">
@@ -856,25 +842,17 @@
             <label class="ww-label" for="ww-customer-notes">
               Additional notes <span class="ww-muted">(optional)</span>
             </label>
-            <textarea
-              id="ww-customer-notes"
-              name="additional_notes"
-              rows="5"
-              maxlength="2000"
-              placeholder="Example: The gate code is..., please watch for our friendly dog, or the backyard has a few areas that need extra attention..."
-              aria-describedby="ww-notes-help"
-            ></textarea>
+            <textarea id="ww-customer-notes" name="additional_notes" rows="5" maxlength="2000" placeholder="Example: The gate code is..., please watch for our friendly dog, or the backyard has a few areas that need extra attention..." aria-describedby="ww-notes-help"></textarea>
             <p class="ww-muted" id="ww-notes-help" style="margin:8px 0 0">
               Please include any details that may help us prepare for your service.
             </p>
           </div>
         </div>
-        <!-- END SECTION 7 -->
 
       </div>
       <!-- END LEFT COLUMN -->
 
-      <!-- RIGHT COLUMN: PRICE BREAKDOWN -->
+      <!-- RIGHT COLUMN: PRICE BREAKDOWN AND SUBMIT BUTTON -->
       <div class="ww-price-column">
         <div class="ww-total" aria-live="polite" aria-atomic="true">
           <h3>Estimated First-Service Total</h3>
@@ -910,6 +888,14 @@
 
           <div id="ww-estimate-note" class="ww-note ww-hidden"></div>
           <p class="ww-muted" style="margin-top:14px">This is an estimate, not a final invoice. Initial cleanup pricing may vary based on the amount of waste and the condition of your yard. Custom-quote services are not included in the displayed dollar total.</p>
+        </div>
+
+        <!-- SUBMIT BUTTON IS DIRECTLY UNDER THE PRICE SUMMARY -->
+        <div class="ww-submit-panel" id="ww-submit-section">
+          <h3>Ready to Request Your Quote?</h3>
+          <p class="ww-muted">Submit your selections and contact information. We'll follow up using your preferred contact method.</p>
+          <button type="button" id="ww-submit-quote">Submit Quote Request</button>
+          <p id="ww-submit-status" role="status" aria-live="polite"></p>
         </div>
       </div>
       <!-- END RIGHT COLUMN -->
@@ -962,9 +948,15 @@
   root.dataset.ready = '1';
 
   /*
+   * GOOGLE APPS SCRIPT WEB APP ENDPOINT
+   * This sends website quote requests to the Apps Script endpoint.
+   */
+  const QUOTE_ENDPOINT =
+    'https://script.google.com/macros/s/AKfycbyCDemM3MYGckMTXnyBD02ssiY8KYMmqSIFAY5j0-w8iJcuT-gmUWsr8V1mjMGOtp2rDw/exec';
+
+  /*
    * IFRAME HEIGHT FIX
-   * Sends the calculator's full height to the Carrd page so the
-   * iframe can grow with its content instead of creating nested scrolling.
+   * Sends the calculator's full height to Carrd so the iframe can grow.
    */
   let heightReportPending = false;
 
@@ -995,11 +987,9 @@
     });
   }
 
-  // Carrd can request the current height after the iframe loads.
   window.addEventListener('message', function(event) {
     if (event.source !== window.parent) return;
     if (!event.data || event.data.type !== 'ww-quote-request-height') return;
-
     scheduleHeightReport();
   });
 
@@ -1012,14 +1002,17 @@
   }
 
   const $ = id => root.querySelector('#' + id);
+
   const money = n => n.toLocaleString('en-US', {
     style:'currency',
     currency:'USD'
   });
+
   const number = id => Math.max(
     1,
     Math.min(20, parseInt($(id).value, 10) || 1)
   );
+
   const show = (id, yes) => $(id).classList.toggle('ww-hidden', !yes);
   const lines = $('ww-price-lines');
 
@@ -1043,7 +1036,6 @@
   let previousDogFrequency = $('ww-dog-frequency').value;
   let freshBeforeRecurring = false;
   let initialAddedByDogFrequency = false;
-  let previousLitterFrequency = $('ww-litter-frequency').value;
 
   function line(label, price) {
     return '<div class="ww-line"><span>' + label +
@@ -1229,12 +1221,149 @@
     show('ww-estimate-note', notes.length > 0);
     $('ww-estimate-note').textContent = notes.join(' ');
 
-    previousDogFrequency = dogFreq;
-    previousLitterFrequency = litterFreq;
-
-    // Recalculate the iframe height after the visible content changes.
     scheduleHeightReport();
   }
+
+  // QUOTE SUBMISSION
+  const submitButton = $('ww-submit-quote');
+  const submitStatus = $('ww-submit-status');
+
+  function getFieldValue(id) {
+    return $(id).value.trim();
+  }
+
+  function setSubmitStatus(message, isError) {
+    submitStatus.style.color = isError ? '#9b3028' : 'var(--green)';
+    submitStatus.textContent = message;
+    scheduleHeightReport();
+  }
+
+  function submitQuote() {
+    if (submitButton.disabled) return;
+
+    const name = getFieldValue('ww-customer-name');
+    const address = getFieldValue('ww-customer-address');
+    const phone = getFieldValue('ww-customer-phone');
+    const contactMethod = getFieldValue('ww-contact-method');
+    const email = getFieldValue('ww-customer-email');
+    const contactTime = getFieldValue('ww-contact-time');
+
+    if (!name || !address || !phone || !contactTime) {
+      setSubmitStatus(
+        'Please complete your name, service address, phone number, and preferred contact time.',
+        true
+      );
+
+      $('ww-customer-info').scrollIntoView({
+        behavior:'smooth',
+        block:'start'
+      });
+
+      return;
+    }
+
+    if (contactMethod === 'email') {
+      const emailInput = $('ww-customer-email');
+
+      if (!email || !emailInput.checkValidity()) {
+        setSubmitStatus('Please enter a valid email address.', true);
+        emailInput.reportValidity();
+        return;
+      }
+    }
+
+    const dogFrequency = getFieldValue('ww-dog-frequency');
+    const litterFrequency = getFieldValue('ww-litter-frequency');
+    const recurringDog = dogFrequency !== 'none';
+    const deepClean = $('ww-deep-clean').checked;
+    const initial = $('ww-initial').checked;
+    const fresh = $('ww-fresh').checked;
+    const yardSign = root.querySelector(
+      'input[name="yard_sign_permission"]:checked'
+    );
+
+    const services = [];
+
+    if (recurringDog) services.push('Dog waste removal');
+    if (initial) services.push('Initial yard cleanup');
+    if (fresh) services.push('Yard Fresh Treatment');
+    if (litterFrequency !== 'none') {
+      services.push('Cat litter-box cleaning');
+    }
+    if (deepClean) services.push('Litter-box deep clean');
+
+    if (services.length === 0) {
+      setSubmitStatus(
+        'Please select at least one service before submitting your request.',
+        true
+      );
+      return;
+    }
+
+    const payload = {
+      name:name,
+      address:address,
+      phone:phone,
+      contactMethod:contactMethod,
+      email:contactMethod === 'email' ? email : '',
+      contactTime:contactTime,
+      customerType:'Residential',
+      services:services.join(', '),
+      dogs:recurringDog ? String(number('ww-dogs')) : '0',
+      dogFrequency:dogFrequency,
+      boxes:litterFrequency !== 'none' ? String(number('ww-boxes')) : '0',
+      litterFrequency:litterFrequency,
+      initial:initial ? 'Yes' : 'No',
+      condition:initial ? getFieldValue('ww-condition') : '',
+      fresh:fresh ? 'Yes' : 'No',
+      sections:fresh && !recurringDog
+        ? String(number('ww-sections'))
+        : (recurringDog ? 'Included with recurring service' : '0'),
+      deepClean:deepClean ? 'Yes' : 'No',
+      deepBoxes:deepClean ? String(number('ww-deep-boxes')) : '0',
+      firstTotal:$('ww-first-total').textContent,
+      dogPrice:$('ww-dog-total').textContent,
+      catPrice:$('ww-cat-total').textContent,
+      dogBilling:$('ww-dog-billing').textContent,
+      catBilling:$('ww-cat-billing').textContent,
+      yardSign:yardSign ? yardSign.value : 'no',
+      notes:getFieldValue('ww-customer-notes'),
+      website:''
+    };
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'Submitting...';
+    setSubmitStatus('Sending your quote request...', false);
+
+    const formBody = new URLSearchParams({
+      payload:JSON.stringify(payload)
+    });
+
+    fetch(QUOTE_ENDPOINT, {
+      method:'POST',
+      mode:'no-cors',
+      body:formBody
+    })
+    .then(function() {
+      submitButton.textContent = 'Request Submitted';
+      setSubmitStatus(
+        'Your request has been sent. We will follow up using your preferred contact method. If you do not hear from us, please call (940) 247-0522.',
+        false
+      );
+    })
+    .catch(function(error) {
+      console.error('Quote submission error:', error);
+      submitButton.disabled = false;
+      submitButton.textContent = 'Submit Quote Request';
+
+      setSubmitStatus(
+        'We could not send your request. Please try again or call (940) 247-0522.',
+        true
+      );
+    });
+  }
+
+  submitButton.addEventListener('click', submitQuote);
 
   $('ww-res-tab').addEventListener('click', () => {
     show('ww-residential', true);
