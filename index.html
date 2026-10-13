@@ -947,7 +947,7 @@
           <div class="ww-contact-section" style="margin-top: 20px;">
             <div class="ww-grid">
               <div>
-                <label class="ww-label" for="ww-comm-business">Property or Business Name <span class="ww-required">*</span></label>
+                <label class="ww-label" for="ww-comm-business">Property/Business Name <span class="ww-required">*</span></label>
                 <input id="ww-comm-business" type="text" required>
               </div>
               <div>
@@ -955,6 +955,9 @@
                 <input id="ww-comm-name" type="text" autocomplete="name" required>
               </div>
             </div>
+
+            <label class="ww-label" for="ww-comm-address">Property Address <span class="ww-required">*</span></label>
+            <input id="ww-comm-address" type="text" autocomplete="street-address" placeholder="123 Main St, City, TX ZIP" required>
 
             <label class="ww-label" for="ww-comm-type">Property Type <span class="ww-required">*</span></label>
             <select id="ww-comm-type" required>
@@ -1103,14 +1106,12 @@
     scheduleHeightReport();
   });
 
-  $('btn-to-cats').addEventListener('click', () => {
-    $('btn-to-cats').style.display = 'none';
+  $('btn-to-cats').addEventListener('click', () => {$('btn-to-cats').style.display = 'none';
     show('step-3-cats', true);
     scheduleHeightReport();
   });
 
-  $('btn-to-details').addEventListener('click', () => {
-    $('btn-to-details').style.display = 'none';
+  $('btn-to-details').addEventListener('click', () => {$('btn-to-details').style.display = 'none';
     show('step-4-contact', true);
     show('ww-submit-section', true);
     scheduleHeightReport();
@@ -1203,12 +1204,10 @@
 
     if (recurringDog) {
       $('ww-fresh').checked = true;
-      $('ww-fresh-title').textContent = 'Yard Fresh Treatment — FREE';
-      $('ww-fresh-description').textContent =
+      $('ww-fresh-title').textContent = 'Yard Fresh Treatment — FREE';$('ww-fresh-description').textContent =
         'Included free with your recurring dog waste service. No additional charge.';
     } else {
-      $('ww-fresh-title').textContent = 'Add Yard Fresh Treatment';
-      $('ww-fresh-description').textContent =
+      $('ww-fresh-title').textContent = 'Add Yard Fresh Treatment';$('ww-fresh-description').textContent =
         '$15 for the first yard section, plus $5 per additional section';
     }
 
@@ -1224,6 +1223,7 @@
 
     show('ww-dog-count-wrap', recurringDog);
     show('ww-box-count-wrap', litterFreq !== 'none');
+    show('ww-initial-details', initial);
     show('ww-deep-clean-details', deepClean);
     show('ww-fresh-details', fresh && !recurringDog);
 
@@ -1495,13 +1495,14 @@
 
     const businessName = getFieldValue('ww-comm-business');
     const contactName = getFieldValue('ww-comm-name');
+    const propertyAddress = getFieldValue('ww-comm-address');
     const propertyType = getFieldValue('ww-comm-type');
     const phone = getFieldValue('ww-comm-phone');
     const email = getFieldValue('ww-comm-email');
     const notes = getFieldValue('ww-comm-notes');
 
-    if (!businessName || !contactName || !phone || !email) {
-      setCommSubmitStatus('Please complete the Property Name, Contact Person, Phone, and Email fields.', true);
+    if (!businessName || !contactName || !propertyAddress || !phone || !email) {
+      setCommSubmitStatus('Please complete all required fields.', true);
       return;
     }
 
@@ -1514,12 +1515,12 @@
 
     const payload = {
       name: contactName,
-      address: businessName, // Putting Business Name in the Address field so it populates the sheet correctly
+      address: businessName + ' (' + propertyAddress + ')', 
       phone: phone,
-      contactMethod: 'email', // Default for commercial fast-contact
+      contactMethod: 'email', 
       email: email,
       contactTime: 'Anytime',
-      customerType: 'Commercial - ' + propertyType, // Tags the lead explicitly
+      customerType: 'Commercial - ' + propertyType, 
       services: 'Commercial Quote Requested',
       dogs: '0',
       dogFrequency: 'none',
