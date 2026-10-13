@@ -156,7 +156,7 @@
       min-width:0;
     }
 
-    /* Sticky price breakdown */
+    /* Stable desktop price breakdown */
     #ww-quote .ww-price-column {
       min-width:0;
       position:sticky;
@@ -225,7 +225,7 @@
 
     #ww-quote .ww-number {
       display:grid;
-      grid-template-columns:44px 1fr 44px;
+      grid-template-columns:44px minmax(0,1fr) 44px;
       gap:8px;
       align-items:center;
     }
@@ -372,23 +372,172 @@
       border-color:var(--green);
     }
 
-    /* Tablet and mobile */
-    @media(max-width:760px) {
+    /* Tablet and mobile improvements */
+    @media (max-width:760px) {
+      body {
+        padding:12px !important;
+      }
+
+      #ww-quote {
+        font-size:15px;
+        line-height:1.45;
+      }
+
       #ww-quote .ww-calculator-layout {
-        grid-template-columns:minmax(0,1fr);
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+      }
+
+      #ww-quote .ww-service-column,
+      #ww-quote .ww-price-column {
+        width:100%;
+        min-width:0;
       }
 
       #ww-quote .ww-price-column {
         position:static;
       }
+
+      #ww-quote .ww-panel {
+        padding:16px;
+        margin-bottom:10px;
+        border-radius:12px;
+      }
+
+      #ww-quote h2 {
+        font-size:24px;
+        line-height:1.25;
+      }
+
+      #ww-quote h3 {
+        font-size:17px;
+        line-height:1.35;
+        margin-bottom:10px;
+      }
+
+      #ww-quote .ww-label {
+        margin-top:12px;
+        margin-bottom:6px;
+      }
+
+      #ww-quote select,
+      #ww-quote input:not([type="checkbox"]):not([type="radio"]),
+      #ww-quote textarea {
+        font-size:16px;
+        min-height:46px;
+      }
+
+      #ww-quote textarea {
+        min-height:76px;
+      }
+
+      #ww-quote .ww-choice {
+        padding:12px;
+        margin:7px 0;
+        gap:4px;
+        border-radius:9px;
+      }
+
+      #ww-quote .ww-choice input[type="checkbox"],
+      #ww-quote .ww-choice input[type="radio"] {
+        width:20px;
+        height:20px;
+        min-height:20px;
+        margin-right:10px;
+        margin-top:1px;
+      }
+
+      #ww-quote .ww-grid {
+        grid-template-columns:1fr;
+        gap:8px;
+      }
+
+      #ww-quote .ww-tabs {
+        gap:8px;
+        margin:12px 0 2px;
+      }
+
+      #ww-quote .ww-tab {
+        min-height:46px;
+        padding:10px 8px;
+        font-size:15px;
+      }
+
+      #ww-quote .ww-number {
+        grid-template-columns:48px minmax(0,1fr) 48px;
+        gap:8px;
+      }
+
+      #ww-quote .ww-number button {
+        height:46px;
+        font-size:24px;
+      }
+
+      #ww-quote .ww-total {
+        padding:18px;
+        border-radius:12px;
+      }
+
+      #ww-quote .ww-big {
+        font-size:30px;
+      }
+
+      #ww-quote .ww-estimate-section {
+        margin-top:15px;
+        padding-top:13px;
+      }
+
+      #ww-quote .ww-estimate-price {
+        font-size:23px;
+      }
+
+      #ww-quote .ww-line {
+        gap:10px;
+        align-items:flex-start;
+        font-size:14px;
+      }
+
+      #ww-quote .ww-line strong {
+        text-align:right;
+        flex-shrink:0;
+      }
+
+      #ww-quote .ww-contact-section,
+      #ww-quote .ww-yard-sign-section,
+      #ww-quote .ww-additional-notes-section,
+      #ww-quote .ww-commercial {
+        padding:13px;
+        border-radius:9px;
+      }
+
+      #ww-quote .ww-contact-actions {
+        grid-template-columns:1fr;
+        gap:9px;
+        margin-top:15px;
+      }
+
+      #ww-quote .ww-contact-btn {
+        min-height:48px;
+      }
     }
 
-    @media(max-width:520px) {
-      #ww-quote .ww-panel { padding:15px; }
-      #ww-quote .ww-grid { grid-template-columns:1fr; }
-      #ww-quote h2 { font-size:24px; }
-      #ww-quote .ww-big { font-size:29px; }
-      #ww-quote .ww-contact-actions { grid-template-columns:1fr; }
+    @media (max-width:380px) {
+      #ww-quote .ww-panel {
+        padding:13px;
+      }
+
+      #ww-quote h2 {
+        font-size:22px;
+      }
+
+      #ww-quote .ww-total {
+        padding:15px;
+      }
+
+      #ww-quote .ww-line {
+        font-size:13px;
+      }
     }
   </style>
 </head>
@@ -676,7 +825,7 @@
       </div>
       <!-- END LEFT COLUMN -->
 
-      <!-- RIGHT COLUMN: STICKY PRICE BREAKDOWN -->
+      <!-- RIGHT COLUMN: PRICE BREAKDOWN -->
       <div class="ww-price-column">
         <div class="ww-total" aria-live="polite" aria-atomic="true">
           <h3>Estimated First-Service Total</h3>
