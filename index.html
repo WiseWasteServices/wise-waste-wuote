@@ -156,8 +156,7 @@
       min-width:0;
     }
 
-    /* The price panel sticks while scrolling, but stays
-       within the calculator layout instead of the page footer. */
+    /* Sticky price breakdown */
     #ww-quote .ww-price-column {
       min-width:0;
       position:sticky;
@@ -206,6 +205,22 @@
       padding:12px;
       font-size:13px;
       margin-top:12px;
+    }
+
+    #ww-quote #ww-recurring-note,
+    #ww-quote #ww-recurring-note::before,
+    #ww-quote #ww-recurring-note::after {
+      border:0 !important;
+      outline:0 !important;
+      box-shadow:none !important;
+    }
+
+    #ww-quote #ww-recurring-note {
+      background:transparent !important;
+      padding:12px 0 0 !important;
+      border-radius:0 !important;
+      -webkit-appearance:none !important;
+      appearance:none !important;
     }
 
     #ww-quote .ww-number {
@@ -301,8 +316,63 @@
       line-height:1.3;
     }
 
-    /* Tablet and mobile: stack the calculator vertically.
-       Sticky positioning is disabled on these screen sizes. */
+    /* Section 5: Customer contact information */
+    #ww-quote .ww-contact-section {
+      background:var(--cream);
+      border:1px solid #dce4da;
+      border-radius:10px;
+      padding:16px;
+      margin-top:14px;
+    }
+
+    #ww-quote .ww-contact-section h4 {
+      color:var(--green);
+      font-size:16px;
+      margin:0 0 6px;
+    }
+
+    #ww-quote .ww-contact-section textarea {
+      min-height:80px;
+      resize:vertical;
+    }
+
+    #ww-quote .ww-required {
+      color:#9b3028;
+    }
+
+    /* Section 6: Yard sign permission */
+    #ww-quote .ww-yard-sign-section {
+      background:var(--cream);
+      border:1px solid #dce4da;
+      border-radius:10px;
+      padding:16px;
+      margin-top:14px;
+    }
+
+    #ww-quote .ww-yard-sign-section .ww-choice:last-child {
+      margin-bottom:0;
+    }
+
+    /* Section 7: Anything else */
+    #ww-quote .ww-additional-notes-section {
+      background:var(--cream);
+      border:1px solid #dce4da;
+      border-radius:10px;
+      padding:16px;
+      margin-top:14px;
+    }
+
+    #ww-quote .ww-additional-notes-section textarea {
+      min-height:140px;
+      resize:vertical;
+    }
+
+    #ww-quote .ww-additional-notes-section textarea:focus {
+      outline:2px solid var(--light);
+      border-color:var(--green);
+    }
+
+    /* Tablet and mobile */
     @media(max-width:760px) {
       #ww-quote .ww-calculator-layout {
         grid-template-columns:minmax(0,1fr);
@@ -356,7 +426,7 @@
             <label class="ww-label" for="ww-dogs">Number of dogs</label>
             <div class="ww-number">
               <button type="button" data-step="-1" data-target="ww-dogs" aria-label="Remove a dog">−</button>
-              <input id="ww-dogs" type="number" min="1" max="20" value="1" />
+              <input id="ww-dogs" type="number" min="1" max="20" value="1">
               <button type="button" data-step="1" data-target="ww-dogs" aria-label="Add a dog">+</button>
             </div>
           </div>
@@ -365,7 +435,7 @@
         <div class="ww-panel">
           <h3>2. Initial Yard Cleanup</h3>
           <label class="ww-choice">
-            <input id="ww-initial" type="checkbox" />
+            <input id="ww-initial" type="checkbox">
             <span><strong>Initial cleanup</strong><br><span class="ww-muted">One-time service, starting at $50</span></span>
           </label>
 
@@ -385,7 +455,7 @@
         <div class="ww-panel">
           <h3>3. Yard Fresh Treatment</h3>
           <label class="ww-choice" id="ww-fresh-choice">
-            <input id="ww-fresh" type="checkbox" />
+            <input id="ww-fresh" type="checkbox">
             <span>
               <strong id="ww-fresh-title">Add Yard Fresh Treatment</strong><br>
               <span class="ww-muted" id="ww-fresh-description">$15 for the first yard section, plus $5 per additional section</span>
@@ -396,7 +466,7 @@
             <label class="ww-label" for="ww-sections">Number of yard sections</label>
             <div class="ww-number">
               <button type="button" data-step="-1" data-target="ww-sections" aria-label="Remove a yard section">−</button>
-              <input id="ww-sections" type="number" min="1" max="20" value="1" />
+              <input id="ww-sections" type="number" min="1" max="20" value="1">
               <button type="button" data-step="1" data-target="ww-sections" aria-label="Add a yard section">+</button>
             </div>
             <p class="ww-muted" style="margin-top:8px">Treatment is priced per visit.</p>
@@ -416,13 +486,13 @@
             <label class="ww-label" for="ww-boxes">Number of litter boxes</label>
             <div class="ww-number">
               <button type="button" data-step="-1" data-target="ww-boxes" aria-label="Remove a litter box">−</button>
-              <input id="ww-boxes" type="number" min="1" max="20" value="1" />
+              <input id="ww-boxes" type="number" min="1" max="20" value="1">
               <button type="button" data-step="1" data-target="ww-boxes" aria-label="Add a litter box">+</button>
             </div>
           </div>
 
           <label class="ww-choice">
-            <input id="ww-deep-clean" type="checkbox" />
+            <input id="ww-deep-clean" type="checkbox">
             <span>
               <strong>Add Litter Box Deep Clean</strong><br>
               <span class="ww-muted">A more thorough reset when your litter box needs extra attention.</span>
@@ -433,7 +503,7 @@
             <label class="ww-label" for="ww-deep-boxes">Number of boxes needing a deep clean</label>
             <div class="ww-number">
               <button type="button" data-step="-1" data-target="ww-deep-boxes" aria-label="Remove a deep-clean box">−</button>
-              <input id="ww-deep-boxes" type="number" min="1" max="20" value="1" />
+              <input id="ww-deep-boxes" type="number" min="1" max="20" value="1">
               <button type="button" data-step="1" data-target="ww-deep-boxes" aria-label="Add a deep-clean box">+</button>
             </div>
             <div class="ww-note">
@@ -447,12 +517,167 @@
           <p class="ww-muted" style="margin-top:10px">Customers provide litter by default. Litter supply, if needed, costs $10 per box.</p>
         </div>
 
+        <!-- SECTION 5: CUSTOMER CONTACT INFORMATION -->
+        <div class="ww-panel" id="ww-customer-info">
+          <h3>5. Your Contact Information</h3>
+          <p class="ww-muted">Tell us how to reach you so we can follow up about your estimate and service needs.</p>
+
+          <div class="ww-contact-section">
+            <h4>Customer Details</h4>
+
+            <label class="ww-label" for="ww-customer-name">
+              Full name <span class="ww-required">*</span>
+            </label>
+            <input
+              id="ww-customer-name"
+              name="customer_name"
+              type="text"
+              autocomplete="name"
+              placeholder="Your full name"
+              required
+            >
+
+            <label class="ww-label" for="ww-customer-address">
+              Service address <span class="ww-required">*</span>
+            </label>
+            <textarea
+              id="ww-customer-address"
+              name="service_address"
+              autocomplete="street-address"
+              placeholder="Street address, city, state, ZIP code"
+              required
+            ></textarea>
+
+            <label class="ww-label" for="ww-customer-phone">
+              Phone number <span class="ww-required">*</span>
+            </label>
+            <input
+              id="ww-customer-phone"
+              name="customer_phone"
+              type="tel"
+              autocomplete="tel"
+              placeholder="(940) 555-0123"
+              required
+            >
+
+            <label class="ww-label" for="ww-contact-method">
+              Preferred contact method <span class="ww-required">*</span>
+            </label>
+            <select id="ww-contact-method" name="preferred_contact" required>
+              <option value="text">Text message</option>
+              <option value="call">Phone call</option>
+              <option value="email">Email</option>
+            </select>
+
+            <div id="ww-customer-email-wrap" class="ww-hidden">
+              <label class="ww-label" for="ww-customer-email">
+                Email address <span class="ww-required">*</span>
+              </label>
+              <input
+                id="ww-customer-email"
+                name="customer_email"
+                type="email"
+                autocomplete="email"
+                placeholder="you@example.com"
+              >
+            </div>
+
+            <label class="ww-label" for="ww-contact-time">
+              Best time to contact you <span class="ww-required">*</span>
+            </label>
+            <select id="ww-contact-time" name="preferred_contact_time" required>
+              <option value="anytime">Anytime</option>
+              <option value="morning">Morning (8 AM–12 PM)</option>
+              <option value="afternoon">Afternoon (12 PM–4 PM)</option>
+              <option value="evening">Evening (4 PM–6 PM)</option>
+            </select>
+
+            <p class="ww-muted" style="margin:12px 0 0">
+              Your information will be used to follow up about your quote and requested services.
+            </p>
+          </div>
+        </div>
+        <!-- END SECTION 5 -->
+
+        <!-- SECTION 6: YARD SIGN PERMISSION -->
+        <div class="ww-panel" id="ww-yard-sign">
+          <h3>6. Yard Sign Permission</h3>
+
+          <p>
+            Help spread the word about Wise Waste Services! Would you be comfortable
+            allowing us to place a small Wise Waste Services promotional yard sign
+            near the front of your lawn?
+          </p>
+
+          <p class="ww-muted">
+            This is completely optional and will not affect your pricing or service.
+            We will only place a sign with your permission, and you can ask us to
+            remove it at any time.
+          </p>
+
+          <div class="ww-yard-sign-section">
+            <label class="ww-choice">
+              <input
+                type="radio"
+                name="yard_sign_permission"
+                id="ww-yard-sign-yes"
+                value="yes"
+              >
+              <span>
+                <strong>Yes, that's fine!</strong><br>
+                <span class="ww-muted">You may place a promotional yard sign on my property.</span>
+              </span>
+            </label>
+
+            <label class="ww-choice">
+              <input
+                type="radio"
+                name="yard_sign_permission"
+                id="ww-yard-sign-no"
+                value="no"
+                checked
+              >
+              <span>
+                <strong>No, thank you</strong><br>
+                <span class="ww-muted">I'd prefer not to have a yard sign.</span>
+              </span>
+            </label>
+          </div>
+        </div>
+        <!-- END SECTION 6 -->
+
+        <!-- SECTION 7: ANYTHING ELSE -->
+        <div class="ww-panel" id="ww-additional-notes">
+          <h3>7. Anything Else We Should Know?</h3>
+          <p class="ww-muted">
+            Have special instructions, access details, pets we should be aware of,
+            or anything else you'd like to tell us? Leave a note below.
+          </p>
+
+          <div class="ww-additional-notes-section">
+            <label class="ww-label" for="ww-customer-notes">
+              Additional notes <span class="ww-muted">(optional)</span>
+            </label>
+            <textarea
+              id="ww-customer-notes"
+              name="additional_notes"
+              rows="5"
+              maxlength="2000"
+              placeholder="Example: The gate code is..., please watch for our friendly dog, or the backyard has a few areas that need extra attention..."
+              aria-describedby="ww-notes-help"
+            ></textarea>
+            <p class="ww-muted" id="ww-notes-help" style="margin:8px 0 0">
+              Please include any details that may help us prepare for your service.
+            </p>
+          </div>
+        </div>
+        <!-- END SECTION 7 -->
+
       </div>
       <!-- END LEFT COLUMN -->
 
       <!-- RIGHT COLUMN: STICKY PRICE BREAKDOWN -->
       <div class="ww-price-column">
-
         <div class="ww-total" aria-live="polite" aria-atomic="true">
           <h3>Estimated First-Service Total</h3>
           <div class="ww-muted">Your estimated cost for one-time services and your first litter-box cleaning. Dog waste recurring service is shown separately.</div>
@@ -488,14 +713,11 @@
           <div id="ww-estimate-note" class="ww-note ww-hidden"></div>
           <p class="ww-muted" style="margin-top:14px">This is an estimate, not a final invoice. Initial cleanup pricing may vary based on the amount of waste and the condition of your yard. Custom-quote services are not included in the displayed dollar total.</p>
         </div>
-
       </div>
       <!-- END RIGHT COLUMN -->
 
     </div>
-    <!-- END TWO-COLUMN LAYOUT -->
   </div>
-  <!-- END RESIDENTIAL CALCULATOR -->
 
   <!-- COMMERCIAL SECTION -->
   <div id="ww-commercial" class="ww-hidden">
@@ -546,6 +768,21 @@
   const number=id=>Math.max(1,Math.min(20,parseInt($(id).value,10)||1));
   const show=(id,yes)=>$(id).classList.toggle('ww-hidden',!yes);
   const lines=$('ww-price-lines');
+
+  // Show and require the email field only when email is selected.
+  function updateContactMethod(){
+    const emailSelected=$('ww-contact-method').value==='email';
+
+    show('ww-customer-email-wrap',emailSelected);
+    $('ww-customer-email').required=emailSelected;
+
+    if(!emailSelected){
+      $('ww-customer-email').value='';
+    }
+  }
+
+  $('ww-contact-method').addEventListener('change',updateContactMethod);
+  updateContactMethod();
 
   let previousDogFrequency=$('ww-dog-frequency').value;
   let freshBeforeRecurring=false;
@@ -608,7 +845,6 @@
     let dogBilling='No dog waste service selected';
     let catBilling='No litter-box service selected';
 
-    /* Dog recurring pricing */
     if(dogFreq==='weekly'){
       dogPrice=15+3*(dogs-1);
       dogBilling='Billed weekly';
@@ -620,7 +856,6 @@
       dogBilling='Billed every other week';
     }
 
-    /* Cat litter recurring pricing */
     if(litterFreq==='weekly'){
       catPrice=15+5*(boxes-1);
       catBilling='Billed weekly';
@@ -629,7 +864,6 @@
       catBilling='Billed weekly · service twice per week';
     }
 
-    /* One-time litter box deep clean */
     if(deepClean){
       let p;
       if(deepBoxes===1){
@@ -643,7 +877,6 @@
       items.push(line('Litter-box deep clean · '+deepBoxes+' box'+(deepBoxes===1?'':'es'),money(p)));
     }
 
-    /* Initial cleanup */
     if(initial){
       if(condition==='light'){
         oneTime+=50;
@@ -663,7 +896,6 @@
       }
     }
 
-    /* Paid Yard Fresh Treatment applies without recurring dog service */
     if(fresh && !recurringDog){
       const p=15+5*(sections-1);
       oneTime+=p;
@@ -672,7 +904,6 @@
       items.push(line('Yard Fresh Treatment','FREE — included with recurring dog service'));
     }
 
-    /* Recurring cat service */
     if(litterFreq!=='none'){
       items.push(line(
         'Litter-box cleaning · '+boxes+' box'+(boxes===1?'':'es')+' · '+(litterFreq==='weekly'?'weekly':'twice weekly'),
@@ -680,7 +911,6 @@
       ));
     }
 
-    /* First-service total: one-time services plus first cat service charge */
     const firstTotal=oneTime+catPrice;
 
     $('ww-first-total').textContent=money(firstTotal);
