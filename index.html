@@ -117,7 +117,9 @@
       gap:12px;
     }
 
+    /* STEP VISIBILITY CLASSES */
     #ww-quote .ww-hidden { display:none!important; }
+    #ww-quote .ww-step-hidden { display:none; }
 
     #ww-quote .ww-tabs {
       display:grid;
@@ -163,55 +165,93 @@
       align-self:start;
     }
 
-    #ww-quote .ww-price-column .ww-total {
-      margin-top:0;
-    }
-
     #ww-quote .ww-total {
       background:var(--green);
       color:white;
       border-radius:14px;
-      padding:22px;
-      margin-top:16px;
+      padding:20px;
       min-width:0;
       max-width:100%;
     }
 
     #ww-quote .ww-total h3 {
       color:white;
-      margin-bottom:5px;
+      margin-bottom:6px;
+      font-size:22px;
     }
 
-    #ww-quote .ww-big {
-      font-size:32px;
-      font-weight:700;
-      line-height:1.2;
-      overflow-wrap:anywhere;
+    /* REDESIGNED ESTIMATE CARDS */
+    #ww-quote .ww-summary-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 14px;
     }
 
-    #ww-quote .ww-line {
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      padding:9px 0;
-      border-bottom:1px solid #ffffff35;
-      min-width:0;
-      width:100%;
+    #ww-quote .ww-summary-card h4 {
+      margin: 0 0 12px 0;
+      color: #fff;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: 8px;
     }
 
-    #ww-quote .ww-line span {
-      min-width:0;
-      overflow-wrap:anywhere;
+    #ww-quote .ww-summary-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 14px;
+      line-height: 1.3;
     }
 
-    #ww-quote .ww-line strong {
-      text-align:right;
-      flex-shrink:0;
+    #ww-quote .ww-summary-line:last-child {
+      margin-bottom: 0;
     }
 
-    #ww-quote .ww-line:last-child { border-bottom:0; }
+    #ww-quote .ww-summary-title {
+      font-weight: 600;
+      color: #fff;
+      font-size: 15px;
+    }
 
-    #ww-quote .ww-total .ww-muted { color:#e0e8df; }
+    #ww-quote .ww-summary-desc {
+      font-size: 13px;
+      color: #D5DFCE;
+      margin-top: 3px;
+    }
+
+    #ww-quote .ww-summary-price {
+      font-weight: 600;
+      text-align: right;
+      color: #fff;
+      white-space: nowrap;
+      margin-left: 12px;
+      font-size: 15px;
+    }
+
+    #ww-quote .ww-summary-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.3);
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    #ww-quote .ww-summary-foot strong {
+      font-size: 24px;
+    }
+
+    #ww-quote .ww-empty-msg {
+      font-size: 13px;
+      color: #D5DFCE;
+      font-style: italic;
+    }
 
     #ww-quote .ww-note {
       background:var(--cream);
@@ -219,24 +259,7 @@
       border-radius:8px;
       padding:12px;
       font-size:13px;
-      margin-top:12px;
-    }
-
-    #ww-quote #ww-recurring-note,
-    #ww-quote #ww-recurring-note::before,
-    #ww-quote #ww-recurring-note::after {
-      border:0 !important;
-      outline:0 !important;
-      box-shadow:none !important;
-    }
-
-    #ww-quote #ww-recurring-note {
-      background:transparent !important;
-      color:white;
-      padding:12px 0 0 !important;
-      border-radius:0 !important;
-      -webkit-appearance:none !important;
-      appearance:none !important;
+      margin-top:14px;
     }
 
     #ww-quote .ww-number {
@@ -314,31 +337,6 @@
 
     #ww-quote .ww-contact-details p { margin-bottom:7px; }
 
-    #ww-quote .ww-estimate-section {
-      margin-top:18px;
-      padding-top:15px;
-      border-top:1px solid #ffffff35;
-      min-width:0;
-    }
-
-    #ww-quote .ww-estimate-section h4 {
-      font-size:15px;
-      color:white;
-      margin:0 0 5px;
-    }
-
-    #ww-quote .ww-estimate-price {
-      font-size:25px;
-      font-weight:700;
-      line-height:1.3;
-      overflow-wrap:anywhere;
-    }
-
-    #ww-quote #ww-price-lines {
-      min-width:0;
-      max-width:100%;
-    }
-
     /* Customer contact information */
     #ww-quote .ww-contact-section {
       background:var(--cream);
@@ -393,13 +391,37 @@
       border-color:var(--green);
     }
 
-    /* Quote submission area, under the right-side estimate */
+    /* Step Progression Buttons */
+    #ww-quote .ww-continue-btn {
+      width:100%;
+      min-height:54px;
+      padding:14px 18px;
+      border:2px solid var(--green);
+      border-radius:9px;
+      background:#fff;
+      color:var(--green);
+      font:inherit;
+      font-weight:600;
+      cursor:pointer;
+      transition:all .15s ease;
+      margin-bottom:16px;
+    }
+
+    #ww-quote .ww-continue-btn:hover {
+      background:var(--cream);
+    }
+
+    /* Quote submission area */
     #ww-quote .ww-submit-panel {
-      margin-top:12px;
-      padding:18px;
+      margin-top:16px;
+      padding:20px;
       background:#fff;
       border:1px solid #dce4da;
       border-radius:14px;
+    }
+    
+    #ww-quote .ww-submit-panel h3 {
+      margin-bottom: 8px;
     }
 
     #ww-quote #ww-submit-quote {
@@ -535,45 +557,9 @@
         padding:18px;
         border-radius:12px;
       }
-
-      #ww-quote .ww-big { font-size:30px; }
-
-      #ww-quote .ww-estimate-section {
-        margin-top:15px;
-        padding-top:13px;
-      }
-
-      #ww-quote .ww-estimate-price { font-size:23px; }
-
-      #ww-quote .ww-line {
-        display:grid;
-        grid-template-columns:minmax(0,1fr) auto;
-        gap:8px;
-        align-items:start;
-        font-size:14px;
-        width:100%;
-        min-width:0;
-      }
-
-      #ww-quote .ww-line span {
-        min-width:0;
-        overflow-wrap:anywhere;
-        word-break:normal;
-      }
-
-      #ww-quote .ww-line strong {
-        min-width:0;
-        max-width:120px;
-        text-align:right;
-        white-space:normal;
-        overflow-wrap:anywhere;
-        word-break:normal;
-      }
-
-      #ww-quote .ww-total,
-      #ww-quote #ww-price-lines {
-        min-width:0;
-        max-width:100%;
+      
+      #ww-quote .ww-summary-foot strong {
+        font-size: 20px;
       }
 
       #ww-quote .ww-contact-section,
@@ -600,18 +586,8 @@
 
     @media (max-width:380px) {
       #ww-quote .ww-panel { padding:13px; }
-
       #ww-quote h2 { font-size:22px; }
-
       #ww-quote .ww-total { padding:15px; }
-
-      #ww-quote .ww-line {
-        font-size:13px;
-        gap:6px;
-        grid-template-columns:minmax(0,1fr) minmax(0,100px);
-      }
-
-      #ww-quote .ww-line strong { max-width:100px; }
     }
   </style>
 </head>
@@ -632,266 +608,309 @@
   <div id="ww-residential">
     <div class="ww-calculator-layout">
 
-      <!-- LEFT COLUMN: SERVICE OPTIONS -->
+      <!-- LEFT COLUMN: SERVICE OPTIONS (Progressive Reveal) -->
       <div class="ww-service-column">
 
-        <div class="ww-panel">
-          <h3>1. Dog Waste Removal</h3>
-          <label class="ww-label" for="ww-dog-frequency">Service frequency</label>
-          <select id="ww-dog-frequency">
-            <option value="none">No dog waste service</option>
-            <option value="weekly">Weekly</option>
-            <option value="twice">Twice weekly</option>
-            <option value="biweekly">Every other week (biweekly)</option>
-          </select>
-
-          <div id="ww-dog-count-wrap" class="ww-hidden">
-            <label class="ww-label" for="ww-dogs">Number of dogs</label>
-            <div class="ww-number">
-              <button type="button" data-step="-1" data-target="ww-dogs" aria-label="Remove a dog">−</button>
-              <input id="ww-dogs" type="number" min="1" max="20" value="1">
-              <button type="button" data-step="1" data-target="ww-dogs" aria-label="Add a dog">+</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="ww-panel">
-          <h3>2. Initial Yard Cleanup</h3>
-          <label class="ww-choice">
-            <input id="ww-initial" type="checkbox">
-            <span><strong>Initial cleanup</strong><br><span class="ww-muted">One-time service, starting at $50</span></span>
-          </label>
-
-          <div id="ww-initial-details" class="ww-hidden">
-            <label class="ww-label" for="ww-condition">Current amount of waste</label>
-            <select id="ww-condition">
-              <option value="light">Light — $50 estimate</option>
-              <option value="moderate">Moderate — $60–$75 estimate</option>
-              <option value="heavy">Heavy — $75–$125+ estimate</option>
-              <option value="very">Very heavy — custom quote</option>
-              <option value="unsure">Not sure — confirm price with me</option>
-            </select>
-            <div class="ww-note">Your final cleanup price depends on the yard's condition and the amount of waste. A free Yard Fresh Treatment is included with an initial cleanup when you sign up for recurring service.</div>
-          </div>
-        </div>
-
-        <div class="ww-panel">
-          <h3>3. Yard Fresh Treatment</h3>
-          <label class="ww-choice" id="ww-fresh-choice">
-            <input id="ww-fresh" type="checkbox">
-            <span>
-              <strong id="ww-fresh-title">Add Yard Fresh Treatment</strong><br>
-              <span class="ww-muted" id="ww-fresh-description">$15 for the first yard section, plus $5 per additional section</span>
-            </span>
-          </label>
-
-          <div id="ww-fresh-details" class="ww-hidden">
-            <label class="ww-label" for="ww-sections">Number of yard sections</label>
-            <div class="ww-number">
-              <button type="button" data-step="-1" data-target="ww-sections" aria-label="Remove a yard section">−</button>
-              <input id="ww-sections" type="number" min="1" max="20" value="1">
-              <button type="button" data-step="1" data-target="ww-sections" aria-label="Add a yard section">+</button>
-            </div>
-            <p class="ww-muted" style="margin-top:8px">Treatment is priced per visit.</p>
-          </div>
-        </div>
-
-        <div class="ww-panel">
-          <h3>4. Cat Litter Box Services</h3>
-          <label class="ww-label" for="ww-litter-frequency">Choose a litter-box service</label>
-          <select id="ww-litter-frequency">
-            <option value="none">No litter-box service</option>
-            <option value="weekly">Weekly cleaning</option>
-            <option value="twice">Twice-weekly cleaning</option>
-          </select>
-
-          <div id="ww-box-count-wrap" class="ww-hidden">
-            <label class="ww-label" for="ww-boxes">Number of litter boxes</label>
-            <div class="ww-number">
-              <button type="button" data-step="-1" data-target="ww-boxes" aria-label="Remove a litter box">−</button>
-              <input id="ww-boxes" type="number" min="1" max="20" value="1">
-              <button type="button" data-step="1" data-target="ww-boxes" aria-label="Add a litter box">+</button>
-            </div>
-          </div>
-
-          <label class="ww-choice">
-            <input id="ww-deep-clean" type="checkbox">
-            <span>
-              <strong>Add Litter Box Deep Clean</strong><br>
-              <span class="ww-muted">A more thorough reset when your litter box needs extra attention.</span>
-            </span>
-          </label>
-
-          <div id="ww-deep-clean-details" class="ww-hidden">
-            <label class="ww-label" for="ww-deep-boxes">Number of boxes needing a deep clean</label>
-            <div class="ww-number">
-              <button type="button" data-step="-1" data-target="ww-deep-boxes" aria-label="Remove a deep-clean box">−</button>
-              <input id="ww-deep-boxes" type="number" min="1" max="20" value="1">
-              <button type="button" data-step="1" data-target="ww-deep-boxes" aria-label="Add a deep-clean box">+</button>
-            </div>
-            <div class="ww-note">
-              <strong>Litter Box Deep Clean Pricing</strong><br>
-              1 box — $25<br>
-              2 boxes — $40<br>
-              Each additional box beyond 2 — $15
-            </div>
-          </div>
-
-          <p class="ww-muted" style="margin-top:10px">Customers provide litter by default. Litter supply, if needed, costs $10 per box.</p>
-        </div>
-
-        <!-- SECTION 5: CUSTOMER CONTACT INFORMATION -->
-        <div class="ww-panel" id="ww-customer-info">
-          <h3>5. Your Contact Information</h3>
-          <p class="ww-muted">Tell us how to reach you so we can follow up about your estimate and service needs.</p>
-
-          <div class="ww-contact-section">
-            <h4>Customer Details</h4>
-
-            <label class="ww-label" for="ww-customer-name">
-              Full name <span class="ww-required">*</span>
-            </label>
-            <input id="ww-customer-name" name="customer_name" type="text" autocomplete="name" placeholder="Your full name" required>
-
-            <label class="ww-label" for="ww-customer-address">
-              Service address <span class="ww-required">*</span>
-            </label>
-            <textarea id="ww-customer-address" name="service_address" autocomplete="street-address" placeholder="Street address, city, state, ZIP code" required></textarea>
-
-            <label class="ww-label" for="ww-customer-phone">
-              Phone number <span class="ww-required">*</span>
-            </label>
-            <input id="ww-customer-phone" name="customer_phone" type="tel" autocomplete="tel" placeholder="(940) 555-0123" required>
-
-            <label class="ww-label" for="ww-contact-method">
-              Preferred contact method <span class="ww-required">*</span>
-            </label>
-            <select id="ww-contact-method" name="preferred_contact" required>
-              <option value="text">Text message</option>
-              <option value="call">Phone call</option>
-              <option value="email">Email</option>
+        <!-- STEP 1: Always visible initially -->
+        <div id="step-1-dog">
+          <div class="ww-panel">
+            <h3>1. Dog Waste Removal</h3>
+            <label class="ww-label" for="ww-dog-frequency">Service frequency</label>
+            <select id="ww-dog-frequency">
+              <option value="" disabled selected>Select an option...</option>
+              <option value="none">No dog waste service</option>
+              <option value="weekly">Weekly</option>
+              <option value="twice">Twice weekly</option>
+              <option value="biweekly">Every other week (biweekly)</option>
             </select>
 
-            <div id="ww-customer-email-wrap" class="ww-hidden">
-              <label class="ww-label" for="ww-customer-email">
-                Email address <span class="ww-required">*</span>
+            <div id="ww-dog-count-wrap" class="ww-hidden">
+              <label class="ww-label" for="ww-dogs">Number of dogs</label>
+              <div class="ww-number">
+                <button type="button" data-step="-1" data-target="ww-dogs" aria-label="Remove a dog">−</button>
+                <input id="ww-dogs" type="number" min="1" max="20" value="1">
+                <button type="button" data-step="1" data-target="ww-dogs" aria-label="Add a dog">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: Reveals when dog frequency is chosen -->
+        <div id="step-2-yard" class="ww-step-hidden">
+          <div class="ww-panel">
+            <h3>2. Initial Yard Cleanup</h3>
+            <label class="ww-choice">
+              <input id="ww-initial" type="checkbox">
+              <span><strong>Initial cleanup</strong><br><span class="ww-muted">One-time service, starting at $50</span></span>
+            </label>
+
+            <div id="ww-initial-details" class="ww-hidden">
+              <label class="ww-label" for="ww-condition">Current amount of waste</label>
+              <select id="ww-condition">
+                <option value="light">Light — $50 estimate</option>
+                <option value="moderate">Moderate — $60–$75 estimate</option>
+                <option value="heavy">Heavy — $75–$125+ estimate</option>
+                <option value="very">Very heavy — custom quote</option>
+                <option value="unsure">Not sure — confirm price with me</option>
+              </select>
+              <div class="ww-note">Your final cleanup price depends on the yard's condition and the amount of waste. A free Yard Fresh Treatment is included with an initial cleanup when you sign up for recurring service.</div>
+            </div>
+          </div>
+
+          <div class="ww-panel">
+            <h3>3. Yard Fresh Treatment</h3>
+            <label class="ww-choice" id="ww-fresh-choice">
+              <input id="ww-fresh" type="checkbox">
+              <span>
+                <strong id="ww-fresh-title">Add Yard Fresh Treatment</strong><br>
+                <span class="ww-muted" id="ww-fresh-description">$15 for the first yard section, plus $5 per additional section</span>
+              </span>
+            </label>
+
+            <div id="ww-fresh-details" class="ww-hidden">
+              <label class="ww-label" for="ww-sections">Number of yard sections</label>
+              <div class="ww-number">
+                <button type="button" data-step="-1" data-target="ww-sections" aria-label="Remove a yard section">−</button>
+                <input id="ww-sections" type="number" min="1" max="20" value="1">
+                <button type="button" data-step="1" data-target="ww-sections" aria-label="Add a yard section">+</button>
+              </div>
+              <p class="ww-muted" style="margin-top:8px">Treatment is priced per visit.</p>
+            </div>
+          </div>
+          
+          <button type="button" class="ww-continue-btn" id="btn-to-cats">Continue to Cat Services</button>
+        </div>
+
+        <!-- STEP 3: Reveals after clicking Continue to Cat Services -->
+        <div id="step-3-cats" class="ww-step-hidden">
+          <div class="ww-panel">
+            <h3>4. Cat Litter Box Services</h3>
+            <label class="ww-label" for="ww-litter-frequency">Choose a litter-box service</label>
+            <select id="ww-litter-frequency">
+              <option value="none">No litter-box service</option>
+              <option value="weekly">Weekly cleaning</option>
+              <option value="twice">Twice-weekly cleaning</option>
+            </select>
+
+            <div id="ww-box-count-wrap" class="ww-hidden">
+              <label class="ww-label" for="ww-boxes">Number of litter boxes</label>
+              <div class="ww-number">
+                <button type="button" data-step="-1" data-target="ww-boxes" aria-label="Remove a litter box">−</button>
+                <input id="ww-boxes" type="number" min="1" max="20" value="1">
+                <button type="button" data-step="1" data-target="ww-boxes" aria-label="Add a litter box">+</button>
+              </div>
+            </div>
+
+            <label class="ww-choice">
+              <input id="ww-deep-clean" type="checkbox">
+              <span>
+                <strong>Add Litter Box Deep Clean</strong><br>
+                <span class="ww-muted">A more thorough reset when your litter box needs extra attention.</span>
+              </span>
+            </label>
+
+            <div id="ww-deep-clean-details" class="ww-hidden">
+              <label class="ww-label" for="ww-deep-boxes">Number of boxes needing a deep clean</label>
+              <div class="ww-number">
+                <button type="button" data-step="-1" data-target="ww-deep-boxes" aria-label="Remove a deep-clean box">−</button>
+                <input id="ww-deep-boxes" type="number" min="1" max="20" value="1">
+                <button type="button" data-step="1" data-target="ww-deep-boxes" aria-label="Add a deep-clean box">+</button>
+              </div>
+              <div class="ww-note">
+                <strong>Litter Box Deep Clean Pricing</strong><br>
+                1 box — $25<br>
+                2 boxes — $40<br>
+                Each additional box beyond 2 — $15
+              </div>
+            </div>
+
+            <p class="ww-muted" style="margin-top:10px">Customers provide litter by default. Litter supply, if needed, costs $10 per box.</p>
+          </div>
+
+          <button type="button" class="ww-continue-btn" id="btn-to-details">Continue to Contact Details</button>
+        </div>
+
+        <!-- STEP 4: Reveals after clicking Continue to Contact Details -->
+        <div id="step-4-contact" class="ww-step-hidden">
+          <!-- SECTION 5: CUSTOMER CONTACT INFORMATION -->
+          <div class="ww-panel" id="ww-customer-info">
+            <h3>5. Your Contact Information</h3>
+            <p class="ww-muted">Tell us how to reach you so we can follow up about your estimate and service needs.</p>
+
+            <div class="ww-contact-section">
+              <h4>Customer Details</h4>
+
+              <label class="ww-label" for="ww-customer-name">
+                Full name <span class="ww-required">*</span>
               </label>
-              <input id="ww-customer-email" name="customer_email" type="email" autocomplete="email" placeholder="you@example.com">
+              <input id="ww-customer-name" name="customer_name" type="text" autocomplete="name" placeholder="Your full name" required>
+
+              <!-- Address Block separated into specific fields -->
+              <label class="ww-label" for="ww-customer-street">
+                Street address <span class="ww-required">*</span>
+              </label>
+              <input id="ww-customer-street" name="customer_street" type="text" autocomplete="address-line1" placeholder="123 Main St" required>
+
+              <label class="ww-label" for="ww-customer-unit">
+                Address line 2 <span class="ww-muted">(optional)</span>
+              </label>
+              <input id="ww-customer-unit" name="customer_unit" type="text" autocomplete="address-line2" placeholder="Apt, Suite, Gate Code, etc.">
+
+              <div class="ww-grid">
+                <div>
+                  <label class="ww-label" for="ww-customer-city">
+                    City <span class="ww-required">*</span>
+                  </label>
+                  <input id="ww-customer-city" name="customer_city" type="text" autocomplete="address-level2" placeholder="Decatur" required>
+                </div>
+                <div>
+                  <label class="ww-label" for="ww-customer-zip">
+                    ZIP code <span class="ww-required">*</span>
+                  </label>
+                  <input id="ww-customer-zip" name="customer_zip" type="text" autocomplete="postal-code" placeholder="76234" required>
+                </div>
+              </div>
+
+              <label class="ww-label" for="ww-customer-phone">
+                Phone number <span class="ww-required">*</span>
+              </label>
+              <input id="ww-customer-phone" name="customer_phone" type="tel" autocomplete="tel" placeholder="(940) 555-0123" required>
+
+              <label class="ww-label" for="ww-contact-method">
+                Preferred contact method <span class="ww-required">*</span>
+              </label>
+              <select id="ww-contact-method" name="preferred_contact" required>
+                <option value="text">Text message</option>
+                <option value="call">Phone call</option>
+                <option value="email">Email</option>
+              </select>
+
+              <div id="ww-customer-email-wrap" class="ww-hidden">
+                <label class="ww-label" for="ww-customer-email">
+                  Email address <span class="ww-required">*</span>
+                </label>
+                <input id="ww-customer-email" name="customer_email" type="email" autocomplete="email" placeholder="you@example.com">
+              </div>
+
+              <label class="ww-label" for="ww-contact-time">
+                Best time to contact you <span class="ww-required">*</span>
+              </label>
+              <select id="ww-contact-time" name="preferred_contact_time" required>
+                <option value="anytime">Anytime</option>
+                <option value="morning">Morning (8 AM–12 PM)</option>
+                <option value="afternoon">Afternoon (12 PM–4 PM)</option>
+                <option value="evening">Evening (4 PM–6 PM)</option>
+              </select>
+
+              <p class="ww-muted" style="margin:12px 0 0">
+                Your information will be used to follow up about your quote and requested services.
+              </p>
             </div>
+          </div>
 
-            <label class="ww-label" for="ww-contact-time">
-              Best time to contact you <span class="ww-required">*</span>
-            </label>
-            <select id="ww-contact-time" name="preferred_contact_time" required>
-              <option value="anytime">Anytime</option>
-              <option value="morning">Morning (8 AM–12 PM)</option>
-              <option value="afternoon">Afternoon (12 PM–4 PM)</option>
-              <option value="evening">Evening (4 PM–6 PM)</option>
-            </select>
+          <!-- SECTION 6: YARD SIGN PERMISSION -->
+          <div class="ww-panel" id="ww-yard-sign">
+            <h3>6. Yard Sign Permission</h3>
 
-            <p class="ww-muted" style="margin:12px 0 0">
-              Your information will be used to follow up about your quote and requested services.
+            <p>
+              Help spread the word about Wise Waste Services! Would you be comfortable
+              allowing us to place a small Wise Waste Services promotional yard sign
+              near the front of your lawn?
             </p>
-          </div>
-        </div>
 
-        <!-- SECTION 6: YARD SIGN PERMISSION -->
-        <div class="ww-panel" id="ww-yard-sign">
-          <h3>6. Yard Sign Permission</h3>
-
-          <p>
-            Help spread the word about Wise Waste Services! Would you be comfortable
-            allowing us to place a small Wise Waste Services promotional yard sign
-            near the front of your lawn?
-          </p>
-
-          <p class="ww-muted">
-            This is completely optional and will not affect your pricing or service.
-            We will only place a sign with your permission, and you can ask us to
-            remove it at any time.
-          </p>
-
-          <div class="ww-yard-sign-section">
-            <label class="ww-choice">
-              <input type="radio" name="yard_sign_permission" id="ww-yard-sign-yes" value="yes">
-              <span>
-                <strong>Yes, that's fine!</strong><br>
-                <span class="ww-muted">You may place a promotional yard sign on my property.</span>
-              </span>
-            </label>
-
-            <label class="ww-choice">
-              <input type="radio" name="yard_sign_permission" id="ww-yard-sign-no" value="no" checked>
-              <span>
-                <strong>No, thank you</strong><br>
-                <span class="ww-muted">I'd prefer not to have a yard sign.</span>
-              </span>
-            </label>
-          </div>
-        </div>
-
-        <!-- SECTION 7: ANYTHING ELSE -->
-        <div class="ww-panel" id="ww-additional-notes">
-          <h3>7. Anything Else We Should Know?</h3>
-          <p class="ww-muted">
-            Have special instructions, access details, pets we should be aware of,
-            or anything else you'd like to tell us? Leave a note below.
-          </p>
-
-          <div class="ww-additional-notes-section">
-            <label class="ww-label" for="ww-customer-notes">
-              Additional notes <span class="ww-muted">(optional)</span>
-            </label>
-            <textarea id="ww-customer-notes" name="additional_notes" rows="5" maxlength="2000" placeholder="Example: The gate code is..., please watch for our friendly dog, or the backyard has a few areas that need extra attention..." aria-describedby="ww-notes-help"></textarea>
-            <p class="ww-muted" id="ww-notes-help" style="margin:8px 0 0">
-              Please include any details that may help us prepare for your service.
+            <p class="ww-muted">
+              This is completely optional and will not affect your pricing or service.
+              We will only place a sign with your permission, and you can ask us to
+              remove it at any time.
             </p>
+
+            <div class="ww-yard-sign-section">
+              <label class="ww-choice">
+                <input type="radio" name="yard_sign_permission" id="ww-yard-sign-yes" value="yes">
+                <span>
+                  <strong>Yes, that's fine!</strong><br>
+                  <span class="ww-muted">You may place a promotional yard sign on my property.</span>
+                </span>
+              </label>
+
+              <label class="ww-choice">
+                <input type="radio" name="yard_sign_permission" id="ww-yard-sign-no" value="no" checked>
+                <span>
+                  <strong>No, thank you</strong><br>
+                  <span class="ww-muted">I'd prefer not to have a yard sign.</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- SECTION 7: ANYTHING ELSE -->
+          <div class="ww-panel" id="ww-additional-notes">
+            <h3>7. Anything Else We Should Know?</h3>
+            <p class="ww-muted">
+              Have special instructions, access details, pets we should be aware of,
+              or anything else you'd like to tell us? Leave a note below.
+            </p>
+
+            <div class="ww-additional-notes-section">
+              <label class="ww-label" for="ww-customer-notes">
+                Additional notes <span class="ww-muted">(optional)</span>
+              </label>
+              <textarea id="ww-customer-notes" name="additional_notes" rows="5" maxlength="2000" placeholder="Example: The gate code is..., please watch for our friendly dog, or the backyard has a few areas that need extra attention..." aria-describedby="ww-notes-help"></textarea>
+              <p class="ww-muted" id="ww-notes-help" style="margin:8px 0 0">
+                Please include any details that may help us prepare for your service.
+              </p>
+            </div>
           </div>
         </div>
-
       </div>
       <!-- END LEFT COLUMN -->
 
-      <!-- RIGHT COLUMN: PRICE BREAKDOWN AND SUBMIT BUTTON -->
+      <!-- RIGHT COLUMN: REDESIGNED PRICE SUMMARY -->
       <div class="ww-price-column">
         <div class="ww-total" aria-live="polite" aria-atomic="true">
-          <h3>Estimated First-Service Total</h3>
-          <div class="ww-muted">Your estimated cost for one-time services and your first litter-box cleaning. Dog waste recurring service is shown separately.</div>
+          <h3>Estimate Summary</h3>
+          <p style="color:#D5DFCE; font-size:14px; margin:0 0 16px 0; line-height:1.4;">
+            Review your customized service plan below. Charges are divided into your first visit and your ongoing schedule.
+          </p>
 
-          <div class="ww-estimate-section">
-            <h4>Estimated Total for Your First Service</h4>
-            <div class="ww-big" id="ww-first-total">$0.00</div>
-            <div class="ww-muted" id="ww-first-total-note">Choose your services above to calculate your estimate.</div>
-            <div id="ww-price-lines" style="margin-top:10px"></div>
+          <!-- First Visit Block -->
+          <div class="ww-summary-card">
+            <h4>First Visit & One-Time</h4>
+            <div id="ww-onetime-lines">
+              <div class="ww-empty-msg">Select a service to calculate costs.</div>
+            </div>
+            
+            <div class="ww-summary-foot">
+              <span>First Visit Total</span>
+              <strong id="ww-first-total">$0.00</strong>
+            </div>
           </div>
 
-          <div class="ww-estimate-section">
-            <h4>Ongoing Recurring Services</h4>
-            <div class="ww-muted">Recurring dog waste and cat litter-box service prices are shown here separately from one-time services.</div>
-
-            <div style="margin-top:14px">
-              <h4>Dog Waste Removal</h4>
-              <div class="ww-estimate-price" id="ww-dog-total">$0.00</div>
-              <div class="ww-muted" id="ww-dog-billing">No dog waste service selected</div>
-            </div>
-
-            <div style="margin-top:18px">
-              <h4>Cat Litter Box Services</h4>
-              <div class="ww-estimate-price" id="ww-cat-total">$0.00</div>
-              <div class="ww-muted" id="ww-cat-billing">No litter-box service selected</div>
-            </div>
-
-            <div class="ww-note" id="ww-recurring-note">
-              Recurring services are billed according to their selected schedules. Dog and cat services may have different billing frequencies.
+          <!-- Recurring Services Block -->
+          <div class="ww-summary-card">
+            <h4>Ongoing Services</h4>
+            <div id="ww-recurring-lines">
+              <div class="ww-empty-msg">No ongoing services selected.</div>
             </div>
           </div>
 
           <div id="ww-estimate-note" class="ww-note ww-hidden"></div>
-          <p class="ww-muted" style="margin-top:14px">This is an estimate, not a final invoice. Initial cleanup pricing may vary based on the amount of waste and the condition of your yard. Custom-quote services are not included in the displayed dollar total.</p>
+          
+          <p style="color:#D5DFCE; font-size:12px; margin-top:16px; line-height:1.4;">
+            *This is an estimate, not a final invoice. Initial cleanup pricing may vary based on yard condition. Custom-quoted services are not included in the displayed total.
+          </p>
+
+          <!-- Hidden fields preserve Google Apps Script compatibility -->
+          <div class="ww-hidden">
+            <span id="ww-dog-total"></span>
+            <span id="ww-dog-billing"></span>
+            <span id="ww-cat-total"></span>
+            <span id="ww-cat-billing"></span>
+          </div>
         </div>
 
-        <!-- SUBMIT BUTTON IS DIRECTLY UNDER THE PRICE SUMMARY -->
-        <div class="ww-submit-panel" id="ww-submit-section">
+        <!-- SUBMIT BUTTON -->
+        <div class="ww-submit-panel ww-step-hidden" id="ww-submit-section">
           <h3>Ready to Request Your Quote?</h3>
           <p class="ww-muted">Submit your selections and contact information. We'll follow up using your preferred contact method.</p>
           <button type="button" id="ww-submit-quote">Submit Quote Request</button>
@@ -949,20 +968,17 @@
 
   /*
    * GOOGLE APPS SCRIPT WEB APP ENDPOINT
-   * This sends website quote requests to the Apps Script endpoint.
    */
   const QUOTE_ENDPOINT =
     'https://script.google.com/macros/s/AKfycbyCDemM3MYGckMTXnyBD02ssiY8KYMmqSIFAY5j0-w8iJcuT-gmUWsr8V1mjMGOtp2rDw/exec';
 
   /*
    * IFRAME HEIGHT FIX
-   * Sends the calculator's full height to Carrd so the iframe can grow.
    */
   let heightReportPending = false;
 
   function reportCalculatorHeight() {
     heightReportPending = false;
-
     if (window.parent === window) return;
 
     const height = Math.ceil(Math.max(
@@ -1013,10 +1029,34 @@
     Math.min(20, parseInt($(id).value, 10) || 1)
   );
 
-  const show = (id, yes) => $(id).classList.toggle('ww-hidden', !yes);
-  const lines = $('ww-price-lines');
+  const show = (id, yes) => {
+    const el = $(id);
+    if (!el) return;
+    // Handle both visibility classes
+    if (el.classList.contains('ww-step-hidden')) {
+      if (yes) el.classList.remove('ww-step-hidden');
+    } else {
+      el.classList.toggle('ww-hidden', !yes);
+    }
+  };
+  
+  // STEP PROGRESSION LOGIC
+  $('ww-dog-frequency').addEventListener('change', () => {
+    show('step-2-yard', true);
+    scheduleHeightReport();
+  });
 
-  // Show and require the email field only when email is selected.
+  $('btn-to-cats').addEventListener('click', () => {$('btn-to-cats').style.display = 'none';
+    show('step-3-cats', true);
+    scheduleHeightReport();
+  });
+
+  $('btn-to-details').addEventListener('click', () => {$('btn-to-details').style.display = 'none';
+    show('step-4-contact', true);
+    show('ww-submit-section', true);
+    scheduleHeightReport();
+  });
+
   function updateContactMethod() {
     const emailSelected = $('ww-contact-method').value === 'email';
 
@@ -1037,22 +1077,30 @@
   let freshBeforeRecurring = false;
   let initialAddedByDogFrequency = false;
 
-  function line(label, price) {
-    return '<div class="ww-line"><span>' + label +
-      '</span><strong>' + price + '</strong></div>';
+  // New helper to render receipt line items
+  function renderItem(title, desc, price) {
+    return `
+      <div class="ww-summary-line">
+        <div>
+          <div class="ww-summary-title">${title}</div>
+          ${desc ? `<div class="ww-summary-desc">${desc}</div>` : ''}
+        </div>
+        <div class="ww-summary-price">${price}</div>
+      </div>
+    `;
   }
 
   function calculate() {
     const dogFreq = $('ww-dog-frequency').value;
-    const recurringDog = dogFreq !== 'none';
+    const recurringDog = dogFreq && dogFreq !== 'none';
 
-    if (recurringDog && previousDogFrequency === 'none') {
+    if (recurringDog && (!previousDogFrequency || previousDogFrequency === 'none')) {
       freshBeforeRecurring = $('ww-fresh').checked;
       initialAddedByDogFrequency = !$('ww-initial').checked;
       $('ww-initial').checked = true;
     }
 
-    if (!recurringDog && previousDogFrequency !== 'none') {
+    if (!recurringDog && previousDogFrequency && previousDogFrequency !== 'none') {
       if (initialAddedByDogFrequency) {
         $('ww-initial').checked = false;
       }
@@ -1067,12 +1115,10 @@
 
     if (recurringDog) {
       $('ww-fresh').checked = true;
-      $('ww-fresh-title').textContent = 'Yard Fresh Treatment — FREE';
-      $('ww-fresh-description').textContent =
+      $('ww-fresh-title').textContent = 'Yard Fresh Treatment — FREE';$('ww-fresh-description').textContent =
         'Included free with your recurring dog waste service. No additional charge.';
     } else {
-      $('ww-fresh-title').textContent = 'Add Yard Fresh Treatment';
-      $('ww-fresh-description').textContent =
+      $('ww-fresh-title').textContent = 'Add Yard Fresh Treatment';$('ww-fresh-description').textContent =
         '$15 for the first yard section, plus $5 per additional section';
     }
 
@@ -1096,130 +1142,112 @@
     let catPrice = 0;
     let oneTime = 0;
 
-    let items = [];
+    let otItems = [];
+    let recItems = [];
     let notes = [];
-    let hasCustomOneTime = false;
+
+    // --- RECURRING MATH & ITEMS ---
 
     let dogBilling = 'No dog waste service selected';
-    let catBilling = 'No litter-box service selected';
-
     if (dogFreq === 'weekly') {
       dogPrice = 15 + 3 * (dogs - 1);
       dogBilling = 'Billed weekly';
+      recItems.push(renderItem('Dog Waste Removal', `${dogs} dog${dogs>1?'s':''} • ${dogBilling}`, money(dogPrice)+'/wk'));
     } else if (dogFreq === 'twice') {
       dogPrice = 25 + 5 * (dogs - 1);
       dogBilling = 'Billed weekly · service twice per week';
+      recItems.push(renderItem('Dog Waste Removal', `${dogs} dog${dogs>1?'s':''} • ${dogBilling}`, money(dogPrice)+'/wk'));
     } else if (dogFreq === 'biweekly') {
       dogPrice = 25 + 5 * (dogs - 1);
       dogBilling = 'Billed every other week';
+      recItems.push(renderItem('Dog Waste Removal', `${dogs} dog${dogs>1?'s':''} • ${dogBilling}`, money(dogPrice)+'/visit'));
     }
 
+    let catBilling = 'No litter-box service selected';
     if (litterFreq === 'weekly') {
       catPrice = 15 + 5 * (boxes - 1);
       catBilling = 'Billed weekly';
+      recItems.push(renderItem('Cat Litter Box Cleaning', `${boxes} box${boxes>1?'es':''} • ${catBilling}`, money(catPrice)+'/wk'));
     } else if (litterFreq === 'twice') {
       catPrice = 25 + 10 * (boxes - 1);
       catBilling = 'Billed weekly · service twice per week';
+      recItems.push(renderItem('Cat Litter Box Cleaning', `${boxes} box${boxes>1?'es':''} • ${catBilling}`, money(catPrice)+'/wk'));
     }
 
+    // --- ONE TIME MATH & ITEMS ---
+
     if (deepClean) {
-      let p;
-
-      if (deepBoxes === 1) {
-        p = 25;
-      } else if (deepBoxes === 2) {
-        p = 40;
-      } else {
-        p = 40 + 15 * (deepBoxes - 2);
-      }
-
+      let p = deepBoxes === 1 ? 25 : (deepBoxes === 2 ? 40 : 40 + 15*(deepBoxes-2));
       oneTime += p;
-      items.push(line(
-        'Litter-box deep clean · ' + deepBoxes +
-        ' box' + (deepBoxes === 1 ? '' : 'es'),
-        money(p)
-      ));
+      otItems.push(renderItem('Litter Box Deep Clean', `${deepBoxes} box${deepBoxes>1?'es':''} (One-time reset)`, money(p)));
     }
 
     if (initial) {
+      let desc = 'Required for new service';
+      let price = '';
       if (condition === 'light') {
         oneTime += 50;
-        items.push(line('Initial cleanup · light', money(50)));
+        price = money(50);
       } else if (condition === 'moderate') {
         oneTime += 60;
-        items.push(line('Initial cleanup · moderate estimate', '$60–$75'));
-        notes.push(
-          'Moderate cleanup is estimated at $60–$75. ' +
-          'The first-service total uses the $60 starting estimate.'
-        );
+        price = '$60–$75';
+        desc += ' (Moderate estimate)';
+        notes.push('Moderate cleanup is estimated at $60–$75. The first-service total uses the $60 starting estimate.');
       } else if (condition === 'heavy') {
         oneTime += 75;
-        items.push(line('Initial cleanup · heavy estimate', '$75–$125+'));
-        notes.push(
-          'Heavy cleanup is estimated at $75–$125+. ' +
-          'The first-service total uses the $75 starting estimate.'
-        );
+        price = '$75–$125+';
+        desc += ' (Heavy estimate)';
+        notes.push('Heavy cleanup is estimated at $75–$125+. The first-service total uses the $75 starting estimate.');
       } else {
-        hasCustomOneTime = true;
-        items.push(line('Initial cleanup', 'Custom quote'));
-        notes.push(
-          'Your first-service total does not include a dollar amount ' +
-          'for the initial cleanup. Please confirm the price based on your yard condition.'
-        );
+        price = 'Custom Quote';
+        desc += ' (Pending yard review)';
+        notes.push('Your first-service total does not include a dollar amount for the initial cleanup. Please confirm the price based on your yard condition.');
       }
+      otItems.push(renderItem('Initial Yard Cleanup', desc, price));
     }
 
     if (fresh && !recurringDog) {
       const p = 15 + 5 * (sections - 1);
       oneTime += p;
-
-      items.push(line(
-        'Yard Fresh Treatment · ' + sections +
-        ' section' + (sections === 1 ? '' : 's'),
-        money(p)
-      ));
+      otItems.push(renderItem('Yard Fresh Treatment', `${sections} yard section${sections>1?'s':''}`, money(p)));
     } else if (recurringDog) {
-      items.push(line(
-        'Yard Fresh Treatment',
-        'FREE — included with recurring dog service'
-      ));
+      // Show as free under recurring
+      recItems.push(renderItem('Yard Fresh Treatment', 'Included with recurring dog service', 'FREE'));
     }
 
+    let firstVisitCatCharge = 0;
     if (litterFreq !== 'none') {
-      items.push(line(
-        'Litter-box cleaning · ' + boxes +
-        ' box' + (boxes === 1 ? '' : 'es') + ' · ' +
-        (litterFreq === 'weekly' ? 'weekly' : 'twice weekly'),
-        money(catPrice) + '/week'
-      ));
+      if (deepClean) {
+        // Waive the standard first visit cleaning fee because they are getting a deep clean
+        otItems.push(renderItem('First Litter Box Service', 'Standard fee waived with Deep Clean', 'FREE'));
+        firstVisitCatCharge = 0;
+      } else {
+        otItems.push(renderItem('First Litter Box Service', 'Included in first service total', money(catPrice)));
+        firstVisitCatCharge = catPrice;
+      }
     }
 
-    const firstTotal = oneTime + catPrice;
 
-    $('ww-first-total').textContent = money(firstTotal);
+    // --- RENDERING DOM UPDATES ---
 
-    $('ww-first-total-note').textContent = hasCustomOneTime
-      ? 'Plus any custom-quoted services not yet priced.'
-      : 'Includes one-time services and the first cat litter-box service charge. Dog waste recurring charges are shown separately.';
-
-    $('ww-dog-total').textContent = recurringDog
-      ? money(dogPrice) + (dogFreq === 'biweekly' ? '/visit' : '/week')
-      : '$0.00';
-
-    $('ww-dog-billing').textContent = dogBilling;
-
-    $('ww-cat-total').textContent = litterFreq === 'none'
-      ? '$0.00'
-      : money(catPrice) + '/week';
-
-    $('ww-cat-billing').textContent = catBilling;
-
-    lines.innerHTML = items.length
-      ? items.join('')
-      : '<p class="ww-muted" style="margin-top:12px">Select a service above to see your estimated price.</p>';
+    // Total math
+    const firstTotal = oneTime + firstVisitCatCharge;
+    $('ww-first-total').textContent = money(firstTotal);$('ww-onetime-lines').innerHTML = otItems.length 
+      ? otItems.join('') 
+      : '<div class="ww-empty-msg">No one-time services selected.</div>';
+      
+    $('ww-recurring-lines').innerHTML = recItems.length 
+      ? recItems.join('') 
+      : '<div class="ww-empty-msg">No recurring services selected.</div>';
 
     show('ww-estimate-note', notes.length > 0);
     $('ww-estimate-note').textContent = notes.join(' ');
+    
+    // Update Hidden Fields for Payload mapping
+    $('ww-dog-total').textContent = recurringDog ? money(dogPrice) + (dogFreq === 'biweekly' ? '/visit' : '/week') : '$0.00';$('ww-dog-billing').textContent = dogBilling;
+    $('ww-cat-total').textContent = litterFreq === 'none' ? '$0.00' : money(catPrice) + '/week';$('ww-cat-billing').textContent = catBilling;
+    
+    previousDogFrequency = dogFreq;
 
     scheduleHeightReport();
   }
@@ -1235,6 +1263,7 @@
   function setSubmitStatus(message, isError) {
     submitStatus.style.color = isError ? '#9b3028' : 'var(--green)';
     submitStatus.textContent = message;
+    submitStatus.style.display = 'block';
     scheduleHeightReport();
   }
 
@@ -1242,15 +1271,22 @@
     if (submitButton.disabled) return;
 
     const name = getFieldValue('ww-customer-name');
-    const address = getFieldValue('ww-customer-address');
+    
+    // Address Fields
+    const street = getFieldValue('ww-customer-street');
+    const unit = getFieldValue('ww-customer-unit');
+    const city = getFieldValue('ww-customer-city');
+    const zip = getFieldValue('ww-customer-zip');
+    
     const phone = getFieldValue('ww-customer-phone');
     const contactMethod = getFieldValue('ww-contact-method');
     const email = getFieldValue('ww-customer-email');
     const contactTime = getFieldValue('ww-contact-time');
 
-    if (!name || !address || !phone || !contactTime) {
+    // Validation ensures street, city, and zip are provided instead of one block
+    if (!name || !street || !city || !zip || !phone || !contactTime) {
       setSubmitStatus(
-        'Please complete your name, service address, phone number, and preferred contact time.',
+        'Please complete your full name, service address (Street, City, and ZIP), phone number, and preferred contact time.',
         true
       );
 
@@ -1258,7 +1294,6 @@
         behavior:'smooth',
         block:'start'
       });
-
       return;
     }
 
@@ -1272,9 +1307,12 @@
       }
     }
 
+    // Combine address for payload so backend doesn't break
+    const formattedAddress = street + (unit ? ' ' + unit : '') + ', ' + city + ', TX ' + zip;
+
     const dogFrequency = getFieldValue('ww-dog-frequency');
     const litterFrequency = getFieldValue('ww-litter-frequency');
-    const recurringDog = dogFrequency !== 'none';
+    const recurringDog = dogFrequency && dogFrequency !== 'none';
     const deepClean = $('ww-deep-clean').checked;
     const initial = $('ww-initial').checked;
     const fresh = $('ww-fresh').checked;
@@ -1302,7 +1340,7 @@
 
     const payload = {
       name:name,
-      address:address,
+      address:formattedAddress,
       phone:phone,
       contactMethod:contactMethod,
       email:contactMethod === 'email' ? email : '',
@@ -1368,16 +1406,14 @@
   $('ww-res-tab').addEventListener('click', () => {
     show('ww-residential', true);
     show('ww-commercial', false);
-    $('ww-res-tab').setAttribute('aria-pressed', 'true');
-    $('ww-com-tab').setAttribute('aria-pressed', 'false');
+    $('ww-res-tab').setAttribute('aria-pressed', 'true');$('ww-com-tab').setAttribute('aria-pressed', 'false');
     scheduleHeightReport();
   });
 
   $('ww-com-tab').addEventListener('click', () => {
     show('ww-residential', false);
     show('ww-commercial', true);
-    $('ww-res-tab').setAttribute('aria-pressed', 'false');
-    $('ww-com-tab').setAttribute('aria-pressed', 'true');
+    $('ww-res-tab').setAttribute('aria-pressed', 'false');$('ww-com-tab').setAttribute('aria-pressed', 'true');
     scheduleHeightReport();
   });
 
