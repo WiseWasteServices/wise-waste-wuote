@@ -83,3 +83,27 @@ transition:opacity .15s ease;
 #ww-quote .ww-big{font-size:29px}
 #ww-quote .ww-contact-actions{grid-template-columns:1fr}
 }
+
+/* Force updated quote results to align left */
+#ww-quote .ww-total,
+#ww-quote .ww-total * ,
+#ww-quote #ww-price-lines,
+#ww-quote #ww-price-lines *,
+#ww-quote #ww-estimate-note,
+#ww-quote #ww-estimate-note *,
+#ww-quote .ww-estimate-section,
+#ww-quote .ww-estimate-section *,
+#ww-quote .ww-estimate-price {
+  text-align: left !important;
+}
+
+/* Keep the price amounts on the right side of each breakdown row */
+#ww-quote .ww-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#ww-quote .ww-line strong {
+  text-align: right !important;
+}
