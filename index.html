@@ -650,17 +650,17 @@
           <div class="ww-panel">
             <h3>2. Yard Cleanup Services</h3>
             
-            <label class="ww-choice" id="choice-initial">
+            <label class="ww-choice ww-hidden" id="choice-initial">
               <input type="radio" name="cleanup_type" value="initial" id="ww-cleanup-initial">
               <span><strong>Initial Cleanup</strong><br><span class="ww-muted">Required with new recurring service, starting at $50</span></span>
             </label>
 
-            <label class="ww-choice" id="choice-onetime">
+            <label class="ww-choice ww-hidden" id="choice-onetime">
               <input type="radio" name="cleanup_type" value="onetime" id="ww-cleanup-onetime">
               <span><strong>One-Time Cleanup</strong><br><span class="ww-muted">Standalone cleanup (No recurring service)</span></span>
             </label>
 
-            <label class="ww-choice" id="choice-none">
+            <label class="ww-choice ww-hidden" id="choice-none">
               <input type="radio" name="cleanup_type" value="none" id="ww-cleanup-none" checked>
               <span><strong>No Cleanup Needed</strong><br><span class="ww-muted">Skip this step</span></span>
             </label>
@@ -696,11 +696,22 @@
 
           <div class="ww-panel">
             <h3>3. Yard Fresh Treatment</h3>
+            
+            <!-- Base Treatment Option -->
             <label class="ww-choice" id="ww-fresh-choice">
               <input id="ww-fresh" type="checkbox">
               <span>
                 <strong id="ww-fresh-title">Add Yard Fresh Treatment</strong><br>
                 <span class="ww-muted" id="ww-fresh-description">$15 for the first yard section, plus $5 per additional section</span>
+              </span>
+            </label>
+
+            <!-- Recurring Upgrade Option (Hidden by default unless they selected recurring service) -->
+            <label class="ww-choice ww-hidden" id="ww-fresh-recurring-choice">
+              <input id="ww-fresh-recurring" type="checkbox">
+              <span>
+                <strong>Add Ongoing Yard Fresh Treatment</strong><br>
+                <span class="ww-muted">Apply this deodorizing treatment to every scheduled visit.</span>
               </span>
             </label>
 
@@ -711,7 +722,7 @@
                 <input id="ww-sections" type="number" min="1" max="20" value="1">
                 <button type="button" data-step="1" data-target="ww-sections" aria-label="Add a yard section">+</button>
               </div>
-              <p class="ww-muted" style="margin-top:8px">Treatment is priced per visit.</p>
+              <p class="ww-muted" style="margin-top:8px" id="ww-sections-note">Treatment is priced per visit.</p>
             </div>
           </div>
           
@@ -1143,7 +1154,6 @@
   const show = (id, yes) => {
     const el = $(id);
     if (!el) return;
-    // Handle both visibility classes
     if (el.classList.contains('ww-step-hidden')) {
       if (yes) el.classList.remove('ww-step-hidden');
     } else {
@@ -1157,14 +1167,12 @@
     scheduleHeightReport();
   });
 
-  $('btn-to-cats').addEventListener('click', () => {
-    $('btn-to-cats').style.display = 'none';
+  $('btn-to-cats').addEventListener('click', () => {$('btn-to-cats').style.display = 'none';
     show('step-3-cats', true);
     scheduleHeightReport();
   });
 
-  $('btn-to-details').addEventListener('click', () => {
-    $('btn-to-details').style.display = 'none';
+  $('btn-to-details').addEventListener('click', () => {$('btn-to-details').style.display = 'none';
     show('step-4-contact', true);
     show('ww-submit-section', true);
     scheduleHeightReport();
@@ -1172,14 +1180,11 @@
 
   function updateContactMethod() {
     const emailSelected = $('ww-contact-method').value === 'email';
-
     show('ww-customer-email-wrap', emailSelected);
     $('ww-customer-email').required = emailSelected;
-
     if (!emailSelected) {
       $('ww-customer-email').value = '';
     }
-
     scheduleHeightReport();
   }
 
@@ -1191,12 +1196,10 @@
     let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
     e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
   }
-  $('ww-customer-phone').addEventListener('input', formatPhoneNumber);
-  $('ww-comm-phone').addEventListener('input', formatPhoneNumber);
+  $('ww-customer-phone').addEventListener('input', formatPhoneNumber);$('ww-comm-phone').addEventListener('input', formatPhoneNumber);
 
 
   let previousDogFrequency = '';
-  let freshBeforeRecurring = false;
   let initialAddedByDogFrequency = false;
 
   function renderItem(title, desc, price) {
@@ -1223,61 +1226,79 @@
     const choiceOnetime = $('choice-onetime');
     const choiceNone = $('choice-none');
 
-    if (recurringDog && (!previousDogFrequency || previousDogFrequency === 'none')) {
-      freshBeforeRecurring = $('ww-fresh').checked;
-      initialAddedByDogFrequency = true;
-      radioInitial.checked = true;
-    }
-
-    if (!recurringDog && previousDogFrequency && previousDogFrequency !== 'none') {
-      if (initialAddedByDogFrequency) {
-        radioNone.checked = true;
-      }
-      initialAddedByDogFrequency = false;
-      $('ww-fresh').checked = freshBeforeRecurring;
-    }
-
+    // DYNAMIC HIDING LOGIC FOR SECTION 2
     if (recurringDog) {
-      radioInitial.disabled = false;
-      radioOnetime.disabled = true;
-      radioNone.disabled = true;
+      show('choice-initial', true);
+      show('choice-onetime', false);
+      show('choice-none', false);
       
-      choiceInitial.classList.remove('ww-disabled');
-      choiceOnetime.classList.add('ww-disabled');
-      choiceNone.classList.add('ww-disabled');
+      if (!previousDogFrequency || previousDogFrequency === 'none') {
+        initialAddedByDogFrequency = true;
+        radioInitial.checked = true;
+      }
     } else {
-      radioInitial.disabled = true;
-      radioOnetime.disabled = false;
-      radioNone.disabled = false;
+      show('choice-initial', false);
+      show('choice-onetime', true);
+      show('choice-none', true);
       
-      choiceInitial.classList.add('ww-disabled');
-      choiceOnetime.classList.remove('ww-disabled');
-      choiceNone.classList.remove('ww-disabled');
+      if (previousDogFrequency && previousDogFrequency !== 'none') {
+        if (initialAddedByDogFrequency) {
+          radioNone.checked = true;
+        }
+        initialAddedByDogFrequency = false;
+      }
     }
 
     const cleanupNode = root.querySelector('input[name="cleanup_type"]:checked');
     const cleanupType = cleanupNode ? cleanupNode.value : 'none';
-    const isInitial = cleanupType === 'initial';
-    const isOnetime = cleanupType === 'onetime';
+    
+    // Safety fallback
+    if (recurringDog && cleanupType === 'onetime') {
+        radioInitial.checked = true;
+    }
+    if (!recurringDog && cleanupType === 'initial') {
+        radioNone.checked = true;
+    }
+
+    const updatedCleanupNode = root.querySelector('input[name="cleanup_type"]:checked');
+    const updatedCleanupType = updatedCleanupNode ? updatedCleanupNode.value : 'none';
+    
+    const isInitial = updatedCleanupType === 'initial';
+    const isOnetime = updatedCleanupType === 'onetime';
     const isCleanup = isInitial || isOnetime;
     
     show('ww-cleanup-details', isCleanup);
-    show('ww-onetime-dogs-wrap', isOnetime);
-    show('ww-cleanup-fresh-note', isInitial);
+    show('ww-onetime-dogs-wrap', isOnetime); 
+    show('ww-cleanup-fresh-note', isInitial); 
 
-    $('ww-fresh').disabled = recurringDog;
-    $('ww-fresh-choice').classList.toggle('ww-disabled', recurringDog);
-
+    // DYNAMIC HIDING LOGIC FOR SECTION 3 (YARD FRESH)
+    const freshBase = $('ww-fresh');
+    const freshRec = $('ww-fresh-recurring');
+    
     if (recurringDog) {
-      $('ww-fresh').checked = true;
-      $('ww-fresh-title').textContent = 'Yard Fresh Treatment — FREE';
-      $('ww-fresh-description').textContent =
-        'Included free with your recurring dog waste service. No additional charge.';
+      // Force base treatment check and disable it
+      freshBase.checked = true;
+      freshBase.disabled = true;
+      $('ww-fresh-choice').classList.add('ww-disabled');
+      $('ww-fresh-title').textContent = 'Initial Yard Fresh Treatment — FREE';$('ww-fresh-description').textContent = 'Included free with your initial cleanup.';
+      
+      // Show recurring upgrade
+      show('ww-fresh-recurring-choice', true);
+      $('ww-sections-note').textContent = 'Note: Your first section is free for the initial visit. Extra sections or ongoing treatments apply per visit.';
     } else {
-      $('ww-fresh-title').textContent = 'Add Yard Fresh Treatment';
-      $('ww-fresh-description').textContent =
-        '$15 for the first yard section, plus $5 per additional section';
+      // Allow base treatment selection
+      freshBase.disabled = false;
+      $('ww-fresh-choice').classList.remove('ww-disabled');
+      $('ww-fresh-title').textContent = 'Add Yard Fresh Treatment';$('ww-fresh-description').textContent = '$15 for the first yard section, plus $5 per additional section.';
+      
+      // Hide recurring upgrade
+      show('ww-fresh-recurring-choice', false);
+      freshRec.checked = false; // Reset it so it doesn't run logic invisibly
+      $('ww-sections-note').textContent = 'Treatment is priced per visit.';
     }
+
+    const isFreshActive = freshBase.checked || freshRec.checked;
+    show('ww-fresh-details', isFreshActive);
 
     const dogs = number('ww-dogs');
     const otDogs = number('ww-onetime-dogs');
@@ -1286,13 +1307,11 @@
     const deepClean = $('ww-deep-clean').checked;
     const deepBoxes = number('ww-deep-boxes');
     const condition = $('ww-condition').value;
-    const fresh = $('ww-fresh').checked;
     const sections = number('ww-sections');
 
     show('ww-dog-count-wrap', recurringDog);
     show('ww-box-count-wrap', litterFreq !== 'none');
     show('ww-deep-clean-details', deepClean);
-    show('ww-fresh-details', fresh && !recurringDog);
 
     let dogPrice = 0;
     let catPrice = 0;
@@ -1343,8 +1362,8 @@
       
       if (condition === 'light') {
         oneTime += 50;
-        price = '$50 estimate';
-        desc += (desc ? ' • ' : '') + 'Starts at $50';
+        price = 'Starts at $50';
+        desc += (desc ? ' • ' : '') + 'Price confirmed on arrival';
       } else if (condition === 'moderate') {
         oneTime += 60;
         price = '$60–$75';
@@ -1363,12 +1382,39 @@
       otItems.push(renderItem(cleanupLabel, desc, price));
     }
 
-    if (fresh && !recurringDog) {
-      const p = 15 + 5 * (sections - 1);
-      oneTime += p;
-      otItems.push(renderItem('Yard Fresh Treatment', `${sections} yard section${sections>1?'s':''}`, money(p)));
-    } else if (recurringDog) {
-      recItems.push(renderItem('Yard Fresh Treatment', 'Included with recurring dog service', 'FREE'));
+    // YARD FRESH CALCULATION
+    let extraSectionsCost = 5 * (sections - 1);
+
+    if (recurringDog) {
+      // 1. Initial Freebie (always active if recurring)
+      if (sections > 1) {
+        oneTime += extraSectionsCost;
+        otItems.push(renderItem('Initial Yard Fresh Treatment', `1 free section + ${sections - 1} extra`, money(extraSectionsCost)));
+      } else {
+        otItems.push(renderItem('Initial Yard Fresh Treatment', '1 section • Included free', 'FREE'));
+      }
+
+      // 2. Ongoing Treatment
+      if (freshRec.checked) {
+        let freshRecPrice = 15 + extraSectionsCost;
+        if (dogFreq === 'weekly') {
+          dogPrice += freshRecPrice;
+          recItems.push(renderItem('Yard Fresh Treatment', `${sections} section(s) • Every visit`, money(freshRecPrice)+'/wk'));
+        } else if (dogFreq === 'twice') {
+          dogPrice += (freshRecPrice * 2);
+          recItems.push(renderItem('Yard Fresh Treatment', `${sections} section(s) • Twice a week`, money(freshRecPrice * 2)+'/wk'));
+        } else if (dogFreq === 'biweekly') {
+          dogPrice += freshRecPrice;
+          recItems.push(renderItem('Yard Fresh Treatment', `${sections} section(s) • Every visit`, money(freshRecPrice)+'/visit'));
+        }
+      }
+    } else {
+      // One-time only
+      if (freshBase.checked) {
+        let p = 15 + extraSectionsCost;
+        oneTime += p;
+        otItems.push(renderItem('Yard Fresh Treatment', `${sections} section(s) • One-time`, money(p)));
+      }
     }
 
     let firstVisitCatCharge = 0;
@@ -1381,7 +1427,6 @@
         firstVisitCatCharge = catPrice;
       }
     }
-
 
     // --- RENDERING DOM UPDATES ---
     const firstTotal = oneTime + firstVisitCatCharge;
@@ -1472,7 +1517,8 @@
     const cleanupType = cleanupNode ? cleanupNode.value : 'none';
     const isInitial = cleanupType === 'initial';
     const isOnetime = cleanupType === 'onetime';
-    const fresh = $('ww-fresh').checked;
+    const freshBaseChecked = $('ww-fresh').checked;
+    const freshRecChecked = $('ww-fresh-recurring').checked;
     
     const yardSignNode = root.querySelector('input[name="yard_sign_permission"]:checked');
     const yardSign = yardSignNode ? yardSignNode.value : 'no';
@@ -1482,7 +1528,16 @@
     if (recurringDog) services.push('Dog waste removal');
     if (isInitial) services.push('Initial yard cleanup');
     if (isOnetime) services.push('One-time yard cleanup');
-    if (fresh) services.push('Yard Fresh Treatment');
+    
+    if (recurringDog) {
+      services.push('Yard Fresh Treatment (Initial Free)');
+      if (freshRecChecked) {
+        services.push('Yard Fresh Treatment (Ongoing)');
+      }
+    } else if (freshBaseChecked) {
+      services.push('Yard Fresh Treatment (One-Time)');
+    }
+
     if (litterFrequency !== 'none') services.push('Cat litter-box cleaning');
     if (deepClean) services.push('Litter-box deep clean');
 
@@ -1508,8 +1563,8 @@
       onetime: isOnetime ? 'Yes' : 'No',
       onetimeDogs: isOnetime ? String(number('ww-onetime-dogs')) : '0',
       condition: (isInitial || isOnetime) ? getFieldValue('ww-condition') : '',
-      fresh:fresh ? 'Yes' : 'No',
-      sections:fresh && !recurringDog ? String(number('ww-sections')) : (recurringDog ? 'Included with recurring service' : '0'),
+      fresh: (freshBaseChecked || freshRecChecked) ? 'Yes' : 'No',
+      sections: String(number('ww-sections')),
       deepClean:deepClean ? 'Yes' : 'No',
       deepBoxes:deepClean ? String(number('ww-deep-boxes')) : '0',
       firstTotal:$('ww-first-total').textContent,
