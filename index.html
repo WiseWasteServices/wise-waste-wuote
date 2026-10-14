@@ -443,6 +443,28 @@
       display:none;
     }
 
+    /* Success Screen */
+    #ww-success-screen {
+      text-align: center;
+      padding: 60px 20px;
+      background: #fff;
+      border: 1px solid #dce4da;
+      border-radius: 14px;
+    }
+
+    #ww-success-screen h2 {
+      font-size: 32px;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    #ww-success-screen p {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 450px;
+      margin: 0 auto;
+    }
+
     /* Tablet and mobile improvements */
     @media (max-width:760px) {
       body { padding:12px !important; }
@@ -582,12 +604,14 @@
 
 <div id="ww-quote">
 
-  <div class="ww-panel">
-    <h2>Get Your Instant Quote</h2>
-    <p>Choose the services you need to see your estimated price. Serving Wise County, Texas.</p>
-    <div class="ww-tabs">
-      <button type="button" class="ww-tab" id="ww-res-tab" aria-pressed="true">Residential</button>
-      <button type="button" class="ww-tab" id="ww-com-tab" aria-pressed="false">Commercial</button>
+  <div id="ww-main-header">
+    <div class="ww-panel">
+      <h2>Get Your Instant Quote</h2>
+      <p>Choose the services you need to see your estimated price. Serving Wise County, Texas.</p>
+      <div class="ww-tabs" id="ww-tab-container">
+        <button type="button" class="ww-tab" id="ww-res-tab" aria-pressed="true">Residential</button>
+        <button type="button" class="ww-tab" id="ww-com-tab" aria-pressed="false">Commercial</button>
+      </div>
     </div>
   </div>
 
@@ -947,7 +971,7 @@
           <div class="ww-contact-section" style="margin-top: 20px;">
             <div class="ww-grid">
               <div>
-                <label class="ww-label" for="ww-comm-business">Property/Business Name <span class="ww-required">*</span></label>
+                <label class="ww-label" for="ww-comm-business">Property or Business Name <span class="ww-required">*</span></label>
                 <input id="ww-comm-business" type="text" required>
               </div>
               <div>
@@ -1018,6 +1042,16 @@
     </div>
   </div>
 
+  <!-- SUCCESS SCREEN (Hidden by default) -->
+  <div id="ww-success-screen" class="ww-hidden">
+    <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:64px;height:64px;margin-bottom:16px;">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+    </svg>
+    <h2>Request Received!</h2>
+    <p>Thank you for reaching out to Wise Waste Services. We've sent a quick confirmation to your email, and we'll be in touch shortly to finalize your quote and get you on the schedule.</p>
+  </div>
+
 </div>
 
 <script>
@@ -1031,6 +1065,23 @@
    */
   const QUOTE_ENDPOINT =
     'https://script.google.com/macros/s/AKfycbyCDemM3MYGckMTXnyBD02ssiY8KYMmqSIFAY5j0-w8iJcuT-gmUWsr8V1mjMGOtp2rDw/exec';
+
+  /*
+   * VALID WISE COUNTY ZIP CODES
+   */
+  const allowedZips = [
+    '76234', // Decatur
+    '76426', // Bridgeport
+    '76023', // Boyd
+    '76073', // Paradise
+    '76078', // Rhome
+    '76431', // Chico
+    '76225', // Alvord
+    '76071', // Newark
+    '76267', // Slidell
+    '76259', // Ponder
+    '76270'  // Justin
+  ];
 
   /*
    * IFRAME HEIGHT FIX
@@ -1106,12 +1157,14 @@
     scheduleHeightReport();
   });
 
-  $('btn-to-cats').addEventListener('click', () => {$('btn-to-cats').style.display = 'none';
+  $('btn-to-cats').addEventListener('click', () => {
+    $('btn-to-cats').style.display = 'none';
     show('step-3-cats', true);
     scheduleHeightReport();
   });
 
-  $('btn-to-details').addEventListener('click', () => {$('btn-to-details').style.display = 'none';
+  $('btn-to-details').addEventListener('click', () => {
+    $('btn-to-details').style.display = 'none';
     show('step-4-contact', true);
     show('ww-submit-section', true);
     scheduleHeightReport();
@@ -1133,11 +1186,19 @@
   $('ww-contact-method').addEventListener('change', updateContactMethod);
   updateContactMethod();
 
-  let previousDogFrequency = $('ww-dog-frequency').value;
+  // PHONE AUTO-FORMATTER
+  function formatPhoneNumber(e) {
+    let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+    e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+  }
+  $('ww-customer-phone').addEventListener('input', formatPhoneNumber);
+  $('ww-comm-phone').addEventListener('input', formatPhoneNumber);
+
+
+  let previousDogFrequency = '';
   let freshBeforeRecurring = false;
   let initialAddedByDogFrequency = false;
 
-  // New helper to render receipt line items
   function renderItem(title, desc, price) {
     return `
       <div class="ww-summary-line">
@@ -1154,7 +1215,6 @@
     const dogFreq = $('ww-dog-frequency').value;
     const recurringDog = dogFreq && dogFreq !== 'none';
 
-    // MUTUALLY EXCLUSIVE CLEANUP LOGIC
     const radioInitial = $('ww-cleanup-initial');
     const radioOnetime = $('ww-cleanup-onetime');
     const radioNone = $('ww-cleanup-none');
@@ -1163,10 +1223,21 @@
     const choiceOnetime = $('choice-onetime');
     const choiceNone = $('choice-none');
 
-    if (recurringDog) {
-      // Force Initial Cleanup, disable others
+    if (recurringDog && (!previousDogFrequency || previousDogFrequency === 'none')) {
+      freshBeforeRecurring = $('ww-fresh').checked;
+      initialAddedByDogFrequency = true;
       radioInitial.checked = true;
-      
+    }
+
+    if (!recurringDog && previousDogFrequency && previousDogFrequency !== 'none') {
+      if (initialAddedByDogFrequency) {
+        radioNone.checked = true;
+      }
+      initialAddedByDogFrequency = false;
+      $('ww-fresh').checked = freshBeforeRecurring;
+    }
+
+    if (recurringDog) {
       radioInitial.disabled = false;
       radioOnetime.disabled = true;
       radioNone.disabled = true;
@@ -1175,11 +1246,6 @@
       choiceOnetime.classList.add('ww-disabled');
       choiceNone.classList.add('ww-disabled');
     } else {
-      // If they unselect recurring, but Initial was forced, bounce them to "None"
-      if (radioInitial.checked) {
-        radioNone.checked = true;
-      }
-      
       radioInitial.disabled = true;
       radioOnetime.disabled = false;
       radioNone.disabled = false;
@@ -1189,25 +1255,27 @@
       choiceNone.classList.remove('ww-disabled');
     }
 
-    // Determine what is currently checked in the UI
-    const cleanupType = root.querySelector('input[name="cleanup_type"]:checked').value;
+    const cleanupNode = root.querySelector('input[name="cleanup_type"]:checked');
+    const cleanupType = cleanupNode ? cleanupNode.value : 'none';
     const isInitial = cleanupType === 'initial';
     const isOnetime = cleanupType === 'onetime';
     const isCleanup = isInitial || isOnetime;
     
     show('ww-cleanup-details', isCleanup);
-    show('ww-onetime-dogs-wrap', isOnetime); // Show dogs only for one-time
-    show('ww-cleanup-fresh-note', isInitial); // Show free note only for initial
+    show('ww-onetime-dogs-wrap', isOnetime);
+    show('ww-cleanup-fresh-note', isInitial);
 
     $('ww-fresh').disabled = recurringDog;
     $('ww-fresh-choice').classList.toggle('ww-disabled', recurringDog);
 
     if (recurringDog) {
       $('ww-fresh').checked = true;
-      $('ww-fresh-title').textContent = 'Yard Fresh Treatment — FREE';$('ww-fresh-description').textContent =
+      $('ww-fresh-title').textContent = 'Yard Fresh Treatment — FREE';
+      $('ww-fresh-description').textContent =
         'Included free with your recurring dog waste service. No additional charge.';
     } else {
-      $('ww-fresh-title').textContent = 'Add Yard Fresh Treatment';$('ww-fresh-description').textContent =
+      $('ww-fresh-title').textContent = 'Add Yard Fresh Treatment';
+      $('ww-fresh-description').textContent =
         '$15 for the first yard section, plus $5 per additional section';
     }
 
@@ -1223,7 +1291,6 @@
 
     show('ww-dog-count-wrap', recurringDog);
     show('ww-box-count-wrap', litterFreq !== 'none');
-    show('ww-initial-details', initial);
     show('ww-deep-clean-details', deepClean);
     show('ww-fresh-details', fresh && !recurringDog);
 
@@ -1236,7 +1303,6 @@
     let notes = [];
 
     // --- RECURRING MATH & ITEMS ---
-
     let dogBilling = 'No dog waste service selected';
     if (dogFreq === 'weekly') {
       dogPrice = 15 + 3 * (dogs - 1);
@@ -1264,24 +1330,21 @@
     }
 
     // --- ONE TIME MATH & ITEMS ---
-
     if (deepClean) {
       let p = deepBoxes === 1 ? 25 : (deepBoxes === 2 ? 40 : 40 + 15*(deepBoxes-2));
       oneTime += p;
       otItems.push(renderItem('Litter Box Deep Clean', `${deepBoxes} box${deepBoxes>1?'es':''} (One-time reset)`, money(p)));
     }
 
-    // Yard Cleanup Pricing
     if (isCleanup) {
-      const cleanupLabel = isOnetime 
-        ? `One-time cleanup (${otDogs} dog${otDogs === 1 ? '' : 's'})` 
-        : 'Initial cleanup';
-
+      const cleanupLabel = isOnetime ? `One-time cleanup (${otDogs} dog${otDogs === 1 ? '' : 's'})` : 'Initial cleanup';
       let desc = isInitial ? 'Required for new service' : '';
       let price = '';
+      
       if (condition === 'light') {
         oneTime += 50;
-        price = money(50);
+        price = '$50 estimate';
+        desc += (desc ? ' • ' : '') + 'Starts at $50';
       } else if (condition === 'moderate') {
         oneTime += 60;
         price = '$60–$75';
@@ -1321,8 +1384,6 @@
 
 
     // --- RENDERING DOM UPDATES ---
-
-    // Total math
     const firstTotal = oneTime + firstVisitCatCharge;
     $('ww-first-total').textContent = money(firstTotal);$('ww-onetime-lines').innerHTML = otItems.length 
       ? otItems.join('') 
@@ -1333,20 +1394,25 @@
       : '<div class="ww-empty-msg">No recurring services selected.</div>';
 
     show('ww-estimate-note', notes.length > 0);
-    $('ww-estimate-note').textContent = notes.join(' ');
-    
-    // Update Hidden Fields for Payload mapping
-    $('ww-dog-total').textContent = recurringDog ? money(dogPrice) + (dogFreq === 'biweekly' ? '/visit' : '/week') : '$0.00';$('ww-dog-billing').textContent = dogBilling;
+    $('ww-estimate-note').textContent = notes.join(' ');$('ww-dog-total').textContent = recurringDog ? money(dogPrice) + (dogFreq === 'biweekly' ? '/visit' : '/week') : '$0.00';$('ww-dog-billing').textContent = dogBilling;
     $('ww-cat-total').textContent = litterFreq === 'none' ? '$0.00' : money(catPrice) + '/week';$('ww-cat-billing').textContent = catBilling;
     
     previousDogFrequency = dogFreq;
-
     scheduleHeightReport();
   }
 
-  // GENERAL HELPERS
   function getFieldValue(id) {
-    return $(id).value.trim();
+    const el = $(id);
+    return el ? el.value.trim() : '';
+  }
+
+  // --- SHOW SUCCESS SCREEN ---
+  function showSuccessScreen() {
+    show('ww-main-header', false);
+    show('ww-residential', false);
+    show('ww-commercial', false);
+    show('ww-success-screen', true);
+    scheduleHeightReport();
   }
 
   // --- RESIDENTIAL SUBMISSION ---
@@ -1364,24 +1430,24 @@
     if (submitResButton.disabled) return;
 
     const name = getFieldValue('ww-customer-name');
-    
-    // Address Fields
     const street = getFieldValue('ww-customer-street');
     const unit = getFieldValue('ww-customer-unit');
     const city = getFieldValue('ww-customer-city');
     const zip = getFieldValue('ww-customer-zip');
-    
     const phone = getFieldValue('ww-customer-phone');
     const contactMethod = getFieldValue('ww-contact-method');
     const email = getFieldValue('ww-customer-email');
     const contactTime = getFieldValue('ww-contact-time');
 
-    // Validation ensures street, city, and zip are provided instead of one block
     if (!name || !street || !city || !zip || !phone || !contactTime) {
-      setResSubmitStatus(
-        'Please complete your full name, service address (Street, City, and ZIP), phone number, and preferred contact time.',
-        true
-      );
+      setResSubmitStatus('Please complete your full name, service address (Street, City, and ZIP), phone number, and preferred contact time.', true);
+      $('ww-customer-info').scrollIntoView({ behavior:'smooth', block:'start' });
+      return;
+    }
+
+    // ZIP CODE VALIDATION
+    if (!allowedZips.includes(zip.substring(0,5))) {
+      setResSubmitStatus('Sorry, we currently only service Wise County and select surrounding areas. Please contact us directly if you believe this is an error.', true);
       $('ww-customer-info').scrollIntoView({ behavior:'smooth', block:'start' });
       return;
     }
@@ -1395,19 +1461,21 @@
       }
     }
 
-    // Combine address for payload so backend doesn't break
     const formattedAddress = street + (unit ? ' ' + unit : '') + ', ' + city + ', TX ' + zip;
 
     const dogFrequency = getFieldValue('ww-dog-frequency');
     const litterFrequency = getFieldValue('ww-litter-frequency');
     const recurringDog = dogFrequency && dogFrequency !== 'none';
     const deepClean = $('ww-deep-clean').checked;
-    const yardSign = root.querySelector('input[name="yard_sign_permission"]:checked');
-
-    const cleanupType = root.querySelector('input[name="cleanup_type"]:checked').value;
+    
+    const cleanupNode = root.querySelector('input[name="cleanup_type"]:checked');
+    const cleanupType = cleanupNode ? cleanupNode.value : 'none';
     const isInitial = cleanupType === 'initial';
     const isOnetime = cleanupType === 'onetime';
     const fresh = $('ww-fresh').checked;
+    
+    const yardSignNode = root.querySelector('input[name="yard_sign_permission"]:checked');
+    const yardSign = yardSignNode ? yardSignNode.value : 'no';
 
     const services = [];
 
@@ -1419,10 +1487,7 @@
     if (deepClean) services.push('Litter-box deep clean');
 
     if (services.length === 0) {
-      setResSubmitStatus(
-        'Please select at least one service before submitting your request.',
-        true
-      );
+      setResSubmitStatus('Please select at least one service before submitting your request.', true);
       return;
     }
 
@@ -1431,7 +1496,7 @@
       address:formattedAddress,
       phone:phone,
       contactMethod:contactMethod,
-      email:contactMethod === 'email' ? email : '',
+      email:contactMethod === 'email' ? email : (email || ''),
       contactTime:contactTime,
       customerType:'Residential',
       services:services.join(', '),
@@ -1452,7 +1517,7 @@
       catPrice:$('ww-cat-total').textContent,
       dogBilling:$('ww-dog-billing').textContent,
       catBilling:$('ww-cat-billing').textContent,
-      yardSign:yardSign ? yardSign.value : 'no',
+      yardSign:yardSign,
       notes:getFieldValue('ww-customer-notes'),
       website:''
     };
@@ -1465,8 +1530,7 @@
 
     fetch(QUOTE_ENDPOINT, { method:'POST', mode:'no-cors', body:formBody })
     .then(function() {
-      submitResButton.textContent = 'Request Submitted';
-      setResSubmitStatus('Your request has been sent. We will follow up using your preferred contact method.', false);
+      showSuccessScreen();
     })
     .catch(function(error) {
       console.error('Quote submission error:', error);
@@ -1552,8 +1616,7 @@
 
     fetch(QUOTE_ENDPOINT, { method:'POST', mode:'no-cors', body:formBody })
     .then(function() {
-      submitCommButton.textContent = 'Request Sent';
-      setCommSubmitStatus('Your request has been sent! We will reach out to discuss your property soon.', false);
+      showSuccessScreen();
     })
     .catch(function(error) {
       console.error('Quote submission error:', error);
