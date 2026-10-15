@@ -235,7 +235,7 @@
     #ww-quote .ww-summary-foot {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-end;
       margin-top: 14px;
       padding-top: 14px;
       border-top: 1px dashed rgba(255, 255, 255, 0.3);
@@ -244,7 +244,16 @@
     }
 
     #ww-quote .ww-summary-foot strong {
-      font-size: 24px;
+      font-size: 22px;
+      line-height: 1.1;
+      display: block;
+    }
+
+    #ww-quote .ww-summary-foot .ww-sub-total {
+      font-size: 15px;
+      color: #D5DFCE;
+      font-weight: 400;
+      margin-top: 4px;
     }
 
     #ww-quote .ww-empty-msg {
@@ -345,7 +354,7 @@
 
     #ww-quote .ww-required { color:#9b3028; }
 
-    /* Yard sign permission */
+    /* Yard sign & Treats permission */
     #ww-quote .ww-yard-sign-section {
       background:var(--cream);
       border:1px solid #dce4da;
@@ -634,7 +643,7 @@
               <option value="biweekly">Every other week (biweekly)</option>
             </select>
             
-            <p id="ww-promo-text" class="ww-muted" style="margin-top:8px; color:#263A2D; font-weight:600; font-size: 14px;">🎁 Promo: Choose a weekly, twice-weekly, or biweekly plan and your first regular cleaning is FREE!</p>
+            <p id="ww-promo-text" class="ww-muted" style="margin-top:8px; color:#263A2D; font-weight:600; font-size: 14px;">🎁 Promo: Choose a weekly, twice-weekly, or biweekly plan and your first regular scoop is FREE!</p>
 
             <div id="ww-dog-count-wrap" class="ww-hidden">
               <label class="ww-label" for="ww-dogs">Number of dogs</label>
@@ -893,16 +902,33 @@
             </div>
           </div>
 
-          <!-- SECTION 7: ANYTHING ELSE -->
+          <!-- SECTION 7: TREATS & ADDITIONAL NOTES -->
           <div class="ww-panel" id="ww-additional-notes">
-            <h3>7. Anything Else We Should Know?</h3>
-            <p class="ww-muted">
-              Have special instructions, access details, pets we should be aware of,
-              or anything else you'd like to tell us? Leave a note below.
+            <h3>7. Pet Treats & Additional Notes</h3>
+            
+            <div id="ww-treats-container" class="ww-hidden" style="margin-bottom: 20px;">
+              <p class="ww-muted" style="margin-bottom: 12px;">We love making friends with your pets! Let us know if we can give them a little treat during our visit.</p>
+
+              <!-- Dynamic Combined Treat Question -->
+              <label class="ww-label" id="ww-treat-label" style="margin-top:0;">May we give your pet(s) a treat?</label>
+              <div class="ww-yard-sign-section" style="margin-top: 8px;">
+                <label class="ww-choice">
+                  <input type="radio" name="pet_treat_permission" value="yes" checked>
+                  <span><strong>Yes, please!</strong></span>
+                </label>
+                <label class="ww-choice">
+                  <input type="radio" name="pet_treat_permission" value="no">
+                  <span><strong>No, thank you.</strong></span>
+                </label>
+              </div>
+            </div>
+
+            <p class="ww-muted" style="margin-top: 16px;">
+              Have special instructions, access details, or anything else you'd like to tell us? Leave a note below.
             </p>
 
-            <div class="ww-additional-notes-section">
-              <label class="ww-label" for="ww-customer-notes">
+            <div class="ww-additional-notes-section" style="margin-top: 0;">
+              <label class="ww-label" for="ww-customer-notes" style="margin-top:0;">
                 Additional notes <span class="ww-muted">(optional)</span>
               </label>
               <textarea id="ww-customer-notes" name="additional_notes" rows="5" maxlength="2000" placeholder="Example: The gate code is..., please watch for our friendly dog, or the backyard has a few areas that need extra attention..." aria-describedby="ww-notes-help"></textarea>
@@ -925,7 +951,7 @@
 
           <!-- First Visit Block -->
           <div class="ww-summary-card">
-            <h4>First Visit & One-Time</h4>
+            <h4>First Visit (One-Time Fees)</h4>
             <div id="ww-onetime-lines">
               <div class="ww-empty-msg">Select a service to calculate costs.</div>
             </div>
@@ -938,9 +964,16 @@
 
           <!-- Recurring Services Block -->
           <div class="ww-summary-card">
-            <h4>Ongoing Services</h4>
+            <h4>Recurring Services</h4>
             <div id="ww-recurring-lines">
               <div class="ww-empty-msg">No ongoing services selected.</div>
+            </div>
+            
+            <div class="ww-summary-foot" id="ww-recurring-foot" class="ww-hidden">
+              <span>Estimated Ongoing Total</span>
+              <div style="text-align: right;" id="ww-recurring-totals-wrap">
+                <!-- Dynamically populated totals will appear here -->
+              </div>
             </div>
           </div>
 
@@ -1311,6 +1344,20 @@
     const condition = $('ww-condition').value;
     const sections = number('ww-sections');
 
+    // DYNAMIC PET TREATS QUESTION LOGIC
+    const hasDogsForTreats = recurringDog || isOnetime;
+    const hasCatsForTreats = litterFreq !== 'none' || deepClean;
+    
+    show('ww-treats-container', hasDogsForTreats || hasCatsForTreats);
+
+    if (hasDogsForTreats && hasCatsForTreats) {
+      $('ww-treat-label').innerHTML = 'May we give your pets a treat? <br><span class="ww-muted" style="font-weight: normal;">(We carry medium-sized Milk-Bones for dogs and Temptations for cats)</span>';
+    } else if (hasDogsForTreats) {
+      $('ww-treat-label').innerHTML = 'May we give your dog(s) a treat? <br><span class="ww-muted" style="font-weight: normal;">(We carry medium-sized Milk-Bones)</span>';
+    } else if (hasCatsForTreats) {
+      $('ww-treat-label').innerHTML = 'May we give your cat(s) a treat? <br><span class="ww-muted" style="font-weight: normal;">(We carry Temptations treats)</span>';
+    }
+
     show('ww-dog-count-wrap', recurringDog);
     show('ww-box-count-wrap', litterFreq !== 'none');
     show('ww-deep-clean-details', deepClean);
@@ -1318,6 +1365,10 @@
     let dogPrice = 0;
     let catPrice = 0;
     let oneTime = 0;
+    
+    // Variables for ongoing summation
+    let weeklyRecTotal = 0;
+    let biweeklyRecTotal = 0;
 
     let otItems = [];
     let recItems = [];
@@ -1327,49 +1378,65 @@
     let dogBilling = 'No dog waste service selected';
     if (dogFreq === 'weekly') {
       dogPrice = 15 + 3 * (dogs - 1);
+      weeklyRecTotal += dogPrice;
       dogBilling = 'Billed weekly';
       recItems.push(renderItem('Dog Waste Removal', `${dogs} dog${dogs>1?'s':''} • ${dogBilling}`, money(dogPrice)+'/wk'));
     } else if (dogFreq === 'twice') {
       dogPrice = 25 + 5 * (dogs - 1);
+      weeklyRecTotal += dogPrice;
       dogBilling = 'Billed weekly · service twice per week';
       recItems.push(renderItem('Dog Waste Removal', `${dogs} dog${dogs>1?'s':''} • ${dogBilling}`, money(dogPrice)+'/wk'));
     } else if (dogFreq === 'biweekly') {
       dogPrice = 25 + 5 * (dogs - 1);
+      biweeklyRecTotal += dogPrice;
       dogBilling = 'Billed every other week';
       recItems.push(renderItem('Dog Waste Removal', `${dogs} dog${dogs>1?'s':''} • ${dogBilling}`, money(dogPrice)+'/visit'));
     }
     
-    // Add the Free Cleaning Promo line item if recurring
-    if (recurringDog) {
-      recItems.push(renderItem('🎁 Special Promotion', 'First regular recurring cleaning', 'FREE'));
+    // YARD FRESH ONGOING CALCULATION
+    let extraSectionsCost = 5 * (sections - 1);
+    
+    if (recurringDog && freshRec.checked) {
+      let freshRecPrice = 15 + extraSectionsCost;
+      if (dogFreq === 'weekly' || dogFreq === 'twice') {
+        let actualFreqPrice = (dogFreq === 'twice') ? (freshRecPrice * 2) : freshRecPrice;
+        dogPrice += actualFreqPrice;
+        weeklyRecTotal += actualFreqPrice;
+        recItems.push(renderItem('Ongoing Yard Fresh', `${sections} section(s) • Applied every visit`, money(actualFreqPrice)+'/wk'));
+      } else if (dogFreq === 'biweekly') {
+        dogPrice += freshRecPrice;
+        biweeklyRecTotal += freshRecPrice;
+        recItems.push(renderItem('Ongoing Yard Fresh', `${sections} section(s) • Applied every visit`, money(freshRecPrice)+'/visit'));
+      }
     }
 
     let catBilling = 'No litter-box service selected';
     if (litterFreq === 'weekly') {
       catPrice = 15 + 5 * (boxes - 1);
+      weeklyRecTotal += catPrice;
       catBilling = 'Billed weekly';
-      recItems.push(renderItem('Cat Litter Box Cleaning', `${boxes} box${boxes>1?'es':''} • ${catBilling}`, money(catPrice)+'/wk'));
+      recItems.push(renderItem('Cat Litter Box Service', `${boxes} box${boxes>1?'es':''} • Maintenance cleaning`, money(catPrice)+'/wk'));
     } else if (litterFreq === 'twice') {
       catPrice = 25 + 10 * (boxes - 1);
+      weeklyRecTotal += catPrice;
       catBilling = 'Billed weekly · service twice per week';
-      recItems.push(renderItem('Cat Litter Box Cleaning', `${boxes} box${boxes>1?'es':''} • ${catBilling}`, money(catPrice)+'/wk'));
+      recItems.push(renderItem('Cat Litter Box Service', `${boxes} box${boxes>1?'es':''} • Maintenance cleaning`, money(catPrice)+'/wk'));
+    }
+    
+    // Add the Free Cleaning Promo line item if recurring
+    if (recurringDog) {
+      recItems.push(renderItem('🎁 Welcome Bonus', 'First regular scoop included', 'FREE'));
     }
 
     // --- ONE TIME MATH & ITEMS ---
-    if (deepClean) {
-      let p = deepBoxes === 1 ? 25 : (deepBoxes === 2 ? 40 : 40 + 15*(deepBoxes-2));
-      oneTime += p;
-      otItems.push(renderItem('Litter Box Deep Clean', `${deepBoxes} box${deepBoxes>1?'es':''} (One-time reset)`, money(p)));
-    }
-
     if (isCleanup) {
-      const cleanupLabel = isOnetime ? `One-time cleanup (${otDogs} dog${otDogs === 1 ? '' : 's'})` : 'Initial cleanup';
-      let desc = isInitial ? 'Required for new service' : '';
+      const cleanupLabel = isOnetime ? `One-Time Yard Cleanup (${otDogs} dog${otDogs === 1 ? '' : 's'})` : 'Initial Yard Baseline Cleanup';
+      let desc = isInitial ? 'Required clear-out for new service' : 'Standalone cleanup';
       let price = '';
       
       if (condition === 'light') {
         oneTime += 50;
-        price = 'Starts at $50';
+        price = 'Est: $50+';
         desc += (desc ? ' • ' : '') + 'Price confirmed on arrival';
       } else if (condition === 'moderate') {
         oneTime += 60;
@@ -1388,40 +1455,27 @@
       }
       otItems.push(renderItem(cleanupLabel, desc, price));
     }
-
-    // YARD FRESH CALCULATION
-    let extraSectionsCost = 5 * (sections - 1);
-
+    
+    // YARD FRESH FIRST-VISIT CALCULATION
     if (recurringDog) {
-      // 1. Initial Freebie (always active if recurring)
       if (sections > 1) {
         oneTime += extraSectionsCost;
-        otItems.push(renderItem('Initial Yard Fresh Treatment', `1 free section + ${sections - 1} extra`, money(extraSectionsCost)));
+        otItems.push(renderItem('First-Visit Yard Fresh', `1 section included free + ${sections - 1} additional`, money(extraSectionsCost)));
       } else {
-        otItems.push(renderItem('Initial Yard Fresh Treatment', '1 section • Included free', 'FREE'));
-      }
-
-      // 2. Ongoing Treatment
-      if (freshRec.checked) {
-        let freshRecPrice = 15 + extraSectionsCost;
-        if (dogFreq === 'weekly') {
-          dogPrice += freshRecPrice;
-          recItems.push(renderItem('Yard Fresh Treatment', `${sections} section(s) • Every visit`, money(freshRecPrice)+'/wk'));
-        } else if (dogFreq === 'twice') {
-          dogPrice += (freshRecPrice * 2);
-          recItems.push(renderItem('Yard Fresh Treatment', `${sections} section(s) • Twice a week`, money(freshRecPrice * 2)+'/wk'));
-        } else if (dogFreq === 'biweekly') {
-          dogPrice += freshRecPrice;
-          recItems.push(renderItem('Yard Fresh Treatment', `${sections} section(s) • Every visit`, money(freshRecPrice)+'/visit'));
-        }
+        otItems.push(renderItem('First-Visit Yard Fresh', 'Deodorizing & sanitizing treatment', 'FREE'));
       }
     } else {
-      // One-time only
       if (freshBase.checked) {
         let p = 15 + extraSectionsCost;
         oneTime += p;
-        otItems.push(renderItem('Yard Fresh Treatment', `${sections} section(s) • One-time`, money(p)));
+        otItems.push(renderItem('One-Time Yard Fresh', `${sections} section(s) • Deodorize & sanitize`, money(p)));
       }
+    }
+    
+    if (deepClean) {
+      let p = deepBoxes === 1 ? 25 : (deepBoxes === 2 ? 40 : 40 + 15*(deepBoxes-2));
+      oneTime += p;
+      otItems.push(renderItem('Litter Box Deep Clean', `${deepBoxes} box${deepBoxes>1?'es':''} • Complete sanitization and reset`, money(p)));
     }
 
     let firstVisitCatCharge = 0;
@@ -1444,6 +1498,18 @@
     $('ww-recurring-lines').innerHTML = recItems.length 
       ? recItems.join('') 
       : '<div class="ww-empty-msg">No recurring services selected.</div>';
+      
+    // Handle Ongoing Totals rendering
+    if (weeklyRecTotal > 0 || biweeklyRecTotal > 0) {
+      let totalsHtml = '';
+      if (weeklyRecTotal > 0) totalsHtml += `<strong>${money(weeklyRecTotal)}<span class="ww-sub-total">/wk</span></strong>`;
+      if (biweeklyRecTotal > 0) totalsHtml += `<strong>${money(biweeklyRecTotal)}<span class="ww-sub-total">/bi-wk</span></strong>`;
+      
+      $('ww-recurring-totals-wrap').innerHTML = totalsHtml;
+      show('ww-recurring-foot', true);
+    } else {
+      show('ww-recurring-foot', false);
+    }
 
     show('ww-estimate-note', notes.length > 0);
     $('ww-estimate-note').textContent = notes.join(' ');$('ww-dog-total').textContent = recurringDog ? money(dogPrice) + (dogFreq === 'biweekly' ? '/visit' : '/week') : '$0.00';$('ww-dog-billing').textContent = dogBilling;
@@ -1530,6 +1596,11 @@
     const yardSignNode = root.querySelector('input[name="yard_sign_permission"]:checked');
     const yardSign = yardSignNode ? yardSignNode.value : 'no';
 
+    const hasDogsForTreats = recurringDog || isOnetime;
+    const hasCatsForTreats = litterFrequency !== 'none' || deepClean;
+    const treatNode = root.querySelector('input[name="pet_treat_permission"]:checked');
+    const petTreats = (hasDogsForTreats || hasCatsForTreats) && treatNode ? treatNode.value : 'N/A';
+
     const services = [];
 
     if (recurringDog) {
@@ -1584,6 +1655,7 @@
       catBilling:$('ww-cat-billing').textContent,
       yardSign:yardSign,
       notes:getFieldValue('ww-customer-notes'),
+      petTreats:petTreats,
       website:''
     };
 
@@ -1670,6 +1742,7 @@
       catBilling: '',
       yardSign: 'no',
       notes: notes,
+      petTreats: 'N/A',
       website: ''
     };
 
