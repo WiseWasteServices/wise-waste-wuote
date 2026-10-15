@@ -633,6 +633,8 @@
               <option value="twice">Twice weekly</option>
               <option value="biweekly">Every other week (biweekly)</option>
             </select>
+            
+            <p id="ww-promo-text" class="ww-muted" style="margin-top:8px; color:#263A2D; font-weight:600; font-size: 14px;">🎁 Promo: Choose a weekly, twice-weekly, or biweekly plan and your first regular cleaning is FREE!</p>
 
             <div id="ww-dog-count-wrap" class="ww-hidden">
               <label class="ww-label" for="ww-dogs">Number of dogs</label>
@@ -1336,6 +1338,11 @@
       dogBilling = 'Billed every other week';
       recItems.push(renderItem('Dog Waste Removal', `${dogs} dog${dogs>1?'s':''} • ${dogBilling}`, money(dogPrice)+'/visit'));
     }
+    
+    // Add the Free Cleaning Promo line item if recurring
+    if (recurringDog) {
+      recItems.push(renderItem('🎁 Special Promotion', 'First regular recurring cleaning', 'FREE'));
+    }
 
     let catBilling = 'No litter-box service selected';
     if (litterFreq === 'weekly') {
@@ -1525,7 +1532,10 @@
 
     const services = [];
 
-    if (recurringDog) services.push('Dog waste removal');
+    if (recurringDog) {
+      services.push('Dog waste removal');
+      services.push('Promo: First regular cleaning FREE');
+    }
     if (isInitial) services.push('Initial yard cleanup');
     if (isOnetime) services.push('One-time yard cleanup');
     
