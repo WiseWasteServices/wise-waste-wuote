@@ -6,196 +6,499 @@
   <title>Instant Quote | Wise Waste Services</title>
   <style>
     #ww-quote {
-      --green:#263A2D;
-      --light:#D5DFCE;
-      --cream:#F4F7F4;
-      --ink:#1E2C22;
-      --muted:#647267;
-      font-family:"Segoe UI",Arial,sans-serif;
-      color:var(--ink);
-      max-width:1180px;
-      margin:auto;
-      font-size:15px;
-      line-height:1.5;
+      --green: #263A2D;
+      --green-hover: #1d2d23;
+      --green-soft: #eef3ee;
+      --light: #D5DFCE;
+      --cream: #F4F7F4;
+      --ink: #1E2C22;
+      --muted: #647267;
+      --border: #cfdbd0;
+      --border-strong: #b0c2b2;
+      --danger: #9b3028;
+      --danger-bg: #fdf2f1;
+      --shadow-sm: 0 2px 8px rgba(30, 44, 34, 0.05);
+      --shadow-md: 0 8px 24px rgba(30, 44, 34, 0.08);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 9px;
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      max-width: 1180px;
+      margin: 0 auto;
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
     }
 
-    #ww-quote * { box-sizing:border-box; }
+    #ww-quote * {
+      box-sizing: border-box;
+    }
 
+    /* STEP VISIBILITY CLASSES (Preserved for JS compatibility) */
+    #ww-quote .ww-hidden {
+      display: none !important;
+    }
+    #ww-quote .ww-step-hidden {
+      display: none;
+    }
+
+    /* MAIN PANELS & CARDS */
     #ww-quote .ww-panel {
-      background:#fff;
-      border:1px solid #dce4da;
-      border-radius:14px;
-      padding:20px;
-      margin:0 0 16px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin: 0 0 18px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #ww-quote .ww-panel:focus-within {
+      border-color: var(--green);
+      box-shadow: 0 4px 16px rgba(38, 58, 45, 0.09);
+    }
+
+    /* HEADER & HERO STYLING */
+    #ww-quote .ww-hero-panel {
+      background: linear-gradient(180deg, #ffffff 0%, #f9fbf9 100%);
+      border: 1px solid var(--border);
+      padding: 28px 24px 24px;
+      text-align: center;
+    }
+
+    #ww-quote .ww-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-soft);
+      color: var(--green);
+      border: 1px solid var(--light);
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
     }
 
     #ww-quote h2 {
-      font-size:27px;
-      line-height:1.2;
-      color:var(--green);
-      margin:0 0 8px;
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--green);
+      margin: 0 0 10px;
+      letter-spacing: -0.3px;
     }
 
-    #ww-quote h3 {
-      font-size:18px;
-      color:var(--green);
-      margin:0 0 14px;
+    #ww-quote .ww-hero-sub {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 620px;
+      margin: 0 auto 20px;
     }
 
-    #ww-quote p { margin:0 0 14px; }
-
-    #ww-quote .ww-muted {
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    #ww-quote .ww-label {
-      display:block;
-      font-weight:600;
-      margin:15px 0 6px;
-    }
-
-    #ww-quote select,
-    #ww-quote input,
-    #ww-quote textarea {
-      width:100%;
-      min-height:44px;
-      border:1px solid #cbd6c9;
-      border-radius:8px;
-      padding:10px 12px;
-      background:#fff;
-      color:var(--ink);
-      font:inherit;
-    }
-
-    #ww-quote input[type=checkbox],
-    #ww-quote input[type=radio] {
-      width:18px;
-      min-height:18px;
-      height:18px;
-      accent-color:var(--green);
-      margin:2px 9px 0 0;
-      flex-shrink:0;
-    }
-
-    #ww-quote .ww-choice {
-      display:flex;
-      align-items:flex-start;
-      padding:12px;
-      border:1px solid #dce4da;
-      border-radius:9px;
-      margin:8px 0;
-      cursor:pointer;
-    }
-
-    #ww-quote .ww-choice:has(input:checked) {
-      border-color:var(--green);
-      background:var(--cream);
-    }
-
-    #ww-quote .ww-choice span { flex:1; }
-
-    #ww-quote .ww-choice.ww-disabled {
-      background:#f1f3f0;
-      border-color:#dce4da;
-      opacity:.8;
-      cursor:not-allowed;
-    }
-
-    #ww-quote .ww-choice.ww-disabled:has(input:checked) {
-      background:#f1f3f0;
-      border-color:#dce4da;
-    }
-
-    #ww-quote .ww-choice.ww-disabled input {
-      cursor:not-allowed;
-    }
-
-    #ww-quote .ww-grid {
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-
-    /* STEP VISIBILITY CLASSES */
-    #ww-quote .ww-hidden { display:none!important; }
-    #ww-quote .ww-step-hidden { display:none; }
-
+    /* SEGMENTED TABS */
     #ww-quote .ww-tabs {
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:8px;
-      margin:16px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      max-width: 460px;
+      margin: 0 auto;
+      background: var(--cream);
+      padding: 6px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
     }
 
     #ww-quote .ww-tab {
-      padding:12px;
-      border:1px solid #cbd6c9;
-      border-radius:9px;
-      background:white;
-      color:var(--green);
-      font:inherit;
-      font-weight:600;
-      cursor:pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 10px 16px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
     }
 
-    #ww-quote .ww-tab[aria-pressed=true] {
-      background:var(--green);
-      color:white;
-      border-color:var(--green);
+    #ww-quote .ww-tab:hover {
+      color: var(--green);
     }
 
-    /* Desktop two-column layout */
+    #ww-quote .ww-tab[aria-pressed="true"] {
+      background: var(--green);
+      color: #ffffff;
+      border-color: var(--green);
+      box-shadow: 0 2px 6px rgba(38, 58, 45, 0.2);
+    }
+
+    /* VISUAL PROGRESS BAR */
+    #ww-quote .ww-progress-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 0 0 18px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    #ww-quote .ww-progress-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      opacity: 0.65;
+      transition: opacity 0.2s ease, color 0.2s ease;
+    }
+
+    #ww-quote .ww-progress-item.is-active {
+      color: var(--green);
+      opacity: 1;
+    }
+
+    #ww-quote .ww-progress-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--cream);
+      border: 1.5px solid var(--border-strong);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    #ww-quote .ww-progress-item.is-active .ww-progress-dot {
+      background: var(--green);
+      border-color: var(--green);
+      color: #ffffff;
+    }
+
+    /* SECTION HEADINGS */
+    #ww-quote .ww-step-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #edf2ed;
+    }
+
+    #ww-quote h3 {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--green);
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    #ww-quote .ww-step-tag {
+      background: var(--cream);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3px 9px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    #ww-quote p {
+      margin: 0 0 14px;
+    }
+
+    #ww-quote .ww-muted {
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.45;
+    }
+
+    /* LABELS & FORM CONTROLS */
+    #ww-quote .ww-label {
+      display: block;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 16px 0 6px;
+      font-size: 14.5px;
+    }
+
+    #ww-quote .ww-label:first-of-type {
+      margin-top: 6px;
+    }
+
+    #ww-quote .ww-field-hint {
+      display: block;
+      font-weight: 400;
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    #ww-quote select,
+    #ww-quote input:not([type="checkbox"]):not([type="radio"]),
+    #ww-quote textarea {
+      width: 100%;
+      min-height: 48px;
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 11px 14px;
+      background-color: #ffffff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 15px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    }
+
+    #ww-quote select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23263A2D' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    #ww-quote select:hover,
+    #ww-quote input:not([type="checkbox"]):not([type="radio"]):hover,
+    #ww-quote textarea:hover {
+      border-color: var(--green);
+    }
+
+    #ww-quote select:focus,
+    #ww-quote input:not([type="checkbox"]):not([type="radio"]):focus,
+    #ww-quote textarea:focus {
+      outline: none;
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(213, 223, 206, 0.75);
+    }
+
+    /* PROMO CALLOUT BANNER */
+    #ww-quote .ww-promo-banner {
+      background: var(--cream);
+      border: 1px solid var(--light);
+      border-left: 4px solid var(--green);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      margin-top: 12px;
+      color: var(--green);
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    /* RADIO & CHECKBOX SELECTION CARDS */
+    #ww-quote input[type="checkbox"],
+    #ww-quote input[type="radio"] {
+      width: 20px;
+      min-height: 20px;
+      height: 20px;
+      accent-color: var(--green);
+      margin: 2px 12px 0 0;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    #ww-quote .ww-choice {
+      display: flex;
+      align-items: flex-start;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      margin: 10px 0;
+      background: #ffffff;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    #ww-quote .ww-choice:hover:not(.ww-disabled) {
+      border-color: var(--green);
+      background: #fafcfa;
+    }
+
+    #ww-quote .ww-choice:has(input:checked) {
+      border-color: var(--green);
+      background: var(--cream);
+      box-shadow: 0 2px 6px rgba(38, 58, 45, 0.06);
+    }
+
+    #ww-quote .ww-choice span {
+      flex: 1;
+    }
+
+    #ww-quote .ww-choice strong {
+      color: var(--ink);
+      font-size: 15px;
+    }
+
+    /* Disabled / Auto-Included Perk State */
+    #ww-quote .ww-choice.ww-disabled {
+      background: var(--green-soft);
+      border-color: var(--light);
+      border-style: solid;
+      opacity: 1;
+      cursor: default;
+    }
+
+    #ww-quote .ww-choice.ww-disabled:has(input:checked) {
+      background: var(--green-soft);
+      border-color: var(--green);
+    }
+
+    #ww-quote .ww-choice.ww-disabled input {
+      cursor: default;
+    }
+
+    /* COUNTER / STEPPER INPUTS */
+    #ww-quote .ww-number {
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr) 48px;
+      gap: 8px;
+      align-items: center;
+      max-width: 240px;
+    }
+
+    #ww-quote .ww-number button {
+      height: 48px;
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      background: var(--cream);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--green);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    #ww-quote .ww-number button:hover {
+      background: var(--light);
+      border-color: var(--green);
+    }
+
+    #ww-quote .ww-number button:active {
+      transform: scale(0.96);
+    }
+
+    #ww-quote .ww-number input {
+      text-align: center;
+      font-weight: 700;
+      font-size: 16px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* GRIDS & SUB-CONTAINERS */
+    #ww-quote .ww-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    #ww-quote .ww-sub-box {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    /* DESKTOP TWO-COLUMN CALCULATOR LAYOUT */
     #ww-quote .ww-calculator-layout {
-      display:grid;
-      grid-template-columns:minmax(0,1.2fr) minmax(320px,0.9fr);
-      gap:16px;
-      align-items:start;
+      display: grid;
+      grid-template-columns: minmax(0, 1.22fr) minmax(340px, 0.88fr);
+      gap: 22px;
+      align-items: start;
     }
 
     #ww-quote .ww-service-column {
-      min-width:0;
+      min-width: 0;
     }
 
-    /* Keep pricing and submission together on desktop */
     #ww-quote .ww-price-column {
-      min-width:0;
-      position:sticky;
-      top:20px;
-      align-self:start;
+      min-width: 0;
+      position: sticky;
+      top: 20px;
+      align-self: start;
     }
 
+    /* RIGHT COLUMN: LIVE ESTIMATE RECEIPT */
     #ww-quote .ww-total {
-      background:var(--green);
-      color:white;
-      border-radius:14px;
-      padding:20px;
-      min-width:0;
-      max-width:100%;
+      background: var(--green);
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      min-width: 0;
+      max-width: 100%;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    #ww-quote .ww-total-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
     }
 
     #ww-quote .ww-total h3 {
-      color:white;
-      margin-bottom:6px;
-      font-size:22px;
+      color: #ffffff;
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.2px;
     }
 
-    /* REDESIGNED ESTIMATE CARDS */
+    #ww-quote .ww-live-pill {
+      background: rgba(213, 223, 206, 0.18);
+      color: var(--light);
+      border: 1px solid rgba(213, 223, 206, 0.35);
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
     #ww-quote .ww-summary-card {
       background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: var(--radius-md);
       padding: 16px;
       margin-top: 14px;
     }
 
     #ww-quote .ww-summary-card h4 {
       margin: 0 0 12px 0;
-      color: #fff;
-      font-size: 14px;
+      color: var(--light);
+      font-size: 12.5px;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      letter-spacing: 0.7px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.16);
       padding-bottom: 8px;
     }
 
@@ -203,8 +506,9 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 14px;
-      line-height: 1.3;
+      margin-bottom: 12px;
+      line-height: 1.35;
+      gap: 12px;
     }
 
     #ww-quote .ww-summary-line:last-child {
@@ -213,23 +517,23 @@
 
     #ww-quote .ww-summary-title {
       font-weight: 600;
-      color: #fff;
-      font-size: 15px;
+      color: #ffffff;
+      font-size: 14.5px;
     }
 
     #ww-quote .ww-summary-desc {
-      font-size: 13px;
-      color: #D5DFCE;
-      margin-top: 3px;
+      font-size: 12.5px;
+      color: var(--light);
+      margin-top: 2px;
     }
 
     #ww-quote .ww-summary-price {
-      font-weight: 600;
+      font-weight: 700;
       text-align: right;
-      color: #fff;
+      color: #ffffff;
       white-space: nowrap;
-      margin-left: 12px;
-      font-size: 15px;
+      font-size: 14.5px;
+      font-variant-numeric: tabular-nums;
     }
 
     #ww-quote .ww-summary-foot {
@@ -238,231 +542,237 @@
       align-items: flex-end;
       margin-top: 14px;
       padding-top: 14px;
-      border-top: 1px dashed rgba(255, 255, 255, 0.3);
-      font-size: 15px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.28);
+      font-size: 14.5px;
       font-weight: 600;
+      color: var(--light);
     }
 
     #ww-quote .ww-summary-foot strong {
-      font-size: 22px;
+      font-size: 24px;
       line-height: 1.1;
       display: block;
+      color: #ffffff;
+      font-variant-numeric: tabular-nums;
     }
 
     #ww-quote .ww-summary-foot .ww-sub-total {
-      font-size: 15px;
-      color: #D5DFCE;
-      font-weight: 400;
-      margin-top: 4px;
+      font-size: 14px;
+      color: var(--light);
+      font-weight: 500;
+      margin-left: 2px;
     }
 
     #ww-quote .ww-empty-msg {
       font-size: 13px;
-      color: #D5DFCE;
+      color: var(--light);
       font-style: italic;
+      opacity: 0.9;
     }
 
     #ww-quote .ww-note {
-      background:var(--cream);
-      color:var(--ink);
-      border-radius:8px;
-      padding:12px;
-      font-size:13px;
-      margin-top:14px;
+      background: var(--cream);
+      color: var(--ink);
+      border-left: 3.5px solid var(--green);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.45;
+      margin-top: 14px;
     }
 
-    #ww-quote .ww-number {
-      display:grid;
-      grid-template-columns:44px minmax(0,1fr) 44px;
-      gap:8px;
-      align-items:center;
-    }
-
-    #ww-quote .ww-number button {
-      height:44px;
-      border:1px solid #cbd6c9;
-      border-radius:8px;
-      background:var(--cream);
-      font-size:22px;
-      color:var(--green);
-      cursor:pointer;
-    }
-
-    #ww-quote .ww-number input { text-align:center; }
-
+    /* CONTACT ACTIONS (Commercial right panel) */
     #ww-quote .ww-contact-actions {
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-      margin-top:20px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 18px;
     }
 
     #ww-quote .ww-contact-btn {
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:9px;
-      min-height:52px;
-      padding:13px 16px;
-      border-radius:9px;
-      font:inherit;
-      font-weight:600;
-      text-align:center;
-      text-decoration:none;
-      transition:opacity .15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 50px;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font: inherit;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      transition: transform 0.12s ease, opacity 0.15s ease;
     }
 
-    #ww-quote .ww-contact-btn:hover { opacity:.88; }
-
-    #ww-quote .ww-call-btn {
-      background:var(--green);
-      color:#fff;
-      border:1px solid var(--green);
-    }
-
-    #ww-quote .ww-email-btn {
-      background:#fff;
-      color:var(--green);
-      border:1px solid #cbd6c9;
+    #ww-quote .ww-contact-btn:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
     }
 
     #ww-quote .ww-contact-icon {
-      width:20px;
-      height:20px;
-      flex-shrink:0;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
     }
 
-    /* Customer contact information */
-    #ww-quote .ww-contact-section {
-      background:var(--cream);
-      border:1px solid #dce4da;
-      border-radius:10px;
-      padding:16px;
-      margin-top:14px;
+    /* CUSTOMER CONTACT, YARD SIGN & NOTES SECTIONS */
+    #ww-quote .ww-contact-section,
+    #ww-quote .ww-yard-sign-section,
+    #ww-quote .ww-additional-notes-section {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-top: 14px;
     }
 
     #ww-quote .ww-contact-section h4 {
-      color:var(--green);
-      font-size:16px;
-      margin:0 0 6px;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 8px;
     }
 
     #ww-quote .ww-contact-section textarea {
-      min-height:80px;
-      resize:vertical;
+      min-height: 84px;
+      resize: vertical;
     }
 
-    #ww-quote .ww-required { color:#9b3028; }
+    #ww-quote .ww-required {
+      color: var(--danger);
+      font-weight: 700;
+    }
 
-    /* Yard sign & Treats permission */
-    #ww-quote .ww-yard-sign-section {
-      background:var(--cream);
-      border:1px solid #dce4da;
-      border-radius:10px;
-      padding:16px;
-      margin-top:14px;
+    #ww-quote .ww-yard-sign-section .ww-choice:first-child {
+      margin-top: 0;
     }
 
     #ww-quote .ww-yard-sign-section .ww-choice:last-child {
-      margin-bottom:0;
-    }
-
-    /* Additional notes */
-    #ww-quote .ww-additional-notes-section {
-      background:var(--cream);
-      border:1px solid #dce4da;
-      border-radius:10px;
-      padding:16px;
-      margin-top:14px;
+      margin-bottom: 0;
     }
 
     #ww-quote .ww-additional-notes-section textarea {
-      min-height:140px;
-      resize:vertical;
+      min-height: 120px;
+      resize: vertical;
     }
 
-    #ww-quote .ww-additional-notes-section textarea:focus {
-      outline:2px solid var(--light);
-      border-color:var(--green);
-    }
-
-    /* Step Progression Buttons */
+    /* STEP PROGRESSION BUTTONS */
     #ww-quote .ww-continue-btn {
-      width:100%;
-      min-height:54px;
-      padding:14px 18px;
-      border:2px solid var(--green);
-      border-radius:9px;
-      background:#fff;
-      color:var(--green);
-      font:inherit;
-      font-weight:600;
-      cursor:pointer;
-      transition:all .15s ease;
-      margin-bottom:16px;
+      width: 100%;
+      min-height: 54px;
+      padding: 14px 20px;
+      border: 2px solid var(--green);
+      border-radius: var(--radius-md);
+      background: var(--green);
+      color: #ffffff;
+      font: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.16s ease;
+      margin-bottom: 20px;
     }
 
     #ww-quote .ww-continue-btn:hover {
-      background:var(--cream);
+      background: var(--green-hover);
+      border-color: var(--green-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(38, 58, 45, 0.18);
     }
 
-    /* Quote submission area */
+    /* QUOTE SUBMISSION AREA */
     #ww-quote .ww-submit-panel {
-      margin-top:16px;
-      padding:20px;
-      background:#fff;
-      border:1px solid #dce4da;
-      border-radius:14px;
+      margin-top: 16px;
+      padding: 22px;
+      background: #ffffff;
+      border: 2px solid var(--green);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
     }
-    
+
     #ww-quote .ww-submit-panel h3 {
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+      font-size: 19px;
     }
 
-    #ww-quote #ww-submit-quote, #ww-quote #ww-submit-comm-quote {
-      width:100%;
-      min-height:54px;
-      padding:14px 18px;
-      border:1px solid var(--green);
-      border-radius:9px;
-      background:var(--green);
-      color:#fff;
-      font:inherit;
-      font-weight:600;
-      cursor:pointer;
-      transition:opacity .15s ease;
+    #ww-quote #ww-submit-quote,
+    #ww-quote #ww-submit-comm-quote {
+      width: 100%;
+      min-height: 54px;
+      padding: 14px 20px;
+      border: 1px solid var(--green);
+      border-radius: var(--radius-sm);
+      background: var(--green);
+      color: #ffffff;
+      font: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.15s ease, transform 0.12s ease, opacity 0.15s ease;
+      box-shadow: 0 4px 12px rgba(38, 58, 45, 0.18);
     }
 
-    #ww-quote #ww-submit-quote:hover:not(:disabled), #ww-quote #ww-submit-comm-quote:hover:not(:disabled) {
-      opacity:.9;
+    #ww-quote #ww-submit-quote:hover:not(:disabled),
+    #ww-quote #ww-submit-comm-quote:hover:not(:disabled) {
+      background: var(--green-hover);
+      transform: translateY(-1px);
     }
 
-    #ww-quote #ww-submit-quote:disabled, #ww-quote #ww-submit-comm-quote:disabled {
-      opacity:.65;
-      cursor:wait;
+    #ww-quote #ww-submit-quote:disabled,
+    #ww-quote #ww-submit-comm-quote:disabled {
+      opacity: 0.65;
+      cursor: wait;
+      transform: none;
     }
 
-    #ww-quote #ww-submit-status, #ww-quote #ww-comm-submit-status {
-      overflow-wrap:anywhere;
-      font-size:14px;
-      margin:12px 0 0;
+    #ww-quote #ww-submit-status,
+    #ww-quote #ww-comm-submit-status {
+      overflow-wrap: anywhere;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 14px 0 0;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: var(--cream);
+      border: 1px solid var(--border);
     }
 
-    #ww-quote #ww-submit-status:empty, #ww-quote #ww-comm-submit-status:empty {
-      display:none;
+    #ww-quote #ww-submit-status:empty,
+    #ww-quote #ww-comm-submit-status:empty {
+      display: none !important;
     }
 
-    /* Success Screen */
+    /* SUCCESS SCREEN */
     #ww-success-screen {
       text-align: center;
-      padding: 60px 20px;
-      background: #fff;
-      border: 1px solid #dce4da;
-      border-radius: 14px;
+      padding: 56px 24px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      max-width: 680px;
+      margin: 20px auto;
+    }
+
+    #ww-success-screen .ww-success-icon-wrap {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: var(--green-soft);
+      border: 2px solid var(--light);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
     }
 
     #ww-success-screen h2 {
-      font-size: 32px;
+      font-size: 30px;
       color: var(--green);
       margin-bottom: 12px;
     }
@@ -470,141 +780,152 @@
     #ww-success-screen p {
       font-size: 16px;
       color: var(--muted);
-      max-width: 450px;
-      margin: 0 auto;
+      max-width: 480px;
+      margin: 0 auto 24px;
     }
 
-    /* Tablet and mobile improvements */
-    @media (max-width:760px) {
-      body { padding:12px !important; }
+    #ww-success-screen .ww-next-steps {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      max-width: 480px;
+      margin: 0 auto;
+      text-align: left;
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    #ww-success-screen .ww-next-steps strong {
+      color: var(--green);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14.5px;
+    }
+
+    #ww-success-screen .ww-next-steps ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    #ww-success-screen .ww-next-steps li {
+      margin-bottom: 6px;
+    }
+
+    #ww-success-screen .ww-next-steps li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* RESPONSIVE / MOBILE OPTIMIZATIONS */
+    @media (max-width: 820px) {
+      #ww-quote .ww-progress-bar {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 12px !important;
+      }
 
       #ww-quote {
-        font-size:15px;
-        line-height:1.45;
+        font-size: 15px;
+        line-height: 1.48;
       }
 
       #ww-quote .ww-calculator-layout {
-        display:flex;
-        flex-direction:column;
-        gap:10px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
       }
 
       #ww-quote .ww-service-column,
       #ww-quote .ww-price-column {
-        width:100%;
-        min-width:0;
+        width: 100%;
+        min-width: 0;
       }
 
-      #ww-quote .ww-price-column { position:static; }
+      #ww-quote .ww-price-column {
+        position: static;
+      }
 
       #ww-quote .ww-panel {
-        padding:16px;
-        margin-bottom:10px;
-        border-radius:12px;
+        padding: 18px 16px;
+        margin-bottom: 12px;
+        border-radius: 14px;
       }
 
       #ww-quote h2 {
-        font-size:24px;
-        line-height:1.25;
+        font-size: 24px;
+        line-height: 1.25;
       }
 
       #ww-quote h3 {
-        font-size:17px;
-        line-height:1.35;
-        margin-bottom:10px;
-      }
-
-      #ww-quote .ww-label {
-        margin-top:12px;
-        margin-bottom:6px;
+        font-size: 17.5px;
+        line-height: 1.35;
       }
 
       #ww-quote select,
       #ww-quote input:not([type="checkbox"]):not([type="radio"]),
       #ww-quote textarea {
-        font-size:16px;
-        min-height:46px;
+        font-size: 16px; /* Prevents iOS auto-zoom on focus */
+        min-height: 48px;
       }
-
-      #ww-quote textarea { min-height:76px; }
 
       #ww-quote .ww-choice {
-        padding:12px;
-        margin:7px 0;
-        gap:4px;
-        border-radius:9px;
-      }
-
-      #ww-quote .ww-choice input[type="checkbox"],
-      #ww-quote .ww-choice input[type="radio"] {
-        width:20px;
-        height:20px;
-        min-height:20px;
-        margin-right:10px;
-        margin-top:1px;
+        padding: 13px 14px;
+        margin: 8px 0;
       }
 
       #ww-quote .ww-grid {
-        grid-template-columns:1fr;
-        gap:8px;
-      }
-
-      #ww-quote .ww-tabs {
-        gap:8px;
-        margin:12px 0 2px;
-      }
-
-      #ww-quote .ww-tab {
-        min-height:46px;
-        padding:10px 8px;
-        font-size:15px;
+        grid-template-columns: 1fr;
+        gap: 10px;
       }
 
       #ww-quote .ww-number {
-        grid-template-columns:48px minmax(0,1fr) 48px;
-        gap:8px;
+        max-width: 100%;
+        grid-template-columns: 52px minmax(0, 1fr) 52px;
       }
 
       #ww-quote .ww-number button {
-        height:46px;
-        font-size:24px;
+        height: 48px;
+        font-size: 24px;
       }
 
       #ww-quote .ww-total {
-        padding:18px;
-        border-radius:12px;
+        padding: 20px 16px;
+        border-radius: 14px;
       }
-      
+
       #ww-quote .ww-summary-foot strong {
-        font-size: 20px;
+        font-size: 21px;
       }
 
       #ww-quote .ww-contact-section,
       #ww-quote .ww-yard-sign-section,
-      #ww-quote .ww-additional-notes-section,
-      #ww-quote .ww-commercial {
-        padding:13px;
-        border-radius:9px;
+      #ww-quote .ww-additional-notes-section {
+        padding: 14px;
       }
-
-      #ww-quote .ww-contact-actions {
-        grid-template-columns:1fr;
-        gap:9px;
-        margin-top:15px;
-      }
-
-      #ww-quote .ww-contact-btn { min-height:48px; }
 
       #ww-quote .ww-submit-panel {
-        margin-top:0;
-        padding:15px;
+        margin-top: 12px;
+        padding: 18px 16px;
       }
     }
 
-    @media (max-width:380px) {
-      #ww-quote .ww-panel { padding:13px; }
-      #ww-quote h2 { font-size:22px; }
-      #ww-quote .ww-total { padding:15px; }
+    @media (max-width: 400px) {
+      #ww-quote .ww-progress-bar {
+        grid-template-columns: 1fr 1fr;
+        padding: 10px 12px;
+      }
+      #ww-quote .ww-panel {
+        padding: 15px 13px;
+      }
+      #ww-quote h2 {
+        font-size: 22px;
+      }
     }
   </style>
 </head>
@@ -613,18 +934,42 @@
 
 <div id="ww-quote">
 
+  <!-- MAIN HEADER & SERVICE TYPE SWITCHER -->
   <div id="ww-main-header">
-    <div class="ww-panel">
+    <div class="ww-panel ww-hero-panel">
+      <div class="ww-badge-pill">Serving Wise County, Texas • No Contracts</div>
       <h2>Get Your Instant Quote</h2>
-      <p>Choose the services you need to see your estimated price. Serving Wise County, Texas.</p>
-      <div class="ww-tabs" id="ww-tab-container">
-        <button type="button" class="ww-tab" id="ww-res-tab" aria-pressed="true">Residential</button>
-        <button type="button" class="ww-tab" id="ww-com-tab" aria-pressed="false">Commercial</button>
+      <p class="ww-hero-sub">Customize your pet waste cleanup plan below and see your estimated price immediately—with no hidden fees.</p>
+      <div class="ww-tabs" id="ww-tab-container" role="group" aria-label="Select property type">
+        <button type="button" class="ww-tab" id="ww-res-tab" aria-pressed="true">🏡 Residential Home</button>
+        <button type="button" class="ww-tab" id="ww-com-tab" aria-pressed="false">🏢 Commercial Property</button>
       </div>
     </div>
   </div>
 
+  <!-- RESIDENTIAL CALCULATOR -->
   <div id="ww-residential">
+
+    <!-- Visual Step Progress Tracker -->
+    <div class="ww-progress-bar" aria-label="Quote progress">
+      <div class="ww-progress-item is-active" id="ww-prog-1">
+        <span class="ww-progress-dot">1</span>
+        <span>Dog Service</span>
+      </div>
+      <div class="ww-progress-item" id="ww-prog-2">
+        <span class="ww-progress-dot">2</span>
+        <span>Yard Care</span>
+      </div>
+      <div class="ww-progress-item" id="ww-prog-3">
+        <span class="ww-progress-dot">3</span>
+        <span>Cat Litter</span>
+      </div>
+      <div class="ww-progress-item" id="ww-prog-4">
+        <span class="ww-progress-dot">4</span>
+        <span>Your Details</span>
+      </div>
+    </div>
+
     <div class="ww-calculator-layout">
 
       <!-- LEFT COLUMN: SERVICE OPTIONS (Progressive Reveal) -->
@@ -633,20 +978,35 @@
         <!-- STEP 1: Always visible initially -->
         <div id="step-1-dog">
           <div class="ww-panel">
-            <h3>1. Dog Waste Removal</h3>
-            <label class="ww-label" for="ww-dog-frequency">Service frequency</label>
+            <div class="ww-step-header">
+              <div>
+                <h3>1. Dog Waste Removal</h3>
+                <p class="ww-muted" style="margin:4px 0 0;">How often would you like us to scoop your yard?</p>
+              </div>
+              <span class="ww-step-tag">Step 1 of 4</span>
+            </div>
+
+            <label class="ww-label" for="ww-dog-frequency">
+              Service frequency
+              <span class="ww-field-hint">Choose a recurring schedule or select "No dog waste service" for one-time or cat-only care.</span>
+            </label>
             <select id="ww-dog-frequency">
               <option value="" disabled selected>Select an option...</option>
               <option value="none">No dog waste service</option>
-              <option value="weekly">Weekly</option>
+              <option value="weekly">Weekly (Most Popular)</option>
               <option value="twice">Twice weekly</option>
               <option value="biweekly">Every other week (biweekly)</option>
             </select>
-            
-            <p id="ww-promo-text" class="ww-muted" style="margin-top:8px; color:#263A2D; font-weight:600; font-size: 14px;">🎁 Promo: Choose a weekly, twice-weekly, or biweekly plan and your first regular scoop is FREE!</p>
 
-            <div id="ww-dog-count-wrap" class="ww-hidden">
-              <label class="ww-label" for="ww-dogs">Number of dogs</label>
+            <p id="ww-promo-text" class="ww-promo-banner">
+              🎁 Promo: Choose a weekly, twice-weekly, or biweekly plan and your first regular scoop is FREE!
+            </p>
+
+            <div id="ww-dog-count-wrap" class="ww-sub-box ww-hidden">
+              <label class="ww-label" for="ww-dogs" style="margin-top:0;">
+                Number of dogs in your household
+                <span class="ww-field-hint">Use the − and + buttons to adjust your dog count.</span>
+              </label>
               <div class="ww-number">
                 <button type="button" data-step="-1" data-target="ww-dogs" aria-label="Remove a dog">−</button>
                 <input id="ww-dogs" type="number" min="1" max="20" value="1">
@@ -659,29 +1019,44 @@
         <!-- STEP 2: Reveals when dog frequency is chosen -->
         <div id="step-2-yard" class="ww-step-hidden">
           <div class="ww-panel">
-            <h3>2. Yard Cleanup Services</h3>
-            
+            <div class="ww-step-header">
+              <div>
+                <h3>2. Yard Cleanup Services</h3>
+                <p class="ww-muted" style="margin:4px 0 0;">Get your lawn completely caught up and fresh.</p>
+              </div>
+              <span class="ww-step-tag">Step 2 of 4</span>
+            </div>
+
             <label class="ww-choice ww-hidden" id="choice-initial">
               <input type="radio" name="cleanup_type" value="initial" id="ww-cleanup-initial">
-              <span><strong>Initial Cleanup</strong><br><span class="ww-muted">Required with new recurring service, starting at $50</span></span>
+              <span>
+                <strong>Initial Cleanup</strong><br>
+                <span class="ww-muted">Required with new recurring service to establish a clean baseline, starting at $50</span>
+              </span>
             </label>
 
             <label class="ww-choice ww-hidden" id="choice-onetime">
               <input type="radio" name="cleanup_type" value="onetime" id="ww-cleanup-onetime">
-              <span><strong>One-Time Cleanup</strong><br><span class="ww-muted">Standalone cleanup (No recurring service)</span></span>
+              <span>
+                <strong>One-Time Cleanup</strong><br>
+                <span class="ww-muted">Standalone deep yard cleanup (No recurring service required)</span>
+              </span>
             </label>
 
             <label class="ww-choice ww-hidden" id="choice-none">
               <input type="radio" name="cleanup_type" value="none" id="ww-cleanup-none" checked>
-              <span><strong>No Cleanup Needed</strong><br><span class="ww-muted">Skip this step</span></span>
+              <span>
+                <strong>No Cleanup Needed</strong><br>
+                <span class="ww-muted">Skip yard cleanup (e.g., if you only need cat litter or deodorizing service)</span>
+              </span>
             </label>
 
             <!-- Condition and Dog Count for chosen cleanup -->
-            <div id="ww-cleanup-details" class="ww-hidden">
-              
+            <div id="ww-cleanup-details" class="ww-sub-box ww-hidden">
+
               <!-- This dog counter only appears for One-Time cleanup -->
-              <div id="ww-onetime-dogs-wrap" class="ww-hidden">
-                <label class="ww-label" for="ww-onetime-dogs">Number of dogs</label>
+              <div id="ww-onetime-dogs-wrap" class="ww-hidden" style="margin-bottom:14px;">
+                <label class="ww-label" for="ww-onetime-dogs" style="margin-top:0;">Number of dogs</label>
                 <div class="ww-number">
                   <button type="button" data-step="-1" data-target="ww-onetime-dogs" aria-label="Remove a dog">−</button>
                   <input id="ww-onetime-dogs" type="number" min="1" max="20" value="1">
@@ -689,25 +1064,34 @@
                 </div>
               </div>
 
-              <label class="ww-label" for="ww-condition">Current amount of waste</label>
+              <label class="ww-label" for="ww-condition" style="margin-top:0;">
+                Current amount of accumulated waste
+                <span class="ww-field-hint">Select your best guess—we always confirm the final price with you before starting.</span>
+              </label>
               <select id="ww-condition">
-                <option value="light">Light — $50 estimate</option>
-                <option value="moderate">Moderate — $60–$75 estimate</option>
-                <option value="heavy">Heavy — $75–$125+ estimate</option>
-                <option value="very">Very heavy — custom quote</option>
-                <option value="unsure">Not sure — confirm price with me</option>
+                <option value="light">Light (1–2 weeks of buildup) — $50 estimate</option>
+                <option value="moderate">Moderate (2–4 weeks of buildup) — $60–$75 estimate</option>
+                <option value="heavy">Heavy (1+ months of buildup) — $75–$125+ estimate</option>
+                <option value="very">Very heavy — custom quote on arrival</option>
+                <option value="unsure">Not sure — confirm price with me first</option>
               </select>
-              
+
               <div class="ww-note">
                 Your final cleanup price depends on the yard's condition and the amount of waste.
-                <span id="ww-cleanup-fresh-note" class="ww-hidden"><br><br><strong>Note:</strong> A free Yard Fresh Treatment is included with an initial cleanup when you sign up for recurring service.</span>
+                <span id="ww-cleanup-fresh-note" class="ww-hidden"><br><br><strong>Included Perk:</strong> A free Yard Fresh Treatment (1st section) is automatically included with your initial cleanup when you sign up for recurring service!</span>
               </div>
             </div>
           </div>
 
           <div class="ww-panel">
-            <h3>3. Yard Fresh Treatment</h3>
-            
+            <div class="ww-step-header">
+              <div>
+                <h3>3. Yard Fresh Treatment</h3>
+                <p class="ww-muted" style="margin:4px 0 0;">Pet-safe deodorizing and sanitizing spray to eliminate lingering yard odors.</p>
+              </div>
+              <span class="ww-step-tag">Add-On</span>
+            </div>
+
             <!-- Base Treatment Option -->
             <label class="ww-choice" id="ww-fresh-choice">
               <input id="ww-fresh" type="checkbox">
@@ -722,37 +1106,53 @@
               <input id="ww-fresh-recurring" type="checkbox">
               <span>
                 <strong>Add Ongoing Yard Fresh Treatment</strong><br>
-                <span class="ww-muted">Apply this deodorizing treatment to every scheduled visit.</span>
+                <span class="ww-muted">Apply this deodorizing treatment on every scheduled visit ($15 first section + $5 each additional per visit).</span>
               </span>
             </label>
 
-            <div id="ww-fresh-details" class="ww-hidden">
-              <label class="ww-label" for="ww-sections">Number of yard sections</label>
+            <div id="ww-fresh-details" class="ww-sub-box ww-hidden">
+              <label class="ww-label" for="ww-sections" style="margin-top:0;">
+                Number of yard sections to treat
+                <span class="ww-field-hint">Example: Backyard = 1 section; Backyard + Front Yard or Side Dog Run = 2 sections.</span>
+              </label>
               <div class="ww-number">
                 <button type="button" data-step="-1" data-target="ww-sections" aria-label="Remove a yard section">−</button>
                 <input id="ww-sections" type="number" min="1" max="20" value="1">
                 <button type="button" data-step="1" data-target="ww-sections" aria-label="Add a yard section">+</button>
               </div>
-              <p class="ww-muted" style="margin-top:8px" id="ww-sections-note">Treatment is priced per visit.</p>
+              <p class="ww-muted" style="margin:10px 0 0;" id="ww-sections-note">Treatment is priced per visit.</p>
             </div>
           </div>
-          
-          <button type="button" class="ww-continue-btn" id="btn-to-cats">Continue to Cat Services</button>
+
+          <button type="button" class="ww-continue-btn" id="btn-to-cats">
+            <span>Next Step: Cat Litter Services</span>
+            <span aria-hidden="true">→</span>
+          </button>
         </div>
 
         <!-- STEP 3: Reveals after clicking Continue to Cat Services -->
         <div id="step-3-cats" class="ww-step-hidden">
           <div class="ww-panel">
-            <h3>4. Cat Litter Box Services</h3>
-            <label class="ww-label" for="ww-litter-frequency">Choose a litter-box service</label>
+            <div class="ww-step-header">
+              <div>
+                <h3>4. Cat Litter Box Services</h3>
+                <p class="ww-muted" style="margin:4px 0 0;">Don't have cats? Leave this set to "No litter-box service" and continue below.</p>
+              </div>
+              <span class="ww-step-tag">Step 3 of 4</span>
+            </div>
+
+            <label class="ww-label" for="ww-litter-frequency">
+              Choose a recurring litter-box service
+              <span class="ww-field-hint">$15/wk for 1 box (+$5 each additional) • Twice-weekly: $25/wk for 1 box (+$10 each additional)</span>
+            </label>
             <select id="ww-litter-frequency">
               <option value="none">No litter-box service</option>
               <option value="weekly">Weekly cleaning</option>
               <option value="twice">Twice-weekly cleaning</option>
             </select>
 
-            <div id="ww-box-count-wrap" class="ww-hidden">
-              <label class="ww-label" for="ww-boxes">Number of litter boxes</label>
+            <div id="ww-box-count-wrap" class="ww-sub-box ww-hidden">
+              <label class="ww-label" for="ww-boxes" style="margin-top:0;">Number of litter boxes</label>
               <div class="ww-number">
                 <button type="button" data-step="-1" data-target="ww-boxes" aria-label="Remove a litter box">−</button>
                 <input id="ww-boxes" type="number" min="1" max="20" value="1">
@@ -760,16 +1160,16 @@
               </div>
             </div>
 
-            <label class="ww-choice">
+            <label class="ww-choice" style="margin-top:14px;">
               <input id="ww-deep-clean" type="checkbox">
               <span>
                 <strong>Add Litter Box Deep Clean</strong><br>
-                <span class="ww-muted">A more thorough reset when your litter box needs extra attention.</span>
+                <span class="ww-muted">A complete scrub, sanitization, and fresh reset when your litter box needs extra attention.</span>
               </span>
             </label>
 
-            <div id="ww-deep-clean-details" class="ww-hidden">
-              <label class="ww-label" for="ww-deep-boxes">Number of boxes needing a deep clean</label>
+            <div id="ww-deep-clean-details" class="ww-sub-box ww-hidden">
+              <label class="ww-label" for="ww-deep-boxes" style="margin-top:0;">Number of boxes needing a deep clean</label>
               <div class="ww-number">
                 <button type="button" data-step="-1" data-target="ww-deep-boxes" aria-label="Remove a deep-clean box">−</button>
                 <input id="ww-deep-boxes" type="number" min="1" max="20" value="1">
@@ -777,27 +1177,37 @@
               </div>
               <div class="ww-note">
                 <strong>Litter Box Deep Clean Pricing</strong><br>
-                1 box — $25<br>
-                2 boxes — $40<br>
-                Each additional box beyond 2 — $15
+                1 box — $25 &nbsp;|&nbsp; 2 boxes — $40 &nbsp;|&nbsp; Each additional box beyond 2 — $15<br>
+                <em>(When paired with recurring cat service, your first standard maintenance fee is waived!)</em>
               </div>
             </div>
 
-            <p class="ww-muted" style="margin-top:10px">Customers provide litter by default. Litter supply, if needed, costs $10 per box.</p>
+            <p class="ww-muted" style="margin:12px 0 0;">
+              💡 <strong>Note on litter:</strong> Customers provide their preferred litter by default. If you need us to supply fresh litter, it is available for $10 per box.
+            </p>
           </div>
 
-          <button type="button" class="ww-continue-btn" id="btn-to-details">Continue to Contact Details</button>
+          <button type="button" class="ww-continue-btn" id="btn-to-details">
+            <span>Final Step: Enter Contact Details</span>
+            <span aria-hidden="true">→</span>
+          </button>
         </div>
 
         <!-- STEP 4: Reveals after clicking Continue to Contact Details -->
         <div id="step-4-contact" class="ww-step-hidden">
+
           <!-- SECTION 5: CUSTOMER CONTACT INFORMATION -->
           <div class="ww-panel" id="ww-customer-info">
-            <h3>5. Your Contact Information</h3>
-            <p class="ww-muted">Tell us how to reach you so we can follow up about your estimate and service needs.</p>
+            <div class="ww-step-header">
+              <div>
+                <h3>5. Your Contact Information</h3>
+                <p class="ww-muted" style="margin:4px 0 0;">Tell us where service is needed and how you prefer we reach out to confirm your quote.</p>
+              </div>
+              <span class="ww-step-tag">Step 4 of 4</span>
+            </div>
 
             <div class="ww-contact-section">
-              <h4>Customer Details</h4>
+              <h4>Customer &amp; Service Address Details</h4>
 
               <label class="ww-label" for="ww-customer-name">
                 Full name <span class="ww-required">*</span>
@@ -829,20 +1239,28 @@
                   <input id="ww-customer-zip" name="customer_zip" type="text" autocomplete="postal-code" placeholder="76234" required>
                 </div>
               </div>
+              <p class="ww-muted" style="margin:6px 0 0; font-size:12.5px;">
+                Serving Wise County ZIP codes: Decatur (76234), Bridgeport (76426), Boyd (76023), Paradise (76073), Rhome (76078), Chico (76431), Alvord (76225), Newark (76071), Slidell (76267), Ponder (76259), and Justin (76270).
+              </p>
 
-              <label class="ww-label" for="ww-customer-phone">
-                Phone number <span class="ww-required">*</span>
-              </label>
-              <input id="ww-customer-phone" name="customer_phone" type="tel" autocomplete="tel" placeholder="(940) 555-0123" required>
-
-              <label class="ww-label" for="ww-contact-method">
-                Preferred contact method <span class="ww-required">*</span>
-              </label>
-              <select id="ww-contact-method" name="preferred_contact" required>
-                <option value="text">Text message</option>
-                <option value="call">Phone call</option>
-                <option value="email">Email</option>
-              </select>
+              <div class="ww-grid">
+                <div>
+                  <label class="ww-label" for="ww-customer-phone">
+                    Phone number <span class="ww-required">*</span>
+                  </label>
+                  <input id="ww-customer-phone" name="customer_phone" type="tel" autocomplete="tel" placeholder="(940) 555-0123" required>
+                </div>
+                <div>
+                  <label class="ww-label" for="ww-contact-method">
+                    Preferred contact method <span class="ww-required">*</span>
+                  </label>
+                  <select id="ww-contact-method" name="preferred_contact" required>
+                    <option value="text">Text message</option>
+                    <option value="call">Phone call</option>
+                    <option value="email">Email</option>
+                  </select>
+                </div>
+              </div>
 
               <div id="ww-customer-email-wrap" class="ww-hidden">
                 <label class="ww-label" for="ww-customer-email">
@@ -861,15 +1279,21 @@
                 <option value="evening">Evening (4 PM–6 PM)</option>
               </select>
 
-              <p class="ww-muted" style="margin:12px 0 0">
-                Your information will be used to follow up about your quote and requested services.
+              <p class="ww-muted" style="margin:14px 0 0;">
+                🔒 Your information is kept private and used solely to follow up about your quote and requested services.
               </p>
             </div>
           </div>
 
           <!-- SECTION 6: YARD SIGN PERMISSION -->
           <div class="ww-panel" id="ww-yard-sign">
-            <h3>6. Yard Sign Permission</h3>
+            <div class="ww-step-header">
+              <div>
+                <h3>6. Yard Sign Permission</h3>
+                <p class="ww-muted" style="margin:4px 0 0;">Optional—does not affect your price or service.</p>
+              </div>
+              <span class="ww-step-tag">Optional</span>
+            </div>
 
             <p>
               Help spread the word about Wise Waste Services! Would you be comfortable
@@ -878,7 +1302,6 @@
             </p>
 
             <p class="ww-muted">
-              This is completely optional and will not affect your pricing or service.
               We will only place a sign with your permission, and you can ask us to
               remove it at any time.
             </p>
@@ -904,10 +1327,16 @@
 
           <!-- SECTION 7: TREATS & ADDITIONAL NOTES -->
           <div class="ww-panel" id="ww-additional-notes">
-            <h3>7. Pet Treats & Additional Notes</h3>
-            
+            <div class="ww-step-header">
+              <div>
+                <h3>7. Pet Treats &amp; Additional Notes</h3>
+                <p class="ww-muted" style="margin:4px 0 0;">Special preferences, gate access, or pet instructions.</p>
+              </div>
+              <span class="ww-step-tag">Preferences</span>
+            </div>
+
             <div id="ww-treats-container" class="ww-hidden" style="margin-bottom: 20px;">
-              <p class="ww-muted" style="margin-bottom: 12px;">We love making friends with your pets! Let us know if we can give them a little treat during our visit.</p>
+              <p class="ww-muted" style="margin-bottom: 10px;">We love making friends with your pets! Let us know if we can give them a little treat during our visit.</p>
 
               <!-- Dynamic Combined Treat Question -->
               <label class="ww-label" id="ww-treat-label" style="margin-top:0;">May we give your pet(s) a treat?</label>
@@ -923,17 +1352,13 @@
               </div>
             </div>
 
-            <p class="ww-muted" style="margin-top: 16px;">
-              Have special instructions, access details, or anything else you'd like to tell us? Leave a note below.
-            </p>
-
             <div class="ww-additional-notes-section" style="margin-top: 0;">
               <label class="ww-label" for="ww-customer-notes" style="margin-top:0;">
-                Additional notes <span class="ww-muted">(optional)</span>
+                Additional notes &amp; access instructions <span class="ww-muted">(optional)</span>
               </label>
-              <textarea id="ww-customer-notes" name="additional_notes" rows="5" maxlength="2000" placeholder="Example: The gate code is..., please watch for our friendly dog, or the backyard has a few areas that need extra attention..." aria-describedby="ww-notes-help"></textarea>
-              <p class="ww-muted" id="ww-notes-help" style="margin:8px 0 0">
-                Please include any details that may help us prepare for your service.
+              <textarea id="ww-customer-notes" name="additional_notes" rows="5" maxlength="2000" placeholder="Example: The gate code is #1234, please watch for our friendly dog, or the side yard behind the garage needs extra attention..." aria-describedby="ww-notes-help"></textarea>
+              <p class="ww-muted" id="ww-notes-help" style="margin:8px 0 0;">
+                Include gate codes, dog names, or any details that will help us prepare for your first visit.
               </p>
             </div>
           </div>
@@ -941,12 +1366,15 @@
       </div>
       <!-- END LEFT COLUMN -->
 
-      <!-- RIGHT COLUMN: REDESIGNED PRICE SUMMARY -->
+      <!-- RIGHT COLUMN: LIVE PRICE SUMMARY & SUBMIT -->
       <div class="ww-price-column">
         <div class="ww-total" aria-live="polite" aria-atomic="true">
-          <h3>Estimate Summary</h3>
-          <p style="color:#D5DFCE; font-size:14px; margin:0 0 16px 0; line-height:1.4;">
-            Review your customized service plan below. Charges are divided into your first visit and your ongoing schedule.
+          <div class="ww-total-header">
+            <h3>Estimate Summary</h3>
+            <span class="ww-live-pill">Live Quote</span>
+          </div>
+          <p style="color:#D5DFCE; font-size:13.5px; margin:0 0 16px 0; line-height:1.45;">
+            Your customized service plan updates automatically as you select options. Charges are separated into your first visit and your ongoing schedule.
           </p>
 
           <!-- First Visit Block -->
@@ -955,7 +1383,7 @@
             <div id="ww-onetime-lines">
               <div class="ww-empty-msg">Select a service to calculate costs.</div>
             </div>
-            
+
             <div class="ww-summary-foot">
               <span>First Visit Total</span>
               <strong id="ww-first-total">$0.00</strong>
@@ -968,8 +1396,8 @@
             <div id="ww-recurring-lines">
               <div class="ww-empty-msg">No ongoing services selected.</div>
             </div>
-            
-            <div class="ww-summary-foot" id="ww-recurring-foot" class="ww-hidden">
+
+            <div class="ww-summary-foot ww-hidden" id="ww-recurring-foot">
               <span>Estimated Ongoing Total</span>
               <div style="text-align: right;" id="ww-recurring-totals-wrap">
                 <!-- Dynamically populated totals will appear here -->
@@ -978,8 +1406,8 @@
           </div>
 
           <div id="ww-estimate-note" class="ww-note ww-hidden"></div>
-          
-          <p style="color:#D5DFCE; font-size:12px; margin-top:16px; line-height:1.4;">
+
+          <p style="color:#D5DFCE; font-size:12px; margin:16px 0 0; line-height:1.45;">
             *This is an estimate, not a final invoice. Initial cleanup pricing may vary based on yard condition. Custom-quoted services are not included in the displayed total.
           </p>
 
@@ -992,10 +1420,10 @@
           </div>
         </div>
 
-        <!-- SUBMIT BUTTON -->
+        <!-- SUBMIT BUTTON PANEL -->
         <div class="ww-submit-panel ww-step-hidden" id="ww-submit-section">
           <h3>Ready to Request Your Quote?</h3>
-          <p class="ww-muted">Submit your selections and contact information. We'll follow up using your preferred contact method.</p>
+          <p class="ww-muted">Submit your selections and contact details—no payment is required today. We'll follow up using your preferred contact method.</p>
           <button type="button" id="ww-submit-quote">Submit Quote Request</button>
           <p id="ww-submit-status" role="status" aria-live="polite"></p>
         </div>
@@ -1011,18 +1439,25 @@
       <!-- LEFT COLUMN: COMMERCIAL FORM -->
       <div class="ww-service-column">
         <div class="ww-panel">
-          <h3>Request a Commercial Consultation</h3>
+          <div class="ww-step-header">
+            <div>
+              <h3>Request a Commercial Consultation</h3>
+              <p class="ww-muted" style="margin:4px 0 0;">Tailored waste management for communities, parks, and businesses across Wise County.</p>
+            </div>
+            <span class="ww-step-tag">Commercial</span>
+          </div>
+
           <p class="ww-muted">Every property has different needs. Provide a few details about your community or business below, and we will reach out to design a customized service plan.</p>
 
-          <div class="ww-contact-section" style="margin-top: 20px;">
+          <div class="ww-contact-section" style="margin-top: 16px;">
             <div class="ww-grid">
               <div>
                 <label class="ww-label" for="ww-comm-business">Property or Business Name <span class="ww-required">*</span></label>
-                <input id="ww-comm-business" type="text" required>
+                <input id="ww-comm-business" type="text" placeholder="e.g., Oak Ridge Apartments" required>
               </div>
               <div>
                 <label class="ww-label" for="ww-comm-name">Contact Person <span class="ww-required">*</span></label>
-                <input id="ww-comm-name" type="text" autocomplete="name" required>
+                <input id="ww-comm-name" type="text" autocomplete="name" placeholder="Your full name" required>
               </div>
             </div>
 
@@ -1042,18 +1477,18 @@
             <div class="ww-grid">
               <div>
                 <label class="ww-label" for="ww-comm-phone">Phone Number <span class="ww-required">*</span></label>
-                <input id="ww-comm-phone" type="tel" autocomplete="tel" required>
+                <input id="ww-comm-phone" type="tel" autocomplete="tel" placeholder="(940) 555-0123" required>
               </div>
               <div>
                 <label class="ww-label" for="ww-comm-email">Email Address <span class="ww-required">*</span></label>
-                <input id="ww-comm-email" type="email" autocomplete="email" required>
+                <input id="ww-comm-email" type="email" autocomplete="email" placeholder="name@company.com" required>
               </div>
             </div>
 
             <label class="ww-label" for="ww-comm-notes">How can we help? <span class="ww-muted">(Optional)</span></label>
             <textarea id="ww-comm-notes" rows="4" placeholder="Example: We need 3 pet waste stations emptied weekly and the main dog park area scooped..."></textarea>
-            
-            <button type="button" id="ww-submit-comm-quote" style="margin-top: 16px;">Send Consultation Request</button>
+
+            <button type="button" id="ww-submit-comm-quote" style="margin-top: 18px;">Send Consultation Request</button>
             <p id="ww-comm-submit-status" role="status" aria-live="polite"></p>
           </div>
         </div>
@@ -1062,12 +1497,15 @@
       <!-- RIGHT COLUMN: QUICK CONTACT INFO -->
       <div class="ww-price-column">
         <div class="ww-total">
-          <h3>Prefer to chat?</h3>
-          <p style="color:#D5DFCE; font-size:14px; margin:0 0 16px 0; line-height:1.4;">
-            Give us a call or send us an email directly to discuss your property's needs right away.
+          <div class="ww-total-header">
+            <h3>Prefer to chat?</h3>
+            <span class="ww-live-pill">Direct Line</span>
+          </div>
+          <p style="color:#D5DFCE; font-size:14px; margin:0 0 16px 0; line-height:1.45;">
+            Give us a call or send us an email directly to discuss your property's needs, station servicing, or walkthrough scheduling right away.
           </p>
-          
-          <div class="ww-contact-actions" style="grid-template-columns: 1fr;">
+
+          <div class="ww-contact-actions">
             <a class="ww-contact-btn" href="tel:+19402470522" style="background:#fff; color:var(--green);">
               <svg class="ww-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.19 18a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.09 3.18 2 2 0 0 1 4.08 1h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.79a2 2 0 0 1-.45 2.11L8.06 8.89a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.89.34 1.83.58 2.79.7A2 2 0 0 1 22 16.92z"/>
@@ -1090,12 +1528,22 @@
 
   <!-- SUCCESS SCREEN (Hidden by default) -->
   <div id="ww-success-screen" class="ww-hidden">
-    <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:64px;height:64px;margin-bottom:16px;">
-      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-      <polyline points="22 4 12 14.01 9 11.01"></polyline>
-    </svg>
+    <div class="ww-success-icon-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:40px;height:40px;">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+    </div>
     <h2>Request Received!</h2>
     <p>Thank you for reaching out to Wise Waste Services. We've sent a quick confirmation to your email, and we'll be in touch shortly to finalize your quote and get you on the schedule.</p>
+    <div class="ww-next-steps">
+      <strong>What happens next:</strong>
+      <ul>
+        <li>We review your selected services and property details.</li>
+        <li>We reach out via your preferred contact method to confirm pricing and answer any questions.</li>
+        <li>Need immediate assistance? Call or text us at <a href="tel:+19402470522" style="color:var(--green);font-weight:700;">(940) 247-0522</a>.</li>
+      </ul>
+    </div>
   </div>
 
 </div>
@@ -1195,21 +1643,31 @@
       el.classList.toggle('ww-hidden', !yes);
     }
   };
-  
+
+  function markProgressStep(stepNum) {
+    const prog = $('ww-prog-' + stepNum);
+    if (prog) prog.classList.add('is-active');
+  }
+
   // STEP PROGRESSION LOGIC
   $('ww-dog-frequency').addEventListener('change', () => {
     show('step-2-yard', true);
+    markProgressStep(2);
     scheduleHeightReport();
   });
 
-  $('btn-to-cats').addEventListener('click', () => {$('btn-to-cats').style.display = 'none';
+  $('btn-to-cats').addEventListener('click', () => {
+    $('btn-to-cats').style.display = 'none';
     show('step-3-cats', true);
+    markProgressStep(3);
     scheduleHeightReport();
   });
 
-  $('btn-to-details').addEventListener('click', () => {$('btn-to-details').style.display = 'none';
+  $('btn-to-details').addEventListener('click', () => {
+    $('btn-to-details').style.display = 'none';
     show('step-4-contact', true);
     show('ww-submit-section', true);
+    markProgressStep(4);
     scheduleHeightReport();
   });
 
@@ -1226,12 +1684,20 @@
   $('ww-contact-method').addEventListener('change', updateContactMethod);
   updateContactMethod();
 
-  // PHONE AUTO-FORMATTER
+  // PHONE AUTO-FORMATTER (Handles +1 and 1 country code autofill)
   function formatPhoneNumber(e) {
-    let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+    let raw = e.target.value.replace(/^\s*\+?1\s*[-. (]*/, '');
+    let digits = raw.replace(/\D/g, '');
+    if (digits.length === 11 && digits.startsWith('1')) {
+      digits = digits.slice(1);
+    }
+    let x = digits.slice(0, 10).match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
     e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
   }
-  $('ww-customer-phone').addEventListener('input', formatPhoneNumber);$('ww-comm-phone').addEventListener('input', formatPhoneNumber);
+  ['input', 'change'].forEach(evt => {
+    $('ww-customer-phone').addEventListener(evt, formatPhoneNumber);
+    $('ww-comm-phone').addEventListener(evt, formatPhoneNumber);
+  });
 
 
   let previousDogFrequency = '';
