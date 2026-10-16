@@ -1031,7 +1031,7 @@
               <input type="radio" name="cleanup_type" value="initial" id="ww-cleanup-initial">
               <span>
                 <strong>Initial Cleanup</strong><br>
-                <span class="ww-muted">Required with new recurring service to establish a clean baseline, starting at $50</span>
+                <span class="ww-muted">Required with new recurring service to establish a clean baseline, starting at $35</span>
               </span>
             </label>
 
@@ -1069,10 +1069,10 @@
                 <span class="ww-field-hint">Select your best guess—we always confirm the final price with you before starting.</span>
               </label>
               <select id="ww-condition">
-                <option value="light">Light (1–2 weeks of buildup) — $50 estimate</option>
-                <option value="moderate">Moderate (2–4 weeks of buildup) — $60–$75 estimate</option>
-                <option value="heavy">Heavy (1+ months of buildup) — $75–$125+ estimate</option>
-                <option value="very">Very heavy — custom quote on arrival</option>
+                <option value="light">Light (Minimal buildup) — $35 estimate</option>
+                <option value="moderate">Moderate (Noticeable buildup) — $45–$60 estimate</option>
+                <option value="heavy">Heavy (Significant buildup requiring extra time) — $60–$100+ estimate</option>
+                <option value="very">Severely Neglected (Extensive buildup or unusually labor-intensive cleanup) — Custom Quote</option>
                 <option value="unsure">Not sure — confirm price with me first</option>
               </select>
 
@@ -1901,19 +1901,19 @@
       let price = '';
       
       if (condition === 'light') {
-        oneTime += 50;
-        price = 'Est: $50+';
-        desc += (desc ? ' • ' : '') + 'Price confirmed on arrival';
+        oneTime += 35;
+        price = 'Est: $35';
+        desc += (desc ? ' • ' : '') + 'Minimal buildup • Price confirmed on arrival';
       } else if (condition === 'moderate') {
-        oneTime += 60;
-        price = '$60–$75';
+        oneTime += 45;
+        price = '$45–$60';
         desc += (desc ? ' • ' : '') + '(Moderate estimate)';
-        notes.push('Moderate cleanup is estimated at $60–$75. The first-service total uses the $60 starting estimate.');
+        notes.push('Moderate cleanup is estimated at $45–$60. The first-service total uses the $45 starting estimate.');
       } else if (condition === 'heavy') {
-        oneTime += 75;
-        price = '$75–$125+';
+        oneTime += 60;
+        price = '$60–$100+';
         desc += (desc ? ' • ' : '') + '(Heavy estimate)';
-        notes.push('Heavy cleanup is estimated at $75–$125+. The first-service total uses the $75 starting estimate.');
+        notes.push('Heavy cleanup is estimated at $60–$100+. The first-service total uses the $60 starting estimate.');
       } else {
         price = 'Custom Quote';
         desc += (desc ? ' • ' : '') + '(Pending yard review)';
