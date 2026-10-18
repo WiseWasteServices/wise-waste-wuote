@@ -24,10 +24,10 @@
       --radius-sm: 9px;
       font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
       color: var(--ink);
-      max-width: 1180px;
+      max-width: 680px;
       margin: 0 auto;
       font-size: 15px;
-      line-height: 1.55;
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -35,12 +35,8 @@
       box-sizing: border-box;
     }
 
-    /* STEP VISIBILITY CLASSES (Preserved for JS compatibility) */
     #ww-quote .ww-hidden {
       display: none !important;
-    }
-    #ww-quote .ww-step-hidden {
-      display: none;
     }
 
     /* MAIN PANELS & CARDS */
@@ -48,55 +44,47 @@
       background: #ffffff;
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 24px;
-      margin: 0 0 18px;
+      padding: 22px;
+      margin: 0 0 16px;
       box-shadow: var(--shadow-sm);
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    #ww-quote .ww-panel:focus-within {
-      border-color: var(--green);
-      box-shadow: 0 4px 16px rgba(38, 58, 45, 0.09);
     }
 
     /* HEADER & HERO STYLING */
     #ww-quote .ww-hero-panel {
       background: linear-gradient(180deg, #ffffff 0%, #f9fbf9 100%);
-      border: 1px solid var(--border);
-      padding: 28px 24px 24px;
+      padding: 24px 20px 20px;
       text-align: center;
     }
 
     #ww-quote .ww-badge-pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
       background: var(--green-soft);
       color: var(--green);
       border: 1px solid var(--light);
       border-radius: 999px;
-      padding: 5px 14px;
-      font-size: 12.5px;
+      padding: 4px 12px;
+      font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.3px;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     #ww-quote h2 {
-      font-size: 30px;
+      font-size: 26px;
       font-weight: 800;
       line-height: 1.2;
       color: var(--green);
-      margin: 0 0 10px;
+      margin: 0 0 6px;
       letter-spacing: -0.3px;
     }
 
     #ww-quote .ww-hero-sub {
       color: var(--muted);
-      font-size: 16px;
-      max-width: 620px;
-      margin: 0 auto 20px;
+      font-size: 15px;
+      max-width: 520px;
+      margin: 0 auto 16px;
     }
 
     /* SEGMENTED TABS */
@@ -104,11 +92,11 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 6px;
-      max-width: 460px;
+      max-width: 420px;
       margin: 0 auto;
       background: var(--cream);
-      padding: 6px;
-      border-radius: 12px;
+      padding: 5px;
+      border-radius: 10px;
       border: 1px solid var(--border);
     }
 
@@ -116,115 +104,33 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      min-height: 46px;
-      padding: 10px 16px;
-      border: 1px solid transparent;
-      border-radius: 8px;
+      gap: 6px;
+      min-height: 42px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 7px;
       background: transparent;
       color: var(--muted);
       font: inherit;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.18s ease;
-    }
-
-    #ww-quote .ww-tab:hover {
-      color: var(--green);
+      transition: all 0.15s ease;
     }
 
     #ww-quote .ww-tab[aria-pressed="true"] {
       background: var(--green);
       color: #ffffff;
-      border-color: var(--green);
       box-shadow: 0 2px 6px rgba(38, 58, 45, 0.2);
     }
 
-    /* VISUAL PROGRESS BAR */
-    #ww-quote .ww-progress-bar {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin: 0 0 18px;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 12px 16px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    #ww-quote .ww-progress-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--muted);
-      opacity: 0.65;
-      transition: opacity 0.2s ease, color 0.2s ease;
-    }
-
-    #ww-quote .ww-progress-item.is-active {
-      color: var(--green);
-      opacity: 1;
-    }
-
-    #ww-quote .ww-progress-dot {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: var(--cream);
-      border: 1.5px solid var(--border-strong);
-      color: var(--muted);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
-      flex-shrink: 0;
-      transition: all 0.2s ease;
-    }
-
-    #ww-quote .ww-progress-item.is-active .ww-progress-dot {
-      background: var(--green);
-      border-color: var(--green);
-      color: #ffffff;
-    }
-
     /* SECTION HEADINGS */
-    #ww-quote .ww-step-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #edf2ed;
-    }
-
     #ww-quote h3 {
-      font-size: 19px;
+      font-size: 17.5px;
       font-weight: 700;
       color: var(--green);
-      margin: 0;
+      margin: 0 0 12px;
       line-height: 1.3;
-    }
-
-    #ww-quote .ww-step-tag {
-      background: var(--cream);
-      color: var(--muted);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 3px 9px;
-      font-size: 12px;
-      font-weight: 600;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    #ww-quote p {
-      margin: 0 0 14px;
     }
 
     #ww-quote .ww-muted {
@@ -238,35 +144,32 @@
       display: block;
       font-weight: 600;
       color: var(--ink);
-      margin: 16px 0 6px;
-      font-size: 14.5px;
+      margin: 12px 0 5px;
+      font-size: 14px;
     }
 
     #ww-quote .ww-label:first-of-type {
-      margin-top: 6px;
+      margin-top: 0;
     }
 
-    #ww-quote .ww-field-hint {
-      display: block;
-      font-weight: 400;
-      font-size: 12.5px;
-      color: var(--muted);
-      margin-top: 2px;
+    #ww-quote .ww-required {
+      color: var(--danger);
+      font-weight: 700;
     }
 
     #ww-quote select,
     #ww-quote input:not([type="checkbox"]):not([type="radio"]),
     #ww-quote textarea {
       width: 100%;
-      min-height: 48px;
+      min-height: 46px;
       border: 1.5px solid var(--border-strong);
       border-radius: var(--radius-sm);
-      padding: 11px 14px;
+      padding: 10px 13px;
       background-color: #ffffff;
       color: var(--ink);
       font: inherit;
       font-size: 15px;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
     #ww-quote select {
@@ -279,12 +182,6 @@
       cursor: pointer;
     }
 
-    #ww-quote select:hover,
-    #ww-quote input:not([type="checkbox"]):not([type="radio"]):hover,
-    #ww-quote textarea:hover {
-      border-color: var(--green);
-    }
-
     #ww-quote select:focus,
     #ww-quote input:not([type="checkbox"]):not([type="radio"]):focus,
     #ww-quote textarea:focus {
@@ -293,104 +190,46 @@
       box-shadow: 0 0 0 3px rgba(213, 223, 206, 0.75);
     }
 
-    /* PROMO CALLOUT BANNER */
-    #ww-quote .ww-promo-banner {
+    #ww-quote textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    #ww-quote .ww-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    #ww-quote .ww-sub-box {
       background: var(--cream);
-      border: 1px solid var(--light);
-      border-left: 4px solid var(--green);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      margin-top: 12px;
-      color: var(--green);
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    /* RADIO & CHECKBOX SELECTION CARDS */
-    #ww-quote input[type="checkbox"],
-    #ww-quote input[type="radio"] {
-      width: 20px;
-      min-height: 20px;
-      height: 20px;
-      accent-color: var(--green);
-      margin: 2px 12px 0 0;
-      flex-shrink: 0;
-      cursor: pointer;
-    }
-
-    #ww-quote .ww-choice {
-      display: flex;
-      align-items: flex-start;
-      padding: 14px 16px;
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      margin: 10px 0;
-      background: #ffffff;
-      cursor: pointer;
-      transition: all 0.16s ease;
+      padding: 14px;
+      margin-top: 12px;
     }
 
-    #ww-quote .ww-choice:hover:not(.ww-disabled) {
-      border-color: var(--green);
-      background: #fafcfa;
-    }
-
-    #ww-quote .ww-choice:has(input:checked) {
-      border-color: var(--green);
-      background: var(--cream);
-      box-shadow: 0 2px 6px rgba(38, 58, 45, 0.06);
-    }
-
-    #ww-quote .ww-choice span {
-      flex: 1;
-    }
-
-    #ww-quote .ww-choice strong {
-      color: var(--ink);
-      font-size: 15px;
-    }
-
-    /* Disabled / Auto-Included Perk State */
-    #ww-quote .ww-choice.ww-disabled {
-      background: var(--green-soft);
-      border-color: var(--light);
-      border-style: solid;
-      opacity: 1;
-      cursor: default;
-    }
-
-    #ww-quote .ww-choice.ww-disabled:has(input:checked) {
-      background: var(--green-soft);
-      border-color: var(--green);
-    }
-
-    #ww-quote .ww-choice.ww-disabled input {
-      cursor: default;
-    }
-
-    /* COUNTER / STEPPER INPUTS */
+    /* STEPPER CONTROLS */
     #ww-quote .ww-number {
       display: grid;
-      grid-template-columns: 48px minmax(0, 1fr) 48px;
+      grid-template-columns: 44px minmax(0, 1fr) 44px;
       gap: 8px;
       align-items: center;
-      max-width: 240px;
+      max-width: 190px;
     }
 
     #ww-quote .ww-number button {
-      height: 48px;
+      height: 44px;
       border: 1.5px solid var(--border-strong);
       border-radius: var(--radius-sm);
-      background: var(--cream);
-      font-size: 22px;
-      font-weight: 600;
+      background: #ffffff;
+      font-size: 20px;
+      font-weight: 700;
       color: var(--green);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.15s ease;
       user-select: none;
     }
 
@@ -399,532 +238,276 @@
       border-color: var(--green);
     }
 
-    #ww-quote .ww-number button:active {
-      transform: scale(0.96);
-    }
-
     #ww-quote .ww-number input {
       text-align: center;
       font-weight: 700;
       font-size: 16px;
-      font-variant-numeric: tabular-nums;
+      min-height: 44px;
     }
 
-    /* GRIDS & SUB-CONTAINERS */
-    #ww-quote .ww-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+    /* CHECKBOX CARDS */
+    #ww-quote input[type="checkbox"] {
+      width: 18px;
+      min-height: 18px;
+      height: 18px;
+      accent-color: var(--green);
+      margin: 1px 10px 0 0;
+      flex-shrink: 0;
+      cursor: pointer;
     }
 
-    #ww-quote .ww-sub-box {
-      background: var(--cream);
-      border: 1px solid var(--border);
+    #ww-quote .ww-choice {
+      display: flex;
+      align-items: flex-start;
+      padding: 13px 15px;
+      border: 1.5px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 16px;
-      margin-top: 14px;
+      background: #ffffff;
+      cursor: pointer;
+      transition: all 0.15s ease;
     }
 
-    /* DESKTOP TWO-COLUMN CALCULATOR LAYOUT */
-    #ww-quote .ww-calculator-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.22fr) minmax(340px, 0.88fr);
-      gap: 22px;
-      align-items: start;
+    #ww-quote .ww-choice:hover {
+      border-color: var(--green);
+      background: #fafcfa;
     }
 
-    #ww-quote .ww-service-column {
-      min-width: 0;
+    #ww-quote .ww-choice:has(input:checked) {
+      border-color: var(--green);
+      background: var(--cream);
     }
 
-    #ww-quote .ww-price-column {
-      min-width: 0;
-      position: sticky;
-      top: 20px;
-      align-self: start;
+    #ww-quote .ww-choice span {
+      flex: 1;
     }
 
-    /* RIGHT COLUMN: LIVE ESTIMATE RECEIPT */
-    #ww-quote .ww-total {
+    #ww-quote .ww-choice strong {
+      color: var(--ink);
+      font-size: 14.5px;
+    }
+
+    /* COMPACT CHECKBOX (Small permissions) */
+    #ww-quote .ww-compact-check {
+      display: flex;
+      align-items: center;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      margin-bottom: 8px;
+      user-select: none;
+    }
+
+    #ww-quote .ww-compact-check:hover {
+      color: var(--green);
+    }
+
+    /* BUTTONS */
+    #ww-quote .ww-primary-btn {
+      width: 100%;
+      min-height: 54px;
+      padding: 14px 20px;
+      border: 2px solid var(--green);
+      border-radius: var(--radius-md);
+      background: var(--green);
+      color: #ffffff;
+      font: inherit;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(38, 58, 45, 0.18);
+      transition: all 0.15s ease;
+      margin-top: 18px;
+    }
+
+    #ww-quote .ww-primary-btn:hover:not(:disabled) {
+      background: var(--green-hover);
+      border-color: var(--green-hover);
+      transform: translateY(-1px);
+    }
+
+    #ww-quote .ww-primary-btn:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+
+    #ww-quote .ww-secondary-btn {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 16px;
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      color: var(--green);
+      font: inherit;
+      font-size: 14.5px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #ww-quote .ww-secondary-btn:hover {
+      border-color: var(--green);
+      background: var(--cream);
+    }
+
+    /* STATUS / ERROR BANNER */
+    #ww-quote .ww-status-msg {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--danger-bg);
+      color: var(--danger);
+      border: 1px solid #ebccd1;
+    }
+
+    /* SCREEN 2: STREAMLINED QUOTE CARD */
+    #ww-quote .ww-receipt-box {
       background: var(--green);
       color: #ffffff;
       border-radius: var(--radius-lg);
-      padding: 24px;
-      min-width: 0;
-      max-width: 100%;
+      padding: 24px 22px;
+      margin-bottom: 16px;
       box-shadow: var(--shadow-md);
-      border: 1px solid rgba(255, 255, 255, 0.12);
     }
 
-    #ww-quote .ww-total-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 6px;
+    #ww-quote .ww-price-hero {
+      text-align: center;
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
     }
 
-    #ww-quote .ww-total h3 {
-      color: #ffffff;
-      margin: 0;
-      font-size: 22px;
-      letter-spacing: -0.2px;
-    }
-
-    #ww-quote .ww-live-pill {
+    #ww-quote .ww-price-eyebrow {
+      display: inline-block;
       background: rgba(213, 223, 206, 0.18);
       color: var(--light);
-      border: 1px solid rgba(213, 223, 206, 0.35);
       border-radius: 999px;
-      padding: 3px 10px;
+      padding: 3px 12px;
       font-size: 11.5px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
     }
 
-    #ww-quote .ww-summary-card {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      margin-top: 14px;
+    #ww-quote .ww-big-price {
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #ffffff;
+      font-variant-numeric: tabular-nums;
     }
 
-    #ww-quote .ww-summary-card h4 {
-      margin: 0 0 12px 0;
+    #ww-quote .ww-big-sub {
       color: var(--light);
-      font-size: 12.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.7px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-      padding-bottom: 8px;
+      font-size: 13.5px;
+      margin-top: 5px;
     }
 
     #ww-quote .ww-summary-line {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 12px;
-      line-height: 1.35;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       gap: 12px;
+      font-size: 14.5px;
     }
 
     #ww-quote .ww-summary-line:last-child {
-      margin-bottom: 0;
+      border-bottom: none;
+      padding-bottom: 0;
     }
 
     #ww-quote .ww-summary-title {
       font-weight: 600;
       color: #ffffff;
-      font-size: 14.5px;
     }
 
     #ww-quote .ww-summary-desc {
       font-size: 12.5px;
       color: var(--light);
-      margin-top: 2px;
     }
 
     #ww-quote .ww-summary-price {
       font-weight: 700;
-      text-align: right;
       color: #ffffff;
       white-space: nowrap;
-      font-size: 14.5px;
       font-variant-numeric: tabular-nums;
     }
 
-    #ww-quote .ww-summary-foot {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-top: 14px;
-      padding-top: 14px;
-      border-top: 1px dashed rgba(255, 255, 255, 0.28);
-      font-size: 14.5px;
-      font-weight: 600;
-      color: var(--light);
-    }
-
-    #ww-quote .ww-summary-foot strong {
-      font-size: 24px;
-      line-height: 1.1;
-      display: block;
-      color: #ffffff;
-      font-variant-numeric: tabular-nums;
-    }
-
-    #ww-quote .ww-summary-foot .ww-sub-total {
-      font-size: 14px;
-      color: var(--light);
-      font-weight: 500;
-      margin-left: 2px;
-    }
-
-    #ww-quote .ww-empty-msg {
-      font-size: 13px;
-      color: var(--light);
-      font-style: italic;
-      opacity: 0.9;
-    }
-
-    #ww-quote .ww-note {
-      background: var(--cream);
-      color: var(--ink);
-      border-left: 3.5px solid var(--green);
-      border-radius: 8px;
+    #ww-quote .ww-free-banner {
+      background: rgba(213, 223, 206, 0.14);
+      border: 1px solid rgba(213, 223, 206, 0.35);
+      border-radius: var(--radius-md);
       padding: 12px 14px;
-      font-size: 13px;
-      line-height: 1.45;
-      margin-top: 14px;
-    }
-
-    /* CONTACT ACTIONS (Commercial right panel) */
-    #ww-quote .ww-contact-actions {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    #ww-quote .ww-contact-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 50px;
-      padding: 12px 16px;
-      border-radius: var(--radius-sm);
-      font: inherit;
-      font-weight: 700;
-      text-align: center;
-      text-decoration: none;
-      transition: transform 0.12s ease, opacity 0.15s ease;
-    }
-
-    #ww-quote .ww-contact-btn:hover {
-      opacity: 0.92;
-      transform: translateY(-1px);
-    }
-
-    #ww-quote .ww-contact-icon {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-    }
-
-    /* CUSTOMER CONTACT, YARD SIGN & NOTES SECTIONS */
-    #ww-quote .ww-contact-section,
-    #ww-quote .ww-yard-sign-section,
-    #ww-quote .ww-additional-notes-section {
-      background: var(--cream);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 18px;
-      margin-top: 14px;
-    }
-
-    #ww-quote .ww-contact-section h4 {
-      color: var(--green);
-      font-size: 16px;
-      font-weight: 700;
-      margin: 0 0 8px;
-    }
-
-    #ww-quote .ww-contact-section textarea {
-      min-height: 84px;
-      resize: vertical;
-    }
-
-    #ww-quote .ww-required {
-      color: var(--danger);
-      font-weight: 700;
-    }
-
-    #ww-quote .ww-yard-sign-section .ww-choice:first-child {
-      margin-top: 0;
-    }
-
-    #ww-quote .ww-yard-sign-section .ww-choice:last-child {
-      margin-bottom: 0;
-    }
-
-    #ww-quote .ww-additional-notes-section textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    /* STEP PROGRESSION BUTTONS */
-    #ww-quote .ww-continue-btn {
-      width: 100%;
-      min-height: 54px;
-      padding: 14px 20px;
-      border: 2px solid var(--green);
-      border-radius: var(--radius-md);
-      background: var(--green);
-      color: #ffffff;
-      font: inherit;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: var(--shadow-sm);
-      transition: all 0.16s ease;
-      margin-bottom: 20px;
-    }
-
-    #ww-quote .ww-continue-btn:hover {
-      background: var(--green-hover);
-      border-color: var(--green-hover);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(38, 58, 45, 0.18);
-    }
-
-    /* QUOTE SUBMISSION AREA */
-    #ww-quote .ww-submit-panel {
       margin-top: 16px;
-      padding: 22px;
-      background: #ffffff;
-      border: 2px solid var(--green);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-    }
-
-    #ww-quote .ww-submit-panel h3 {
-      margin-bottom: 6px;
-      font-size: 19px;
-    }
-
-    #ww-quote #ww-submit-quote,
-    #ww-quote #ww-submit-comm-quote {
-      width: 100%;
-      min-height: 54px;
-      padding: 14px 20px;
-      border: 1px solid var(--green);
-      border-radius: var(--radius-sm);
-      background: var(--green);
+      font-size: 13.5px;
+      line-height: 1.45;
       color: #ffffff;
-      font: inherit;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background-color 0.15s ease, transform 0.12s ease, opacity 0.15s ease;
-      box-shadow: 0 4px 12px rgba(38, 58, 45, 0.18);
     }
 
-    #ww-quote #ww-submit-quote:hover:not(:disabled),
-    #ww-quote #ww-submit-comm-quote:hover:not(:disabled) {
-      background: var(--green-hover);
-      transform: translateY(-1px);
-    }
-
-    #ww-quote #ww-submit-quote:disabled,
-    #ww-quote #ww-submit-comm-quote:disabled {
-      opacity: 0.65;
-      cursor: wait;
-      transform: none;
-    }
-
-    #ww-quote #ww-submit-status,
-    #ww-quote #ww-comm-submit-status {
-      overflow-wrap: anywhere;
+    #ww-quote .ww-free-banner strong {
+      color: var(--light);
+      display: block;
+      margin-bottom: 2px;
       font-size: 14px;
-      font-weight: 600;
-      margin: 14px 0 0;
-      padding: 12px 14px;
-      border-radius: 8px;
-      background: var(--cream);
-      border: 1px solid var(--border);
-    }
-
-    #ww-quote #ww-submit-status:empty,
-    #ww-quote #ww-comm-submit-status:empty {
-      display: none !important;
     }
 
     /* SUCCESS SCREEN */
     #ww-success-screen {
       text-align: center;
-      padding: 56px 24px;
+      padding: 42px 22px;
       background: #ffffff;
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-md);
-      max-width: 680px;
-      margin: 20px auto;
     }
 
     #ww-success-screen .ww-success-icon-wrap {
-      width: 76px;
-      height: 76px;
+      width: 68px;
+      height: 68px;
       border-radius: 50%;
       background: var(--green-soft);
       border: 2px solid var(--light);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
     }
 
-    #ww-success-screen h2 {
-      font-size: 30px;
-      color: var(--green);
-      margin-bottom: 12px;
-    }
-
-    #ww-success-screen p {
-      font-size: 16px;
-      color: var(--muted);
-      max-width: 480px;
-      margin: 0 auto 24px;
-    }
-
-    #ww-success-screen .ww-next-steps {
-      background: var(--cream);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 18px;
-      max-width: 480px;
-      margin: 0 auto;
-      text-align: left;
-      font-size: 14px;
-      color: var(--ink);
-    }
-
-    #ww-success-screen .ww-next-steps strong {
-      color: var(--green);
-      display: block;
-      margin-bottom: 8px;
-      font-size: 14.5px;
-    }
-
-    #ww-success-screen .ww-next-steps ul {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--muted);
-    }
-
-    #ww-success-screen .ww-next-steps li {
-      margin-bottom: 6px;
-    }
-
-    #ww-success-screen .ww-next-steps li:last-child {
-      margin-bottom: 0;
-    }
-
-    /* RESPONSIVE / MOBILE OPTIMIZATIONS */
-    @media (max-width: 820px) {
-      #ww-quote .ww-progress-bar {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-      }
-    }
-
-    @media (max-width: 760px) {
+    @media (max-width: 640px) {
       body {
-        padding: 12px !important;
+        padding: 10px !important;
       }
-
-      #ww-quote {
-        font-size: 15px;
-        line-height: 1.48;
-      }
-
-      #ww-quote .ww-calculator-layout {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-      }
-
-      #ww-quote .ww-service-column,
-      #ww-quote .ww-price-column {
-        width: 100%;
-        min-width: 0;
-      }
-
-      #ww-quote .ww-price-column {
-        position: static;
-      }
-
       #ww-quote .ww-panel {
-        padding: 18px 16px;
+        padding: 16px 15px;
         margin-bottom: 12px;
-        border-radius: 14px;
       }
-
+      #ww-quote .ww-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
       #ww-quote h2 {
-        font-size: 24px;
-        line-height: 1.25;
+        font-size: 23px;
       }
-
-      #ww-quote h3 {
-        font-size: 17.5px;
-        line-height: 1.35;
+      #ww-quote .ww-big-price {
+        font-size: 32px;
       }
-
       #ww-quote select,
       #ww-quote input:not([type="checkbox"]):not([type="radio"]),
       #ww-quote textarea {
-        font-size: 16px; /* Prevents iOS auto-zoom on focus */
-        min-height: 48px;
+        font-size: 16px;
       }
-
-      #ww-quote .ww-choice {
-        padding: 13px 14px;
-        margin: 8px 0;
-      }
-
-      #ww-quote .ww-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-
       #ww-quote .ww-number {
         max-width: 100%;
-        grid-template-columns: 52px minmax(0, 1fr) 52px;
-      }
-
-      #ww-quote .ww-number button {
-        height: 48px;
-        font-size: 24px;
-      }
-
-      #ww-quote .ww-total {
-        padding: 20px 16px;
-        border-radius: 14px;
-      }
-
-      #ww-quote .ww-summary-foot strong {
-        font-size: 21px;
-      }
-
-      #ww-quote .ww-contact-section,
-      #ww-quote .ww-yard-sign-section,
-      #ww-quote .ww-additional-notes-section {
-        padding: 14px;
-      }
-
-      #ww-quote .ww-submit-panel {
-        margin-top: 12px;
-        padding: 18px 16px;
-      }
-    }
-
-    @media (max-width: 400px) {
-      #ww-quote .ww-progress-bar {
-        grid-template-columns: 1fr 1fr;
-        padding: 10px 12px;
-      }
-      #ww-quote .ww-panel {
-        padding: 15px 13px;
-      }
-      #ww-quote h2 {
-        font-size: 22px;
       }
     }
   </style>
@@ -939,7 +522,7 @@
     <div class="ww-panel ww-hero-panel">
       <div class="ww-badge-pill">Serving Wise County, Texas • No Contracts</div>
       <h2>Get Your Instant Quote</h2>
-      <p class="ww-hero-sub">Customize your pet waste cleanup plan below and see your estimated price immediately—with no hidden fees.</p>
+      <p class="ww-hero-sub">Select your services below to see your instant price—no hidden fees.</p>
       <div class="ww-tabs" id="ww-tab-container" role="group" aria-label="Select property type">
         <button type="button" class="ww-tab" id="ww-res-tab" aria-pressed="true">🏡 Residential Home</button>
         <button type="button" class="ww-tab" id="ww-com-tab" aria-pressed="false">🏢 Commercial Property</button>
@@ -947,638 +530,286 @@
     </div>
   </div>
 
-  <!-- RESIDENTIAL CALCULATOR -->
+  <!-- RESIDENTIAL FLOW -->
   <div id="ww-residential">
 
-    <!-- Visual Step Progress Tracker -->
-    <div class="ww-progress-bar" aria-label="Quote progress">
-      <div class="ww-progress-item is-active" id="ww-prog-1">
-        <span class="ww-progress-dot">1</span>
-        <span>Dog Service</span>
-      </div>
-      <div class="ww-progress-item" id="ww-prog-2">
-        <span class="ww-progress-dot">2</span>
-        <span>Yard Care</span>
-      </div>
-      <div class="ww-progress-item" id="ww-prog-3">
-        <span class="ww-progress-dot">3</span>
-        <span>Cat Litter</span>
-      </div>
-      <div class="ww-progress-item" id="ww-prog-4">
-        <span class="ww-progress-dot">4</span>
-        <span>Your Details</span>
-      </div>
-    </div>
+    <!-- ==========================================
+         SCREEN 1 — GET A QUOTE
+         ========================================== -->
+    <form id="ww-screen-1" onsubmit="event.preventDefault(); document.getElementById('ww-see-price-btn').click();">
 
-    <div class="ww-calculator-layout">
+      <!-- 1. Basic Contact Information with Browser Autofill Attributes -->
+      <div class="ww-panel">
+        <h3>1. Contact &amp; Service Address</h3>
 
-      <!-- LEFT COLUMN: SERVICE OPTIONS (Progressive Reveal) -->
-      <div class="ww-service-column">
+        <label class="ww-label" for="ww-customer-name">
+          Full name <span class="ww-required">*</span>
+        </label>
+        <input id="ww-customer-name" name="name" type="text" autocomplete="name" placeholder="Your full name">
 
-        <!-- STEP 1: Always visible initially -->
-        <div id="step-1-dog">
-          <div class="ww-panel">
-            <div class="ww-step-header">
-              <div>
-                <h3>1. Dog Waste Removal</h3>
-                <p class="ww-muted" style="margin:4px 0 0;">How often would you like us to scoop your yard?</p>
-              </div>
-              <span class="ww-step-tag">Step 1 of 4</span>
-            </div>
-
-            <label class="ww-label" for="ww-dog-frequency">
-              Service frequency
-              <span class="ww-field-hint">Choose a recurring schedule or select "No dog waste service" for one-time or cat-only care.</span>
+        <div class="ww-grid">
+          <div>
+            <label class="ww-label" for="ww-customer-phone">
+              Phone number <span class="ww-required">*</span>
             </label>
-            <select id="ww-dog-frequency">
-              <option value="" disabled selected>Select an option...</option>
-              <option value="none">No dog waste service</option>
-              <option value="weekly">Weekly (Most Popular)</option>
-              <option value="twice">Twice weekly</option>
-              <option value="biweekly">Every other week (biweekly)</option>
+            <input id="ww-customer-phone" name="tel" type="tel" autocomplete="tel" placeholder="(940) 555-0123">
+          </div>
+          <div>
+            <label class="ww-label" for="ww-customer-email">
+              Email <span class="ww-muted">(optional)</span>
+            </label>
+            <input id="ww-customer-email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+          </div>
+        </div>
+
+        <label class="ww-label" for="ww-customer-address">
+          Service address <span class="ww-required">*</span>
+        </label>
+        <input id="ww-customer-address" name="street-address" type="text" autocomplete="street-address" placeholder="123 Main St, Decatur, TX 76234">
+      </div>
+
+      <!-- 2. Dog Waste Removal -->
+      <div class="ww-panel">
+        <h3>2. Dog Waste Removal</h3>
+
+        <label class="ww-label" for="ww-dog-frequency">Service frequency</label>
+        <select id="ww-dog-frequency" name="dog_frequency">
+          <option value="none">No dog waste service</option>
+          <option value="twice">Twice Weekly</option>
+          <option value="weekly" selected>Weekly (Most Popular)</option>
+          <option value="biweekly">Bi-Weekly (Every 2 Weeks)</option>
+          <option value="onetime">One-Time Cleanup</option>
+        </select>
+
+        <div id="ww-dog-count-wrap" class="ww-sub-box">
+          <label class="ww-label" for="ww-dogs" style="margin-top:0;">Number of dogs</label>
+          <div class="ww-number">
+            <button type="button" data-step="-1" data-target="ww-dogs" aria-label="Remove a dog">−</button>
+            <input id="ww-dogs" name="dog_count" type="number" min="1" max="20" value="1" readonly>
+            <button type="button" data-step="1" data-target="ww-dogs" aria-label="Add a dog">+</button>
+          </div>
+
+          <!-- Condition selector appears only for One-Time Cleanup -->
+          <div id="ww-condition-wrap" class="ww-hidden" style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">
+            <label class="ww-label" for="ww-condition" style="margin-top:0;">Current yard buildup</label>
+            <select id="ww-condition" name="yard_condition">
+              <option value="light">Light (Minimal buildup) — $35 estimate</option>
+              <option value="moderate">Moderate (Noticeable buildup) — $45–$60 estimate</option>
+              <option value="heavy">Heavy (Significant buildup) — $60–$100+ estimate</option>
+              <option value="very">Severely Neglected — Custom Quote</option>
             </select>
-
-            <p id="ww-promo-text" class="ww-promo-banner">
-              🎁 Promo: Choose a weekly, twice-weekly, or biweekly plan and your first regular scoop is FREE!
-            </p>
-
-            <div id="ww-dog-count-wrap" class="ww-sub-box ww-hidden">
-              <label class="ww-label" for="ww-dogs" style="margin-top:0;">
-                Number of dogs in your household
-                <span class="ww-field-hint">Use the − and + buttons to adjust your dog count.</span>
-              </label>
-              <div class="ww-number">
-                <button type="button" data-step="-1" data-target="ww-dogs" aria-label="Remove a dog">−</button>
-                <input id="ww-dogs" type="number" min="1" max="20" value="1">
-                <button type="button" data-step="1" data-target="ww-dogs" aria-label="Add a dog">+</button>
-              </div>
-            </div>
           </div>
         </div>
+      </div>
 
-        <!-- STEP 2: Reveals when dog frequency is chosen -->
-        <div id="step-2-yard" class="ww-step-hidden">
-          <div class="ww-panel">
-            <div class="ww-step-header">
-              <div>
-                <h3>2. Yard Cleanup Services</h3>
-                <p class="ww-muted" style="margin:4px 0 0;">Get your lawn completely caught up and fresh.</p>
-              </div>
-              <span class="ww-step-tag">Step 2 of 4</span>
-            </div>
+      <!-- 3. Cat Litter Box Cleaning -->
+      <div class="ww-panel">
+        <h3>3. Cat Litter Box Cleaning</h3>
 
-            <label class="ww-choice ww-hidden" id="choice-initial">
-              <input type="radio" name="cleanup_type" value="initial" id="ww-cleanup-initial">
-              <span>
-                <strong>Initial Cleanup</strong><br>
-                <span class="ww-muted">Required with new recurring service to establish a clean baseline, starting at $35</span>
-              </span>
-            </label>
+        <label class="ww-label" for="ww-litter-frequency">Service frequency</label>
+        <select id="ww-litter-frequency" name="litter_frequency">
+          <option value="none" selected>No cat litter box service</option>
+          <option value="twice">Twice Weekly</option>
+          <option value="weekly">Weekly</option>
+          <option value="biweekly">Bi-Weekly (Every 2 Weeks)</option>
+          <option value="onetime">One-Time Cleanup</option>
+        </select>
 
-            <label class="ww-choice ww-hidden" id="choice-onetime">
-              <input type="radio" name="cleanup_type" value="onetime" id="ww-cleanup-onetime">
-              <span>
-                <strong>One-Time Cleanup</strong><br>
-                <span class="ww-muted">Standalone deep yard cleanup (No recurring service required)</span>
-              </span>
-            </label>
-
-            <label class="ww-choice ww-hidden" id="choice-none">
-              <input type="radio" name="cleanup_type" value="none" id="ww-cleanup-none" checked>
-              <span>
-                <strong>No Cleanup Needed</strong><br>
-                <span class="ww-muted">Skip yard cleanup (e.g., if you only need cat litter or deodorizing service)</span>
-              </span>
-            </label>
-
-            <!-- Condition and Dog Count for chosen cleanup -->
-            <div id="ww-cleanup-details" class="ww-sub-box ww-hidden">
-
-              <!-- This dog counter only appears for One-Time cleanup -->
-              <div id="ww-onetime-dogs-wrap" class="ww-hidden" style="margin-bottom:14px;">
-                <label class="ww-label" for="ww-onetime-dogs" style="margin-top:0;">Number of dogs</label>
-                <div class="ww-number">
-                  <button type="button" data-step="-1" data-target="ww-onetime-dogs" aria-label="Remove a dog">−</button>
-                  <input id="ww-onetime-dogs" type="number" min="1" max="20" value="1">
-                  <button type="button" data-step="1" data-target="ww-onetime-dogs" aria-label="Add a dog">+</button>
-                </div>
-              </div>
-
-              <label class="ww-label" for="ww-condition" style="margin-top:0;">
-                Current amount of accumulated waste
-                <span class="ww-field-hint">Select your best guess—we always confirm the final price with you before starting.</span>
-              </label>
-              <select id="ww-condition">
-                <option value="light">Light (Minimal buildup) — $35 estimate</option>
-                <option value="moderate">Moderate (Noticeable buildup) — $45–$60 estimate</option>
-                <option value="heavy">Heavy (Significant buildup requiring extra time) — $60–$100+ estimate</option>
-                <option value="very">Severely Neglected (Extensive buildup or unusually labor-intensive cleanup) — Custom Quote</option>
-                <option value="unsure">Not sure — confirm price with me first</option>
-              </select>
-
-              <div class="ww-note">
-                Your final cleanup price depends on the yard's condition and the amount of waste.
-                <span id="ww-cleanup-fresh-note" class="ww-hidden"><br><br><strong>Included Perk:</strong> A free Yard Fresh Treatment (1st section) is automatically included with your initial cleanup when you sign up for recurring service!</span>
-              </div>
-            </div>
+        <div id="ww-box-count-wrap" class="ww-sub-box ww-hidden">
+          <label class="ww-label" for="ww-boxes" style="margin-top:0;">Number of litter boxes</label>
+          <div class="ww-number">
+            <button type="button" data-step="-1" data-target="ww-boxes" aria-label="Remove a litter box">−</button>
+            <input id="ww-boxes" name="box_count" type="number" min="1" max="20" value="1" readonly>
+            <button type="button" data-step="1" data-target="ww-boxes" aria-label="Add a litter box">+</button>
           </div>
+        </div>
+      </div>
 
-          <div class="ww-panel">
-            <div class="ww-step-header">
-              <div>
-                <h3>3. Yard Fresh Treatment</h3>
-                <p class="ww-muted" style="margin:4px 0 0;">Pet-safe deodorizing and sanitizing spray to eliminate lingering yard odors.</p>
-              </div>
-              <span class="ww-step-tag">Add-On</span>
-            </div>
+      <!-- 4. Disposal, Preferences & Notes -->
+      <div class="ww-panel">
+        <h3>4. Disposal, Preferences &amp; Notes</h3>
 
-            <!-- Base Treatment Option -->
-            <label class="ww-choice" id="ww-fresh-choice">
-              <input id="ww-fresh" type="checkbox">
-              <span>
-                <strong id="ww-fresh-title">Add Yard Fresh Treatment</strong><br>
-                <span class="ww-muted" id="ww-fresh-description">$15 for the first yard section, plus $5 per additional section</span>
-              </span>
-            </label>
+        <label class="ww-choice" style="margin-bottom:14px;">
+          <input type="checkbox" id="ww-haul-away" name="haul_away">
+          <span>
+            <strong>Haul the waste away for me (+$5 per visit)</strong><br>
+            <span class="ww-muted">Otherwise, we double-bag it and leave it neatly in your outdoor trash bin at no extra charge.</span>
+          </span>
+        </label>
 
-            <!-- Recurring Upgrade Option (Hidden by default unless they selected recurring service) -->
-            <label class="ww-choice ww-hidden" id="ww-fresh-recurring-choice">
-              <input id="ww-fresh-recurring" type="checkbox">
-              <span>
-                <strong>Add Ongoing Yard Fresh Treatment</strong><br>
-                <span class="ww-muted">Apply this deodorizing treatment on every scheduled visit ($15 first section + $5 each additional per visit).</span>
-              </span>
-            </label>
-
-            <div id="ww-fresh-details" class="ww-sub-box ww-hidden">
-              <label class="ww-label" for="ww-sections" style="margin-top:0;">
-                Number of yard sections to treat
-                <span class="ww-field-hint">Example: Backyard = 1 section; Backyard + Front Yard or Side Dog Run = 2 sections.</span>
-              </label>
-              <div class="ww-number">
-                <button type="button" data-step="-1" data-target="ww-sections" aria-label="Remove a yard section">−</button>
-                <input id="ww-sections" type="number" min="1" max="20" value="1">
-                <button type="button" data-step="1" data-target="ww-sections" aria-label="Add a yard section">+</button>
-              </div>
-              <p class="ww-muted" style="margin:10px 0 0;" id="ww-sections-note">Treatment is priced per visit.</p>
-            </div>
-          </div>
-
-          <button type="button" class="ww-continue-btn" id="btn-to-cats">
-            <span>Next Step: Cat Litter Services</span>
-            <span aria-hidden="true">→</span>
-          </button>
+        <!-- Compact Permission Checkboxes -->
+        <div style="background:var(--cream); border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px 14px; margin-bottom:14px;">
+          <label class="ww-compact-check" style="margin-bottom:8px;">
+            <input type="checkbox" id="ww-yard-sign" name="yard_sign">
+            <span>May we place a small promotional yard sign in your yard? (Optional)</span>
+          </label>
+          <label class="ww-compact-check" style="margin-bottom:0;">
+            <input type="checkbox" id="ww-pet-treats" name="pet_treats">
+            <span>May we give your pet(s) a treat during our visit? (Milk-Bones / Temptations)</span>
+          </label>
         </div>
 
-        <!-- STEP 3: Reveals after clicking Continue to Cat Services -->
-        <div id="step-3-cats" class="ww-step-hidden">
-          <div class="ww-panel">
-            <div class="ww-step-header">
-              <div>
-                <h3>4. Cat Litter Box Services</h3>
-                <p class="ww-muted" style="margin:4px 0 0;">Don't have cats? Leave this set to "No litter-box service" and continue below.</p>
-              </div>
-              <span class="ww-step-tag">Step 3 of 4</span>
-            </div>
+        <label class="ww-label" for="ww-customer-notes">
+          Additional notes <span class="ww-muted">(optional)</span>
+        </label>
+        <textarea id="ww-customer-notes" name="notes" rows="3" maxlength="2000" placeholder="Gate codes, pet names, or special instructions..."></textarea>
+      </div>
 
-            <label class="ww-label" for="ww-litter-frequency">
-              Choose a recurring litter-box service
-              <span class="ww-field-hint">$15/wk for 1 box (+$5 each additional) • Twice-weekly: $25/wk for 1 box (+$10 each additional)</span>
-            </label>
-            <select id="ww-litter-frequency">
-              <option value="none">No litter-box service</option>
-              <option value="weekly">Weekly cleaning</option>
-              <option value="twice">Twice-weekly cleaning</option>
-            </select>
+      <!-- Validation Error Message & See My Price Button -->
+      <div id="ww-s1-error" class="ww-status-msg ww-hidden" role="alert"></div>
 
-            <div id="ww-box-count-wrap" class="ww-sub-box ww-hidden">
-              <label class="ww-label" for="ww-boxes" style="margin-top:0;">Number of litter boxes</label>
-              <div class="ww-number">
-                <button type="button" data-step="-1" data-target="ww-boxes" aria-label="Remove a litter box">−</button>
-                <input id="ww-boxes" type="number" min="1" max="20" value="1">
-                <button type="button" data-step="1" data-target="ww-boxes" aria-label="Add a litter box">+</button>
-              </div>
-            </div>
+      <button type="button" class="ww-primary-btn" id="ww-see-price-btn">
+        <span>See My Price</span>
+        <span aria-hidden="true">→</span>
+      </button>
 
-            <label class="ww-choice" style="margin-top:14px;">
-              <input id="ww-deep-clean" type="checkbox">
-              <span>
-                <strong>Add Litter Box Deep Clean</strong><br>
-                <span class="ww-muted">A complete scrub, sanitization, and fresh reset when your litter box needs extra attention.</span>
-              </span>
-            </label>
+    </form>
 
-            <div id="ww-deep-clean-details" class="ww-sub-box ww-hidden">
-              <label class="ww-label" for="ww-deep-boxes" style="margin-top:0;">Number of boxes needing a deep clean</label>
-              <div class="ww-number">
-                <button type="button" data-step="-1" data-target="ww-deep-boxes" aria-label="Remove a deep-clean box">−</button>
-                <input id="ww-deep-boxes" type="number" min="1" max="20" value="1">
-                <button type="button" data-step="1" data-target="ww-deep-boxes" aria-label="Add a deep-clean box">+</button>
-              </div>
-              <div class="ww-note">
-                <strong>Litter Box Deep Clean Pricing</strong><br>
-                1 box — $25 &nbsp;|&nbsp; 2 boxes — $40 &nbsp;|&nbsp; Each additional box beyond 2 — $15<br>
-                <em>(When paired with recurring cat service, your first standard maintenance fee is waived!)</em>
-              </div>
-            </div>
+    <!-- ==========================================
+         SCREEN 2 — REVIEW YOUR QUOTE
+         ========================================== -->
+    <form id="ww-screen-2" class="ww-hidden" onsubmit="event.preventDefault(); document.getElementById('ww-submit-quote-btn').click();">
 
-            <p class="ww-muted" style="margin:12px 0 0;">
-              💡 <strong>Note on litter:</strong> Customers provide their preferred litter by default. If you need us to supply fresh litter, it is available for $10 per box.
-            </p>
-          </div>
-
-          <button type="button" class="ww-continue-btn" id="btn-to-details">
-            <span>Final Step: Enter Contact Details</span>
-            <span aria-hidden="true">→</span>
-          </button>
+      <!-- Clean, Single-Box Quote Summary -->
+      <div class="ww-receipt-box" aria-live="polite">
+        <div class="ww-price-hero">
+          <span class="ww-price-eyebrow" id="ww-price-eyebrow">Your Quote</span>
+          <div class="ww-big-price" id="ww-display-per-visit">$15.00 / visit</div>
+          <div class="ww-big-sub" id="ww-display-billing-sub">Billed at $15.00 / week</div>
         </div>
 
-        <!-- STEP 4: Reveals after clicking Continue to Contact Details -->
-        <div id="step-4-contact" class="ww-step-hidden">
+        <!-- Concise Itemized Breakdown -->
+        <div id="ww-quote-lines"></div>
 
-          <!-- SECTION 5: CUSTOMER CONTACT INFORMATION -->
-          <div class="ww-panel" id="ww-customer-info">
-            <div class="ww-step-header">
-              <div>
-                <h3>5. Your Contact Information</h3>
-                <p class="ww-muted" style="margin:4px 0 0;">Tell us where service is needed and how you prefer we reach out to confirm your quote.</p>
-              </div>
-              <span class="ww-step-tag">Step 4 of 4</span>
-            </div>
+        <!-- Compact First-Visit Free Offer Callout -->
+        <div class="ww-free-banner" id="ww-free-offer-banner">
+          <strong>🎁 First Scoop Free!</strong>
+          Your very first scoop is 100% free when you sign up for a monthly recurring plan! (Includes a free Yard Fresh treatment on your initial cleanup, with no separate initial-cleanup fee). Normal recurring rates apply afterward.
+        </div>
+      </div>
 
-            <div class="ww-contact-section">
-              <h4>Customer &amp; Service Address Details</h4>
+      <!-- Streamlined Optional Add-Ons -->
+      <div class="ww-panel" id="ww-addons-panel">
+        <h3>Optional Add-Ons</h3>
 
-              <label class="ww-label" for="ww-customer-name">
-                Full name <span class="ww-required">*</span>
-              </label>
-              <input id="ww-customer-name" name="customer_name" type="text" autocomplete="name" placeholder="Your full name" required>
+        <!-- Yard Fresh Treatment Add-On (Only shown for recurring dog service) -->
+        <div id="ww-addon-yard-wrap" class="ww-hidden">
+          <label class="ww-choice">
+            <input type="checkbox" id="ww-addon-yard-fresh" name="yard_fresh">
+            <span>
+              <strong>Ongoing Yard Fresh Treatment (+$15/visit)</strong><br>
+              <span class="ww-muted">Deodorizing spray on recurring visits (+$5 per extra yard section). First visit is already included free!</span>
+            </span>
+          </label>
 
-              <!-- Address Block separated into specific fields -->
-              <label class="ww-label" for="ww-customer-street">
-                Street address <span class="ww-required">*</span>
-              </label>
-              <input id="ww-customer-street" name="customer_street" type="text" autocomplete="address-line1" placeholder="123 Main St" required>
-
-              <label class="ww-label" for="ww-customer-unit">
-                Address line 2 <span class="ww-muted">(optional)</span>
-              </label>
-              <input id="ww-customer-unit" name="customer_unit" type="text" autocomplete="address-line2" placeholder="Apt, Suite, Gate Code, etc.">
-
-              <div class="ww-grid">
-                <div>
-                  <label class="ww-label" for="ww-customer-city">
-                    City <span class="ww-required">*</span>
-                  </label>
-                  <input id="ww-customer-city" name="customer_city" type="text" autocomplete="address-level2" placeholder="Decatur" required>
-                </div>
-                <div>
-                  <label class="ww-label" for="ww-customer-zip">
-                    ZIP code <span class="ww-required">*</span>
-                  </label>
-                  <input id="ww-customer-zip" name="customer_zip" type="text" autocomplete="postal-code" placeholder="76234" required>
-                </div>
-              </div>
-              <p class="ww-muted" style="margin:6px 0 0; font-size:12.5px;">
-                Serving Wise County ZIP codes: Decatur (76234), Bridgeport (76426), Boyd (76023), Paradise (76073), Rhome (76078), Chico (76431), Alvord (76225), Newark (76071), Slidell (76267), Ponder (76259), and Justin (76270).
-              </p>
-
-              <div class="ww-grid">
-                <div>
-                  <label class="ww-label" for="ww-customer-phone">
-                    Phone number <span class="ww-required">*</span>
-                  </label>
-                  <input id="ww-customer-phone" name="customer_phone" type="tel" autocomplete="tel" placeholder="(940) 555-0123" required>
-                </div>
-                <div>
-                  <label class="ww-label" for="ww-contact-method">
-                    Preferred contact method <span class="ww-required">*</span>
-                  </label>
-                  <select id="ww-contact-method" name="preferred_contact" required>
-                    <option value="text">Text message</option>
-                    <option value="call">Phone call</option>
-                    <option value="email">Email</option>
-                  </select>
-                </div>
-              </div>
-
-              <div id="ww-customer-email-wrap" class="ww-hidden">
-                <label class="ww-label" for="ww-customer-email">
-                  Email address <span class="ww-required">*</span>
-                </label>
-                <input id="ww-customer-email" name="customer_email" type="email" autocomplete="email" placeholder="you@example.com">
-              </div>
-
-              <label class="ww-label" for="ww-contact-time">
-                Best time to contact you <span class="ww-required">*</span>
-              </label>
-              <select id="ww-contact-time" name="preferred_contact_time" required>
-                <option value="anytime">Anytime</option>
-                <option value="morning">Morning (8 AM–12 PM)</option>
-                <option value="afternoon">Afternoon (12 PM–4 PM)</option>
-                <option value="evening">Evening (4 PM–6 PM)</option>
-              </select>
-
-              <p class="ww-muted" style="margin:14px 0 0;">
-                🔒 Your information is kept private and used solely to follow up about your quote and requested services.
-              </p>
-            </div>
-          </div>
-
-          <!-- SECTION 6: YARD SIGN PERMISSION -->
-          <div class="ww-panel" id="ww-yard-sign">
-            <div class="ww-step-header">
-              <div>
-                <h3>6. Yard Sign Permission</h3>
-                <p class="ww-muted" style="margin:4px 0 0;">Optional—does not affect your price or service.</p>
-              </div>
-              <span class="ww-step-tag">Optional</span>
-            </div>
-
-            <p>
-              Help spread the word about Wise Waste Services! Would you be comfortable
-              allowing us to place a small Wise Waste Services promotional yard sign
-              near the front of your lawn?
-            </p>
-
-            <p class="ww-muted">
-              We will only place a sign with your permission, and you can ask us to
-              remove it at any time.
-            </p>
-
-            <div class="ww-yard-sign-section">
-              <label class="ww-choice">
-                <input type="radio" name="yard_sign_permission" id="ww-yard-sign-yes" value="yes">
-                <span>
-                  <strong>Yes, that's fine!</strong><br>
-                  <span class="ww-muted">You may place a promotional yard sign on my property.</span>
-                </span>
-              </label>
-
-              <label class="ww-choice">
-                <input type="radio" name="yard_sign_permission" id="ww-yard-sign-no" value="no" checked>
-                <span>
-                  <strong>No, thank you</strong><br>
-                  <span class="ww-muted">I'd prefer not to have a yard sign.</span>
-                </span>
-              </label>
-            </div>
-          </div>
-
-          <!-- SECTION 7: TREATS & ADDITIONAL NOTES -->
-          <div class="ww-panel" id="ww-additional-notes">
-            <div class="ww-step-header">
-              <div>
-                <h3>7. Pet Treats &amp; Additional Notes</h3>
-                <p class="ww-muted" style="margin:4px 0 0;">Special preferences, gate access, or pet instructions.</p>
-              </div>
-              <span class="ww-step-tag">Preferences</span>
-            </div>
-
-            <div id="ww-treats-container" class="ww-hidden" style="margin-bottom: 20px;">
-              <p class="ww-muted" style="margin-bottom: 10px;">We love making friends with your pets! Let us know if we can give them a little treat during our visit.</p>
-
-              <!-- Dynamic Combined Treat Question -->
-              <label class="ww-label" id="ww-treat-label" style="margin-top:0;">May we give your pet(s) a treat?</label>
-              <div class="ww-yard-sign-section" style="margin-top: 8px;">
-                <label class="ww-choice">
-                  <input type="radio" name="pet_treat_permission" value="yes" checked>
-                  <span><strong>Yes, please!</strong></span>
-                </label>
-                <label class="ww-choice">
-                  <input type="radio" name="pet_treat_permission" value="no">
-                  <span><strong>No, thank you.</strong></span>
-                </label>
-              </div>
-            </div>
-
-            <div class="ww-additional-notes-section" style="margin-top: 0;">
-              <label class="ww-label" for="ww-customer-notes" style="margin-top:0;">
-                Additional notes &amp; access instructions <span class="ww-muted">(optional)</span>
-              </label>
-              <textarea id="ww-customer-notes" name="additional_notes" rows="5" maxlength="2000" placeholder="Example: The gate code is #1234, please watch for our friendly dog, or the side yard behind the garage needs extra attention..." aria-describedby="ww-notes-help"></textarea>
-              <p class="ww-muted" id="ww-notes-help" style="margin:8px 0 0;">
-                Include gate codes, dog names, or any details that will help us prepare for your first visit.
-              </p>
+          <div id="ww-yard-sections-box" class="ww-sub-box ww-hidden">
+            <label class="ww-label" for="ww-sections" style="margin-top:0;">Number of yard sections</label>
+            <div class="ww-number">
+              <button type="button" data-step="-1" data-target="ww-sections" aria-label="Remove a section">−</button>
+              <input id="ww-sections" name="yard_sections" type="number" min="1" max="20" value="1" readonly>
+              <button type="button" data-step="1" data-target="ww-sections" aria-label="Add a section">+</button>
             </div>
           </div>
         </div>
       </div>
-      <!-- END LEFT COLUMN -->
 
-      <!-- RIGHT COLUMN: LIVE PRICE SUMMARY & SUBMIT -->
-      <div class="ww-price-column">
-        <div class="ww-total" aria-live="polite" aria-atomic="true">
-          <div class="ww-total-header">
-            <h3>Estimate Summary</h3>
-            <span class="ww-live-pill">Live Quote</span>
-          </div>
-          <p style="color:#D5DFCE; font-size:13.5px; margin:0 0 16px 0; line-height:1.45;">
-            Your customized service plan updates automatically as you select options. Charges are separated into your first visit and your ongoing schedule.
-          </p>
+      <!-- Final Submission Error & Buttons -->
+      <div id="ww-s2-error" class="ww-status-msg ww-hidden" role="alert"></div>
 
-          <!-- First Visit Block -->
-          <div class="ww-summary-card">
-            <h4>First Visit (One-Time Fees)</h4>
-            <div id="ww-onetime-lines">
-              <div class="ww-empty-msg">Select a service to calculate costs.</div>
-            </div>
+      <button type="button" class="ww-primary-btn" id="ww-submit-quote-btn">
+        Submit Quote
+      </button>
 
-            <div class="ww-summary-foot">
-              <span>First Visit Total</span>
-              <strong id="ww-first-total">$0.00</strong>
-            </div>
-          </div>
+      <button type="button" class="ww-secondary-btn" id="ww-back-to-s1-btn">
+        ← Edit Selections
+      </button>
 
-          <!-- Recurring Services Block -->
-          <div class="ww-summary-card">
-            <h4>Recurring Services</h4>
-            <div id="ww-recurring-lines">
-              <div class="ww-empty-msg">No ongoing services selected.</div>
-            </div>
+    </form>
 
-            <div class="ww-summary-foot ww-hidden" id="ww-recurring-foot">
-              <span>Estimated Ongoing Total</span>
-              <div style="text-align: right;" id="ww-recurring-totals-wrap">
-                <!-- Dynamically populated totals will appear here -->
-              </div>
-            </div>
-          </div>
-
-          <div id="ww-estimate-note" class="ww-note ww-hidden"></div>
-
-          <p style="color:#D5DFCE; font-size:12px; margin:16px 0 0; line-height:1.45;">
-            *This is an estimate, not a final invoice. Initial cleanup pricing may vary based on yard condition. Custom-quoted services are not included in the displayed total.
-          </p>
-
-          <!-- Hidden fields preserve Google Apps Script compatibility -->
-          <div class="ww-hidden">
-            <span id="ww-dog-total"></span>
-            <span id="ww-dog-billing"></span>
-            <span id="ww-cat-total"></span>
-            <span id="ww-cat-billing"></span>
-          </div>
-        </div>
-
-        <!-- SUBMIT BUTTON PANEL -->
-        <div class="ww-submit-panel ww-step-hidden" id="ww-submit-section">
-          <h3>Ready to Request Your Quote?</h3>
-          <p class="ww-muted">Submit your selections and contact details—no payment is required today. We'll follow up using your preferred contact method.</p>
-          <button type="button" id="ww-submit-quote">Submit Quote Request</button>
-          <p id="ww-submit-status" role="status" aria-live="polite"></p>
-        </div>
-      </div>
-      <!-- END RIGHT COLUMN -->
-
-    </div>
   </div>
 
-  <!-- COMMERCIAL SECTION -->
-  <div id="ww-commercial" class="ww-hidden">
-    <div class="ww-calculator-layout">
-      <!-- LEFT COLUMN: COMMERCIAL FORM -->
-      <div class="ww-service-column">
-        <div class="ww-panel">
-          <div class="ww-step-header">
-            <div>
-              <h3>Request a Commercial Consultation</h3>
-              <p class="ww-muted" style="margin:4px 0 0;">Tailored waste management for communities, parks, and businesses across Wise County.</p>
-            </div>
-            <span class="ww-step-tag">Commercial</span>
-          </div>
+  <!-- COMMERCIAL SECTION (Preserved) -->
+  <form id="ww-commercial" class="ww-hidden" onsubmit="event.preventDefault(); document.getElementById('ww-submit-comm-quote').click();">
+    <div class="ww-panel">
+      <h3>Request a Commercial Consultation</h3>
+      <p class="ww-muted" style="margin:0 0 14px;">Tailored waste management for communities, parks, and businesses across Wise County.</p>
 
-          <p class="ww-muted">Every property has different needs. Provide a few details about your community or business below, and we will reach out to design a customized service plan.</p>
-
-          <div class="ww-contact-section" style="margin-top: 16px;">
-            <div class="ww-grid">
-              <div>
-                <label class="ww-label" for="ww-comm-business">Property or Business Name <span class="ww-required">*</span></label>
-                <input id="ww-comm-business" type="text" placeholder="e.g., Oak Ridge Apartments" required>
-              </div>
-              <div>
-                <label class="ww-label" for="ww-comm-name">Contact Person <span class="ww-required">*</span></label>
-                <input id="ww-comm-name" type="text" autocomplete="name" placeholder="Your full name" required>
-              </div>
-            </div>
-
-            <label class="ww-label" for="ww-comm-address">Property Address <span class="ww-required">*</span></label>
-            <input id="ww-comm-address" type="text" autocomplete="street-address" placeholder="123 Main St, City, TX ZIP" required>
-
-            <label class="ww-label" for="ww-comm-type">Property Type <span class="ww-required">*</span></label>
-            <select id="ww-comm-type" required>
-              <option value="Apartment Community">Apartment Community</option>
-              <option value="HOA / Subdivision">HOA / Subdivision</option>
-              <option value="Veterinary Clinic">Veterinary Clinic</option>
-              <option value="RV Park / Campground">RV Park / Campground</option>
-              <option value="Dog Park / Public Park">Dog Park / Public Park</option>
-              <option value="Other">Other</option>
-            </select>
-
-            <div class="ww-grid">
-              <div>
-                <label class="ww-label" for="ww-comm-phone">Phone Number <span class="ww-required">*</span></label>
-                <input id="ww-comm-phone" type="tel" autocomplete="tel" placeholder="(940) 555-0123" required>
-              </div>
-              <div>
-                <label class="ww-label" for="ww-comm-email">Email Address <span class="ww-required">*</span></label>
-                <input id="ww-comm-email" type="email" autocomplete="email" placeholder="name@company.com" required>
-              </div>
-            </div>
-
-            <label class="ww-label" for="ww-comm-notes">How can we help? <span class="ww-muted">(Optional)</span></label>
-            <textarea id="ww-comm-notes" rows="4" placeholder="Example: We need 3 pet waste stations emptied weekly and the main dog park area scooped..."></textarea>
-
-            <button type="button" id="ww-submit-comm-quote" style="margin-top: 18px;">Send Consultation Request</button>
-            <p id="ww-comm-submit-status" role="status" aria-live="polite"></p>
-          </div>
+      <div class="ww-grid">
+        <div>
+          <label class="ww-label" for="ww-comm-business">Property or Business Name <span class="ww-required">*</span></label>
+          <input id="ww-comm-business" name="business" type="text" placeholder="e.g., Oak Ridge Apartments">
+        </div>
+        <div>
+          <label class="ww-label" for="ww-comm-name">Contact Person <span class="ww-required">*</span></label>
+          <input id="ww-comm-name" name="name" type="text" autocomplete="name" placeholder="Your full name">
         </div>
       </div>
 
-      <!-- RIGHT COLUMN: QUICK CONTACT INFO -->
-      <div class="ww-price-column">
-        <div class="ww-total">
-          <div class="ww-total-header">
-            <h3>Prefer to chat?</h3>
-            <span class="ww-live-pill">Direct Line</span>
-          </div>
-          <p style="color:#D5DFCE; font-size:14px; margin:0 0 16px 0; line-height:1.45;">
-            Give us a call or send us an email directly to discuss your property's needs, station servicing, or walkthrough scheduling right away.
-          </p>
+      <label class="ww-label" for="ww-comm-address">Property Address <span class="ww-required">*</span></label>
+      <input id="ww-comm-address" name="street-address" type="text" autocomplete="street-address" placeholder="123 Main St, City, TX ZIP">
 
-          <div class="ww-contact-actions">
-            <a class="ww-contact-btn" href="tel:+19402470522" style="background:#fff; color:var(--green);">
-              <svg class="ww-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.19 18a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.09 3.18 2 2 0 0 1 4.08 1h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.79a2 2 0 0 1-.45 2.11L8.06 8.89a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.89.34 1.83.58 2.79.7A2 2 0 0 1 22 16.92z"/>
-              </svg>
-              (940) 247-0522
-            </a>
+      <label class="ww-label" for="ww-comm-type">Property Type <span class="ww-required">*</span></label>
+      <select id="ww-comm-type" name="property_type">
+        <option value="Apartment Community">Apartment Community</option>
+        <option value="HOA / Subdivision">HOA / Subdivision</option>
+        <option value="Veterinary Clinic">Veterinary Clinic</option>
+        <option value="RV Park / Campground">RV Park / Campground</option>
+        <option value="Dog Park / Public Park">Dog Park / Public Park</option>
+        <option value="Other">Other</option>
+      </select>
 
-            <a class="ww-contact-btn" href="mailto:WiseWasteServices@gmail.com?subject=Commercial%20Service%20Quote%20Request" style="background:var(--cream); color:var(--green); border:1px solid #cbd6c9;">
-              <svg class="ww-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="2" y="4" width="20" height="16" rx="2"/>
-                <path d="m22 7-10 6L2 7"/>
-              </svg>
-              Email Us
-            </a>
-          </div>
+      <div class="ww-grid">
+        <div>
+          <label class="ww-label" for="ww-comm-phone">Phone Number <span class="ww-required">*</span></label>
+          <input id="ww-comm-phone" name="tel" type="tel" autocomplete="tel" placeholder="(940) 555-0123">
+        </div>
+        <div>
+          <label class="ww-label" for="ww-comm-email">Email Address <span class="ww-muted">(optional)</span></label>
+          <input id="ww-comm-email" name="email" type="email" autocomplete="email" placeholder="name@company.com">
         </div>
       </div>
+
+      <label class="ww-label" for="ww-comm-notes">How can we help? <span class="ww-muted">(optional)</span></label>
+      <textarea id="ww-comm-notes" name="notes" rows="3" placeholder="Tell us about your property needs..."></textarea>
+
+      <div id="ww-comm-error" class="ww-status-msg ww-hidden" style="margin-top:14px;" role="alert"></div>
+      <button type="button" class="ww-primary-btn" id="ww-submit-comm-quote" style="margin-top:16px;">Send Consultation Request</button>
     </div>
-  </div>
+  </form>
 
-  <!-- SUCCESS SCREEN (Hidden by default) -->
+  <!-- CONFIRMATION SCREEN -->
   <div id="ww-success-screen" class="ww-hidden">
     <div class="ww-success-icon-wrap">
-      <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:40px;height:40px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:36px;height:36px;">
         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
         <polyline points="22 4 12 14.01 9 11.01"></polyline>
       </svg>
     </div>
-    <h2>Request Received!</h2>
-    <p>Thank you for reaching out to Wise Waste Services. We've sent a quick confirmation to your email, and we'll be in touch shortly to finalize your quote and get you on the schedule.</p>
-    <div class="ww-next-steps">
-      <strong>What happens next:</strong>
-      <ul>
-        <li>We review your selected services and property details.</li>
-        <li>We reach out via your preferred contact method to confirm pricing and answer any questions.</li>
-        <li>Need immediate assistance? Call or text us at <a href="tel:+19402470522" style="color:var(--green);font-weight:700;">(940) 247-0522</a>.</li>
-      </ul>
-    </div>
+    <h2>Quote Submitted!</h2>
+    <p style="color:var(--muted); max-width:460px; margin:0 auto 16px;">
+      Thank you for choosing Wise Waste Services! We will contact you shortly to confirm your details and get your first visit on the schedule.
+    </p>
+    <p style="font-size:14px; color:var(--ink); margin:0;">
+      Need immediate help? Call or text <a href="tel:+19402470522" style="color:var(--green);font-weight:700;">(940) 247-0522</a>.
+    </p>
   </div>
 
 </div>
 
 <script>
-(function(){
+(function() {
   const root = document.getElementById('ww-quote');
   if (!root || root.dataset.ready) return;
   root.dataset.ready = '1';
 
   /*
-   * GOOGLE APPS SCRIPT WEB APP ENDPOINT
+   * GOOGLE APPS SCRIPT / PUSHOVER WEB APP ENDPOINT
    */
   const QUOTE_ENDPOINT =
     'https://script.google.com/macros/s/AKfycbyCDemM3MYGckMTXnyBD02ssiY8KYMmqSIFAY5j0-w8iJcuT-gmUWsr8V1mjMGOtp2rDw/exec';
 
   /*
-   * VALID WISE COUNTY ZIP CODES
-   */
-  const allowedZips = [
-    '76234', // Decatur
-    '76426', // Bridgeport
-    '76023', // Boyd
-    '76073', // Paradise
-    '76078', // Rhome
-    '76431', // Chico
-    '76225', // Alvord
-    '76071', // Newark
-    '76267', // Slidell
-    '76259', // Ponder
-    '76270'  // Justin
-  ];
-
-  /*
-   * IFRAME HEIGHT FIX
+   * IFRAME HEIGHT REPORTER
    */
   let heightReportPending = false;
 
@@ -1602,7 +833,6 @@
   function scheduleHeightReport() {
     if (heightReportPending) return;
     heightReportPending = true;
-
     requestAnimationFrame(function() {
       requestAnimationFrame(reportCalculatorHeight);
     });
@@ -1622,69 +852,25 @@
     heightObserver.observe(root);
   }
 
-  const $ = id => root.querySelector('#' + id);
+  const $ = function(id) { return root.querySelector('#' + id); };
 
-  const money = n => n.toLocaleString('en-US', {
-    style:'currency',
-    currency:'USD'
-  });
-
-  const number = id => Math.max(
-    1,
-    Math.min(20, parseInt($(id).value, 10) || 1)
-  );
-
-  const show = (id, yes) => {
-    const el = $(id);
-    if (!el) return;
-    if (el.classList.contains('ww-step-hidden')) {
-      if (yes) el.classList.remove('ww-step-hidden');
-    } else {
-      el.classList.toggle('ww-hidden', !yes);
-    }
+  const money = function(n) {
+    return n.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
   };
 
-  function markProgressStep(stepNum) {
-    const prog = $('ww-prog-' + stepNum);
-    if (prog) prog.classList.add('is-active');
-  }
+  const getNum = function(id) {
+    const el = $(id);
+    if (!el) return 1;
+    return Math.max(1, Math.min(20, parseInt(el.value, 10) || 1));
+  };
 
-  // STEP PROGRESSION LOGIC
-  $('ww-dog-frequency').addEventListener('change', () => {
-    show('step-2-yard', true);
-    markProgressStep(2);
-    scheduleHeightReport();
-  });
+  const show = function(id, visible) {
+    const el = $(id);
+    if (!el) return;
+    el.classList.toggle('ww-hidden', !visible);
+  };
 
-  $('btn-to-cats').addEventListener('click', () => {
-    $('btn-to-cats').style.display = 'none';
-    show('step-3-cats', true);
-    markProgressStep(3);
-    scheduleHeightReport();
-  });
-
-  $('btn-to-details').addEventListener('click', () => {
-    $('btn-to-details').style.display = 'none';
-    show('step-4-contact', true);
-    show('ww-submit-section', true);
-    markProgressStep(4);
-    scheduleHeightReport();
-  });
-
-  function updateContactMethod() {
-    const emailSelected = $('ww-contact-method').value === 'email';
-    show('ww-customer-email-wrap', emailSelected);
-    $('ww-customer-email').required = emailSelected;
-    if (!emailSelected) {
-      $('ww-customer-email').value = '';
-    }
-    scheduleHeightReport();
-  }
-
-  $('ww-contact-method').addEventListener('change', updateContactMethod);
-  updateContactMethod();
-
-  // PHONE AUTO-FORMATTER (Handles +1 and 1 country code autofill)
+  // PHONE AUTO-FORMATTER
   function formatPhoneNumber(e) {
     let raw = e.target.value.replace(/^\s*\+?1\s*[-. (]*/, '');
     let digits = raw.replace(/\D/g, '');
@@ -1694,500 +880,571 @@
     let x = digits.slice(0, 10).match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
     e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
   }
-  ['input', 'change'].forEach(evt => {
+
+  ['input', 'change'].forEach(function(evt) {
     $('ww-customer-phone').addEventListener(evt, formatPhoneNumber);
     $('ww-comm-phone').addEventListener(evt, formatPhoneNumber);
   });
 
-
-  let previousDogFrequency = '';
-  let initialAddedByDogFrequency = false;
-
-  function renderItem(title, desc, price) {
-    return `
-      <div class="ww-summary-line">
-        <div>
-          <div class="ww-summary-title">${title}</div>
-          ${desc ? `<div class="ww-summary-desc">${desc}</div>` : ''}
-        </div>
-        <div class="ww-summary-price">${price}</div>
-      </div>
-    `;
-  }
-
-  function calculate() {
-    const dogFreq = $('ww-dog-frequency').value;
-    const recurringDog = dogFreq && dogFreq !== 'none';
-
-    const radioInitial = $('ww-cleanup-initial');
-    const radioOnetime = $('ww-cleanup-onetime');
-    const radioNone = $('ww-cleanup-none');
-    
-    const choiceInitial = $('choice-initial');
-    const choiceOnetime = $('choice-onetime');
-    const choiceNone = $('choice-none');
-
-    // DYNAMIC HIDING LOGIC FOR SECTION 2
-    if (recurringDog) {
-      show('choice-initial', true);
-      show('choice-onetime', false);
-      show('choice-none', false);
-      
-      if (!previousDogFrequency || previousDogFrequency === 'none') {
-        initialAddedByDogFrequency = true;
-        radioInitial.checked = true;
-      }
-    } else {
-      show('choice-initial', false);
-      show('choice-onetime', true);
-      show('choice-none', true);
-      
-      if (previousDogFrequency && previousDogFrequency !== 'none') {
-        if (initialAddedByDogFrequency) {
-          radioNone.checked = true;
-        }
-        initialAddedByDogFrequency = false;
-      }
-    }
-
-    const cleanupNode = root.querySelector('input[name="cleanup_type"]:checked');
-    const cleanupType = cleanupNode ? cleanupNode.value : 'none';
-    
-    // Safety fallback
-    if (recurringDog && cleanupType === 'onetime') {
-        radioInitial.checked = true;
-    }
-    if (!recurringDog && cleanupType === 'initial') {
-        radioNone.checked = true;
-    }
-
-    const updatedCleanupNode = root.querySelector('input[name="cleanup_type"]:checked');
-    const updatedCleanupType = updatedCleanupNode ? updatedCleanupNode.value : 'none';
-    
-    const isInitial = updatedCleanupType === 'initial';
-    const isOnetime = updatedCleanupType === 'onetime';
-    const isCleanup = isInitial || isOnetime;
-    
-    show('ww-cleanup-details', isCleanup);
-    show('ww-onetime-dogs-wrap', isOnetime); 
-    show('ww-cleanup-fresh-note', isInitial); 
-
-    // DYNAMIC HIDING LOGIC FOR SECTION 3 (YARD FRESH)
-    const freshBase = $('ww-fresh');
-    const freshRec = $('ww-fresh-recurring');
-    
-    if (recurringDog) {
-      // Force base treatment check and disable it
-      freshBase.checked = true;
-      freshBase.disabled = true;
-      $('ww-fresh-choice').classList.add('ww-disabled');
-      $('ww-fresh-title').textContent = 'Initial Yard Fresh Treatment — FREE';$('ww-fresh-description').textContent = 'Included free with your initial cleanup.';
-      
-      // Show recurring upgrade
-      show('ww-fresh-recurring-choice', true);
-      $('ww-sections-note').textContent = 'Note: Your first section is free for the initial visit. Extra sections or ongoing treatments apply per visit.';
-    } else {
-      // Allow base treatment selection
-      freshBase.disabled = false;
-      $('ww-fresh-choice').classList.remove('ww-disabled');
-      $('ww-fresh-title').textContent = 'Add Yard Fresh Treatment';$('ww-fresh-description').textContent = '$15 for the first yard section, plus $5 per additional section.';
-      
-      // Hide recurring upgrade
-      show('ww-fresh-recurring-choice', false);
-      freshRec.checked = false; // Reset it so it doesn't run logic invisibly
-      $('ww-sections-note').textContent = 'Treatment is priced per visit.';
-    }
-
-    const isFreshActive = freshBase.checked || freshRec.checked;
-    show('ww-fresh-details', isFreshActive);
-
-    const dogs = number('ww-dogs');
-    const otDogs = number('ww-onetime-dogs');
-    const litterFreq = $('ww-litter-frequency').value;
-    const boxes = number('ww-boxes');
-    const deepClean = $('ww-deep-clean').checked;
-    const deepBoxes = number('ww-deep-boxes');
-    const condition = $('ww-condition').value;
-    const sections = number('ww-sections');
-
-    // DYNAMIC PET TREATS QUESTION LOGIC
-    const hasDogsForTreats = recurringDog || isOnetime;
-    const hasCatsForTreats = litterFreq !== 'none' || deepClean;
-    
-    show('ww-treats-container', hasDogsForTreats || hasCatsForTreats);
-
-    if (hasDogsForTreats && hasCatsForTreats) {
-      $('ww-treat-label').innerHTML = 'May we give your pets a treat? <br><span class="ww-muted" style="font-weight: normal;">(We carry medium-sized Milk-Bones for dogs and Temptations for cats)</span>';
-    } else if (hasDogsForTreats) {
-      $('ww-treat-label').innerHTML = 'May we give your dog(s) a treat? <br><span class="ww-muted" style="font-weight: normal;">(We carry medium-sized Milk-Bones)</span>';
-    } else if (hasCatsForTreats) {
-      $('ww-treat-label').innerHTML = 'May we give your cat(s) a treat? <br><span class="ww-muted" style="font-weight: normal;">(We carry Temptations treats)</span>';
-    }
-
-    show('ww-dog-count-wrap', recurringDog);
-    show('ww-box-count-wrap', litterFreq !== 'none');
-    show('ww-deep-clean-details', deepClean);
-
-    let dogPrice = 0;
-    let catPrice = 0;
-    let oneTime = 0;
-    
-    // Variables for ongoing summation
-    let weeklyRecTotal = 0;
-    let biweeklyRecTotal = 0;
-
-    let otItems = [];
-    let recItems = [];
-    let notes = [];
-
-    // --- RECURRING MATH & ITEMS ---
-    let dogBilling = 'No dog waste service selected';
-    if (dogFreq === 'weekly') {
-      dogPrice = 15 + 3 * (dogs - 1);
-      weeklyRecTotal += dogPrice;
-      dogBilling = 'Billed weekly';
-      recItems.push(renderItem('Dog Waste Removal', `${dogs} dog${dogs>1?'s':''} • ${dogBilling}`, money(dogPrice)+'/wk'));
-    } else if (dogFreq === 'twice') {
-      dogPrice = 25 + 5 * (dogs - 1);
-      weeklyRecTotal += dogPrice;
-      dogBilling = 'Billed weekly · service twice per week';
-      recItems.push(renderItem('Dog Waste Removal', `${dogs} dog${dogs>1?'s':''} • ${dogBilling}`, money(dogPrice)+'/wk'));
-    } else if (dogFreq === 'biweekly') {
-      dogPrice = 25 + 5 * (dogs - 1);
-      biweeklyRecTotal += dogPrice;
-      dogBilling = 'Billed every other week';
-      recItems.push(renderItem('Dog Waste Removal', `${dogs} dog${dogs>1?'s':''} • ${dogBilling}`, money(dogPrice)+'/visit'));
-    }
-    
-    // YARD FRESH ONGOING CALCULATION
-    let extraSectionsCost = 5 * (sections - 1);
-    
-    if (recurringDog && freshRec.checked) {
-      let freshRecPrice = 15 + extraSectionsCost;
-      if (dogFreq === 'weekly' || dogFreq === 'twice') {
-        let actualFreqPrice = (dogFreq === 'twice') ? (freshRecPrice * 2) : freshRecPrice;
-        dogPrice += actualFreqPrice;
-        weeklyRecTotal += actualFreqPrice;
-        recItems.push(renderItem('Ongoing Yard Fresh', `${sections} section(s) • Applied every visit`, money(actualFreqPrice)+'/wk'));
-      } else if (dogFreq === 'biweekly') {
-        dogPrice += freshRecPrice;
-        biweeklyRecTotal += freshRecPrice;
-        recItems.push(renderItem('Ongoing Yard Fresh', `${sections} section(s) • Applied every visit`, money(freshRecPrice)+'/visit'));
-      }
-    }
-
-    let catBilling = 'No litter-box service selected';
-    if (litterFreq === 'weekly') {
-      catPrice = 15 + 5 * (boxes - 1);
-      weeklyRecTotal += catPrice;
-      catBilling = 'Billed weekly';
-      recItems.push(renderItem('Cat Litter Box Service', `${boxes} box${boxes>1?'es':''} • Maintenance cleaning`, money(catPrice)+'/wk'));
-    } else if (litterFreq === 'twice') {
-      catPrice = 25 + 10 * (boxes - 1);
-      weeklyRecTotal += catPrice;
-      catBilling = 'Billed weekly · service twice per week';
-      recItems.push(renderItem('Cat Litter Box Service', `${boxes} box${boxes>1?'es':''} • Maintenance cleaning`, money(catPrice)+'/wk'));
-    }
-    
-    // Add the Free Cleaning Promo line item if recurring
-    if (recurringDog) {
-      recItems.push(renderItem('🎁 Welcome Bonus', 'First regular scoop included', 'FREE'));
-    }
-
-    // --- ONE TIME MATH & ITEMS ---
-    if (isCleanup) {
-      const cleanupLabel = isOnetime ? `One-Time Yard Cleanup (${otDogs} dog${otDogs === 1 ? '' : 's'})` : 'Initial Yard Baseline Cleanup';
-      let desc = isInitial ? 'Required clear-out for new service' : 'Standalone cleanup';
-      let price = '';
-      
-      if (condition === 'light') {
-        oneTime += 35;
-        price = 'Est: $35';
-        desc += (desc ? ' • ' : '') + 'Minimal buildup • Price confirmed on arrival';
-      } else if (condition === 'moderate') {
-        oneTime += 45;
-        price = '$45–$60';
-        desc += (desc ? ' • ' : '') + '(Moderate estimate)';
-        notes.push('Moderate cleanup is estimated at $45–$60. The first-service total uses the $45 starting estimate.');
-      } else if (condition === 'heavy') {
-        oneTime += 60;
-        price = '$60–$100+';
-        desc += (desc ? ' • ' : '') + '(Heavy estimate)';
-        notes.push('Heavy cleanup is estimated at $60–$100+. The first-service total uses the $60 starting estimate.');
-      } else {
-        price = 'Custom Quote';
-        desc += (desc ? ' • ' : '') + '(Pending yard review)';
-        notes.push(`Your first-service total does not include a dollar amount for the ${isOnetime ? 'one-time' : 'initial'} cleanup. Please confirm the price based on your yard condition.`);
-      }
-      otItems.push(renderItem(cleanupLabel, desc, price));
-    }
-    
-    // YARD FRESH FIRST-VISIT CALCULATION
-    if (recurringDog) {
-      if (sections > 1) {
-        oneTime += extraSectionsCost;
-        otItems.push(renderItem('First-Visit Yard Fresh', `1 section included free + ${sections - 1} additional`, money(extraSectionsCost)));
-      } else {
-        otItems.push(renderItem('First-Visit Yard Fresh', 'Deodorizing & sanitizing treatment', 'FREE'));
-      }
-    } else {
-      if (freshBase.checked) {
-        let p = 15 + extraSectionsCost;
-        oneTime += p;
-        otItems.push(renderItem('One-Time Yard Fresh', `${sections} section(s) • Deodorize & sanitize`, money(p)));
-      }
-    }
-    
-    if (deepClean) {
-      let p = deepBoxes === 1 ? 25 : (deepBoxes === 2 ? 40 : 40 + 15*(deepBoxes-2));
-      oneTime += p;
-      otItems.push(renderItem('Litter Box Deep Clean', `${deepBoxes} box${deepBoxes>1?'es':''} • Complete sanitization and reset`, money(p)));
-    }
-
-    let firstVisitCatCharge = 0;
-    if (litterFreq !== 'none') {
-      if (deepClean) {
-        otItems.push(renderItem('First Litter Box Service', 'Standard fee waived with Deep Clean', 'FREE'));
-        firstVisitCatCharge = 0;
-      } else {
-        otItems.push(renderItem('First Litter Box Service', 'Included in first service total', money(catPrice)));
-        firstVisitCatCharge = catPrice;
-      }
-    }
-
-    // --- RENDERING DOM UPDATES ---
-    const firstTotal = oneTime + firstVisitCatCharge;
-    $('ww-first-total').textContent = money(firstTotal);$('ww-onetime-lines').innerHTML = otItems.length 
-      ? otItems.join('') 
-      : '<div class="ww-empty-msg">No one-time services selected.</div>';
-      
-    $('ww-recurring-lines').innerHTML = recItems.length 
-      ? recItems.join('') 
-      : '<div class="ww-empty-msg">No recurring services selected.</div>';
-      
-    // Handle Ongoing Totals rendering
-    if (weeklyRecTotal > 0 || biweeklyRecTotal > 0) {
-      let totalsHtml = '';
-      if (weeklyRecTotal > 0) totalsHtml += `<strong>${money(weeklyRecTotal)}<span class="ww-sub-total">/wk</span></strong>`;
-      if (biweeklyRecTotal > 0) totalsHtml += `<strong>${money(biweeklyRecTotal)}<span class="ww-sub-total">/bi-wk</span></strong>`;
-      
-      $('ww-recurring-totals-wrap').innerHTML = totalsHtml;
-      show('ww-recurring-foot', true);
-    } else {
-      show('ww-recurring-foot', false);
-    }
-
-    show('ww-estimate-note', notes.length > 0);
-    $('ww-estimate-note').textContent = notes.join(' ');$('ww-dog-total').textContent = recurringDog ? money(dogPrice) + (dogFreq === 'biweekly' ? '/visit' : '/week') : '$0.00';$('ww-dog-billing').textContent = dogBilling;
-    $('ww-cat-total').textContent = litterFreq === 'none' ? '$0.00' : money(catPrice) + '/week';$('ww-cat-billing').textContent = catBilling;
-    
-    previousDogFrequency = dogFreq;
-    scheduleHeightReport();
-  }
-
-  function getFieldValue(id) {
-    const el = $(id);
-    return el ? el.value.trim() : '';
-  }
-
-  // --- SHOW SUCCESS SCREEN ---
-  function showSuccessScreen() {
-    show('ww-main-header', false);
-    show('ww-residential', false);
+  // RESIDENTIAL / COMMERCIAL TAB SWITCHER
+  $('ww-res-tab').addEventListener('click', function() {
+    show('ww-residential', true);
     show('ww-commercial', false);
-    show('ww-success-screen', true);
+    $('ww-res-tab').setAttribute('aria-pressed', 'true');
+    $('ww-com-tab').setAttribute('aria-pressed', 'false');
+    scheduleHeightReport();
+  });
+
+  $('ww-com-tab').addEventListener('click', function() {
+    show('ww-residential', false);
+    show('ww-commercial', true);
+    $('ww-res-tab').setAttribute('aria-pressed', 'false');
+    $('ww-com-tab').setAttribute('aria-pressed', 'true');
+    scheduleHeightReport();
+  });
+
+  // SCREEN 1 DYNAMIC VISIBILITY
+  function updateScreen1Visibility() {
+    const dogFreq = $('ww-dog-frequency').value;
+    const catFreq = $('ww-litter-frequency').value;
+
+    show('ww-dog-count-wrap', dogFreq !== 'none');
+    show('ww-condition-wrap', dogFreq === 'onetime');
+    show('ww-box-count-wrap', catFreq !== 'none');
     scheduleHeightReport();
   }
 
-  // --- RESIDENTIAL SUBMISSION ---
-  const submitResButton = $('ww-submit-quote');
-  const submitResStatus = $('ww-submit-status');
+  $('ww-dog-frequency').addEventListener('change', updateScreen1Visibility);
+  $('ww-litter-frequency').addEventListener('change', updateScreen1Visibility);
 
-  function setResSubmitStatus(message, isError) {
-    submitResStatus.style.color = isError ? '#9b3028' : 'var(--green)';
-    submitResStatus.textContent = message;
-    submitResStatus.style.display = 'block';
+  // STEPPER BUTTONS (- / +)
+  root.querySelectorAll('[data-step]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const targetId = btn.getAttribute('data-target');
+      const field = $(targetId);
+      if (!field) return;
+      const min = parseInt(field.min, 10) || 1;
+      const max = parseInt(field.max, 10) || 20;
+      const step = parseInt(btn.getAttribute('data-step'), 10) || 0;
+      const nextVal = Math.max(min, Math.min(max, (parseInt(field.value, 10) || min) + step));
+      field.value = nextVal;
+
+      if (!$('ww-screen-2').classList.contains('ww-hidden')) {
+        calculateAndRenderQuote();
+      }
+      scheduleHeightReport();
+    });
+  });
+
+  // SCREEN 2 ADD-ON LISTENERS
+  $('ww-addon-yard-fresh').addEventListener('change', function() {
+    show('ww-yard-sections-box', this.checked);
+    calculateAndRenderQuote();
     scheduleHeightReport();
+  });
+
+  function renderLine(title, desc, priceText) {
+    return (
+      '<div class="ww-summary-line">' +
+        '<div>' +
+          '<div class="ww-summary-title">' + title + '</div>' +
+          (desc ? '<div class="ww-summary-desc">' + desc + '</div>' : '') +
+        '</div>' +
+        '<div class="ww-summary-price">' + priceText + '</div>' +
+      '</div>'
+    );
   }
 
-  function submitResidentialQuote() {
-    if (submitResButton.disabled) return;
+  let quoteState = {};
 
-    const name = getFieldValue('ww-customer-name');
-    const street = getFieldValue('ww-customer-street');
-    const unit = getFieldValue('ww-customer-unit');
-    const city = getFieldValue('ww-customer-city');
-    const zip = getFieldValue('ww-customer-zip');
-    const phone = getFieldValue('ww-customer-phone');
-    const contactMethod = getFieldValue('ww-contact-method');
-    const email = getFieldValue('ww-customer-email');
-    const contactTime = getFieldValue('ww-contact-time');
+  function calculateAndRenderQuote() {
+    const dogFreq = $('ww-dog-frequency').value;
+    const dogs = getNum('ww-dogs');
+    const condition = $('ww-condition').value;
 
-    if (!name || !street || !city || !zip || !phone || !contactTime) {
-      setResSubmitStatus('Please complete your full name, service address (Street, City, and ZIP), phone number, and preferred contact time.', true);
-      $('ww-customer-info').scrollIntoView({ behavior:'smooth', block:'start' });
-      return;
+    const catFreq = $('ww-litter-frequency').value;
+    const boxes = getNum('ww-boxes');
+
+    const haulAway = $('ww-haul-away').checked;
+
+    const hasDog = dogFreq !== 'none';
+    const isRecurringDog = dogFreq === 'weekly' || dogFreq === 'twice' || dogFreq === 'biweekly';
+    const isOneTimeDog = dogFreq === 'onetime';
+
+    const hasCat = catFreq !== 'none';
+    const isRecurringCat = catFreq === 'weekly' || catFreq === 'twice' || catFreq === 'biweekly';
+
+    show('ww-addon-yard-wrap', isRecurringDog);
+    if (!isRecurringDog) {
+      $('ww-addon-yard-fresh').checked = false;
+      show('ww-yard-sections-box', false);
     }
 
-    // ZIP CODE VALIDATION
-    if (!allowedZips.includes(zip.substring(0,5))) {
-      setResSubmitStatus('Sorry, we currently only service Wise County and select surrounding areas. Please contact us directly if you believe this is an error.', true);
-      $('ww-customer-info').scrollIntoView({ behavior:'smooth', block:'start' });
-      return;
-    }
+    show('ww-addons-panel', isRecurringDog);
 
-    if (contactMethod === 'email') {
-      const emailInput = $('ww-customer-email');
-      if (!email || !emailInput.checkValidity()) {
-        setResSubmitStatus('Please enter a valid email address.', true);
-        emailInput.reportValidity();
-        return;
-      }
-    }
+    const yardFreshAddon = isRecurringDog && $('ww-addon-yard-fresh').checked;
+    const sections = getNum('ww-sections');
 
-    const formattedAddress = street + (unit ? ' ' + unit : '') + ', ' + city + ', TX ' + zip;
+    let summaryLinesHtml = [];
+    let breakdownTextLines = [];
 
-    const dogFrequency = getFieldValue('ww-dog-frequency');
-    const litterFrequency = getFieldValue('ww-litter-frequency');
-    const recurringDog = dogFrequency && dogFrequency !== 'none';
-    const deepClean = $('ww-deep-clean').checked;
-    
-    const cleanupNode = root.querySelector('input[name="cleanup_type"]:checked');
-    const cleanupType = cleanupNode ? cleanupNode.value : 'none';
-    const isInitial = cleanupType === 'initial';
-    const isOnetime = cleanupType === 'onetime';
-    const freshBaseChecked = $('ww-fresh').checked;
-    const freshRecChecked = $('ww-fresh-recurring').checked;
-    
-    const yardSignNode = root.querySelector('input[name="yard_sign_permission"]:checked');
-    const yardSign = yardSignNode ? yardSignNode.value : 'no';
+    let dogPerVisit = 0;
+    let dogWeeklyRate = 0;
+    let dogCustom = false;
+    let dogBillingText = 'No dog waste service selected';
 
-    const hasDogsForTreats = recurringDog || isOnetime;
-    const hasCatsForTreats = litterFrequency !== 'none' || deepClean;
-    const treatNode = root.querySelector('input[name="pet_treat_permission"]:checked');
-    const petTreats = (hasDogsForTreats || hasCatsForTreats) && treatNode ? treatNode.value : 'N/A';
+    let catPerVisit = 0;
+    let catWeeklyRate = 0;
+    let catCustom = false;
+    let catBillingText = 'No litter-box service selected';
 
-    const services = [];
-
-    if (recurringDog) {
-      services.push('Dog waste removal');
-      services.push('Promo: First regular cleaning FREE');
-    }
-    if (isInitial) services.push('Initial yard cleanup');
-    if (isOnetime) services.push('One-time yard cleanup');
-    
-    if (recurringDog) {
-      services.push('Yard Fresh Treatment (Initial Free)');
-      if (freshRecChecked) {
-        services.push('Yard Fresh Treatment (Ongoing)');
-      }
-    } else if (freshBaseChecked) {
-      services.push('Yard Fresh Treatment (One-Time)');
-    }
-
-    if (litterFrequency !== 'none') services.push('Cat litter-box cleaning');
-    if (deepClean) services.push('Litter-box deep clean');
-
-    if (services.length === 0) {
-      setResSubmitStatus('Please select at least one service before submitting your request.', true);
-      return;
-    }
-
-    const payload = {
-      name:name,
-      address:formattedAddress,
-      phone:phone,
-      contactMethod:contactMethod,
-      email:contactMethod === 'email' ? email : (email || ''),
-      contactTime:contactTime,
-      customerType:'Residential',
-      services:services.join(', '),
-      dogs:recurringDog ? String(number('ww-dogs')) : '0',
-      dogFrequency:dogFrequency,
-      boxes:litterFrequency !== 'none' ? String(number('ww-boxes')) : '0',
-      litterFrequency:litterFrequency,
-      initial: isInitial ? 'Yes' : 'No', 
-      onetime: isOnetime ? 'Yes' : 'No',
-      onetimeDogs: isOnetime ? String(number('ww-onetime-dogs')) : '0',
-      condition: (isInitial || isOnetime) ? getFieldValue('ww-condition') : '',
-      fresh: (freshBaseChecked || freshRecChecked) ? 'Yes' : 'No',
-      sections: String(number('ww-sections')),
-      deepClean:deepClean ? 'Yes' : 'No',
-      deepBoxes:deepClean ? String(number('ww-deep-boxes')) : '0',
-      firstTotal:$('ww-first-total').textContent,
-      dogPrice:$('ww-dog-total').textContent,
-      catPrice:$('ww-cat-total').textContent,
-      dogBilling:$('ww-dog-billing').textContent,
-      catBilling:$('ww-cat-billing').textContent,
-      yardSign:yardSign,
-      notes:getFieldValue('ww-customer-notes'),
-      petTreats:petTreats,
-      website:''
+    const freqLabelMap = {
+      twice: 'Twice Weekly',
+      weekly: 'Weekly',
+      biweekly: 'Bi-Weekly',
+      onetime: 'One-Time Cleanup'
     };
 
-    submitResButton.disabled = true;
-    submitResButton.textContent = 'Submitting...';
-    setResSubmitStatus('Sending your quote request...', false);
+    // 1. DOG PRICING
+    if (isRecurringDog) {
+      if (dogs >= 4) {
+        dogCustom = true;
+        dogBillingText = freqLabelMap[dogFreq] + ' • Custom Quote (4+ dogs)';
+        summaryLinesHtml.push(
+          renderLine(
+            'Dog Waste Removal (' + dogs + ' dogs)',
+            freqLabelMap[dogFreq] + ' • 4+ dogs require a custom quote',
+            'Custom Quote'
+          )
+        );
+        breakdownTextLines.push('Dog Service (' + freqLabelMap[dogFreq] + ', ' + dogs + ' dogs): Custom Quote');
+      } else {
+        if (dogFreq === 'weekly') {
+          dogWeeklyRate = 15 + 3 * (dogs - 1);
+          dogPerVisit = dogWeeklyRate;
+          dogBillingText = 'Weekly (' + money(dogPerVisit) + '/visit)';
+          summaryLinesHtml.push(
+            renderLine(
+              'Dog Waste Removal (' + dogs + ' dog' + (dogs > 1 ? 's' : '') + ')',
+              'Weekly (First scoop FREE)',
+              money(dogPerVisit) + ' / visit'
+            )
+          );
+          breakdownTextLines.push('Dog Service (Weekly, ' + dogs + ' dog(s)): ' + money(dogPerVisit) + '/visit');
+        } else if (dogFreq === 'twice') {
+          dogWeeklyRate = 25 + 5 * (dogs - 1);
+          dogPerVisit = dogWeeklyRate / 2;
+          dogBillingText = 'Twice Weekly (' + money(dogPerVisit) + '/visit • ' + money(dogWeeklyRate) + '/wk)';
+          summaryLinesHtml.push(
+            renderLine(
+              'Dog Waste Removal (' + dogs + ' dog' + (dogs > 1 ? 's' : '') + ')',
+              'Twice Weekly (First scoop FREE)',
+              money(dogPerVisit) + ' / visit'
+            )
+          );
+          breakdownTextLines.push('Dog Service (Twice Weekly, ' + dogs + ' dog(s)): ' + money(dogPerVisit) + '/visit (' + money(dogWeeklyRate) + '/wk)');
+        } else if (dogFreq === 'biweekly') {
+          dogPerVisit = 25 + 5 * (dogs - 1);
+          dogBillingText = 'Bi-Weekly (' + money(dogPerVisit) + '/visit)';
+          summaryLinesHtml.push(
+            renderLine(
+              'Dog Waste Removal (' + dogs + ' dog' + (dogs > 1 ? 's' : '') + ')',
+              'Bi-Weekly (First scoop FREE)',
+              money(dogPerVisit) + ' / visit'
+            )
+          );
+          breakdownTextLines.push('Dog Service (Bi-Weekly, ' + dogs + ' dog(s)): ' + money(dogPerVisit) + '/visit');
+        }
+      }
+    } else if (isOneTimeDog) {
+      let condPriceText = '';
+      let condDesc = '';
+      if (dogs >= 4 || condition === 'very') {
+        dogCustom = true;
+        condPriceText = 'Custom Quote';
+        condDesc = dogs >= 4 ? '4+ dogs' : 'Severely Neglected';
+      } else if (condition === 'light') {
+        dogPerVisit = 35;
+        condPriceText = '$35.00 est.';
+        condDesc = 'One-Time Cleanup (Light buildup)';
+      } else if (condition === 'moderate') {
+        dogPerVisit = 45;
+        condPriceText = '$45–$60 est.';
+        condDesc = 'One-Time Cleanup (Moderate buildup)';
+      } else if (condition === 'heavy') {
+        dogPerVisit = 60;
+        condPriceText = '$60–$100+ est.';
+        condDesc = 'One-Time Cleanup (Heavy buildup)';
+      }
+      dogBillingText = 'One-Time Cleanup (' + condPriceText + ')';
+      summaryLinesHtml.push(
+        renderLine(
+          'Dog Waste Removal (' + dogs + ' dog' + (dogs > 1 ? 's' : '') + ')',
+          condDesc,
+          condPriceText
+        )
+      );
+      breakdownTextLines.push('One-Time Dog Cleanup (' + dogs + ' dog(s), ' + condition + '): ' + condPriceText);
+    }
 
-    const formBody = new URLSearchParams({ payload:JSON.stringify(payload) });
+    // 2. CAT LITTER BOX PRICING
+    if (hasCat) {
+      if (boxes >= 4 || catFreq === 'biweekly' || catFreq === 'onetime') {
+        catCustom = true;
+        const reason = boxes >= 4 ? '4+ boxes' : freqLabelMap[catFreq];
+        catBillingText = freqLabelMap[catFreq] + ' • Custom Quote (' + reason + ')';
+        summaryLinesHtml.push(
+          renderLine(
+            'Cat Litter Box Cleaning (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')',
+            freqLabelMap[catFreq] + ' • Custom Quote',
+            'Custom Quote'
+          )
+        );
+        breakdownTextLines.push('Cat Service (' + freqLabelMap[catFreq] + ', ' + boxes + ' box(es)): Custom Quote');
+      } else if (catFreq === 'weekly') {
+        catWeeklyRate = 15 + 5 * (boxes - 1);
+        catPerVisit = catWeeklyRate;
+        catBillingText = 'Weekly (' + money(catPerVisit) + '/visit)';
+        summaryLinesHtml.push(
+          renderLine(
+            'Cat Litter Box Cleaning (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')',
+            'Weekly maintenance cleaning',
+            money(catPerVisit) + ' / visit'
+          )
+        );
+        breakdownTextLines.push('Cat Service (Weekly, ' + boxes + ' box(es)): ' + money(catPerVisit) + '/visit');
+      } else if (catFreq === 'twice') {
+        catWeeklyRate = 25 + 10 * (boxes - 1);
+        catPerVisit = catWeeklyRate / 2;
+        catBillingText = 'Twice Weekly (' + money(catPerVisit) + '/visit • ' + money(catWeeklyRate) + '/wk)';
+        summaryLinesHtml.push(
+          renderLine(
+            'Cat Litter Box Cleaning (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')',
+            'Twice Weekly maintenance cleaning',
+            money(catPerVisit) + ' / visit'
+          )
+        );
+        breakdownTextLines.push('Cat Service (Twice Weekly, ' + boxes + ' box(es)): ' + money(catPerVisit) + '/visit (' + money(catWeeklyRate) + '/wk)');
+      }
+    }
 
-    fetch(QUOTE_ENDPOINT, { method:'POST', mode:'no-cors', body:formBody })
-    .then(function() {
-      showSuccessScreen();
-    })
-    .catch(function(error) {
-      console.error('Quote submission error:', error);
-      submitResButton.disabled = false;
-      submitResButton.textContent = 'Submit Quote Request';
-      setResSubmitStatus('We could not send your request. Please try again or call (940) 247-0522.', true);
-    });
+    // 3. OPTIONAL ADD-ONS
+    let yardFreshPerVisit = 0;
+    if (yardFreshAddon) {
+      yardFreshPerVisit = 15 + 5 * (sections - 1);
+      summaryLinesHtml.push(
+        renderLine(
+          'Ongoing Yard Fresh (' + sections + ' section' + (sections > 1 ? 's' : '') + ')',
+          'Recurring deodorizing spray on future visits',
+          '+' + money(yardFreshPerVisit) + ' / visit'
+        )
+      );
+      breakdownTextLines.push('Add-On: Ongoing Yard Fresh (' + sections + ' section(s)): ' + money(yardFreshPerVisit) + '/visit');
+    }
+
+    // 4. WASTE HAUL-AWAY
+    if (haulAway) {
+      summaryLinesHtml.push(
+        renderLine(
+          'Waste Haul-Away',
+          'Off-site disposal',
+          '+$5.00 / visit'
+        )
+      );
+      breakdownTextLines.push('Waste Haul-Away: Yes (+$5.00/visit)');
+    } else {
+      breakdownTextLines.push('Waste Haul-Away: No ($0.00)');
+    }
+
+    // 5. CALCULATE DISPLAY TOTALS
+    const anyRecurring = isRecurringDog || isRecurringCat;
+    const anyCustom = dogCustom || catCustom;
+
+    let totalRecurringPerVisit = 0;
+    if (isRecurringDog && !dogCustom) totalRecurringPerVisit += dogPerVisit;
+    if (isRecurringCat && !catCustom) totalRecurringPerVisit += catPerVisit;
+    if (yardFreshAddon) totalRecurringPerVisit += yardFreshPerVisit;
+    if (haulAway && anyRecurring) totalRecurringPerVisit += 5;
+
+    let totalWeeklyEquivalent = 0;
+    const hasBiWeekly = dogFreq === 'biweekly' || catFreq === 'biweekly';
+    if (!hasBiWeekly && anyRecurring && !anyCustom) {
+      if (isRecurringDog) {
+        totalWeeklyEquivalent += dogWeeklyRate;
+        if (yardFreshAddon) {
+          totalWeeklyEquivalent += (dogFreq === 'twice' ? yardFreshPerVisit * 2 : yardFreshPerVisit);
+        }
+      }
+      if (isRecurringCat) {
+        totalWeeklyEquivalent += catWeeklyRate;
+      }
+      if (haulAway) {
+        const visitsPerWeek = (dogFreq === 'twice' || catFreq === 'twice') ? 2 : 1;
+        totalWeeklyEquivalent += 5 * visitsPerWeek;
+      }
+    }
+
+    if (anyCustom) {
+      $('ww-price-eyebrow').textContent = 'Custom Quote Required';
+      $('ww-display-per-visit').textContent = 'Custom Quote';
+      $('ww-display-billing-sub').textContent = 'We will confirm your exact price after reviewing your selections.';
+    } else if (anyRecurring) {
+      $('ww-price-eyebrow').textContent = 'Regular Price Per Visit';
+      $('ww-display-per-visit').textContent = money(totalRecurringPerVisit) + ' / visit';
+      $('ww-display-billing-sub').textContent = 'First scoop is FREE! Regular rate applies after.';
+    } else {
+      $('ww-price-eyebrow').textContent = 'Estimated Total';
+      $('ww-display-per-visit').textContent = money(dogPerVisit);
+      $('ww-display-billing-sub').textContent = 'One-time cleanup service • No ongoing charges';
+    }
+
+    $('ww-quote-lines').innerHTML = summaryLinesHtml.join('');
+
+    quoteState = {
+      dogFreq: dogFreq,
+      dogs: hasDog ? dogs : 0,
+      condition: isOneTimeDog ? condition : '',
+      catFreq: catFreq,
+      boxes: hasCat ? boxes : 0,
+      haulAway: haulAway,
+      yardFreshAddon: yardFreshAddon,
+      sections: yardFreshAddon ? sections : 1,
+      perVisitText: $('ww-display-per-visit').textContent,
+      recurringTotalText: anyRecurring ? $('ww-display-per-visit').textContent : '$0.00',
+      dogPriceText: isRecurringDog
+        ? (dogCustom ? 'Custom Quote' : money(dogPerVisit) + '/visit')
+        : (isOneTimeDog ? money(dogPerVisit) : '$0.00'),
+      catPriceText: hasCat
+        ? (catCustom ? 'Custom Quote' : money(catPerVisit) + '/visit')
+        : '$0.00',
+      dogBillingText: dogBillingText,
+      catBillingText: catBillingText,
+      breakdownSummary: breakdownTextLines.join(' | ')
+    };
   }
 
-  submitResButton.addEventListener('click', submitResidentialQuote);
+  // SCREEN 1 VALIDATION & TRANSITION TO SCREEN 2
+  $('ww-see-price-btn').addEventListener('click', function() {
+    const errEl = $('ww-s1-error');
+    show('ww-s1-error', false);
 
+    const name = $('ww-customer-name').value.trim();
+    const phone = $('ww-customer-phone').value.trim();
+    const phoneDigits = phone.replace(/\D/g, '');
+    const email = $('ww-customer-email').value.trim();
+    const address = $('ww-customer-address').value.trim();
 
-  // --- COMMERCIAL SUBMISSION ---
-  const submitCommButton = $('ww-submit-comm-quote');
-  const submitCommStatus = $('ww-comm-submit-status');
+    const dogFreq = $('ww-dog-frequency').value;
+    const catFreq = $('ww-litter-frequency').value;
 
-  function setCommSubmitStatus(message, isError) {
-    submitCommStatus.style.color = isError ? '#9b3028' : 'var(--green)';
-    submitCommStatus.textContent = message;
-    submitCommStatus.style.display = 'block';
-    scheduleHeightReport();
-  }
-
-  function submitCommercialQuote() {
-    if (submitCommButton.disabled) return;
-
-    const businessName = getFieldValue('ww-comm-business');
-    const contactName = getFieldValue('ww-comm-name');
-    const propertyAddress = getFieldValue('ww-comm-address');
-    const propertyType = getFieldValue('ww-comm-type');
-    const phone = getFieldValue('ww-comm-phone');
-    const email = getFieldValue('ww-comm-email');
-    const notes = getFieldValue('ww-comm-notes');
-
-    if (!businessName || !contactName || !propertyAddress || !phone || !email) {
-      setCommSubmitStatus('Please complete all required fields.', true);
+    if (!name) {
+      errEl.textContent = 'Please enter your full name.';
+      show('ww-s1-error', true);
+      $('ww-customer-name').focus();
+      scheduleHeightReport();
       return;
     }
 
-    const emailInput = $('ww-comm-email');
-    if (!emailInput.checkValidity()) {
-      setCommSubmitStatus('Please enter a valid email address.', true);
-      emailInput.reportValidity();
+    if (phoneDigits.length < 10) {
+      errEl.textContent = 'Please enter a valid 10-digit phone number.';
+      show('ww-s1-error', true);
+      $('ww-customer-phone').focus();
+      scheduleHeightReport();
+      return;
+    }
+
+    if (email && !$('ww-customer-email').checkValidity()) {
+      errEl.textContent = 'Please enter a valid email address or leave the email field blank.';
+      show('ww-s1-error', true);
+      $('ww-customer-email').focus();
+      scheduleHeightReport();
+      return;
+    }
+
+    if (!address) {
+      errEl.textContent = 'Please enter your service address.';
+      show('ww-s1-error', true);
+      $('ww-customer-address').focus();
+      scheduleHeightReport();
+      return;
+    }
+
+    if (dogFreq === 'none' && catFreq === 'none') {
+      errEl.textContent = 'Please select at least one service (Dog Waste Removal or Cat Litter Box Cleaning).';
+      show('ww-s1-error', true);
+      scheduleHeightReport();
+      return;
+    }
+
+    calculateAndRenderQuote();
+
+    show('ww-screen-1', false);
+    show('ww-screen-2', true);
+
+    root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    scheduleHeightReport();
+  });
+
+  // BACK BUTTON
+  $('ww-back-to-s1-btn').addEventListener('click', function() {
+    show('ww-s2-error', false);
+    show('ww-screen-2', false);
+    show('ww-screen-1', true);
+
+    root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    scheduleHeightReport();
+  });
+
+  // FINAL SUBMISSION
+  const submitBtn = $('ww-submit-quote-btn');
+
+  submitBtn.addEventListener('click', function() {
+    if (submitBtn.disabled) return;
+
+    calculateAndRenderQuote();
+
+    const name = $('ww-customer-name').value.trim();
+    const phone = $('ww-customer-phone').value.trim();
+    const email = $('ww-customer-email').value.trim();
+    const address = $('ww-customer-address').value.trim();
+    const userNotes = $('ww-customer-notes').value.trim();
+
+    const yardSign = $('ww-yard-sign').checked ? 'Yes' : 'No';
+    const petTreats = $('ww-pet-treats').checked ? 'Yes' : 'No';
+
+    const servicesList = [];
+    const isRecDog = quoteState.dogFreq === 'weekly' || quoteState.dogFreq === 'twice' || quoteState.dogFreq === 'biweekly';
+
+    if (isRecDog) {
+      servicesList.push('Dog waste removal (' + quoteState.dogFreq + ')');
+      servicesList.push('Promo: First Scoop FREE (Monthly Plan)');
+    } else if (quoteState.dogFreq === 'onetime') {
+      servicesList.push('One-time dog yard cleanup');
+    }
+
+    if (quoteState.catFreq !== 'none') {
+      servicesList.push('Cat litter-box cleaning (' + quoteState.catFreq + ')');
+    }
+
+    if (quoteState.haulAway) {
+      servicesList.push('Waste Haul-Away ($5/visit)');
+    }
+
+    if (quoteState.yardFreshAddon) {
+      servicesList.push('Add-On: Ongoing Yard Fresh (' + quoteState.sections + ' section(s))');
+    }
+
+    const combinedNotes =
+      (userNotes ? userNotes + '\n\n' : '') +
+      '--- PREFERENCES ---\n' +
+      'Yard Sign Permitted: ' + yardSign + '\n' +
+      'Pet Treats Permitted: ' + petTreats + '\n\n' +
+      '--- QUOTE SUMMARY ---\n' +
+      'Displayed Rate: ' + quoteState.perVisitText + '\n' +
+      'Waste Haul-Away: ' + (quoteState.haulAway ? 'Yes ($5/visit)' : 'No') + '\n' +
+      'Breakdown: ' + quoteState.breakdownSummary;
+
+    const payload = {
+      name: name,
+      address: address,
+      phone: phone,
+      contactMethod: email ? 'Text / Phone / Email' : 'Text / Phone',
+      email: email,
+      contactTime: 'Anytime',
+      customerType: 'Residential',
+      services: servicesList.join(', '),
+      dogs: String(quoteState.dogs),
+      dogFrequency: quoteState.dogFreq,
+      boxes: String(quoteState.boxes),
+      litterFrequency: quoteState.catFreq,
+      initial: 'No (First Scoop Free Promo)',
+      onetime: quoteState.dogFreq === 'onetime' ? 'Yes' : 'No',
+      onetimeDogs: quoteState.dogFreq === 'onetime' ? String(quoteState.dogs) : '0',
+      condition: quoteState.condition,
+      fresh: (isRecDog || quoteState.yardFreshAddon) ? 'Yes' : 'No',
+      sections: String(quoteState.sections),
+      deepClean: 'No',
+      deepBoxes: '0',
+      haulAway: quoteState.haulAway ? 'Yes ($5/visit)' : 'No',
+      perVisitPrice: quoteState.perVisitText,
+      firstTotal: quoteState.perVisitText,
+      dogPrice: quoteState.dogPriceText,
+      catPrice: quoteState.catPriceText,
+      dogBilling: quoteState.dogBillingText,
+      catBilling: quoteState.catBillingText,
+      yardSign: yardSign,
+      petTreats: petTreats,
+      notes: combinedNotes,
+      website: ''
+    };
+
+    show('ww-s2-error', false);
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting Quote...';
+
+    const formBody = new URLSearchParams({ payload: JSON.stringify(payload) });
+
+    fetch(QUOTE_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: formBody
+    })
+      .then(function() {
+        show('ww-main-header', false);
+        show('ww-residential', false);
+        show('ww-commercial', false);
+        show('ww-success-screen', true);
+        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        scheduleHeightReport();
+      })
+      .catch(function(error) {
+        console.error('Quote submission error:', error);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Quote';
+        const errEl = $('ww-s2-error');
+        errEl.textContent = 'We could not submit your quote right now. Please try again or call/text us at (940) 247-0522.';
+        show('ww-s2-error', true);
+        scheduleHeightReport();
+      });
+  });
+
+  // COMMERCIAL SUBMISSION
+  const commBtn = $('ww-submit-comm-quote');
+  commBtn.addEventListener('click', function() {
+    if (commBtn.disabled) return;
+    const errEl = $('ww-comm-error');
+    show('ww-comm-error', false);
+
+    const businessName = $('ww-comm-business').value.trim();
+    const contactName = $('ww-comm-name').value.trim();
+    const propertyAddress = $('ww-comm-address').value.trim();
+    const propertyType = $('ww-comm-type').value;
+    const phone = $('ww-comm-phone').value.trim();
+    const email = $('ww-comm-email').value.trim();
+    const notes = $('ww-comm-notes').value.trim();
+
+    if (!businessName || !contactName || !propertyAddress || !phone) {
+      errEl.textContent = 'Please complete your business name, contact name, property address, and phone number.';
+      show('ww-comm-error', true);
+      scheduleHeightReport();
+      return;
+    }
+
+    if (email && !$('ww-comm-email').checkValidity()) {
+      errEl.textContent = 'Please enter a valid email address or leave it blank.';
+      show('ww-comm-error', true);
+      scheduleHeightReport();
       return;
     }
 
     const payload = {
       name: contactName,
-      address: businessName + ' (' + propertyAddress + ')', 
+      address: businessName + ' (' + propertyAddress + ')',
       phone: phone,
-      contactMethod: 'email', 
+      contactMethod: email ? 'email' : 'phone',
       email: email,
       contactTime: 'Anytime',
-      customerType: 'Commercial - ' + propertyType, 
+      customerType: 'Commercial - ' + propertyType,
       services: 'Commercial Quote Requested',
       dogs: '0',
       dogFrequency: 'none',
@@ -2207,71 +1464,37 @@
       dogBilling: '',
       catBilling: '',
       yardSign: 'no',
-      notes: notes,
       petTreats: 'N/A',
+      notes: notes,
       website: ''
     };
 
-    submitCommButton.disabled = true;
-    submitCommButton.textContent = 'Submitting...';
-    setCommSubmitStatus('Sending your consultation request...', false);
+    commBtn.disabled = true;
+    commBtn.textContent = 'Submitting...';
 
-    const formBody = new URLSearchParams({ payload:JSON.stringify(payload) });
-
-    fetch(QUOTE_ENDPOINT, { method:'POST', mode:'no-cors', body:formBody })
-    .then(function() {
-      showSuccessScreen();
+    fetch(QUOTE_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: new URLSearchParams({ payload: JSON.stringify(payload) })
     })
-    .catch(function(error) {
-      console.error('Quote submission error:', error);
-      submitCommButton.disabled = false;
-      submitCommButton.textContent = 'Send Consultation Request';
-      setCommSubmitStatus('We could not send your request. Please try again or call (940) 247-0522.', true);
-    });
-  }
-
-  submitCommButton.addEventListener('click', submitCommercialQuote);
-
-
-  // TABS NAVIGATION
-  $('ww-res-tab').addEventListener('click', () => {
-    show('ww-residential', true);
-    show('ww-commercial', false);
-    $('ww-res-tab').setAttribute('aria-pressed', 'true');$('ww-com-tab').setAttribute('aria-pressed', 'false');
-    scheduleHeightReport();
+      .then(function() {
+        show('ww-main-header', false);
+        show('ww-residential', false);
+        show('ww-commercial', false);
+        show('ww-success-screen', true);
+        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        scheduleHeightReport();
+      })
+      .catch(function() {
+        commBtn.disabled = false;
+        commBtn.textContent = 'Send Consultation Request';
+        errEl.textContent = 'We could not send your request. Please try again or call (940) 247-0522.';
+        show('ww-comm-error', true);
+        scheduleHeightReport();
+      });
   });
 
-  $('ww-com-tab').addEventListener('click', () => {
-    show('ww-residential', false);
-    show('ww-commercial', true);
-    $('ww-res-tab').setAttribute('aria-pressed', 'false');$('ww-com-tab').setAttribute('aria-pressed', 'true');
-    scheduleHeightReport();
-  });
-
-  root.querySelectorAll('#ww-residential input, #ww-residential select').forEach(el => {
-    el.addEventListener('input', calculate);
-    el.addEventListener('change', calculate);
-  });
-
-  root.querySelectorAll('#ww-residential [data-step]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const field = $(btn.dataset.target);
-      const min = parseInt(field.min, 10) || 1;
-      const max = parseInt(field.max, 10) || 20;
-
-      field.value = Math.max(
-        min,
-        Math.min(
-          max,
-          (parseInt(field.value, 10) || min) + parseInt(btn.dataset.step, 10)
-        )
-      );
-
-      calculate();
-    });
-  });
-
-  calculate();
+  updateScreen1Visibility();
   scheduleHeightReport();
 })();
 </script>
