@@ -649,10 +649,10 @@
           </label>
         </div>
 
-        <label class="ww-label" for="ww-customer-notes">
+        <label class="ww-label" for="ww-extra-details">
           Additional notes <span class="ww-muted">(optional)</span>
         </label>
-        <textarea id="ww-customer-notes" name="notes" rows="3" maxlength="2000" placeholder="Gate codes, pet names, or special instructions..." autocomplete="off" spellcheck="true"></textarea>
+        <textarea id="ww-extra-details" name="extra_details" rows="3" maxlength="2000" placeholder="Gate codes, pet names, or special instructions..." autocomplete="new-password" spellcheck="true"></textarea>
       </div>
 
       <!-- Validation Error Message & See My Price Button -->
@@ -1307,7 +1307,7 @@
     const phone = $('ww-customer-phone').value.trim();
     const email = $('ww-customer-email').value.trim();
     const address = $('ww-customer-address').value.trim();
-    const userNotes = $('ww-customer-notes').value.trim();
+    const userNotes = $('ww-extra-details').value.trim();
 
     const yardSign = $('ww-yard-sign').checked ? 'Yes' : 'No';
     const petTreats = $('ww-pet-treats').checked ? 'Yes' : 'No';
