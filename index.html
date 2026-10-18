@@ -335,26 +335,6 @@
       cursor: wait;
     }
 
-    #ww-quote .ww-secondary-btn {
-      width: 100%;
-      min-height: 46px;
-      padding: 10px 16px;
-      border: 1.5px solid var(--border-strong);
-      border-radius: var(--radius-md);
-      background: #ffffff;
-      color: var(--green);
-      font: inherit;
-      font-size: 14.5px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    #ww-quote .ww-secondary-btn:hover {
-      border-color: var(--green);
-      background: var(--cream);
-    }
-
     /* STATUS / ERROR BANNER */
     #ww-quote .ww-status-msg {
       font-size: 14px;
@@ -367,26 +347,16 @@
       border: 1px solid #ebccd1;
     }
 
-    /* SCREEN 2: STANDALONE QUOTE CARD (NEW) */
+    /* INLINE QUOTE CARD STYLING */
     #ww-screen-2 {
       width: 100%;
-      max-width: 580px;
-      margin: 0 auto;
+      margin: 16px 0 0;
       animation: fadeIn 0.4s ease;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    #ww-screen-2-content {
-      background: #ffffff;
-      width: 100%;
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: var(--shadow-md);
-      border: 1px solid var(--border);
     }
 
     #ww-quote .ww-receipt-box {
@@ -508,7 +478,7 @@
       body {
         padding: 5px !important;
       }
-      #ww-quote .ww-panel, #ww-screen-2-content {
+      #ww-quote .ww-panel {
         padding: 16px 14px;
         margin-bottom: 12px;
       }
@@ -557,12 +527,9 @@
   <!-- RESIDENTIAL FLOW -->
   <div id="ww-residential">
 
-    <!-- ==========================================
-         SCREEN 1 — GET A QUOTE
-         ========================================== -->
     <form id="ww-screen-1" onsubmit="event.preventDefault(); document.getElementById('ww-see-price-btn').click();">
 
-      <!-- 1. Basic Contact Information with Browser Autofill Attributes -->
+      <!-- 1. Basic Contact Information -->
       <div class="ww-panel">
         <h3>1. Contact &amp; Service Address</h3>
 
@@ -684,19 +651,15 @@
 
       <button type="button" class="ww-primary-btn" id="ww-see-price-btn">
         <span>See My Price</span>
-        <span aria-hidden="true">→</span>
+        <span aria-hidden="true">↓</span>
       </button>
 
-    </form>
-
-    <!-- ==========================================
-         SCREEN 2 — REVIEW YOUR QUOTE (STANDALONE CARD)
-         ========================================== -->
-    <div id="ww-screen-2" class="ww-hidden">
-      <div id="ww-screen-2-content">
-        <form onsubmit="event.preventDefault(); document.getElementById('ww-submit-quote-btn').click();">
-
-          <!-- Clean, Single-Box Quote Summary -->
+      <!-- ==========================================
+           SCREEN 2 — INLINE QUOTE CARD (REVEALED IN PLACE)
+           ========================================== -->
+      <div id="ww-screen-2" class="ww-hidden">
+        <div class="ww-panel" style="background: #f9fbf9; border: 2px solid var(--light);">
+          
           <div class="ww-receipt-box" aria-live="polite">
             <div class="ww-price-hero">
               <span class="ww-price-eyebrow" id="ww-price-eyebrow">Your Quote</span>
@@ -704,21 +667,17 @@
               <div class="ww-big-sub" id="ww-display-billing-sub">Billed at $15.00 / week</div>
             </div>
 
-            <!-- Concise Itemized Breakdown -->
             <div id="ww-quote-lines"></div>
 
-            <!-- Compact First-Visit Free Offer Callout -->
             <div class="ww-free-banner" id="ww-free-offer-banner">
               <strong>🎁 First Scoop Free!</strong>
               Your very first scoop is 100% free when you sign up for a monthly recurring plan! (Includes a free Yard Fresh treatment on your initial cleanup, with no separate initial-cleanup fee). Normal recurring rates apply afterward.
             </div>
           </div>
 
-          <!-- Streamlined Optional Add-Ons -->
-          <div id="ww-addons-panel" style="margin-bottom: 24px;">
+          <div id="ww-addons-panel" style="margin-bottom: 20px;">
             <h3 style="margin-bottom:12px;">Optional Add-Ons</h3>
 
-            <!-- Yard Fresh Treatment Add-On (Only shown for recurring dog service) -->
             <div id="ww-addon-yard-wrap" class="ww-hidden">
               <label class="ww-choice" style="margin-bottom: 0; background: var(--cream);">
                 <input type="checkbox" id="ww-addon-yard-fresh" name="yard_fresh">
@@ -739,24 +698,20 @@
             </div>
           </div>
 
-          <!-- Final Submission Error & Buttons -->
           <div id="ww-s2-error" class="ww-status-msg ww-hidden" role="alert"></div>
 
-          <button type="button" class="ww-primary-btn" id="ww-submit-quote-btn">
+          <button type="button" class="ww-primary-btn" id="ww-submit-quote-btn" style="margin-top:0;">
             Submit Quote
           </button>
 
-          <button type="button" class="ww-secondary-btn" id="ww-back-to-s1-btn">
-            ← Edit Selections
-          </button>
-
-        </form>
+        </div>
       </div>
-    </div>
+
+    </form>
 
   </div>
 
-  <!-- COMMERCIAL SECTION (Preserved) -->
+  <!-- COMMERCIAL SECTION -->
   <form id="ww-commercial" class="ww-hidden" onsubmit="event.preventDefault(); document.getElementById('ww-submit-comm-quote').click();">
     <div class="ww-panel">
       <h3>Request a Commercial Consultation</h3>
@@ -830,15 +785,9 @@
   if (!root || root.dataset.ready) return;
   root.dataset.ready = '1';
 
-  /*
-   * GOOGLE APPS SCRIPT / PUSHOVER WEB APP ENDPOINT
-   */
   const QUOTE_ENDPOINT =
     'https://script.google.com/macros/s/AKfycbyCDemM3MYGckMTXnyBD02ssiY8KYMmqSIFAY5j0-w8iJcuT-gmUWsr8V1mjMGOtp2rDw/exec';
 
-  /*
-   * IFRAME HEIGHT REPORTER
-   */
   let heightReportPending = false;
 
   function reportCalculatorHeight() {
@@ -864,15 +813,6 @@
     requestAnimationFrame(function() {
       requestAnimationFrame(reportCalculatorHeight);
     });
-  }
-
-  // Tells Carrd parent script to scroll smoothly to the top of the embed container
-  function scrollToTop() {
-    if (window.parent !== window) {
-      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
   }
 
   window.addEventListener('message', function(event) {
@@ -951,8 +891,31 @@
     scheduleHeightReport();
   }
 
-  $('ww-dog-frequency').addEventListener('change', updateScreen1Visibility);
-  $('ww-litter-frequency').addEventListener('change', updateScreen1Visibility);
+  $('ww-dog-frequency').addEventListener('change', function() {
+    updateScreen1Visibility();
+    if (!$('ww-screen-2').classList.contains('ww-hidden')) {
+      calculateAndRenderQuote();
+    }
+  });
+
+  $('ww-litter-frequency').addEventListener('change', function() {
+    updateScreen1Visibility();
+    if (!$('ww-screen-2').classList.contains('ww-hidden')) {
+      calculateAndRenderQuote();
+    }
+  });
+
+  $('ww-condition').addEventListener('change', function() {
+    if (!$('ww-screen-2').classList.contains('ww-hidden')) {
+      calculateAndRenderQuote();
+    }
+  });
+
+  $('ww-haul-away').addEventListener('change', function() {
+    if (!$('ww-screen-2').classList.contains('ww-hidden')) {
+      calculateAndRenderQuote();
+    }
+  });
 
   // STEPPER BUTTONS (- / +)
   root.querySelectorAll('[data-step]').forEach(function(btn) {
@@ -973,7 +936,7 @@
     });
   });
 
-  // SCREEN 2 ADD-ON LISTENERS
+  // ADD-ON LISTENERS
   $('ww-addon-yard-fresh').addEventListener('change', function() {
     show('ww-yard-sections-box', this.checked);
     calculateAndRenderQuote();
@@ -1240,7 +1203,7 @@
     };
   }
 
-  // SCREEN 1 VALIDATION & SWAP TRIGGER
+  // VALIDATION & INLINE REVEAL TRIGGER
   $('ww-see-price-btn').addEventListener('click', function() {
     const errEl = $('ww-s1-error');
     show('ww-s1-error', false);
@@ -1288,24 +1251,8 @@
       return;
     }
 
-    // Hide Screen 1 entirely, show Screen 2, then fire the scroll trigger
     calculateAndRenderQuote();
-    show('ww-main-header', false);
-    show('ww-screen-1', false);
     show('ww-screen-2', true);
-
-    scrollToTop();
-    scheduleHeightReport();
-  });
-
-  // BACK BUTTON (Returns to Screen 1)
-  $('ww-back-to-s1-btn').addEventListener('click', function() {
-    show('ww-s2-error', false);
-    show('ww-screen-2', false);
-    show('ww-main-header', true);
-    show('ww-screen-1', true);
-
-    scrollToTop();
     scheduleHeightReport();
   });
 
@@ -1404,9 +1351,9 @@
       body: formBody
     })
       .then(function() {
-        show('ww-screen-2', false);
+        show('ww-screen-1', false);
+        show('ww-main-header', false);
         show('ww-success-screen', true);
-        scrollToTop();
         scheduleHeightReport();
       })
       .catch(function(error) {
@@ -1493,7 +1440,6 @@
         show('ww-main-header', false);
         show('ww-commercial', false);
         show('ww-success-screen', true);
-        scrollToTop();
         scheduleHeightReport();
       })
       .catch(function() {
