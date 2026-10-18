@@ -845,7 +845,6 @@
     heightReportPending = false;
     if (window.parent === window) return;
 
-    // Report height dynamically
     const height = Math.ceil(Math.max(
       root.scrollHeight,
       root.getBoundingClientRect().height,
@@ -867,7 +866,7 @@
     });
   }
 
-  // Tells Carrd parent script to scroll to the top of the iframe anchor
+  // Tells Carrd parent script to scroll smoothly to the top of the embed container
   function scrollToTop() {
     if (window.parent !== window) {
       window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
@@ -1201,24 +1200,6 @@
     if (isRecurringCat && !catCustom) totalRecurringPerVisit += catPerVisit;
     if (yardFreshAddon) totalRecurringPerVisit += yardFreshPerVisit;
     if (haulAway && anyRecurring) totalRecurringPerVisit += 5;
-
-    let totalWeeklyEquivalent = 0;
-    const hasBiWeekly = dogFreq === 'biweekly' || catFreq === 'biweekly';
-    if (!hasBiWeekly && anyRecurring && !anyCustom) {
-      if (isRecurringDog) {
-        totalWeeklyEquivalent += dogWeeklyRate;
-        if (yardFreshAddon) {
-          totalWeeklyEquivalent += (dogFreq === 'twice' ? yardFreshPerVisit * 2 : yardFreshPerVisit);
-        }
-      }
-      if (isRecurringCat) {
-        totalWeeklyEquivalent += catWeeklyRate;
-      }
-      if (haulAway) {
-        const visitsPerWeek = (dogFreq === 'twice' || catFreq === 'twice') ? 2 : 1;
-        totalWeeklyEquivalent += 5 * visitsPerWeek;
-      }
-    }
 
     if (anyCustom) {
       $('ww-price-eyebrow').textContent = 'Custom Quote Required';
