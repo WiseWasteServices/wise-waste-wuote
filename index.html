@@ -366,6 +366,36 @@
       color: var(--danger);
       border: 1px solid #ebccd1;
     }
+    
+    /* =========================================
+       MODAL OVERLAY (SCREEN 2)
+       ========================================= */
+    #ww-quote .ww-modal-active {
+      display: flex !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(30, 44, 34, 0.75);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      backdrop-filter: blur(4px);
+    }
+    
+    #ww-screen-2-content {
+      background: #ffffff;
+      width: 100%;
+      max-width: 580px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      position: relative;
+    }
 
     /* SCREEN 2: STREAMLINED QUOTE CARD */
     #ww-quote .ww-receipt-box {
@@ -508,6 +538,11 @@
       }
       #ww-quote .ww-number {
         max-width: 100%;
+      }
+      
+      /* Make sure modal content fits on small screens */
+      #ww-screen-2-content {
+        padding: 18px 15px;
       }
     }
   </style>
@@ -666,65 +701,69 @@
     </form>
 
     <!-- ==========================================
-         SCREEN 2 — REVIEW YOUR QUOTE
+         SCREEN 2 — REVIEW YOUR QUOTE (MODAL POPUP)
          ========================================== -->
-    <form id="ww-screen-2" class="ww-hidden" onsubmit="event.preventDefault(); document.getElementById('ww-submit-quote-btn').click();">
+    <div id="ww-screen-2" class="ww-hidden">
+      <div id="ww-screen-2-content">
+        <form onsubmit="event.preventDefault(); document.getElementById('ww-submit-quote-btn').click();">
 
-      <!-- Clean, Single-Box Quote Summary -->
-      <div class="ww-receipt-box" aria-live="polite">
-        <div class="ww-price-hero">
-          <span class="ww-price-eyebrow" id="ww-price-eyebrow">Your Quote</span>
-          <div class="ww-big-price" id="ww-display-per-visit">$15.00 / visit</div>
-          <div class="ww-big-sub" id="ww-display-billing-sub">Billed at $15.00 / week</div>
-        </div>
+          <!-- Clean, Single-Box Quote Summary -->
+          <div class="ww-receipt-box" aria-live="polite">
+            <div class="ww-price-hero">
+              <span class="ww-price-eyebrow" id="ww-price-eyebrow">Your Quote</span>
+              <div class="ww-big-price" id="ww-display-per-visit">$15.00 / visit</div>
+              <div class="ww-big-sub" id="ww-display-billing-sub">Billed at $15.00 / week</div>
+            </div>
 
-        <!-- Concise Itemized Breakdown -->
-        <div id="ww-quote-lines"></div>
+            <!-- Concise Itemized Breakdown -->
+            <div id="ww-quote-lines"></div>
 
-        <!-- Compact First-Visit Free Offer Callout -->
-        <div class="ww-free-banner" id="ww-free-offer-banner">
-          <strong>🎁 First Scoop Free!</strong>
-          Your very first scoop is 100% free when you sign up for a monthly recurring plan! (Includes a free Yard Fresh treatment on your initial cleanup, with no separate initial-cleanup fee). Normal recurring rates apply afterward.
-        </div>
-      </div>
-
-      <!-- Streamlined Optional Add-Ons -->
-      <div class="ww-panel" id="ww-addons-panel">
-        <h3>Optional Add-Ons</h3>
-
-        <!-- Yard Fresh Treatment Add-On (Only shown for recurring dog service) -->
-        <div id="ww-addon-yard-wrap" class="ww-hidden">
-          <label class="ww-choice">
-            <input type="checkbox" id="ww-addon-yard-fresh" name="yard_fresh">
-            <span>
-              <strong>Ongoing Yard Fresh Treatment (+$15/visit)</strong><br>
-              <span class="ww-muted">Deodorizing spray on recurring visits (+$5 per extra yard section). First visit is already included free!</span>
-            </span>
-          </label>
-
-          <div id="ww-yard-sections-box" class="ww-sub-box ww-hidden">
-            <label class="ww-label" for="ww-sections" style="margin-top:0;">Number of yard sections</label>
-            <div class="ww-number">
-              <button type="button" data-step="-1" data-target="ww-sections" aria-label="Remove a section">−</button>
-              <input id="ww-sections" name="yard_sections" type="number" min="1" max="20" value="1" readonly>
-              <button type="button" data-step="1" data-target="ww-sections" aria-label="Add a section">+</button>
+            <!-- Compact First-Visit Free Offer Callout -->
+            <div class="ww-free-banner" id="ww-free-offer-banner">
+              <strong>🎁 First Scoop Free!</strong>
+              Your very first scoop is 100% free when you sign up for a monthly recurring plan! (Includes a free Yard Fresh treatment on your initial cleanup, with no separate initial-cleanup fee). Normal recurring rates apply afterward.
             </div>
           </div>
-        </div>
+
+          <!-- Streamlined Optional Add-Ons -->
+          <div class="ww-panel" id="ww-addons-panel" style="margin-bottom: 20px;">
+            <h3 style="margin-bottom:8px;">Optional Add-Ons</h3>
+
+            <!-- Yard Fresh Treatment Add-On (Only shown for recurring dog service) -->
+            <div id="ww-addon-yard-wrap" class="ww-hidden">
+              <label class="ww-choice" style="margin-bottom: 0;">
+                <input type="checkbox" id="ww-addon-yard-fresh" name="yard_fresh">
+                <span>
+                  <strong>Ongoing Yard Fresh Treatment (+$15/visit)</strong><br>
+                  <span class="ww-muted">Deodorizing spray on recurring visits (+$5 per extra yard section). First visit is already included free!</span>
+                </span>
+              </label>
+
+              <div id="ww-yard-sections-box" class="ww-sub-box ww-hidden" style="margin-bottom: 0;">
+                <label class="ww-label" for="ww-sections" style="margin-top:0;">Number of yard sections</label>
+                <div class="ww-number">
+                  <button type="button" data-step="-1" data-target="ww-sections" aria-label="Remove a section">−</button>
+                  <input id="ww-sections" name="yard_sections" type="number" min="1" max="20" value="1" readonly>
+                  <button type="button" data-step="1" data-target="ww-sections" aria-label="Add a section">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Final Submission Error & Buttons -->
+          <div id="ww-s2-error" class="ww-status-msg ww-hidden" role="alert"></div>
+
+          <button type="button" class="ww-primary-btn" id="ww-submit-quote-btn">
+            Submit Quote
+          </button>
+
+          <button type="button" class="ww-secondary-btn" id="ww-back-to-s1-btn">
+            ← Edit Selections
+          </button>
+
+        </form>
       </div>
-
-      <!-- Final Submission Error & Buttons -->
-      <div id="ww-s2-error" class="ww-status-msg ww-hidden" role="alert"></div>
-
-      <button type="button" class="ww-primary-btn" id="ww-submit-quote-btn">
-        Submit Quote
-      </button>
-
-      <button type="button" class="ww-secondary-btn" id="ww-back-to-s1-btn">
-        ← Edit Selections
-      </button>
-
-    </form>
+    </div>
 
   </div>
 
@@ -837,15 +876,6 @@
       requestAnimationFrame(reportCalculatorHeight);
     });
   }
-  
-  // NEW: Scroll to Top Helper Function
-  function scrollToTop() {
-    if (window.parent !== window) {
-      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-    } else {
-      root.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
 
   window.addEventListener('message', function(event) {
     if (event.source !== window.parent) return;
@@ -938,10 +968,9 @@
       const nextVal = Math.max(min, Math.min(max, (parseInt(field.value, 10) || min) + step));
       field.value = nextVal;
 
-      if (!$('ww-screen-2').classList.contains('ww-hidden')) {
+      if ($('ww-screen-2').classList.contains('ww-modal-active')) {
         calculateAndRenderQuote();
       }
-      scheduleHeightReport();
     });
   });
 
@@ -949,7 +978,6 @@
   $('ww-addon-yard-fresh').addEventListener('change', function() {
     show('ww-yard-sections-box', this.checked);
     calculateAndRenderQuote();
-    scheduleHeightReport();
   });
 
   function renderLine(title, desc, priceText) {
@@ -1232,7 +1260,7 @@
     };
   }
 
-  // SCREEN 1 VALIDATION & TRANSITION TO SCREEN 2
+  // SCREEN 1 VALIDATION & POPUP TRIGGER
   $('ww-see-price-btn').addEventListener('click', function() {
     const errEl = $('ww-s1-error');
     show('ww-s1-error', false);
@@ -1250,7 +1278,6 @@
       errEl.textContent = 'Please enter your full name.';
       show('ww-s1-error', true);
       $('ww-customer-name').focus();
-      scheduleHeightReport();
       return;
     }
 
@@ -1258,7 +1285,6 @@
       errEl.textContent = 'Please enter a valid 10-digit phone number.';
       show('ww-s1-error', true);
       $('ww-customer-phone').focus();
-      scheduleHeightReport();
       return;
     }
 
@@ -1266,7 +1292,6 @@
       errEl.textContent = 'Please enter a valid email address or leave the email field blank.';
       show('ww-s1-error', true);
       $('ww-customer-email').focus();
-      scheduleHeightReport();
       return;
     }
 
@@ -1274,34 +1299,26 @@
       errEl.textContent = 'Please enter your service address.';
       show('ww-s1-error', true);
       $('ww-customer-address').focus();
-      scheduleHeightReport();
       return;
     }
 
     if (dogFreq === 'none' && catFreq === 'none') {
       errEl.textContent = 'Please select at least one service (Dog Waste Removal or Cat Litter Box Cleaning).';
       show('ww-s1-error', true);
-      scheduleHeightReport();
       return;
     }
 
+    // If valid, calculate the price and trigger the modal popup
     calculateAndRenderQuote();
-
-    show('ww-screen-1', false);
-    show('ww-screen-2', true);
-
-    scrollToTop();
-    scheduleHeightReport();
+    $('ww-screen-2').classList.remove('ww-hidden');
+    $('ww-screen-2').classList.add('ww-modal-active');
   });
 
-  // BACK BUTTON
+  // BACK BUTTON (Closes the modal)
   $('ww-back-to-s1-btn').addEventListener('click', function() {
     show('ww-s2-error', false);
-    show('ww-screen-2', false);
-    show('ww-screen-1', true);
-
-    scrollToTop();
-    scheduleHeightReport();
+    $('ww-screen-2').classList.remove('ww-modal-active');
+    $('ww-screen-2').classList.add('ww-hidden');
   });
 
   // FINAL SUBMISSION
@@ -1399,11 +1416,13 @@
       body: formBody
     })
       .then(function() {
+        $('ww-screen-2').classList.remove('ww-modal-active');
+        $('ww-screen-2').classList.add('ww-hidden');
         show('ww-main-header', false);
         show('ww-residential', false);
         show('ww-commercial', false);
         show('ww-success-screen', true);
-        scrollToTop();
+        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
         scheduleHeightReport();
       })
       .catch(function(error) {
@@ -1413,7 +1432,6 @@
         const errEl = $('ww-s2-error');
         errEl.textContent = 'We could not submit your quote right now. Please try again or call/text us at (940) 247-0522.';
         show('ww-s2-error', true);
-        scheduleHeightReport();
       });
   });
 
@@ -1491,7 +1509,7 @@
         show('ww-residential', false);
         show('ww-commercial', false);
         show('ww-success-screen', true);
-        scrollToTop();
+        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
         scheduleHeightReport();
       })
       .catch(function() {
