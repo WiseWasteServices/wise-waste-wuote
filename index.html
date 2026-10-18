@@ -837,6 +837,15 @@
       requestAnimationFrame(reportCalculatorHeight);
     });
   }
+  
+  // NEW: Scroll to Top Helper Function
+  function scrollToTop() {
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
+    } else {
+      root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 
   window.addEventListener('message', function(event) {
     if (event.source !== window.parent) return;
@@ -1281,7 +1290,7 @@
     show('ww-screen-1', false);
     show('ww-screen-2', true);
 
-    root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    scrollToTop();
     scheduleHeightReport();
   });
 
@@ -1291,7 +1300,7 @@
     show('ww-screen-2', false);
     show('ww-screen-1', true);
 
-    root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    scrollToTop();
     scheduleHeightReport();
   });
 
@@ -1394,7 +1403,7 @@
         show('ww-residential', false);
         show('ww-commercial', false);
         show('ww-success-screen', true);
-        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        scrollToTop();
         scheduleHeightReport();
       })
       .catch(function(error) {
@@ -1482,7 +1491,7 @@
         show('ww-residential', false);
         show('ww-commercial', false);
         show('ww-success-screen', true);
-        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        scrollToTop();
         scheduleHeightReport();
       })
       .catch(function() {
