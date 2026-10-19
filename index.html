@@ -879,7 +879,7 @@
   }
 
   /*
-   * MOBILE SCROLL FIX
+   * MOBILE SCROLL FIX (Forces Carrd parent to do the math)
    */
   function shootToTop() {
     // 1. Defocus input fields to unlock the mobile keyboard/viewport anchor
@@ -887,21 +887,19 @@
       document.activeElement.blur();
     }
 
-    // 2. Tell Carrd to scroll the iframe into view immediately
+    // 2. Tell Carrd to calculate its own exact scroll position immediately
     if (window.parent !== window) {
       window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
+      
+      // Fire it a second time half a second later just in case iOS Safari
+      // tries to yank you back down while the height shrinks.
+      setTimeout(function() {
+        window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
+      }, 400);
     }
 
-    // 3. Just in case it's viewed directly
+    // 3. Just in case it's viewed directly without Carrd
     try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) { window.scrollTo(0,0); }
-
-    // 4. Report height and fire scroll again after layout changes
-    setTimeout(function() {
-      reportCalculatorHeight();
-      if (window.parent !== window) {
-        window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-      }
-    }, 150);
   }
 
   window.addEventListener('message', function(event) {
@@ -1317,6 +1315,7 @@
     show('ww-screen-2', true);
 
     shootToTop();
+    scheduleHeightReport();
   });
 
   // BACK BUTTON (Returns to Screen 1)
@@ -1327,6 +1326,7 @@
     show('ww-screen-1', true);
 
     shootToTop();
+    scheduleHeightReport();
   });
 
   // FINAL SUBMISSION
@@ -1420,6 +1420,7 @@
     show('ww-screen-2', false);
     show('ww-success-screen', true);
     shootToTop();
+    scheduleHeightReport();
 
     const formBody = new URLSearchParams({ payload: JSON.stringify(payload) });
 
@@ -1509,6 +1510,7 @@
     show('ww-commercial', false);
     show('ww-success-screen', true);
     shootToTop();
+    scheduleHeightReport();
 
     fetch(QUOTE_ENDPOINT, {
       method: 'POST',
