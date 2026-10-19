@@ -514,7 +514,7 @@
 <div id="ww-quote">
 
   <!-- ==========================================
-       TOP INTRO BLOCK (Always visible for Residential)
+       TOP INTRO BLOCK
        ========================================== -->
   <div id="ww-intro-block" style="max-width:850px; margin:0 auto 16px; font-family:'Segoe UI',Arial,sans-serif; color:#1E2C22; text-align:center;">
     <div style="background:#F4F7F4; border:1px solid #D5DFCE; border-radius:14px; padding:30px 25px; box-shadow:0 4px 12px rgba(30,44,34,0.06);">
@@ -706,6 +706,11 @@
               <strong>🎁 First Scoop Free!</strong>
               Your very first scoop is 100% free when you sign up for a monthly recurring plan! Normal recurring rates apply afterward.
             </div>
+            
+            <div style="text-align: center; margin-top: 15px;">
+              <a href="#" onclick="event.preventDefault(); document.getElementById('ww-submit-quote-btn').click();" style="color: #ffffff; text-decoration: underline; font-weight: 600; cursor: pointer;">Click here to submit quote</a>
+            </div>
+
           </div>
 
           <div id="ww-addons-panel" style="margin-bottom: 24px;">
@@ -908,7 +913,6 @@
   $('ww-res-tab').addEventListener('click', function() {
     show('ww-residential', true);
     show('ww-commercial', false);
-    show('ww-intro-block', true);
     goToStep(1);
     $('ww-res-tab').setAttribute('aria-pressed', 'true');
     $('ww-com-tab').setAttribute('aria-pressed', 'false');
@@ -917,7 +921,6 @@
 
   $('ww-com-tab').addEventListener('click', function() {
     show('ww-residential', false);
-    show('ww-intro-block', false);
     show('ww-commercial', true);
     $('ww-res-tab').setAttribute('aria-pressed', 'false');
     $('ww-com-tab').setAttribute('aria-pressed', 'true');
@@ -1190,3 +1193,4 @@
 
 </body>
 </html>
+```<FollowUp>
