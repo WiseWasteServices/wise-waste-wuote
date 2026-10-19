@@ -514,7 +514,7 @@
 <div id="ww-quote">
 
   <!-- ==========================================
-       TOP INTRO BLOCK (Hides after Step 1)
+       TOP INTRO BLOCK (Always visible for Residential)
        ========================================== -->
   <div id="ww-intro-block" style="max-width:850px; margin:0 auto 16px; font-family:'Segoe UI',Arial,sans-serif; color:#1E2C22; text-align:center;">
     <div style="background:#F4F7F4; border:1px solid #D5DFCE; border-radius:14px; padding:30px 25px; box-shadow:0 4px 12px rgba(30,44,34,0.06);">
@@ -870,9 +870,6 @@
     // Show target step
     show('ww-step-' + targetStep, true);
 
-    // Hide intro block on step 2+ to keep it compact
-    show('ww-intro-block', targetStep === 1);
-
     // Gentle scroll to top of iframe just in case they scrolled down to hit "Next"
     try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {}
     
@@ -892,9 +889,8 @@
 
     calculateAndRenderQuote();
     
-    // Hide all steps and intro
+    // Hide all steps
     [1, 2, 3, 4].forEach(i => show('ww-step-' + i, false));
-    show('ww-intro-block', false);
     
     // Show quote card
     show('ww-screen-2', true);
