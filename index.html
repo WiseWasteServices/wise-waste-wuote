@@ -56,30 +56,33 @@
       to { opacity: 1; transform: translateX(0); }
     }
 
-    /* SPARKLE ANIMATION */
-    .ww-sparkle {
+    /* UNIFIED POP ANIMATION (For both Sparkles & Confetti) */
+    .ww-celebration {
       position: absolute;
       pointer-events: none;
       z-index: 50;
-      font-size: 24px;
+      font-size: 28px;
       user-select: none;
-      animation: ww-burst 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      opacity: 0;
+      animation: ww-pop 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     }
 
-    @keyframes ww-burst {
-      0% {
-        opacity: 0;
-        transform: translate(0, 0) scale(0.2) rotate(0deg);
+    @keyframes ww-pop {
+      0% { 
+        opacity: 0; 
+        transform: translate(0, 0) scale(0.2) rotate(0deg); 
       }
-      10% {
-        opacity: 1;
+      15% { 
+        opacity: 1; 
+        transform: translate(calc(var(--tx) * 0.6), calc(var(--ty) * 0.3 - 80px)) scale(1.3) rotate(calc(var(--rot) * 0.3)); 
       }
-      70% {
-        opacity: 1;
+      80% { 
+        opacity: 1; 
+        transform: translate(var(--tx), calc(var(--ty) * 0.8 + 120px)) scale(1) rotate(calc(var(--rot) * 0.8)); 
       }
-      100% {
-        opacity: 0;
-        transform: translate(var(--tx), var(--ty)) scale(1.3) rotate(var(--rot));
+      100% { 
+        opacity: 0; 
+        transform: translate(var(--tx), calc(var(--ty) + 200px)) scale(0.5) rotate(var(--rot)); 
       }
     }
 
@@ -421,8 +424,8 @@
       padding: 24px;
       box-shadow: var(--shadow-md);
       border: 1px solid var(--border);
-      position: relative; /* For absolute sparkles */
-      overflow: hidden; /* Keeps sparkles from making the page jump */
+      position: relative; 
+      overflow: hidden; 
     }
 
     #ww-quote .ww-receipt-box {
@@ -530,6 +533,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-md);
+      overflow: hidden; 
     }
 
     #ww-success-screen .ww-success-icon-wrap {
@@ -963,35 +967,104 @@
     scheduleHeightReport();
   };
 
-  /* SPARKLE EFFECT */
+  /* UNIFIED BURST EFFECTS */
   function fireSparkles() {
     const container = $('ww-screen-2-content');
     if(!container) return;
     
     const emojis = ['✨', '⭐', '✨'];
     for (let i = 0; i < 20; i++) {
-      const sparkle = document.createElement('div');
-      sparkle.className = 'ww-sparkle';
-      sparkle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      const el = document.createElement('div');
+      el.className = 'ww-celebration';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
       
-      // Start near the middle-top of the quote box
-      sparkle.style.left = (40 + Math.random() * 20) + '%';
-      sparkle.style.top = '40px';
+      // Start near the top of the quote box
+      el.style.left = '50%';
+      el.style.top = '15%';
       
-      // Random outward trajectory and falling down further
-      const tx = (Math.random() - 0.5) * 400 + 'px';
-      const ty = (Math.random() * 450) - 20 + 'px'; 
-      const rot = (Math.random() - 0.5) * 200 + 'deg';
+      const tx = (Math.random() - 0.5) * 450 + 'px'; 
+      const ty = (Math.random() - 0.5) * 300 + 'px'; 
+      const rot = (Math.random() - 0.5) * 720 + 'deg';
       
-      sparkle.style.setProperty('--tx', tx);
-      sparkle.style.setProperty('--ty', ty);
-      sparkle.style.setProperty('--rot', rot);
+      el.style.setProperty('--tx', tx);
+      el.style.setProperty('--ty', ty);
+      el.style.setProperty('--rot', rot);
+      el.style.animationDelay = (Math.random() * 0.2) + 's';
       
-      container.appendChild(sparkle);
-      
-      // Clean up DOM after 2.5s animation
-      setTimeout(() => { if (sparkle.parentNode) sparkle.parentNode.removeChild(sparkle); }, 2500);
+      container.appendChild(el);
+      setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 3500);
     }
+  }
+
+  function fireConfetti() {
+    const container = $('ww-success-screen');
+    if(!container) return;
+    
+    const emojis = ['🎉', '🎊', '🥳', '🎈', '✨', '🙌'];
+    for (let i = 0; i < 20; i++) {
+      const el = document.createElement('div');
+      el.className = 'ww-celebration';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      
+      // Start at the center of the success screen
+      el.style.left = '50%';
+      el.style.top = '30%';
+      
+      const tx = (Math.random() - 0.5) * 450 + 'px'; 
+      const ty = (Math.random() - 0.5) * 300 + 'px'; 
+      const rot = (Math.random() - 0.5) * 720 + 'deg';
+      
+      el.style.setProperty('--tx', tx);
+      el.style.setProperty('--ty', ty);
+      el.style.setProperty('--rot', rot);
+      el.style.animationDelay = (Math.random() * 0.2) + 's';
+      
+      container.appendChild(el);
+      setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 3500);
+    }
+  }
+
+  // --- SEND PARTIAL LEAD (SILENT) ---
+  function sendPartialLead() {
+    const name = $('ww-customer-name').value.trim();
+    const phone = $('ww-customer-phone').value.trim();
+    const email = $('ww-customer-email').value.trim();
+    const address = $('ww-customer-address').value.trim();
+    const userNotes = $('ww-extra-details').value.trim();
+    const yardSign = $('ww-yard-sign').checked ? 'Yes' : 'No';
+    const petTreats = $('ww-pet-treats').checked ? 'Yes' : 'No';
+    
+    const servicesList = [];
+    const isRecDog = quoteState.dogFreq === 'weekly' || quoteState.dogFreq === 'twice' || quoteState.dogFreq === 'biweekly';
+    if (isRecDog) { servicesList.push('Dog waste removal (' + quoteState.dogFreq + ')'); servicesList.push('Promo: First Scoop FREE (Monthly Plan)'); }
+    else if (quoteState.dogFreq === 'onetime') { servicesList.push('One-time dog yard cleanup'); }
+    
+    if (quoteState.catFreq !== 'none') {
+      servicesList.push('Cat litter-box cleaning (' + quoteState.catFreq + ')');
+      if (quoteState.catDeepClean) servicesList.push('Cat Deep Cleaning (' + quoteState.boxes + ' box(es))');
+      if (quoteState.catLitterSupply) servicesList.push('Litter Supply Provided (' + quoteState.boxes + ' box(es))');
+    }
+    
+    if (quoteState.haulAway) servicesList.push('Waste Haul-Away');
+    
+    const combinedNotes = (userNotes ? userNotes + '\n\n' : '') + '--- PREFERENCES ---\n' + 'Yard Sign Permitted: ' + yardSign + '\n' +
+      'Pet Treats Permitted: ' + petTreats + '\n\n' + '--- QUOTE SUMMARY ---\n' + 'Displayed Rate: ' + quoteState.perVisitText + '\n' +
+      'Waste Haul-Away: ' + (quoteState.haulAway ? 'Yes' : 'No') + '\n' + 'Breakdown: ' + quoteState.breakdownSummary;
+
+    const payload = {
+      leadType: 'partial', // Flags this to GAS as a preview lead
+      name: name, address: address, phone: phone, contactMethod: email ? 'Text / Phone / Email' : 'Text / Phone', email: email,
+      contactTime: 'Anytime', customerType: 'Residential', services: servicesList.join(', '), dogs: String(quoteState.dogs),
+      dogFrequency: quoteState.dogFreq, boxes: String(quoteState.boxes), litterFrequency: quoteState.catFreq, initial: 'No (First Scoop Free Promo)',
+      onetime: quoteState.dogFreq === 'onetime' ? 'Yes' : 'No', onetimeDogs: quoteState.dogFreq === 'onetime' ? String(quoteState.dogs) : '0',
+      condition: quoteState.condition, fresh: 'No', sections: '0',
+      deepClean: quoteState.catDeepClean ? 'Yes' : 'No', deepBoxes: quoteState.catDeepClean ? String(quoteState.boxes) : '0', 
+      haulAway: quoteState.haulAway ? 'Yes' : 'No', perVisitPrice: quoteState.perVisitText,
+      firstTotal: quoteState.perVisitText, dogPrice: quoteState.dogPriceText, catPrice: quoteState.catPriceText, dogBilling: quoteState.dogBillingText,
+      catBilling: quoteState.catBillingText, yardSign: yardSign, petTreats: petTreats, notes: combinedNotes, website: ''
+    };
+
+    fetch(QUOTE_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ payload: JSON.stringify(payload) }) }).catch(()=>{});
   }
 
   window.showQuoteScreen = function() {
@@ -1006,10 +1079,14 @@
     }
 
     calculateAndRenderQuote();
+
+    // Silently send the partial lead to the endpoint
+    sendPartialLead();
+
     [1, 2, 3, 4].forEach(i => show('ww-step-' + i, false));
     show('ww-screen-2', true);
     
-    // Trigger the cute sparkle effect!
+    // Trigger the matched sparkle effect!
     setTimeout(fireSparkles, 100); 
 
     try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {}
@@ -1344,6 +1421,7 @@
       'Waste Haul-Away: ' + (quoteState.haulAway ? 'Yes' : 'No') + '\n' + 'Breakdown: ' + quoteState.breakdownSummary;
 
     const payload = {
+      leadType: 'final',
       name: name, address: address, phone: phone, contactMethod: email ? 'Text / Phone / Email' : 'Text / Phone', email: email,
       contactTime: 'Anytime', customerType: 'Residential', services: servicesList.join(', '), dogs: String(quoteState.dogs),
       dogFrequency: quoteState.dogFreq, boxes: String(quoteState.boxes), litterFrequency: quoteState.catFreq, initial: 'No (First Scoop Free Promo)',
@@ -1361,6 +1439,10 @@
 
     show('ww-screen-2', false);
     show('ww-success-screen', true);
+    
+    // Trigger the success confetti effect!
+    setTimeout(fireConfetti, 100);
+
     scheduleHeightReport();
 
     fetch(QUOTE_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ payload: JSON.stringify(payload) }) })
@@ -1393,6 +1475,7 @@
     }
 
     const payload = {
+      leadType: 'final',
       name: contactName, address: businessName + ' (' + propertyAddress + ')', phone: phone, contactMethod: email ? 'email' : 'phone', email: email,
       contactTime: 'Anytime', customerType: 'Commercial - ' + $('ww-comm-type').value, services: 'Commercial Quote Requested', dogs: '0', dogFrequency: 'none',
       boxes: '0', litterFrequency: 'none', initial: 'No', onetime: 'No', onetimeDogs: '0', condition: '', fresh: 'No', sections: '0', deepClean: 'No', deepBoxes: '0',
@@ -1401,7 +1484,12 @@
     };
 
     commBtn.disabled = true; commBtn.textContent = 'Submitting...';
-    show('ww-commercial', false); show('ww-success-screen', true); scheduleHeightReport();
+    show('ww-commercial', false); show('ww-success-screen', true); 
+    
+    // Trigger the success confetti effect!
+    setTimeout(fireConfetti, 100);
+    
+    scheduleHeightReport();
 
     fetch(QUOTE_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ payload: JSON.stringify(payload) }) })
       .catch(function() {
