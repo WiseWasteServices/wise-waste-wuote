@@ -131,6 +131,18 @@
       line-height: 1.45;
     }
 
+    /* SERVICE DESCRIPTIONS (Dynamic Text) */
+    .ww-service-desc {
+      margin-top: 10px;
+      padding: 12px 16px;
+      background: #eef3ee;
+      border-left: 4px solid var(--green);
+      font-size: 14px;
+      color: var(--ink);
+      border-radius: 0 6px 6px 0;
+      line-height: 1.5;
+    }
+
     /* LABELS & FORM CONTROLS */
     #ww-quote .ww-label {
       display: block;
@@ -388,15 +400,15 @@
       background: var(--green);
       color: #ffffff;
       border-radius: var(--radius-lg);
-      padding: 26px 24px;
+      padding: 16px 20px;
       margin-bottom: 20px;
       box-shadow: var(--shadow-sm);
     }
 
     #ww-quote .ww-price-hero {
       text-align: center;
-      padding-bottom: 18px;
-      margin-bottom: 18px;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     }
 
@@ -410,11 +422,11 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
     }
 
     #ww-quote .ww-big-price {
-      font-size: 42px;
+      font-size: 36px;
       font-weight: 800;
       line-height: 1.1;
       color: #ffffff;
@@ -423,18 +435,18 @@
 
     #ww-quote .ww-big-sub {
       color: var(--light);
-      font-size: 14px;
-      margin-top: 6px;
+      font-size: 13.5px;
+      margin-top: 4px;
     }
 
     #ww-quote .ww-summary-line {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 0;
+      padding: 6px 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       gap: 12px;
-      font-size: 15px;
+      font-size: 14.5px;
     }
 
     #ww-quote .ww-summary-line:last-child {
@@ -464,18 +476,19 @@
       background: rgba(213, 223, 206, 0.14);
       border: 1px solid rgba(213, 223, 206, 0.35);
       border-radius: var(--radius-md);
-      padding: 14px 16px;
-      margin-top: 18px;
-      font-size: 14px;
+      padding: 12px 14px;
+      margin-top: 12px;
+      font-size: 13.5px;
       line-height: 1.45;
       color: #ffffff;
+      text-align: center;
     }
 
     #ww-quote .ww-free-banner strong {
       color: #ffffff;
       display: block;
-      margin-bottom: 4px;
-      font-size: 15px;
+      margin-bottom: 0;
+      font-size: 16px;
       letter-spacing: 0.3px;
     }
 
@@ -521,10 +534,10 @@
       #ww-quote .ww-panel, #ww-screen-2-content { padding: 18px 16px; margin-bottom: 12px; }
       #ww-quote .ww-grid { grid-template-columns: 1fr; gap: 0; }
       #ww-quote h2 { font-size: 24px; }
-      #ww-quote .ww-big-price { font-size: 34px; }
+      #ww-quote .ww-big-price { font-size: 30px; }
       #ww-quote select, #ww-quote input:not([type="checkbox"]):not([type="radio"]), #ww-quote textarea { font-size: 16px; }
       #ww-quote .ww-number { max-width: 100%; }
-      #ww-quote .ww-receipt-box { padding: 22px 18px; }
+      #ww-quote .ww-receipt-box { padding: 16px 14px; }
       #ww-quote .ww-nav-row { flex-direction: column-reverse; }
       #ww-quote .ww-secondary-btn, #ww-quote .ww-primary-btn { width: 100%; flex: none; }
     }
@@ -611,6 +624,7 @@
             <option value="biweekly">Bi-Weekly (Every 2 Weeks)</option>
             <option value="onetime">One-Time Cleanup</option>
           </select>
+          <div id="ww-dog-desc" class="ww-service-desc ww-hidden"></div>
 
           <div id="ww-dog-count-wrap" class="ww-sub-box">
             <label class="ww-label" for="ww-dogs" style="margin-top:0;">Number of dogs</label>
@@ -623,10 +637,10 @@
             <div id="ww-condition-wrap" class="ww-hidden" style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">
               <label class="ww-label" for="ww-condition" style="margin-top:0;">Current yard buildup</label>
               <select id="ww-condition" name="yard_condition">
-                <option value="light">Light (Minimal buildup) — $35 est.</option>
-                <option value="moderate">Moderate (Noticeable buildup) — $45–$60 est.</option>
-                <option value="heavy">Heavy (Significant buildup) — $60–$100+ est.</option>
-                <option value="very">Severely Neglected — Custom Quote</option>
+                <option value="light">Light (Cleaned within last 2 weeks) — $35 est.</option>
+                <option value="moderate">Moderate (2 to 4 weeks of buildup) — $45–$60 est.</option>
+                <option value="heavy">Heavy (Over 1 month of buildup) — $60–$100+ est.</option>
+                <option value="very">Severely Neglected (Major overhaul) — $100+ est.</option>
               </select>
             </div>
           </div>
@@ -649,9 +663,9 @@
             <option value="none" selected>No cat litter box service</option>
             <option value="twice">Twice Weekly</option>
             <option value="weekly">Weekly</option>
-            <option value="biweekly">Bi-Weekly (Every 2 Weeks)</option>
             <option value="onetime">One-Time Cleanup</option>
           </select>
+          <div id="ww-cat-desc" class="ww-service-desc ww-hidden"></div>
 
           <div id="ww-box-count-wrap" class="ww-sub-box ww-hidden">
             <label class="ww-label" for="ww-boxes" style="margin-top:0;">Number of litter boxes</label>
@@ -659,6 +673,25 @@
               <button type="button" data-step="-1" data-target="ww-boxes">−</button>
               <input id="ww-boxes" name="box_count" type="number" min="1" max="20" value="1" readonly>
               <button type="button" data-step="1" data-target="ww-boxes">+</button>
+            </div>
+
+            <!-- Deep Clean & Litter Supply Add-ons -->
+            <div style="margin-top:18px; padding-top:16px; border-top:1px solid var(--border);">
+              <label class="ww-choice" style="margin-bottom:12px;">
+                <input type="checkbox" id="ww-cat-deep-clean" name="cat_deep_clean">
+                <span>
+                  <strong>Deep Box Cleaning (+$25 1st box, +$10 each add'l)</strong><br>
+                  <span class="ww-muted">We wash the box, replace the litter, and clean the area. We only perform and charge for this when a full reset is needed (usually every 2-4 weeks).</span>
+                </span>
+              </label>
+
+              <label class="ww-choice" style="margin-bottom:0;">
+                <input type="checkbox" id="ww-cat-litter-supply" name="cat_litter_supply">
+                <span>
+                  <strong>Litter Supply (+$10 per box)</strong><br>
+                  <span class="ww-muted">Skip the heavy lifting! We will bring and use our standard clumping cat litter so you don't have to worry about buying any.</span>
+                </span>
+              </label>
             </div>
           </div>
 
@@ -678,8 +711,8 @@
           <label class="ww-choice" style="margin-bottom:14px;">
             <input type="checkbox" id="ww-haul-away" name="haul_away">
             <span>
-              <strong>Haul the waste away for me (+$5 per visit)</strong><br>
-              <span class="ww-muted">Otherwise, we double-bag it and leave it neatly in your outdoor trash bin at no extra charge.</span>
+              <strong>Haul the waste away with us (+$5 per visit)</strong><br>
+              <span class="ww-muted">By default, we double-bag the waste and leave it neatly in your outdoor trash bin for FREE. Check this box if you want us to take it away.</span>
             </span>
           </label>
 
@@ -727,12 +760,11 @@
             <div id="ww-quote-lines"></div>
 
             <div class="ww-free-banner" id="ww-free-offer-banner">
-              <strong>🎁 First Scoop Free!</strong>
-              Your very first scoop is 100% free when you sign up for a monthly recurring plan! Normal recurring rates apply afterward.
+              <strong>🎁 First Scoop is 100% Free!</strong>
             </div>
             
-            <div style="text-align: center; margin-top: 18px;">
-              <a href="#" onclick="event.preventDefault(); document.getElementById('ww-submit-quote-btn').click();" style="color: #ffffff; text-decoration: underline; font-weight: 600; cursor: pointer;">Click here to submit quote</a>
+            <div style="text-align: center; margin-top: 16px;">
+              <a href="#" onclick="event.preventDefault(); document.getElementById('ww-submit-quote-btn').click();" style="color: #ffffff; text-decoration: underline; font-weight: 800; font-size: 18px; cursor: pointer; display: inline-block; padding: 4px;">Click here to submit quote</a>
             </div>
 
           </div>
@@ -743,8 +775,8 @@
               <label class="ww-choice" style="margin-bottom: 0; background: var(--cream);">
                 <input type="checkbox" id="ww-addon-yard-fresh" name="yard_fresh">
                 <span>
-                  <strong>Ongoing Yard Fresh Treatment ($10/visit)</strong><br>
-                  <span class="ww-muted">Enzymatic deodorizing spray on recurring visits (+$7 per extra yard section).</span>
+                  <strong>Ongoing Yard Fresh Treatment (+$10 per visit)</strong><br>
+                  <span class="ww-muted">We apply a pet-safe, enzymatic deodorizing spray after scooping to eliminate odors (+$7 per extra yard section).</span>
                 </span>
               </label>
 
@@ -956,6 +988,22 @@
   function updateScreen1Visibility() {
     const dogFreq = $('ww-dog-frequency').value;
     const catFreq = $('ww-litter-frequency').value;
+    
+    // Dynamic Dog Description
+    const dogDesc = $('ww-dog-desc');
+    if (dogFreq === 'weekly') { dogDesc.innerHTML = '<strong>Weekly Service:</strong> Thorough removal of dog waste throughout the yard, bagging and disposal, and a final check to leave your yard clean.'; show('ww-dog-desc', true); }
+    else if (dogFreq === 'twice') { dogDesc.innerHTML = '<strong>Twice-Weekly Service:</strong> More frequent service for households that need a cleaner yard throughout the week, including thorough removal, bagging, disposal, and a final check.'; show('ww-dog-desc', true); }
+    else if (dogFreq === 'biweekly') { dogDesc.innerHTML = '<strong>Bi-Weekly Service:</strong> Thorough removal of dog waste throughout the yard, bagging and disposal every two weeks.'; show('ww-dog-desc', true); }
+    else if (dogFreq === 'onetime') { dogDesc.innerHTML = '<strong>One-Time Cleanup:</strong> A single, thorough cleaning to completely reset your yard and remove all visible waste.'; show('ww-dog-desc', true); }
+    else { show('ww-dog-desc', false); }
+    
+    // Dynamic Cat Description
+    const catDesc = $('ww-cat-desc');
+    if (catFreq === 'weekly') { catDesc.innerHTML = '<strong>Weekly Service:</strong> Includes scooping and removal of waste, freshening and leveling litter, deodorizer, and cleanup around the box.'; show('ww-cat-desc', true); }
+    else if (catFreq === 'twice') { catDesc.innerHTML = '<strong>Twice-Weekly Service:</strong> Includes scooping and removal of waste, freshening and leveling litter, deodorizer, and cleanup around the box.'; show('ww-cat-desc', true); }
+    else if (catFreq === 'onetime') { catDesc.innerHTML = '<strong>One-Time Cleanup:</strong> A single, thorough scooping and freshening of your cat litter boxes.'; show('ww-cat-desc', true); }
+    else { show('ww-cat-desc', false); }
+
     show('ww-dog-count-wrap', dogFreq !== 'none');
     show('ww-condition-wrap', dogFreq === 'onetime');
     show('ww-box-count-wrap', catFreq !== 'none');
@@ -1000,12 +1048,14 @@
     const catFreq = $('ww-litter-frequency').value;
     const boxes = getNum('ww-boxes');
     const haulAway = $('ww-haul-away').checked;
+    const catDeepClean = $('ww-cat-deep-clean').checked;
+    const catLitterSupply = $('ww-cat-litter-supply').checked;
 
     const hasDog = dogFreq !== 'none';
     const isRecurringDog = dogFreq === 'weekly' || dogFreq === 'twice' || dogFreq === 'biweekly';
     const isOneTimeDog = dogFreq === 'onetime';
     const hasCat = catFreq !== 'none';
-    const isRecurringCat = catFreq === 'weekly' || catFreq === 'twice' || catFreq === 'biweekly';
+    const isRecurringCat = catFreq === 'weekly' || catFreq === 'twice';
 
     show('ww-addon-yard-wrap', isRecurringDog);
     if (!isRecurringDog) { $('ww-addon-yard-fresh').checked = false; show('ww-yard-sections-box', false); }
@@ -1024,53 +1074,79 @@
     let catBillingText = 'No litter-box service selected';
     const freqLabelMap = { twice: 'Twice Weekly', weekly: 'Weekly', biweekly: 'Bi-Weekly', onetime: 'One-Time Cleanup' };
 
+    // --- DOG CALCULATIONS ---
     if (isRecurringDog) {
+      let visitPrice = 0;
+      if (dogFreq === 'weekly') {
+        dogWeeklyTotal = 15 + 3 * (dogs - 1);
+        dogBillingText = 'Weekly (' + money(dogWeeklyTotal) + '/wk)';
+      } else if (dogFreq === 'twice') {
+        dogWeeklyTotal = 25 + 5 * (dogs - 1);
+        dogBillingText = 'Twice Weekly (' + money(dogWeeklyTotal) + '/wk)';
+      } else if (dogFreq === 'biweekly') {
+        visitPrice = 25 + 5 * (dogs - 1);
+        dogWeeklyTotal = visitPrice / 2; // Average weekly cost for bi-weekly billing
+        dogBillingText = 'Bi-Weekly (' + money(visitPrice) + '/visit)';
+      }
+
       if (dogs >= 4) {
-        dogCustom = true; dogBillingText = freqLabelMap[dogFreq] + ' • Custom Quote (4+ dogs)';
-        summaryLinesHtml.push(renderLine('Dog Waste Removal (' + dogs + ' dogs)', freqLabelMap[dogFreq] + ' • 4+ dogs require a custom quote', 'Custom Quote'));
-        breakdownTextLines.push('Dog Service (' + freqLabelMap[dogFreq] + ', ' + dogs + ' dogs): Custom Quote');
+        dogCustom = true;
+        let priceDisplay = dogFreq === 'biweekly' ? money(visitPrice) + ' est. / visit' : money(dogWeeklyTotal) + ' est. / wk';
+        summaryLinesHtml.push(renderLine('Dog Waste Removal (' + dogs + ' dogs)', freqLabelMap[dogFreq] + ' • 4+ dogs', priceDisplay));
+        breakdownTextLines.push('Dog Service (' + freqLabelMap[dogFreq] + ', ' + dogs + ' dogs): ' + priceDisplay);
       } else {
-        if (dogFreq === 'weekly') {
-          dogWeeklyTotal = 15 + 3 * (dogs - 1);
-          dogBillingText = 'Weekly (' + money(dogWeeklyTotal) + '/wk)';
-        } else if (dogFreq === 'twice') {
-          dogWeeklyTotal = 25 + 5 * (dogs - 1);
-          dogBillingText = 'Twice Weekly (' + money(dogWeeklyTotal) + '/wk)';
-        } else if (dogFreq === 'biweekly') {
-          dogWeeklyTotal = (25 + 5 * (dogs - 1)) / 2; // Averaged weekly cost for bi-weekly
-          dogBillingText = 'Bi-Weekly (' + money(25 + 5 * (dogs - 1)) + '/visit)';
-        }
-        summaryLinesHtml.push(renderLine('Dog Waste Removal (' + dogs + ' dog' + (dogs > 1 ? 's' : '') + ')', freqLabelMap[dogFreq] + ' (First scoop FREE)', dogFreq === 'biweekly' ? money(25 + 5 * (dogs - 1)) + ' / visit' : money(dogWeeklyTotal) + ' / wk'));
+        let priceDisplay = dogFreq === 'biweekly' ? money(visitPrice) + ' / visit' : money(dogWeeklyTotal) + ' / wk';
+        summaryLinesHtml.push(renderLine('Dog Waste Removal (' + dogs + ' dog' + (dogs > 1 ? 's' : '') + ')', freqLabelMap[dogFreq] + ' (First scoop FREE)', priceDisplay));
         breakdownTextLines.push('Dog Service (' + freqLabelMap[dogFreq] + ', ' + dogs + ' dog(s)): ' + dogBillingText);
       }
     } else if (isOneTimeDog) {
       let condPriceText = '', condDesc = '';
-      if (dogs >= 4 || condition === 'very') {
-        dogCustom = true; condPriceText = 'Custom Quote'; condDesc = dogs >= 4 ? '4+ dogs' : 'Severely Neglected';
-      } else if (condition === 'light') { dogWeeklyTotal = 35; condPriceText = '$35.00 est.'; condDesc = 'One-Time Cleanup (Light buildup)';
-      } else if (condition === 'moderate') { dogWeeklyTotal = 45; condPriceText = '$45–$60 est.'; condDesc = 'One-Time Cleanup (Moderate buildup)';
-      } else if (condition === 'heavy') { dogWeeklyTotal = 60; condPriceText = '$60–$100+ est.'; condDesc = 'One-Time Cleanup (Heavy buildup)'; }
+      if (condition === 'light') { dogWeeklyTotal = 35; condPriceText = '$35.00 est.'; condDesc = 'One-Time Cleanup (Cleaned recently)'; }
+      else if (condition === 'moderate') { dogWeeklyTotal = 45; condPriceText = '$45–$60 est.'; condDesc = 'One-Time Cleanup (2-4 weeks buildup)'; }
+      else if (condition === 'heavy') { dogWeeklyTotal = 60; condPriceText = '$60–$100+ est.'; condDesc = 'One-Time Cleanup (1+ month buildup)'; }
+      else if (condition === 'very') { dogWeeklyTotal = 100; dogCustom = true; condPriceText = '$100.00+ est.'; condDesc = 'One-Time Cleanup (Severely Neglected)'; }
+      
       dogBillingText = 'One-Time Cleanup (' + condPriceText + ')';
       summaryLinesHtml.push(renderLine('Dog Waste Removal (' + dogs + ' dog' + (dogs > 1 ? 's' : '') + ')', condDesc, condPriceText));
       breakdownTextLines.push('One-Time Dog Cleanup (' + dogs + ' dog(s), ' + condition + '): ' + condPriceText);
     }
 
+    // --- CAT CALCULATIONS ---
     if (hasCat) {
-      if (boxes >= 4 || catFreq === 'biweekly' || catFreq === 'onetime') {
-        catCustom = true; const reason = boxes >= 4 ? '4+ boxes' : freqLabelMap[catFreq];
-        catBillingText = freqLabelMap[catFreq] + ' • Custom Quote (' + reason + ')';
-        summaryLinesHtml.push(renderLine('Cat Litter Box Cleaning (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')', freqLabelMap[catFreq] + ' • Custom Quote', 'Custom Quote'));
-        breakdownTextLines.push('Cat Service (' + freqLabelMap[catFreq] + ', ' + boxes + ' box(es)): Custom Quote');
+      if (catFreq === 'weekly') {
+        catWeeklyTotal = 15 + 5 * (boxes - 1);
+        catBillingText = 'Weekly (' + money(catWeeklyTotal) + '/wk)';
+      } else if (catFreq === 'twice') {
+        catWeeklyTotal = 25 + 10 * (boxes - 1);
+        catBillingText = 'Twice Weekly (' + money(catWeeklyTotal) + '/wk)';
+      } else if (catFreq === 'onetime') {
+        catCustom = true;
+        catWeeklyTotal = 35; // Baseline estimate for onetime cat
+        catBillingText = 'One-Time Cleanup • Estimate';
+      }
+
+      if (boxes >= 4 && isRecurringCat) {
+        catCustom = true;
+        summaryLinesHtml.push(renderLine('Cat Litter Box Cleaning (' + boxes + ' boxes)', freqLabelMap[catFreq] + ' maintenance • 4+ boxes', money(catWeeklyTotal) + ' est. / wk'));
+        breakdownTextLines.push('Cat Service (' + freqLabelMap[catFreq] + ', ' + boxes + ' boxes): ' + money(catWeeklyTotal) + ' est. / wk');
+      } else if (catFreq === 'onetime') {
+        summaryLinesHtml.push(renderLine('Cat Litter Box Cleaning (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')', 'One-Time Cleanup', money(catWeeklyTotal) + '+ est.'));
+        breakdownTextLines.push('Cat Service (One-Time, ' + boxes + ' box(es)): ' + money(catWeeklyTotal) + '+ est.');
       } else {
-        if (catFreq === 'weekly') {
-          catWeeklyTotal = 15 + 5 * (boxes - 1);
-          catBillingText = 'Weekly (' + money(catWeeklyTotal) + '/wk)';
-        } else if (catFreq === 'twice') {
-          catWeeklyTotal = 25 + 10 * (boxes - 1);
-          catBillingText = 'Twice Weekly (' + money(catWeeklyTotal) + '/wk)';
-        }
         summaryLinesHtml.push(renderLine('Cat Litter Box Cleaning (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')', freqLabelMap[catFreq] + ' maintenance cleaning', money(catWeeklyTotal) + ' / wk'));
         breakdownTextLines.push('Cat Service (' + freqLabelMap[catFreq] + ', ' + boxes + ' box(es)): ' + catBillingText);
+      }
+      
+      if (catDeepClean) {
+        let deepCleanTotal = 25 + 10 * (boxes - 1);
+        summaryLinesHtml.push(renderLine('Deep Cleaning (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')', 'As-needed complete box reset', '+' + money(deepCleanTotal) + ' / reset'));
+        breakdownTextLines.push('Add-On: Deep Clean (' + boxes + ' box(es)): ' + money(deepCleanTotal) + '/reset (as needed)');
+      }
+      
+      if (catLitterSupply) {
+        let litterSupplyTotal = 10 * boxes;
+        summaryLinesHtml.push(renderLine('Litter Supply (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')', 'Standard clumping cat litter', '+' + money(litterSupplyTotal) + ' / box'));
+        breakdownTextLines.push('Add-On: Litter Supply (' + boxes + ' box(es)): ' + money(litterSupplyTotal) + '/box');
       }
     }
 
@@ -1091,21 +1167,42 @@
 
     const anyRecurring = isRecurringDog || isRecurringCat;
     const anyCustom = dogCustom || catCustom;
+    
+    // Summing exactly what to display at the top
     let totalWeeklyRate = 0;
-    if (isRecurringDog && !dogCustom) totalWeeklyRate += dogWeeklyTotal;
-    if (isRecurringCat && !catCustom) totalWeeklyRate += catWeeklyTotal;
+    if (isRecurringDog) totalWeeklyRate += dogWeeklyTotal;
+    else if (isOneTimeDog) totalWeeklyRate += dogWeeklyTotal;
+    
+    if (isRecurringCat) totalWeeklyRate += catWeeklyTotal;
+    else if (catFreq === 'onetime') totalWeeklyRate += catWeeklyTotal;
+
     if (yardFreshAddon) totalWeeklyRate += yardFreshWeekly;
     if (haulAway && anyRecurring) totalWeeklyRate += 5;
+    if (haulAway && !anyRecurring) totalWeeklyRate += 5;
 
-    if (anyCustom) {
-      $('ww-price-eyebrow').textContent = 'Custom Quote Required'; $('ww-display-per-visit').textContent = 'Custom Quote';
-      $('ww-display-billing-sub').textContent = 'We will confirm your exact price after reviewing your selections.';
-    } else if (anyRecurring) {
-      $('ww-price-eyebrow').textContent = 'Total Weekly Rate'; $('ww-display-per-visit').textContent = money(totalWeeklyRate) + ' / week';
-      $('ww-display-billing-sub').textContent = 'First scoop is FREE! Billed at ' + money(totalWeeklyRate) + ' / week.';
-    } else {
-      $('ww-price-eyebrow').textContent = 'Estimated Total'; $('ww-display-per-visit').textContent = money(dogWeeklyTotal);
+    // --- DISPLAY LOGIC ---
+    if (anyRecurring) {
+      if (anyCustom) {
+        $('ww-price-eyebrow').textContent = 'Estimated Weekly Rate'; 
+        $('ww-display-per-visit').textContent = money(totalWeeklyRate) + ' / week';
+        $('ww-display-billing-sub').textContent = '4+ pets require a custom quote. We will confirm your exact rate.';
+      } else {
+        $('ww-price-eyebrow').textContent = 'Total Weekly Rate'; 
+        $('ww-display-per-visit').textContent = money(totalWeeklyRate) + ' / week';
+        $('ww-display-billing-sub').textContent = 'First scoop FREE with recurring service!';
+      }
+    } else if (isOneTimeDog || catFreq === 'onetime') {
+      $('ww-price-eyebrow').textContent = 'Estimated Total';
+      if (condition === 'heavy' || condition === 'very' || condition === 'moderate') {
+         $('ww-display-per-visit').textContent = money(totalWeeklyRate) + '+';
+      } else {
+         $('ww-display-per-visit').textContent = money(totalWeeklyRate);
+      }
       $('ww-display-billing-sub').textContent = 'One-time cleanup service • No ongoing charges';
+    } else {
+      $('ww-price-eyebrow').textContent = 'Your Quote'; 
+      $('ww-display-per-visit').textContent = '$0.00';
+      $('ww-display-billing-sub').textContent = '';
     }
 
     $('ww-quote-lines').innerHTML = summaryLinesHtml.join('');
@@ -1113,6 +1210,7 @@
     quoteState = {
       dogFreq: dogFreq, dogs: hasDog ? dogs : 0, condition: isOneTimeDog ? condition : '',
       catFreq: catFreq, boxes: hasCat ? boxes : 0, haulAway: haulAway, yardFreshAddon: yardFreshAddon, sections: yardFreshAddon ? sections : 1,
+      catDeepClean: catDeepClean, catLitterSupply: catLitterSupply,
       perVisitText: $('ww-display-per-visit').textContent, recurringTotalText: anyRecurring ? money(totalWeeklyRate) + '/wk' : '$0.00',
       dogPriceText: isRecurringDog ? (dogCustom ? 'Custom Quote' : money(dogWeeklyTotal) + '/wk') : (isOneTimeDog ? money(dogWeeklyTotal) : '$0.00'),
       catPriceText: hasCat ? (catCustom ? 'Custom Quote' : money(catWeeklyTotal) + '/wk') : '$0.00',
@@ -1136,7 +1234,13 @@
     const isRecDog = quoteState.dogFreq === 'weekly' || quoteState.dogFreq === 'twice' || quoteState.dogFreq === 'biweekly';
     if (isRecDog) { servicesList.push('Dog waste removal (' + quoteState.dogFreq + ')'); servicesList.push('Promo: First Scoop FREE (Monthly Plan)'); }
     else if (quoteState.dogFreq === 'onetime') { servicesList.push('One-time dog yard cleanup'); }
-    if (quoteState.catFreq !== 'none') servicesList.push('Cat litter-box cleaning (' + quoteState.catFreq + ')');
+    
+    if (quoteState.catFreq !== 'none') {
+      servicesList.push('Cat litter-box cleaning (' + quoteState.catFreq + ')');
+      if (quoteState.catDeepClean) servicesList.push('Cat Deep Cleaning (' + quoteState.boxes + ' box(es))');
+      if (quoteState.catLitterSupply) servicesList.push('Litter Supply Provided (' + quoteState.boxes + ' box(es))');
+    }
+    
     if (quoteState.haulAway) servicesList.push('Waste Haul-Away');
     if (quoteState.yardFreshAddon) servicesList.push('Add-On: Ongoing Yard Fresh (' + quoteState.sections + ' section(s))');
 
@@ -1150,7 +1254,8 @@
       dogFrequency: quoteState.dogFreq, boxes: String(quoteState.boxes), litterFrequency: quoteState.catFreq, initial: 'No (First Scoop Free Promo)',
       onetime: quoteState.dogFreq === 'onetime' ? 'Yes' : 'No', onetimeDogs: quoteState.dogFreq === 'onetime' ? String(quoteState.dogs) : '0',
       condition: quoteState.condition, fresh: (isRecDog || quoteState.yardFreshAddon) ? 'Yes' : 'No', sections: String(quoteState.sections),
-      deepClean: 'No', deepBoxes: '0', haulAway: quoteState.haulAway ? 'Yes' : 'No', perVisitPrice: quoteState.perVisitText,
+      deepClean: quoteState.catDeepClean ? 'Yes' : 'No', deepBoxes: quoteState.catDeepClean ? String(quoteState.boxes) : '0', 
+      haulAway: quoteState.haulAway ? 'Yes' : 'No', perVisitPrice: quoteState.perVisitText,
       firstTotal: quoteState.perVisitText, dogPrice: quoteState.dogPriceText, catPrice: quoteState.catPriceText, dogBilling: quoteState.dogBillingText,
       catBilling: quoteState.catBillingText, yardSign: yardSign, petTreats: petTreats, notes: combinedNotes, website: ''
     };
