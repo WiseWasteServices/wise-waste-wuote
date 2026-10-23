@@ -759,7 +759,7 @@
 
             <div id="ww-quote-lines"></div>
 
-            <div class="ww-free-banner" id="ww-free-offer-banner">
+            <div class="ww-free-banner ww-hidden" id="ww-free-offer-banner">
               <strong>🎁 First Scoop is 100% Free!</strong>
             </div>
             
@@ -769,9 +769,9 @@
 
           </div>
 
-          <div id="ww-addons-panel" style="margin-bottom: 24px;">
+          <div id="ww-addons-panel" style="margin-bottom: 24px;" class="ww-hidden">
             <h3 style="margin-bottom:12px; font-size:16px;">✨ Optional Add-Ons</h3>
-            <div id="ww-addon-yard-wrap" class="ww-hidden">
+            <div id="ww-addon-yard-wrap">
               <label class="ww-choice" style="margin-bottom: 0; background: var(--cream);">
                 <input type="checkbox" id="ww-addon-yard-fresh" name="yard_fresh">
                 <span>
@@ -1057,9 +1057,13 @@
     const hasCat = catFreq !== 'none';
     const isRecurringCat = catFreq === 'weekly' || catFreq === 'twice';
 
-    show('ww-addon-yard-wrap', isRecurringDog);
-    if (!isRecurringDog) { $('ww-addon-yard-fresh').checked = false; show('ww-yard-sections-box', false); }
-    const yardFreshAddon = isRecurringDog && $('ww-addon-yard-fresh').checked;
+    // Show Free Banner ONLY if there is a recurring dog service
+    show('ww-free-offer-banner', isRecurringDog);
+    
+    // Always show Optional Add-Ons Panel
+    show('ww-addons-panel', true);
+    
+    const yardFreshAddon = $('ww-addon-yard-fresh').checked;
     const sections = getNum('ww-sections');
 
     let summaryLinesHtml = [];
@@ -1112,6 +1116,7 @@
     }
 
     // --- CAT CALCULATIONS ---
+    let litterSupplyTotal = 0;
     if (hasCat) {
       if (catFreq === 'weekly') {
         catWeeklyTotal = 15 + 5 * (boxes - 1);
@@ -1144,17 +1149,26 @@
       }
       
       if (catLitterSupply) {
-        let litterSupplyTotal = 10 * boxes;
-        summaryLinesHtml.push(renderLine('Litter Supply (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')', 'Standard clumping cat litter', '+' + money(litterSupplyTotal) + ' / box'));
-        breakdownTextLines.push('Add-On: Litter Supply (' + boxes + ' box(es)): ' + money(litterSupplyTotal) + '/box');
+        litterSupplyTotal = 10 * boxes;
+        let suffix = isRecurringCat ? ' / wk' : ' / visit';
+        summaryLinesHtml.push(renderLine('Litter Supply (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')', 'Standard clumping cat litter', '+' + money(litterSupplyTotal) + suffix));
+        breakdownTextLines.push('Add-On: Litter Supply (' + boxes + ' box(es)): ' + money(litterSupplyTotal) + suffix);
       }
     }
 
-    let yardFreshWeekly = 0;
+    let yardFreshTotal = 0;
     if (yardFreshAddon) {
-      yardFreshWeekly = 10 + 7 * (sections - 1);
-      summaryLinesHtml.push(renderLine('Ongoing Yard Fresh (' + sections + ' section' + (sections > 1 ? 's' : '') + ')', 'Recurring deodorizing spray', '+' + money(yardFreshWeekly) + ' / wk'));
-      breakdownTextLines.push('Add-On: Ongoing Yard Fresh (' + sections + ' section(s)): ' + money(yardFreshWeekly) + '/wk');
+      let freshVisits = (dogFreq === 'twice' || catFreq === 'twice') ? 2 : 1;
+      let costPerVisit = 10 + 7 * (sections - 1);
+      yardFreshTotal = costPerVisit * freshVisits;
+      
+      let isRecurring = isRecurringDog || isRecurringCat;
+      let suffix = isRecurring ? ' / wk' : ' / visit';
+      let titlePrefix = isRecurring ? 'Ongoing Yard Fresh' : 'Yard Fresh Treatment';
+      let descText = (freshVisits > 1) ? money(costPerVisit) + ' / visit' : 'Deodorizing spray application';
+      
+      summaryLinesHtml.push(renderLine(titlePrefix + ' (' + sections + ' section' + (sections > 1 ? 's' : '') + ')', descText, '+' + money(yardFreshTotal) + suffix));
+      breakdownTextLines.push('Add-On: ' + titlePrefix + ' (' + sections + ' section(s)): ' + money(yardFreshTotal) + suffix);
     }
 
     if (haulAway && (isRecurringDog || isRecurringCat)) {
@@ -1176,7 +1190,7 @@
     if (isRecurringCat) totalWeeklyRate += catWeeklyTotal;
     else if (catFreq === 'onetime') totalWeeklyRate += catWeeklyTotal;
 
-    if (yardFreshAddon) totalWeeklyRate += yardFreshWeekly;
+    // We do NOT add YardFresh or Litter Supply to the top total per your instruction
     if (haulAway && anyRecurring) totalWeeklyRate += 5;
     if (haulAway && !anyRecurring) totalWeeklyRate += 5;
 
@@ -1189,7 +1203,11 @@
       } else {
         $('ww-price-eyebrow').textContent = 'Total Weekly Rate'; 
         $('ww-display-per-visit').textContent = money(totalWeeklyRate) + ' / week';
-        $('ww-display-billing-sub').textContent = 'First scoop FREE with recurring service!';
+        if (isRecurringDog) {
+          $('ww-display-billing-sub').textContent = 'First scoop FREE with recurring service!';
+        } else {
+          $('ww-display-billing-sub').textContent = 'Recurring weekly service.';
+        }
       }
     } else if (isOneTimeDog || catFreq === 'onetime') {
       $('ww-price-eyebrow').textContent = 'Estimated Total';
@@ -1242,7 +1260,7 @@
     }
     
     if (quoteState.haulAway) servicesList.push('Waste Haul-Away');
-    if (quoteState.yardFreshAddon) servicesList.push('Add-On: Ongoing Yard Fresh (' + quoteState.sections + ' section(s))');
+    if (quoteState.yardFreshAddon) servicesList.push('Add-On: Yard Fresh (' + quoteState.sections + ' section(s))');
 
     const combinedNotes = (userNotes ? userNotes + '\n\n' : '') + '--- PREFERENCES ---\n' + 'Yard Sign Permitted: ' + yardSign + '\n' +
       'Pet Treats Permitted: ' + petTreats + '\n\n' + '--- QUOTE SUMMARY ---\n' + 'Displayed Rate: ' + quoteState.perVisitText + '\n' +
