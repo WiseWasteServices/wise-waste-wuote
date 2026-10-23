@@ -56,6 +56,33 @@
       to { opacity: 1; transform: translateX(0); }
     }
 
+    /* SPARKLE ANIMATION */
+    .ww-sparkle {
+      position: absolute;
+      pointer-events: none;
+      z-index: 50;
+      font-size: 24px;
+      user-select: none;
+      animation: ww-burst 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    @keyframes ww-burst {
+      0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.2) rotate(0deg);
+      }
+      10% {
+        opacity: 1;
+      }
+      70% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--tx), var(--ty)) scale(1.3) rotate(var(--rot));
+      }
+    }
+
     /* MAIN PANELS & CARDS */
     #ww-quote .ww-panel {
       background: #ffffff;
@@ -394,6 +421,8 @@
       padding: 24px;
       box-shadow: var(--shadow-md);
       border: 1px solid var(--border);
+      position: relative; /* For absolute sparkles */
+      overflow: hidden; /* Keeps sparkles from making the page jump */
     }
 
     #ww-quote .ww-receipt-box {
@@ -934,6 +963,37 @@
     scheduleHeightReport();
   };
 
+  /* SPARKLE EFFECT */
+  function fireSparkles() {
+    const container = $('ww-screen-2-content');
+    if(!container) return;
+    
+    const emojis = ['✨', '⭐', '✨'];
+    for (let i = 0; i < 20; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'ww-sparkle';
+      sparkle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      
+      // Start near the middle-top of the quote box
+      sparkle.style.left = (40 + Math.random() * 20) + '%';
+      sparkle.style.top = '40px';
+      
+      // Random outward trajectory and falling down further
+      const tx = (Math.random() - 0.5) * 400 + 'px';
+      const ty = (Math.random() * 450) - 20 + 'px'; 
+      const rot = (Math.random() - 0.5) * 200 + 'deg';
+      
+      sparkle.style.setProperty('--tx', tx);
+      sparkle.style.setProperty('--ty', ty);
+      sparkle.style.setProperty('--rot', rot);
+      
+      container.appendChild(sparkle);
+      
+      // Clean up DOM after 2.5s animation
+      setTimeout(() => { if (sparkle.parentNode) sparkle.parentNode.removeChild(sparkle); }, 2500);
+    }
+  }
+
   window.showQuoteScreen = function() {
     show('ww-err-4', false);
     const dogFreq = $('ww-dog-frequency').value;
@@ -948,6 +1008,10 @@
     calculateAndRenderQuote();
     [1, 2, 3, 4].forEach(i => show('ww-step-' + i, false));
     show('ww-screen-2', true);
+    
+    // Trigger the cute sparkle effect!
+    setTimeout(fireSparkles, 100); 
+
     try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {}
     scheduleHeightReport();
   };
@@ -1149,10 +1213,23 @@
       }
       
       if (catLitterSupply) {
-        litterSupplyTotal = 10 * boxes;
-        let suffix = isRecurringCat ? ' / wk' : ' / visit';
-        summaryLinesHtml.push(renderLine('Litter Supply (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')', 'Standard clumping cat litter', '+' + money(litterSupplyTotal) + suffix));
-        breakdownTextLines.push('Add-On: Litter Supply (' + boxes + ' box(es)): ' + money(litterSupplyTotal) + suffix);
+        let costPerVisit = 10 * boxes;
+        let titleText = 'Litter Supply (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')';
+        let descText = '$10.00 / visit per box';
+        
+        if (catFreq === 'twice') {
+          litterSupplyTotal = costPerVisit * 2;
+          summaryLinesHtml.push(renderLine(titleText, descText, '+' + money(litterSupplyTotal) + ' / wk'));
+          breakdownTextLines.push('Add-On: Litter Supply: +' + money(litterSupplyTotal) + '/wk');
+        } else if (catFreq === 'weekly') {
+          litterSupplyTotal = costPerVisit;
+          summaryLinesHtml.push(renderLine(titleText, descText, '+' + money(litterSupplyTotal) + ' / wk'));
+          breakdownTextLines.push('Add-On: Litter Supply: +' + money(litterSupplyTotal) + '/wk');
+        } else if (catFreq === 'onetime') {
+          litterSupplyTotal = costPerVisit;
+          summaryLinesHtml.push(renderLine(titleText, descText, '+' + money(litterSupplyTotal) + ' / visit'));
+          breakdownTextLines.push('Add-On: Litter Supply: +' + money(litterSupplyTotal) + '/visit');
+        }
       }
     }
 
