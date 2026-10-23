@@ -978,7 +978,6 @@
       el.className = 'ww-celebration';
       el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
       
-      // Start near the top of the quote box
       el.style.left = '50%';
       el.style.top = '15%';
       
@@ -1006,7 +1005,6 @@
       el.className = 'ww-celebration';
       el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
       
-      // Start at the center of the success screen
       el.style.left = '50%';
       el.style.top = '30%';
       
@@ -1052,7 +1050,7 @@
       'Waste Haul-Away: ' + (quoteState.haulAway ? 'Yes' : 'No') + '\n' + 'Breakdown: ' + quoteState.breakdownSummary;
 
     const payload = {
-      leadType: 'partial', // Flags this to GAS as a preview lead
+      leadType: 'partial',
       name: name, address: address, phone: phone, contactMethod: email ? 'Text / Phone / Email' : 'Text / Phone', email: email,
       contactTime: 'Anytime', customerType: 'Residential', services: servicesList.join(', '), dogs: String(quoteState.dogs),
       dogFrequency: quoteState.dogFreq, boxes: String(quoteState.boxes), litterFrequency: quoteState.catFreq, initial: 'No (First Scoop Free Promo)',
@@ -1079,14 +1077,11 @@
     }
 
     calculateAndRenderQuote();
-
-    // Silently send the partial lead to the endpoint
     sendPartialLead();
 
     [1, 2, 3, 4].forEach(i => show('ww-step-' + i, false));
     show('ww-screen-2', true);
     
-    // Trigger the matched sparkle effect!
     setTimeout(fireSparkles, 100); 
 
     try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {}
@@ -1130,7 +1125,6 @@
     const dogFreq = $('ww-dog-frequency').value;
     const catFreq = $('ww-litter-frequency').value;
     
-    // Dynamic Dog Description
     const dogDesc = $('ww-dog-desc');
     if (dogFreq === 'weekly') { dogDesc.innerHTML = '<strong>Weekly Service:</strong> Thorough removal of dog waste throughout the yard, bagging and disposal, and a final check to leave your yard clean.'; show('ww-dog-desc', true); }
     else if (dogFreq === 'twice') { dogDesc.innerHTML = '<strong>Twice-Weekly Service:</strong> More frequent service for households that need a cleaner yard throughout the week, including thorough removal, bagging, disposal, and a final check.'; show('ww-dog-desc', true); }
@@ -1138,7 +1132,6 @@
     else if (dogFreq === 'onetime') { dogDesc.innerHTML = '<strong>One-Time Cleanup:</strong> A single, thorough cleaning to completely reset your yard and remove all visible waste.'; show('ww-dog-desc', true); }
     else { show('ww-dog-desc', false); }
     
-    // Dynamic Cat Description
     const catDesc = $('ww-cat-desc');
     if (catFreq === 'weekly') { catDesc.innerHTML = '<strong>Weekly Service:</strong> Includes scooping and removal of waste, freshening and leveling litter, deodorizer, and cleanup around the box.'; show('ww-cat-desc', true); }
     else if (catFreq === 'twice') { catDesc.innerHTML = '<strong>Twice-Weekly Service:</strong> Includes scooping and removal of waste, freshening and leveling litter, deodorizer, and cleanup around the box.'; show('ww-cat-desc', true); }
@@ -1198,10 +1191,7 @@
     const hasCat = catFreq !== 'none';
     const isRecurringCat = catFreq === 'weekly' || catFreq === 'twice';
 
-    // Show Free Banner ONLY if there is a recurring dog service
     show('ww-free-offer-banner', isRecurringDog);
-    
-    // Always show Optional Add-Ons Panel
     show('ww-addons-panel', true);
     
     const yardFreshAddon = $('ww-addon-yard-fresh').checked;
@@ -1230,7 +1220,7 @@
         dogBillingText = 'Twice Weekly (' + money(dogWeeklyTotal) + '/wk)';
       } else if (dogFreq === 'biweekly') {
         visitPrice = 25 + 5 * (dogs - 1);
-        dogWeeklyTotal = visitPrice / 2; // Average weekly cost for bi-weekly billing
+        dogWeeklyTotal = visitPrice / 2;
         dogBillingText = 'Bi-Weekly (' + money(visitPrice) + '/visit)';
       }
 
@@ -1267,7 +1257,7 @@
         catBillingText = 'Twice Weekly (' + money(catWeeklyTotal) + '/wk)';
       } else if (catFreq === 'onetime') {
         catCustom = true;
-        catWeeklyTotal = 35; // Baseline estimate for onetime cat
+        catWeeklyTotal = 35;
         catBillingText = 'One-Time Cleanup • Estimate';
       }
 
@@ -1336,7 +1326,7 @@
     const anyRecurring = isRecurringDog || isRecurringCat;
     const anyCustom = dogCustom || catCustom;
     
-    // Summing exactly what to display at the top
+    // Summing exactly what to display at the top (INCLUDING Yard Fresh now!)
     let totalWeeklyRate = 0;
     if (isRecurringDog) totalWeeklyRate += dogWeeklyTotal;
     else if (isOneTimeDog) totalWeeklyRate += dogWeeklyTotal;
@@ -1344,7 +1334,9 @@
     if (isRecurringCat) totalWeeklyRate += catWeeklyTotal;
     else if (catFreq === 'onetime') totalWeeklyRate += catWeeklyTotal;
 
-    // We do NOT add YardFresh or Litter Supply to the top total per your instruction
+    // Added Yard Fresh to the top total calculation
+    if (yardFreshAddon) totalWeeklyRate += yardFreshTotal;
+
     if (haulAway && anyRecurring) totalWeeklyRate += 5;
     if (haulAway && !anyRecurring) totalWeeklyRate += 5;
 
@@ -1440,7 +1432,6 @@
     show('ww-screen-2', false);
     show('ww-success-screen', true);
     
-    // Trigger the success confetti effect!
     setTimeout(fireConfetti, 100);
 
     scheduleHeightReport();
@@ -1486,7 +1477,6 @@
     commBtn.disabled = true; commBtn.textContent = 'Submitting...';
     show('ww-commercial', false); show('ww-success-screen', true); 
     
-    // Trigger the success confetti effect!
     setTimeout(fireConfetti, 100);
     
     scheduleHeightReport();
