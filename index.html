@@ -746,7 +746,7 @@
                 <input type="checkbox" id="ww-cat-litter-supply" name="cat_litter_supply">
                 <span>
                   <strong>Litter Supply (+$10 per box / visit)</strong><br>
-                  <span class="ww-muted">Skip the heavy lifting! We supply standard clumping cat litter.</span>
+                  <span class="ww-muted">Skip the heavy lifting! We supply standard clumping cat litter. (Charged at time of service)</span>
                 </span>
               </label>
             </div>
@@ -769,7 +769,7 @@
             <input type="checkbox" id="ww-haul-away" name="haul_away">
             <span>
               <strong>Haul the waste away with us (+$5 per visit)</strong><br>
-              <span class="ww-muted">By default, we double-bag the waste and leave it neatly in your outdoor trash bin for FREE. Check this box if you want us to take it away.</span>
+              <span class="ww-muted">By default, we double-bag the waste and leave it neatly in your outdoor trash bin for FREE. Check this box if you want us to take it away. (Charged at time of service)</span>
             </span>
           </label>
 
@@ -777,7 +777,7 @@
             <input type="checkbox" id="ww-addon-yard-fresh" name="yard_fresh">
             <span>
               <strong>Yard Fresh Treatment (+$10 per visit)</strong><br>
-              <span class="ww-muted">A professional enzymatic spray that destroys urine odors and leaves your lawn smelling amazing (+$7 per extra yard section). Requires a working outdoor water spigot.</span>
+              <span class="ww-muted">A professional enzymatic spray that destroys urine odors and leaves your lawn smelling amazing (+$7 per extra yard section). Requires a working outdoor water spigot. (Charged at time of service)</span>
             </span>
           </label>
 
@@ -839,6 +839,11 @@
             </div>
 
             <div id="ww-quote-lines"></div>
+
+            <!-- PER-VISIT ADD-ONS NOTE -->
+            <div id="ww-addons-note" style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.15); font-size: 12.5px; color: var(--light); text-align: center; line-height: 1.4; display: none;">
+              <em>*Note: Selected add-ons (Litter Supply, Yard Fresh, Haul-Away) are charged at the time of service and are not included in the monthly subscription total above.</em>
+            </div>
 
             <div class="ww-free-banner ww-hidden" id="ww-free-offer-banner">
               <strong>🎁 First Scoop is 100% Free!</strong>
@@ -1062,18 +1067,18 @@
     
     if (quoteState.hasCat) {
       servicesList.push('Cat litter-box service (' + quoteState.catMode + ')');
-      if (quoteState.catLitterSupply) servicesList.push('Litter Supply Provided (' + quoteState.boxes + ' box(es))');
+      if (quoteState.catLitterSupply) servicesList.push('Litter Supply Provided per visit (' + quoteState.boxes + ' box(es))');
       if (!isRecDog && (quoteState.catMode === 'weekly' || quoteState.catMode === 'twice' || quoteState.catMode === 'biweekly')) {
           servicesList.push('Promo: First Scoop FREE (Monthly Plan)');
       }
     }
     
-    if (quoteState.haulAway) servicesList.push('Waste Haul-Away');
-    if (quoteState.yardFreshAddon) servicesList.push('Add-On: Yard Fresh (' + quoteState.sections + ' section(s))');
+    if (quoteState.haulAway) servicesList.push('Waste Haul-Away (charged at time of service)');
+    if (quoteState.yardFreshAddon) servicesList.push('Add-On: Yard Fresh charged at time of service (' + quoteState.sections + ' section(s))');
     
     const combinedNotes = (userNotes ? userNotes + '\n\n' : '') + '--- PREFERENCES ---\n' + 'Yard Sign Permitted: ' + yardSign + '\n' +
       'Pet Treats Permitted: ' + petTreats + '\n\n' + '--- QUOTE SUMMARY ---\n' + 'Displayed Rate: ' + quoteState.perVisitText + '\n' +
-      'Waste Haul-Away: ' + (quoteState.haulAway ? 'Yes' : 'No') + '\n' + 'Breakdown: ' + quoteState.breakdownSummary;
+      'Waste Haul-Away (charged at time of service): ' + (quoteState.haulAway ? 'Yes' : 'No') + '\n' + 'Breakdown: ' + quoteState.breakdownSummary;
 
     const payload = {
       leadType: 'partial',
@@ -1348,67 +1353,21 @@
       }
       
       if (catLitterSupply) {
-        let costPerVisit = 10 * boxes; // For recurring, per visit logic implies +$10/box/visit. One-time is also +$10.
-        // Convert to monthly cost if recurring
-        let addOnPriceText = '+$10.00 / visit per box';
-        if (isRecurringDog || isRecurringCatOnly) {
-          let visits = 4;
-          if (hasDog && isRecurringDog) {
-             if(dogFreq === 'twice') visits = 8;
-             if(dogFreq === 'biweekly') visits = 2;
-          } else if (isRecurringCatOnly) {
-             if(catStandaloneFreq === 'twice') visits = 8;
-             if(catStandaloneFreq === 'biweekly') visits = 2;
-          }
-          let monthlyLitterCost = costPerVisit * visits;
-          addOnPriceText = '+' + money(monthlyLitterCost) + ' / mo';
-          catTotal += monthlyLitterCost;
-        } else {
-          addOnPriceText = '+' + money(costPerVisit) + ' / visit';
-          catTotal += costPerVisit; // Already included in one-time math below
-        }
-        
-        summaryLinesHtml.push(renderLine('Litter Supply (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')', '$10.00 / visit per box', addOnPriceText));
-        breakdownTextLines.push('Add-On: Litter Supply: ' + addOnPriceText);
+        let costPerVisit = 10 * boxes;
+        summaryLinesHtml.push(renderLine('Litter Supply (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')', '$10.00 / visit per box', '+' + money(costPerVisit) + ' / visit (charged at time of service)'));
+        breakdownTextLines.push('Add-On: Litter Supply: +' + money(costPerVisit) + ' / visit (charged at time of service)');
       }
     }
 
     if (yardFreshAddon) {
       let costPerVisit = 10 + 7 * (sections - 1);
-      let addOnPriceText = '+' + money(costPerVisit) + ' / visit';
-      
-      if (isRecurringDog) {
-          let visits = 4;
-          if (dogFreq === 'twice') visits = 8;
-          if (dogFreq === 'biweekly') visits = 2;
-          let monthlyYardCost = costPerVisit * visits;
-          addOnPriceText = '+' + money(monthlyYardCost) + ' / mo';
-          dogTotal += monthlyYardCost; 
-      }
-      
-      summaryLinesHtml.push(renderLine('Yard Fresh (' + sections + ' section' + (sections > 1 ? 's' : '') + ')', 'Deodorizing spray application', addOnPriceText));
-      breakdownTextLines.push('Add-On: Yard Fresh (' + sections + ' section(s)): ' + addOnPriceText);
+      summaryLinesHtml.push(renderLine('Yard Fresh (' + sections + ' section' + (sections > 1 ? 's' : '') + ')', 'Deodorizing spray application', '+' + money(costPerVisit) + ' / visit (charged at time of service)'));
+      breakdownTextLines.push('Add-On: Yard Fresh (' + sections + ' section(s)): +' + money(costPerVisit) + ' / visit (charged at time of service)');
     }
 
     if (haulAway) {
-      let costPerVisit = 5;
-      let addOnPriceText = '+$5.00 / visit';
-      
-      if (isRecurringDog || isRecurringCatOnly) {
-          let visits = 4;
-          if (hasDog && isRecurringDog) {
-             if(dogFreq === 'twice') visits = 8;
-             if(dogFreq === 'biweekly') visits = 2;
-          } else if (isRecurringCatOnly) {
-             if(catStandaloneFreq === 'twice') visits = 8;
-             if(catStandaloneFreq === 'biweekly') visits = 2;
-          }
-          let monthlyHaulCost = costPerVisit * visits;
-          addOnPriceText = '+' + money(monthlyHaulCost) + ' / mo';
-          if (hasDog) { dogTotal += monthlyHaulCost; } else { catTotal += monthlyHaulCost; }
-      }
-      summaryLinesHtml.push(renderLine('Waste Haul-Away', 'Off-site disposal', addOnPriceText));
-      breakdownTextLines.push('Waste Haul-Away: Yes (' + addOnPriceText + ')');
+      summaryLinesHtml.push(renderLine('Waste Haul-Away', 'Off-site disposal', '+$5.00 / visit (charged at time of service)'));
+      breakdownTextLines.push('Waste Haul-Away: Yes (+$5.00/visit charged at time of service)');
     }
 
     const anyRecurring = isRecurringDog || isRecurringCatOnly;
@@ -1426,9 +1385,9 @@
     let totalOneTime = 0;
     if (isOneTimeDog) {
         totalOneTime += dogTotal;
-        if (hasCat && catAddChecked) totalOneTime += catTotal; // Includes litter supply if checked
+        if (hasCat && catAddChecked) totalOneTime += catTotal;
     } else if (!hasDog && hasCat && catStandaloneFreq === 'onetime') {
-        totalOneTime += catTotal; // Includes litter supply if checked
+        totalOneTime += catTotal;
     }
 
     // --- DISPLAY LOGIC & COMPETITOR-STYLE FIRST MONTH BREAKDOWN ---
@@ -1436,7 +1395,7 @@
       if (anyCustom) {
         $('ww-price-eyebrow').textContent = 'Estimated Monthly Rate'; 
         $('ww-display-per-visit').textContent = money(totalMonthlyRate) + ' / mo';
-        $('ww-display-billing-sub').textContent = 'Pets require a custom quote. Add-ons billed separately per visit.';
+        $('ww-display-billing-sub').textContent = 'Pets require a custom quote. Add-ons charged at time of service.';
         show('ww-intro-breakdown-wrap', false);
       } else {
         $('ww-price-eyebrow').textContent = 'Total Monthly Rate'; 
@@ -1470,12 +1429,6 @@
       show('ww-intro-breakdown-wrap', false);
       
       let totalDisplay = totalOneTime;
-      // Yard fresh / haulaway for onetime are already included if it was standalone cat one-time, 
-      // wait, they are calculated into totalOneTime up above? 
-      // Actually we need to ensure they display right for one-time.
-      if (yardFreshAddon) totalDisplay += (10 + 7 * (sections - 1));
-      if (haulAway) totalDisplay += 5;
-      // Litter supply for onetime was added to catTotal directly in the if block above.
 
       if (isOneTimeDog && (condition === 'heavy' || condition === 'very' || condition === 'moderate')) {
          $('ww-display-per-visit').textContent = money(totalDisplay) + '+';
@@ -1491,6 +1444,9 @@
     }
 
     $('ww-quote-lines').innerHTML = summaryLinesHtml.join('');
+
+    // Toggle visibility of per-visit add-ons note on screen 2
+    show('ww-addons-note', hasAddons);
 
     quoteState = {
       dogFreq: dogFreq, dogs: hasDog ? dogs : 0, condition: isOneTimeDog ? condition : '',
@@ -1523,18 +1479,18 @@
     
     if (quoteState.hasCat) {
       servicesList.push('Cat litter-box service (' + quoteState.catMode + ')');
-      if (quoteState.catLitterSupply) servicesList.push('Litter Supply Provided (' + quoteState.boxes + ' box(es))');
+      if (quoteState.catLitterSupply) servicesList.push('Litter Supply Provided per visit (' + quoteState.boxes + ' box(es))');
       if (!isRecDog && (quoteState.catMode === 'weekly' || quoteState.catMode === 'twice' || quoteState.catMode === 'biweekly')) {
           servicesList.push('Promo: First Scoop FREE (Monthly Plan)');
       }
     }
     
-    if (quoteState.haulAway) servicesList.push('Waste Haul-Away');
-    if (quoteState.yardFreshAddon) servicesList.push('Add-On: Yard Fresh (' + quoteState.sections + ' section(s))');
+    if (quoteState.haulAway) servicesList.push('Waste Haul-Away (charged at time of service)');
+    if (quoteState.yardFreshAddon) servicesList.push('Add-On: Yard Fresh charged at time of service (' + quoteState.sections + ' section(s))');
 
     const combinedNotes = (userNotes ? userNotes + '\n\n' : '') + '--- PREFERENCES ---\n' + 'Yard Sign Permitted: ' + yardSign + '\n' +
       'Pet Treats Permitted: ' + petTreats + '\n\n' + '--- QUOTE SUMMARY ---\n' + 'Displayed Rate: ' + quoteState.perVisitText + '\n' +
-      'Waste Haul-Away: ' + (quoteState.haulAway ? 'Yes' : 'No') + '\n' + 'Breakdown: ' + quoteState.breakdownSummary;
+      'Waste Haul-Away (charged at time of service): ' + (quoteState.haulAway ? 'Yes' : 'No') + '\n' + 'Breakdown: ' + quoteState.breakdownSummary;
 
     const payload = {
       leadType: 'final',
