@@ -432,15 +432,15 @@
       background: var(--green);
       color: #ffffff;
       border-radius: var(--radius-lg);
-      padding: 16px 20px;
+      padding: 20px 22px;
       margin-bottom: 20px;
       box-shadow: var(--shadow-sm);
     }
 
     #ww-quote .ww-price-hero {
       text-align: center;
-      padding-bottom: 12px;
-      margin-bottom: 12px;
+      padding-bottom: 14px;
+      margin-bottom: 14px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     }
 
@@ -474,11 +474,11 @@
     #ww-quote .ww-summary-line {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
+      align-items: flex-start;
+      padding: 10px 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      gap: 12px;
-      font-size: 14.5px;
+      gap: 16px;
+      font-size: 14px;
     }
 
     #ww-quote .ww-summary-line:last-child {
@@ -486,14 +486,21 @@
       padding-bottom: 0;
     }
 
+    #ww-quote .ww-summary-title-wrap {
+      flex: 1;
+      min-width: 0;
+    }
+
     #ww-quote .ww-summary-title {
       font-weight: 700;
       color: #ffffff;
-      font-size: 14.5px;
+      font-size: 14px;
+      word-break: normal;
+      overflow-wrap: break-word;
     }
 
     #ww-quote .ww-summary-desc {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--light);
       margin-top: 2px;
     }
@@ -504,7 +511,8 @@
       white-space: nowrap;
       font-variant-numeric: tabular-nums;
       text-align: right;
-      font-size: 14.5px;
+      font-size: 14px;
+      flex-shrink: 0;
     }
 
     /* FIRST MONTH / RECURRING BREAKDOWN CALLOUT BOX */
@@ -532,7 +540,7 @@
       border: 1px solid rgba(213, 223, 206, 0.35);
       border-radius: var(--radius-md);
       padding: 12px 14px;
-      margin-top: 12px;
+      margin-top: 14px;
       font-size: 13.5px;
       line-height: 1.45;
       color: #ffffff;
@@ -543,7 +551,7 @@
       color: #ffffff;
       display: block;
       margin-bottom: 0;
-      font-size: 16px;
+      font-size: 15px;
       letter-spacing: 0.3px;
     }
 
@@ -587,13 +595,15 @@
 
     @media (max-width: 640px) {
       body { padding: 15px 5px !important; }
-      #ww-quote .ww-panel, #ww-screen-2-content { padding: 18px 16px; margin-bottom: 12px; }
+      #ww-quote .ww-panel, #ww-screen-2-content { padding: 18px 14px; margin-bottom: 12px; }
       #ww-quote .ww-grid { grid-template-columns: 1fr; gap: 0; }
       #ww-quote h2 { font-size: 24px; }
       #ww-quote .ww-big-price { font-size: 30px; }
       #ww-quote select, #ww-quote input:not([type="checkbox"]):not([type="radio"]), #ww-quote textarea { font-size: 16px; }
       #ww-quote .ww-number { max-width: 100%; }
-      #ww-quote .ww-receipt-box { padding: 16px 14px; }
+      #ww-quote .ww-receipt-box { padding: 14px 12px; }
+      #ww-quote .ww-summary-line { font-size: 13.5px; gap: 10px; }
+      #ww-quote .ww-summary-title, #ww-quote .ww-summary-price { font-size: 13.5px; }
       #ww-quote .ww-nav-row { flex-direction: column-reverse; }
       #ww-quote .ww-secondary-btn, #ww-quote .ww-primary-btn { width: 100%; flex: none; }
     }
@@ -603,19 +613,6 @@
 <body style="margin:0;padding:25px 20px;background:transparent;">
 
 <div id="ww-quote">
-
-  <!-- SLIM TOP INTRO HEADER WITH MOBILE SPACER -->
-  <div id="ww-intro-block" style="max-width:680px; margin:0 auto 18px; background:#F4F7F4; border:1.5px solid #D5DFCE; border-radius:16px; padding:18px 20px; text-align:center; font-family:'Segoe UI',Arial,sans-serif;">
-    <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#3F6049; margin-bottom:4px;">
-      ✨ Free Instant Quote
-    </div>
-    <h2 style="margin:0 0 4px; font-size:20px; font-weight:800; color:#1E2C22;">
-      Ready for a spotless yard? Let's build your custom plan! ⏱️
-    </h2>
-    <p style="margin:0 auto; font-size:14px; line-height:1.5; color:#59655D;">
-      Select your services below to see your instant price. Questions? Call or text <a href="tel:9402470522" class="ww-phone-link">(940) 247-0522</a>
-    </p>
-  </div>
 
   <!-- SERVICE TABS -->
   <div class="ww-tabs" id="ww-tab-container" role="group">
@@ -1239,10 +1236,10 @@
   });
 
   function renderLine(title, desc, priceText, subPriceText) {
-    return '<div class="ww-summary-line"><div><div class="ww-summary-title">' + title + '</div>' +
+    return '<div class="ww-summary-line"><div class="ww-summary-title-wrap"><div class="ww-summary-title">' + title + '</div>' +
            (desc ? '<div class="ww-summary-desc">' + desc + '</div>' : '') +
            '</div><div class="ww-summary-price"><div>' + priceText + '</div>' +
-           (subPriceText ? '<div style="font-size: 11px; color: var(--light); font-weight: normal; margin-top: 2px;">' + subPriceText + '</div>' : '') +
+           (subPriceText ? '<div style="font-size: 11px; color: var(--light); font-weight: normal; margin-top: 2px; white-space: nowrap;">' + subPriceText + '</div>' : '') +
            '</div></div>';
   }
 
