@@ -475,7 +475,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 6px 0;
+      padding: 8px 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       gap: 12px;
       font-size: 14.5px;
@@ -487,8 +487,9 @@
     }
 
     #ww-quote .ww-summary-title {
-      font-weight: 600;
+      font-weight: 700;
       color: #ffffff;
+      font-size: 14.5px;
     }
 
     #ww-quote .ww-summary-desc {
@@ -502,6 +503,8 @@
       color: #ffffff;
       white-space: nowrap;
       font-variant-numeric: tabular-nums;
+      text-align: right;
+      font-size: 14.5px;
     }
 
     /* FIRST MONTH / RECURRING BREAKDOWN CALLOUT BOX */
@@ -839,11 +842,6 @@
             </div>
 
             <div id="ww-quote-lines"></div>
-
-            <!-- PER-VISIT ADD-ONS NOTE -->
-            <div id="ww-addons-note" style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.15); font-size: 12.5px; color: var(--light); text-align: center; line-height: 1.4; display: none;">
-              <em>*Note: Selected add-ons (Litter Supply, Yard Fresh, Haul-Away) are charged at the time of service and are not included in the monthly subscription total above.</em>
-            </div>
 
             <div class="ww-free-banner ww-hidden" id="ww-free-offer-banner">
               <strong>🎁 First Scoop is 100% Free!</strong>
@@ -1234,10 +1232,12 @@
     scheduleHeightReport();
   });
 
-  function renderLine(title, desc, priceText) {
+  function renderLine(title, desc, priceText, subPriceText) {
     return '<div class="ww-summary-line"><div><div class="ww-summary-title">' + title + '</div>' +
            (desc ? '<div class="ww-summary-desc">' + desc + '</div>' : '') +
-           '</div><div class="ww-summary-price">' + priceText + '</div></div>';
+           '</div><div class="ww-summary-price"><div>' + priceText + '</div>' +
+           (subPriceText ? '<div style="font-size: 11px; color: var(--light); font-weight: normal; margin-top: 2px;">' + subPriceText + '</div>' : '') +
+           '</div></div>';
   }
 
   let quoteState = {};
@@ -1354,19 +1354,19 @@
       
       if (catLitterSupply) {
         let costPerVisit = 10 * boxes;
-        summaryLinesHtml.push(renderLine('Litter Supply (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')', '$10.00 / visit per box', '+' + money(costPerVisit) + ' / visit (charged at time of service)'));
+        summaryLinesHtml.push(renderLine('Litter Supply (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')', '$10.00 / visit per box', '+' + money(costPerVisit) + ' / visit', 'charged at time of service'));
         breakdownTextLines.push('Add-On: Litter Supply: +' + money(costPerVisit) + ' / visit (charged at time of service)');
       }
     }
 
     if (yardFreshAddon) {
       let costPerVisit = 10 + 7 * (sections - 1);
-      summaryLinesHtml.push(renderLine('Yard Fresh (' + sections + ' section' + (sections > 1 ? 's' : '') + ')', 'Deodorizing spray application', '+' + money(costPerVisit) + ' / visit (charged at time of service)'));
+      summaryLinesHtml.push(renderLine('Yard Fresh (' + sections + ' section' + (sections > 1 ? 's' : '') + ')', 'Deodorizing spray application', '+' + money(costPerVisit) + ' / visit', 'charged at time of service'));
       breakdownTextLines.push('Add-On: Yard Fresh (' + sections + ' section(s)): +' + money(costPerVisit) + ' / visit (charged at time of service)');
     }
 
     if (haulAway) {
-      summaryLinesHtml.push(renderLine('Waste Haul-Away', 'Off-site disposal', '+$5.00 / visit (charged at time of service)'));
+      summaryLinesHtml.push(renderLine('Waste Haul-Away', 'Off-site disposal', '+$5.00 / visit', 'charged at time of service'));
       breakdownTextLines.push('Waste Haul-Away: Yes (+$5.00/visit charged at time of service)');
     }
 
@@ -1444,9 +1444,6 @@
     }
 
     $('ww-quote-lines').innerHTML = summaryLinesHtml.join('');
-
-    // Toggle visibility of per-visit add-ons note on screen 2
-    show('ww-addons-note', hasAddons);
 
     quoteState = {
       dogFreq: dogFreq, dogs: hasDog ? dogs : 0, condition: isOneTimeDog ? condition : '',
