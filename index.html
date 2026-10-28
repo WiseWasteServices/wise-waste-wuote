@@ -604,23 +604,17 @@
 
 <div id="ww-quote">
 
-  <!-- TOP INTRO BLOCK -->
-  <div id="ww-intro-block" style="max-width:850px; margin:0 auto 18px; font-family:'Segoe UI',Arial,sans-serif; color:#1E2C22; text-align:center;">
-    <div style="background:#F4F7F4; border:1px solid #D5DFCE; border-radius:16px; padding:32px 25px; box-shadow:0 4px 12px rgba(30,44,34,0.06);">
-      <div style="font-size:12px; font-weight:800; letter-spacing:1.8px; text-transform:uppercase; color:#3F6049; margin-bottom:10px;">
-        ✨ Free Quote • Instant Pricing
-      </div>
-      <h2 style="margin:0 0 14px; font-size:28px; line-height:1.2; font-weight:800; color:#1E2C22;">
-        Ready for a clean home and yard? ⏱️
-      </h2>
-      <p style="margin:0 auto; max-width:600px; font-size:16px; line-height:1.65; color:#425047;">
-        Getting started is easy! Use our quick calculator below to build your custom service plan and see your price instantly. No waiting, no hassle.
-      </p>
-      <div style="margin:24px auto 0; padding:18px; max-width:550px; background:#E5EEE5; border-radius:12px; font-size:15px; line-height:1.6; color:#1E2C22; border: 1px solid #D5DFCE;">
-        Have questions? We're happy to help! <br>
-        Call or text us at <a href="tel:9402470522" class="ww-phone-link">(940) 247-0522</a>
-      </div>
+  <!-- SLIM TOP INTRO HEADER -->
+  <div id="ww-intro-block" style="max-width:680px; margin:0 auto 18px; background:#F4F7F4; border:1.5px solid #D5DFCE; border-radius:16px; padding:18px 20px; text-align:center; font-family:'Segoe UI',Arial,sans-serif;">
+    <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#3F6049; margin-bottom:4px;">
+      ✨ Free Instant Quote
     </div>
+    <h2 style="margin:0 0 4px; font-size:20px; font-weight:800; color:#1E2C22;">
+      Build Your Custom Service Plan ⏱️
+    </h2>
+    <p style="margin:0 auto; font-size:14px; line-height:1.5; color:#59655D;">
+      Select your services below to see your instant price. Questions? Call or text <a href="tel:9402470522" class="ww-phone-link">(940) 247-0522</a>
+    </p>
   </div>
 
   <!-- SERVICE TABS -->
@@ -743,8 +737,19 @@
               <button type="button" data-step="1" data-target="ww-boxes">+</button>
             </div>
 
-            <!-- Litter Supply Add-on -->
+            <!-- Deep Clean Option -->
             <div style="margin-top:18px; padding-top:16px; border-top:1px solid var(--border);">
+              <label class="ww-choice" style="margin-bottom:12px;">
+                <input type="checkbox" id="ww-cat-deep-clean" name="cat_deep_clean">
+                <span>
+                  <strong>Occasional Litter Box Deep Clean (Wash &amp; Sanitize)</strong><br>
+                  <span class="ww-muted">Complete basin wash, sanitize, and fresh refill. <strong>$20 for 1st box, +$15 per extra box.</strong> (Charged at time of service)</span>
+                </span>
+              </label>
+            </div>
+
+            <!-- Litter Supply Add-on -->
+            <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">
               <label class="ww-choice" style="margin-bottom:0;">
                 <input type="checkbox" id="ww-cat-litter-supply" name="cat_litter_supply">
                 <span>
@@ -1065,6 +1070,7 @@
     
     if (quoteState.hasCat) {
       servicesList.push('Cat litter-box service (' + quoteState.catMode + ')');
+      if (quoteState.catDeepClean) servicesList.push('Litter Box Deep Clean (' + quoteState.boxes + ' box(es))');
       if (quoteState.catLitterSupply) servicesList.push('Litter Supply Provided per visit (' + quoteState.boxes + ' box(es))');
       if (!isRecDog && (quoteState.catMode === 'weekly' || quoteState.catMode === 'twice' || quoteState.catMode === 'biweekly')) {
           servicesList.push('Promo: First Scoop FREE (Monthly Plan)');
@@ -1085,7 +1091,7 @@
       dogFrequency: quoteState.dogFreq, boxes: String(quoteState.boxes), litterFrequency: quoteState.catMode, initial: 'No (First Scoop Free Promo)',
       onetime: quoteState.dogFreq === 'onetime' ? 'Yes' : 'No', onetimeDogs: quoteState.dogFreq === 'onetime' ? String(quoteState.dogs) : '0',
       condition: quoteState.condition, fresh: quoteState.yardFreshAddon ? 'Yes' : 'No', sections: String(quoteState.sections),
-      deepClean: 'No', deepBoxes: '0', 
+      deepClean: quoteState.catDeepClean ? 'Yes' : 'No', deepBoxes: quoteState.catDeepClean ? String(quoteState.boxes) : '0', 
       haulAway: quoteState.haulAway ? 'Yes' : 'No', perVisitPrice: quoteState.perVisitText,
       firstTotal: quoteState.perVisitText, dogPrice: quoteState.dogPriceText, catPrice: quoteState.catPriceText, dogBilling: quoteState.dogBillingText,
       catBilling: quoteState.catBillingText, yardSign: yardSign, petTreats: petTreats, notes: combinedNotes, website: ''
@@ -1249,6 +1255,7 @@
     const boxes = getNum('ww-boxes');
     const haulAway = $('ww-haul-away').checked;
     const catLitterSupply = $('ww-cat-litter-supply').checked;
+    const catDeepClean = $('ww-cat-deep-clean').checked;
 
     const hasDog = dogFreq !== 'none';
     const isRecurringDog = dogFreq === 'weekly' || dogFreq === 'twice' || dogFreq === 'biweekly';
@@ -1352,6 +1359,12 @@
         breakdownTextLines.push('Standalone Cat Service (' + boxes + ' box(es)): ' + catBillingText);
       }
       
+      if (catDeepClean) {
+        let deepCleanCost = 20 + 15 * Math.max(0, boxes - 1);
+        summaryLinesHtml.push(renderLine('Litter Box Deep Clean (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')', 'Basin wash & sanitize', '+' + money(deepCleanCost), 'charged at time of service'));
+        breakdownTextLines.push('Add-On: Litter Box Deep Clean (' + boxes + ' box(es)): +' + money(deepCleanCost) + ' (charged at time of service)');
+      }
+
       if (catLitterSupply) {
         let costPerVisit = 10 * boxes;
         summaryLinesHtml.push(renderLine('Litter Supply (' + boxes + ' box' + (boxes > 1 ? 'es' : '') + ')', '$10.00 / visit per box', '+' + money(costPerVisit) + ' / visit', 'charged at time of service'));
@@ -1372,7 +1385,7 @@
 
     const anyRecurring = isRecurringDog || isRecurringCatOnly;
     const anyCustom = dogCustom;
-    const hasAddons = yardFreshAddon || catLitterSupply || haulAway;
+    const hasAddons = yardFreshAddon || catLitterSupply || haulAway || catDeepClean;
     
     let totalMonthlyRate = 0;
     if (isRecurringDog) {
@@ -1449,7 +1462,7 @@
       dogFreq: dogFreq, dogs: hasDog ? dogs : 0, condition: isOneTimeDog ? condition : '',
       catMode: hasDog ? (catAddChecked ? 'Add-on during dog visits' : 'None') : catStandaloneFreq, boxes: hasCat ? boxes : 0, hasCat: hasCat,
       haulAway: haulAway, yardFreshAddon: yardFreshAddon, sections: yardFreshAddon ? sections : 1,
-      catLitterSupply: catLitterSupply,
+      catLitterSupply: catLitterSupply, catDeepClean: catDeepClean,
       perVisitText: $('ww-display-per-visit').textContent, recurringTotalText: anyRecurring ? money(totalMonthlyRate) + '/mo' : '$0.00',
       dogPriceText: isRecurringDog ? (dogCustom ? 'Custom Quote' : money(dogTotal) + '/mo') : (isOneTimeDog ? money(dogTotal) : '$0.00'),
       catPriceText: hasCat ? money(catTotal) + (anyRecurring ? '/mo' : '') : '$0.00',
@@ -1476,6 +1489,7 @@
     
     if (quoteState.hasCat) {
       servicesList.push('Cat litter-box service (' + quoteState.catMode + ')');
+      if (quoteState.catDeepClean) servicesList.push('Litter Box Deep Clean (' + quoteState.boxes + ' box(es))');
       if (quoteState.catLitterSupply) servicesList.push('Litter Supply Provided per visit (' + quoteState.boxes + ' box(es))');
       if (!isRecDog && (quoteState.catMode === 'weekly' || quoteState.catMode === 'twice' || quoteState.catMode === 'biweekly')) {
           servicesList.push('Promo: First Scoop FREE (Monthly Plan)');
@@ -1496,7 +1510,7 @@
       dogFrequency: quoteState.dogFreq, boxes: String(quoteState.boxes), litterFrequency: quoteState.catMode, initial: 'No (First Scoop Free Promo)',
       onetime: quoteState.dogFreq === 'onetime' ? 'Yes' : 'No', onetimeDogs: quoteState.dogFreq === 'onetime' ? String(quoteState.dogs) : '0',
       condition: quoteState.condition, fresh: quoteState.yardFreshAddon ? 'Yes' : 'No', sections: String(quoteState.sections),
-      deepClean: 'No', deepBoxes: '0', 
+      deepClean: quoteState.catDeepClean ? 'Yes' : 'No', deepBoxes: quoteState.catDeepClean ? String(quoteState.boxes) : '0', 
       haulAway: quoteState.haulAway ? 'Yes' : 'No', perVisitPrice: quoteState.perVisitText,
       firstTotal: quoteState.perVisitText, dogPrice: quoteState.dogPriceText, catPrice: quoteState.catPriceText, dogBilling: quoteState.dogBillingText,
       catBilling: quoteState.catBillingText, yardSign: yardSign, petTreats: petTreats, notes: combinedNotes, website: ''
