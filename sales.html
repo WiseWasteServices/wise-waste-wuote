@@ -3,7 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <!-- App Icon & Mobile Web App Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="WW Sales">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="https://wisewastetx.com/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="https://wisewastetx.com/favicon.ico">
+
   <title>Wise Waste Services - Sales Quoting Tool</title>
+  
+  <!-- html2canvas library for taking mobile screenshots -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
   <style>
     :root {
       --green: #263A2D;
@@ -28,7 +41,6 @@
     
     body {
       margin: 0; 
-      /* Massive bottom padding to prevent any mobile iframe cut-offs */
       padding: 30px 24px 300px 24px;
       padding-bottom: calc(300px + env(safe-area-inset-bottom));
       background-color: var(--cream);
@@ -165,8 +177,21 @@
 
     .sales-tool-box { background: #fdfaf2; border: 1px solid #ebdcb8; border-radius: var(--radius-md); padding: 16px; margin-top: 20px; }
 
-    /* Print Styles */
+    /* Image Modal (For Mobile Screenshot) */
+    #img-modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9); z-index: 9999; flex-direction: column; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    #img-modal.active { display: flex; }
+    #img-modal img { max-width: 100%; max-height: 75vh; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .modal-text { color: #fff; margin-bottom: 20px; font-weight: 700; text-align: center; font-size: 16px; line-height: 1.4; }
+    .close-modal { margin-top: 24px; padding: 12px 24px; background: #fff; color: #000; font-weight: 800; font-size: 16px; border-radius: 30px; cursor: pointer; border: none; }
+
+    /* Desktop Print / Mobile Screenshot shared styles */
     .print-only { display: none; }
+
+    /* We combine print media query AND screenshot class so html2canvas sees the white background version */
     @media print {
       body { background: #ffffff; color: #000; padding: 0; }
       .no-print, .ww-builder, .ww-btn-group, .ww-header { display: none !important; }
@@ -191,6 +216,30 @@
       .print-customer div { margin-bottom: 4px; }
       .print-footer { margin-top: 30px; font-size: 12px; color: #555; border-top: 1px solid #ddd; padding-top: 10px; }
     }
+
+    /* Used dynamically by javascript just for the screenshot */
+    .screenshot-mode .no-print, .screenshot-mode .ww-builder, .screenshot-mode .ww-header { display: none !important; }
+    .screenshot-mode { background: #ffffff !important; padding: 20px !important; }
+    .screenshot-mode .ww-container { display: block; max-width: 800px; margin: 0 auto; padding: 0; }
+    .screenshot-mode .ww-quote-pane { width: 100%; position: static; }
+    .screenshot-mode .ww-quote-pane .ww-panel { background: #ffffff !important; color: #000 !important; box-shadow: none; border: none; padding: 20px; margin: 0; }
+    .screenshot-mode .ww-quote-pane h3 { color: var(--green) !important; border-bottom: 2px solid var(--green) !important; }
+    .screenshot-mode .quote-section { border-bottom: 1px solid #ddd !important; }
+    .screenshot-mode .quote-section-title { color: #555 !important; }
+    .screenshot-mode .quote-item-desc { color: #555 !important; }
+    .screenshot-mode .quote-total-row { color: #000 !important; border-top: 2px solid #000; padding-top: 10px; }
+    .screenshot-mode .quote-warning { background: #fff !important; border-left: 4px solid #000 !important; color: #000 !important; border: 1px solid #ccc; }
+    .screenshot-mode .quote-promo { background: #fff !important; border: 2px dashed #000 !important; color: #000 !important; }
+    .screenshot-mode .first-month-box { background: #f9f9f9 !important; border: 1px solid #ccc !important; color: #000 !important; }
+    .screenshot-mode .first-month-box strong { color: #000 !important; }
+    .screenshot-mode .first-month-box span { color: #555 !important; }
+    .screenshot-mode .print-only { display: block; margin-bottom: 20px; }
+    .screenshot-mode .print-header { border-bottom: 2px solid var(--green); padding-bottom: 15px; margin-bottom: 20px; }
+    .screenshot-mode .print-header h1 { margin: 0; color: var(--green); font-size: 24pt; }
+    .screenshot-mode .print-header p { margin: 5px 0 0; color: #555; }
+    .screenshot-mode .print-customer { margin-bottom: 20px; font-size: 14px; }
+    .screenshot-mode .print-customer div { margin-bottom: 4px; }
+    .screenshot-mode .print-footer { margin-top: 30px; font-size: 12px; color: #555; border-top: 1px solid #ddd; padding-top: 10px; }
   </style>
 </head>
 <body>
@@ -202,7 +251,7 @@
 
 <div class="ww-container">
   
-  <!-- LEFT COLUMN: BUILDER (HIDDEN ON PRINT) -->
+  <!-- LEFT COLUMN: BUILDER -->
   <div class="ww-builder no-print" id="builder-residential">
     
     <!-- Customer Details -->
@@ -251,7 +300,6 @@
     <div class="ww-panel">
       <h3>🐈 Cat Litter Box Service</h3>
       
-      <!-- Bundled Mode -->
       <div id="cat-bundled-wrap">
         <label class="ww-choice" style="margin-bottom: 0;">
           <input type="checkbox" id="cat-add-bundled">
@@ -262,7 +310,6 @@
         </label>
       </div>
 
-      <!-- Standalone Mode -->
       <div id="cat-standalone-wrap" class="ww-hidden">
         <label class="ww-label">Standalone Cat Service Frequency</label>
         <select id="cat-freq">
@@ -343,7 +390,6 @@
       <label class="ww-label">Internal / Route Notes</label>
       <textarea id="pref-notes" placeholder="Gate codes, dogs' names, aggressive dog warnings..."></textarea>
       
-      <!-- CLOSING TOOL: 10% DISCOUNT -->
       <div class="sales-tool-box">
         <label style="display:flex; align-items:center; gap:10px; font-weight:800; color: #7f6013; cursor:pointer; font-size:15.5px;">
           <input type="checkbox" id="promo-10" style="width:22px;height:22px;accent-color:#7f6013;"> 
@@ -362,7 +408,7 @@
   <div class="ww-quote-pane">
     <div class="ww-panel" id="quote-panel">
       
-      <!-- Print Header (Only visible on print) -->
+      <!-- Print Header -->
       <div class="print-only print-header">
         <h1>Wise Waste Services</h1>
         <p>wisewastetx.com | (940) 247-0522 | WiseWasteServices@gmail.com</p>
@@ -377,15 +423,22 @@
         <p>Thank you for choosing Wise Waste Services!</p>
       </div>
 
-      <div class="ww-btn-group no-print">
-        <button class="btn btn-primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
+      <div class="ww-btn-group no-print" id="action-buttons">
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Desktop Print / PDF</button>
+        <button class="btn btn-outline" id="btn-mobile-save" onclick="generateScreenshot()" style="background: var(--light); color: var(--green);">📱 Save Image (Mobile)</button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Modal to display the generated screenshot -->
+<div id="img-modal">
+  <div class="modal-text">👇 Tap and hold the image below to save it to your photos, or screenshot this screen!</div>
+  <img id="quote-result-img" src="" alt="Generated Quote Image">
+  <button class="close-modal" onclick="document.getElementById('img-modal').classList.remove('active')">Done</button>
+</div>
+
 <script>
-  // Listeners
   const inputs = document.querySelectorAll('input, select, textarea');
   inputs.forEach(input => {
     input.addEventListener('input', renderQuote);
@@ -502,7 +555,7 @@
 
     // 1. DOG MATH
     if (dogFreq !== 'none') {
-      if (dogs >= 5) warnings.push("Estimates for 5 or more dogs require a custom quote. Ensure property size and condition are confirmed.");
+      if (dogs >= 5) warnings.push("Estimates for 5 or more dogs require a custom quote.");
 
       if (dogFreq === 'weekly' || dogFreq === 'twice' || dogFreq === 'biweekly') {
         hasPromoFreeScoop = true;
@@ -516,7 +569,7 @@
         monthlyItems.push(buildItemHtml(`Dog Waste Removal (${freqLabel})`, `${dogs} dog(s)`, formatMoney(price) + '/mo'));
       } else if (dogFreq === 'onetime') {
         let price = 35; 
-        if (dogs > 2) warnings.push("Confirm base price for one-time cleanups involving more than 2 dogs prior to presenting as final.");
+        if (dogs > 2) warnings.push("Confirm base price for extra dogs prior to presenting as final.");
         oneTimeTotal += price;
         oneTimeItems.push(buildItemHtml(`One-Time Dog Cleanup`, `${dogs} dog(s)`, formatMoney(price)));
       }
@@ -539,7 +592,6 @@
         else if (dogFreq === 'biweekly') { price = 30 + (boxes > 2 ? (boxes - 2) * 5 : 0); label = "Bundled Cat Service (Bi-Weekly)"; }
         else if (dogFreq === 'onetime') { 
           price = 20 + (boxes > 2 ? (boxes - 2) * 5 : 0); label = "Bundled One-Time Cat Cleanup"; 
-          if (boxes > 2) warnings.push("Confirm extra box pricing for one-time bundled cat cleanups before finalizing.");
         }
       } else if (isCatStandaloneRec) {
         hasPromoFreeScoop = true;
@@ -551,7 +603,6 @@
         isMonthly = false;
         price = 45 + (boxes > 2 ? (boxes - 2) * 10 : 0);
         label = "Standalone One-Time Cat Cleanup";
-        if (boxes > 2) warnings.push("Confirm extra box pricing for standalone one-time cat cleanups before finalizing.");
       }
 
       if (isMonthly) {
@@ -666,20 +717,41 @@
     renderQuote();
   }
 
-  renderQuote();
+  // --- MOBILE SCREENSHOT FUNCTION ---
+  function generateScreenshot() {
+    const btn = document.getElementById('btn-mobile-save');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '📸 Generating...';
+    btn.disabled = true;
 
-  // --- AUTO-RESIZE FOR CARRD EMBED ---
-  function reportHeight() {
-    if (window.parent !== window) {
-      // Massive +200px buffer added to ensure iframe clears all content bounds
-      const height = document.documentElement.scrollHeight + 200;
-      window.parent.postMessage({ type: 'ww-quote-height', height: height }, '*');
-    }
+    // Force the white PDF layout
+    document.body.classList.add('screenshot-mode');
+
+    // Small delay to let CSS apply
+    setTimeout(() => {
+      const panel = document.querySelector('.ww-quote-pane .ww-panel');
+      
+      html2canvas(panel, { scale: 2, backgroundColor: '#ffffff', useCORS: true }).then(canvas => {
+        // Revert back to normal layout
+        document.body.classList.remove('screenshot-mode');
+        
+        // Output image to modal
+        const imgData = canvas.toDataURL('image/png');
+        document.getElementById('quote-result-img').src = imgData;
+        document.getElementById('img-modal').classList.add('active');
+        
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }).catch(err => {
+        alert("Could not generate image. Please try Desktop Print instead.");
+        document.body.classList.remove('screenshot-mode');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      });
+    }, 300);
   }
-  window.addEventListener('load', reportHeight);
-  window.addEventListener('resize', reportHeight);
-  document.addEventListener('input', () => setTimeout(reportHeight, 100));
-  document.addEventListener('click', () => setTimeout(reportHeight, 100));
+
+  renderQuote();
 </script>
 
 </body>
