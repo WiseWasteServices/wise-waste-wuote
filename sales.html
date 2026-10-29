@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Wise Waste Services - Sales Quoting Tool</title>
   <style>
     :root {
@@ -25,26 +25,33 @@
     }
 
     * { box-sizing: border-box; }
+    
     body {
-      margin: 0; padding: 20px;
+      margin: 0; 
+      /* Generous padding for desktop; massive bottom pad prevents mobile toolbar cut-offs */
+      padding: 30px 24px 80px 24px;
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
       background-color: var(--cream);
       color: var(--ink);
       font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden; /* Prevent horizontal scrolling/wiggling */
     }
 
     /* Layout */
     .ww-container {
+      width: 100%;
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
       gap: 24px;
     }
+    
     @media (min-width: 900px) {
       .ww-container { flex-direction: row; align-items: flex-start; }
       .ww-builder { flex: 1; min-width: 0; }
-      .ww-quote-pane { flex: 0 0 450px; position: sticky; top: 20px; }
+      .ww-quote-pane { flex: 0 0 450px; position: sticky; top: 30px; }
     }
 
     .ww-hidden { display: none !important; }
@@ -52,10 +59,10 @@
     /* Header */
     .ww-header {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
     .ww-header h1 {
-      margin: 0 0 5px 0; color: var(--green); font-size: 24px; font-weight: 800;
+      margin: 0 0 5px 0; color: var(--green); font-size: 26px; font-weight: 800;
     }
 
     /* Panels & Cards */
@@ -64,8 +71,9 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       padding: 24px;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       box-shadow: var(--shadow-sm);
+      overflow-wrap: break-word;
     }
     .ww-panel h3 {
       font-size: 19px; font-weight: 800; color: var(--green);
@@ -79,15 +87,16 @@
       margin: 14px 0 6px;
     }
     .ww-label:first-of-type { margin-top: 0; }
-    .ww-muted { color: var(--muted); font-size: 13.5px; }
+    .ww-muted { color: var(--muted); font-size: 13.5px; line-height: 1.4; }
 
     select, input[type="text"], input[type="tel"], input[type="email"], textarea {
-      width: 100%; min-height: 48px;
+      width: 100%; max-width: 100%; min-height: 48px;
       border: 1.5px solid var(--border-strong);
       border-radius: var(--radius-sm);
       padding: 10px 14px;
       background-color: #ffffff; color: var(--ink);
-      font-size: 15px; font-family: inherit;
+      font-size: 16px; /* 16px prevents iOS from zooming in on input focus */
+      font-family: inherit;
     }
     select {
       appearance: none; -webkit-appearance: none;
@@ -100,8 +109,14 @@
       box-shadow: 0 0 0 3px rgba(213, 223, 206, 0.75);
     }
 
-    .ww-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    @media (max-width: 600px) { .ww-grid { grid-template-columns: 1fr; gap: 0; } }
+    .ww-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    
+    /* Mobile Spacing Adjustments */
+    @media (max-width: 600px) { 
+      .ww-grid { grid-template-columns: 1fr; gap: 16px; } /* Ensures stacked inputs don't touch */
+      body { padding: 20px 16px 100px 16px; } /* Slightly tighter side padding for very small phones */
+      .ww-panel { padding: 20px; }
+    }
 
     /* Number Steppers */
     .ww-number {
@@ -182,11 +197,11 @@
     }
 
     /* Buttons */
-    .ww-btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .ww-btn-group { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
     @media (min-width: 600px) { .ww-btn-group.row { flex-direction: row; } }
     
     .btn {
-      width: 100%; min-height: 50px; padding: 12px 20px;
+      width: 100%; min-height: 52px; padding: 12px 20px;
       border-radius: var(--radius-sm); font-size: 16px; font-weight: 700;
       cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
       transition: all 0.15s ease; border: 2px solid transparent;
@@ -251,7 +266,7 @@
     <!-- Customer Details -->
     <div class="ww-panel">
       <h3>👤 Customer Details (Optional)</h3>
-      <p class="ww-muted" style="margin-top:-10px; margin-bottom:14px;">Leave blank for quick pricing. Fill out to include on the printed/saved PDF quote.</p>
+      <p class="ww-muted" style="margin-top:-10px; margin-bottom:16px;">Leave blank for quick pricing. Fill out to include on the printed/saved PDF quote.</p>
       <div class="ww-grid">
         <div>
           <label class="ww-label">Customer Name</label>
@@ -375,12 +390,12 @@
     <!-- Preferences & Sales Tools -->
     <div class="ww-panel">
       <h3>📝 Preferences & Sales Tools</h3>
-      <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:14px;">
+      <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:16px;">
         <label style="display:flex; align-items:center; gap:8px; font-weight:600; cursor:pointer;">
-          <input type="checkbox" id="pref-sign" style="width:18px;height:18px;accent-color:var(--green);"> Promotional yard sign permitted
+          <input type="checkbox" id="pref-sign" style="width:20px;height:20px;accent-color:var(--green);"> Promotional yard sign permitted
         </label>
         <label style="display:flex; align-items:center; gap:8px; font-weight:600; cursor:pointer;">
-          <input type="checkbox" id="pref-treats" style="width:18px;height:18px;accent-color:var(--green);"> Pet treats permitted
+          <input type="checkbox" id="pref-treats" style="width:20px;height:20px;accent-color:var(--green);"> Pet treats permitted
         </label>
       </div>
       <label class="ww-label">Internal / Route Notes</label>
@@ -388,11 +403,11 @@
       
       <!-- CLOSING TOOL: 10% DISCOUNT -->
       <div class="sales-tool-box">
-        <label style="display:flex; align-items:center; gap:8px; font-weight:800; color: #7f6013; cursor:pointer; font-size:15.5px;">
-          <input type="checkbox" id="promo-10" style="width:20px;height:20px;accent-color:#7f6013;"> 
+        <label style="display:flex; align-items:center; gap:10px; font-weight:800; color: #7f6013; cursor:pointer; font-size:15.5px;">
+          <input type="checkbox" id="promo-10" style="width:22px;height:22px;accent-color:#7f6013;"> 
           Apply 10% Off First Month (Sales Closer)
         </label>
-        <div style="font-size:13px; color:var(--muted); margin-top:6px; padding-left:28px;">Applies a 10% discount to the first month's recurring subscription total.</div>
+        <div style="font-size:13.5px; color:var(--muted); margin-top:8px; padding-left:32px;">Applies a 10% discount to the first month's recurring subscription total.</div>
       </div>
 
       <div class="ww-btn-group row" style="margin-top: 24px;">
