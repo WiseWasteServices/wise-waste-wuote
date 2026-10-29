@@ -391,10 +391,10 @@
       <!-- CLOSING TOOL: BILLING CYCLE & DISCOUNTS -->
       <div class="sales-tool-box">
         <label class="ww-label" style="margin-top:0; margin-bottom:8px; color:#7f6013;">Billing Cycle</label>
-        <select id="billing-cycle" style="margin-bottom: 16px; border-color: #ebdcb8; background: #fff;">
+        <select id="billing-cycle" style="margin-bottom: 16px; border-color: #ebdcb8; background: #fff; color: #1E2C22; font-weight: 600;">
           <option value="1" selected>Monthly (Default)</option>
-          <option value="6">6 Months (Prepay)</option>
-          <option value="12">1 Year (Prepay)</option>
+          <option value="6">6 Months (Save 5%)</option>
+          <option value="12">1 Year (Save 10%)</option>
         </select>
 
         <div style="border-top: 1px solid rgba(235, 220, 184, 0.5); margin: 16px 0;"></div>
@@ -619,7 +619,7 @@
 
       if (isMonthly) {
         monthlyTotal += price;
-        let perVisitCost = price / visitsPerMonth;
+        let perVisitCost = price / (visitsPerMonth || 1); // fallback to prevent NaN if standalone cat without visits
         monthlyItems.push(buildItemHtml(label, `${boxes} box(es) • (${formatMoney(perVisitCost)} / visit)`, formatMoney(price) + '/mo'));
       } else {
         oneTimeTotal += price;
@@ -657,19 +657,26 @@
 
     // 4. MONTHLY / PREPAY SECTION
     let monthlyTotalDisplay = null;
-    let cycleGross = monthlyTotal * billingCycle;
+    let cycleGrossBase = monthlyTotal * billingCycle;
+    let prepayDiscountRate = 0;
+    
+    if (billingCycle === 6) prepayDiscountRate = 0.05;
+    if (billingCycle === 12) prepayDiscountRate = 0.10;
+    
+    let prepayDiscountAmt = cycleGrossBase * prepayDiscountRate;
+    let cycleGrossDiscounted = cycleGrossBase - prepayDiscountAmt;
 
     if (monthlyTotal > 0) {
       if (visitsPerMonth > 0) {
         let totalPerVisit = monthlyTotal / visitsPerMonth;
         monthlyTotalDisplay = `
           <div style="display:flex; flex-direction:column; align-items:flex-end;">
-            <div>${formatMoney(cycleGross)}${billingCycle === 1 ? '/mo' : ''}</div>
-            <div class="quote-item-desc" style="margin-top:2px; text-align:right;">(${formatMoney(totalPerVisit)} / visit)</div>
+            <div>${formatMoney(cycleGrossDiscounted)}${billingCycle === 1 ? '/mo' : ''}</div>
+            <div class="quote-item-desc" style="margin-top:2px; text-align:right;">(${formatMoney(totalPerVisit)} / visit base)</div>
           </div>
         `;
       } else {
-        monthlyTotalDisplay = `${formatMoney(cycleGross)}${billingCycle === 1 ? '/mo' : ''}`;
+        monthlyTotalDisplay = `${formatMoney(cycleGrossDiscounted)}${billingCycle === 1 ? '/mo' : ''}`;
       }
     }
 
@@ -683,21 +690,21 @@
     if (monthlyTotal > 0 && visitsPerMonth > 0) {
       let costPerVisit = monthlyTotal / visitsPerMonth;
       
-      let discountAmt = 0;
+      let extraDiscountsAmt = 0;
       let promoNotes = [];
       
       if (hasPromoFreeScoop) {
-        discountAmt += costPerVisit;
+        extraDiscountsAmt += costPerVisit;
         promoNotes.push("First visit free");
       }
       
       if (promo10Off) {
         let tenPercent = monthlyTotal * 0.10;
-        discountAmt += tenPercent;
+        extraDiscountsAmt += tenPercent;
         promoNotes.push("10% off 1st mo");
       }
 
-      let dueToday = cycleGross - discountAmt;
+      let dueToday = cycleGrossDiscounted - extraDiscountsAmt;
       let notesStr = promoNotes.length > 0 ? ` (${promoNotes.join(' + ')})` : "";
 
       if (billingCycle === 1) {
@@ -711,10 +718,11 @@
         }
       } else {
         let cycleText = billingCycle === 6 ? "6 months" : "1 year";
+        let prepayNote = prepayDiscountRate > 0 ? ` Includes ${prepayDiscountRate * 100}% prepay discount.` : "";
         html += `
           <div class="first-month-box">
             <strong style="font-size: 15px; display: block; margin-bottom: 2px;">Total Due Today: ${formatMoney(dueToday)}${notesStr}</strong>
-            <span style="font-size: 13px; color: var(--light);">Prepays your service for ${cycleText}. Renews at ${formatMoney(cycleGross)} every ${cycleText}.</span>
+            <span style="font-size: 13px; color: var(--light);">Prepays your service for ${cycleText}.${prepayNote} Renews at ${formatMoney(cycleGrossDiscounted)} every ${cycleText}.</span>
           </div>
         `;
       }
@@ -725,16 +733,24 @@
     html += buildSectionHtml("Per-Visit / Per-Treatment Options", perVisitItems, null, null);
 
     // PROMOTIONS & DISCOUNTS DISPLAY
-    if (hasPromoFreeScoop || (promo10Off && monthlyTotal > 0)) {
+    if (hasPromoFreeScoop || (promo10Off && monthlyTotal > 0) || prepayDiscountAmt > 0) {
       html += `<div class="quote-promo">`;
-      if (hasPromoFreeScoop) {
-        html += `<div>🎁 <strong>First Scoop FREE Promo Applied!</strong> <br><span style="font-size:12.5px; font-weight:normal;">Does not reduce the regular renewal rate shown above.</span></div>`;
+      
+      if (prepayDiscountAmt > 0) {
+        html += `<div>✅ <strong>${prepayDiscountRate * 100}% Prepay Discount: -${formatMoney(prepayDiscountAmt)}</strong> <br><span style="font-size:12.5px; font-weight:normal;">Locked-in savings for paying upfront.</span></div>`;
       }
+
+      if (hasPromoFreeScoop) {
+        const mtString = (prepayDiscountAmt > 0) ? 'margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.2);' : '';
+        html += `<div style="${mtString}">🎁 <strong>First Scoop FREE Promo Applied!</strong> <br><span style="font-size:12.5px; font-weight:normal;">Does not reduce the regular renewal rate shown above.</span></div>`;
+      }
+
       if (promo10Off && monthlyTotal > 0) {
         const discountAmt = monthlyTotal * 0.10;
-        const mtString = hasPromoFreeScoop ? 'margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.2);' : '';
+        const mtString = (hasPromoFreeScoop || prepayDiscountAmt > 0) ? 'margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.2);' : '';
         html += `<div style="${mtString}">💸 <strong>10% Off First Month: -${formatMoney(discountAmt)}</strong> <br><span style="font-size:12.5px; font-weight:normal;">Discount applied to today's total.</span></div>`;
       }
+
       html += `</div>`;
     }
 
