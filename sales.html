@@ -191,7 +191,6 @@
     /* Desktop Print / Mobile Screenshot shared styles */
     .print-only { display: none; }
 
-    /* We combine print media query AND screenshot class so html2canvas sees the white background version */
     @media print {
       body { background: #ffffff; color: #000; padding: 0; }
       .no-print, .ww-builder, .ww-btn-group, .ww-header { display: none !important; }
@@ -217,7 +216,6 @@
       .print-footer { margin-top: 30px; font-size: 12px; color: #555; border-top: 1px solid #ddd; padding-top: 10px; }
     }
 
-    /* Used dynamically by javascript just for the screenshot */
     .screenshot-mode .no-print, .screenshot-mode .ww-builder, .screenshot-mode .ww-header { display: none !important; }
     .screenshot-mode { background: #ffffff !important; padding: 20px !important; }
     .screenshot-mode .ww-container { display: block; max-width: 800px; margin: 0 auto; padding: 0; }
@@ -390,12 +388,22 @@
       <label class="ww-label">Internal / Route Notes</label>
       <textarea id="pref-notes" placeholder="Gate codes, dogs' names, aggressive dog warnings..."></textarea>
       
+      <!-- CLOSING TOOL: BILLING CYCLE & DISCOUNTS -->
       <div class="sales-tool-box">
+        <label class="ww-label" style="margin-top:0; margin-bottom:8px; color:#7f6013;">Billing Cycle</label>
+        <select id="billing-cycle" style="margin-bottom: 16px; border-color: #ebdcb8; background: #fff;">
+          <option value="1" selected>Monthly (Default)</option>
+          <option value="6">6 Months (Prepay)</option>
+          <option value="12">1 Year (Prepay)</option>
+        </select>
+
+        <div style="border-top: 1px solid rgba(235, 220, 184, 0.5); margin: 16px 0;"></div>
+
         <label style="display:flex; align-items:center; gap:10px; font-weight:800; color: #7f6013; cursor:pointer; font-size:15.5px;">
           <input type="checkbox" id="promo-10" style="width:22px;height:22px;accent-color:#7f6013;"> 
           Apply 10% Off First Month (Sales Closer)
         </label>
-        <div style="font-size:13.5px; color:var(--muted); margin-top:8px; padding-left:32px;">Applies a 10% discount to the first month's recurring subscription total.</div>
+        <div style="font-size:13.5px; color:var(--muted); margin-top:8px; padding-left:32px;">Applies a 10% discount to the first month's equivalent value.</div>
       </div>
 
       <div class="ww-btn-group row" style="margin-top: 24px;">
@@ -419,7 +427,7 @@
       <div id="quote-content"></div>
 
       <div class="print-only print-footer">
-        <p><strong>Note:</strong> Monthly prices are recurring subscription charges. One-time cleanups and optional per-visit or per-treatment services are separate charges. All selected charges are shown individually in this quote.</p>
+        <p><strong>Note:</strong> Subscription charges are recurring based on the selected billing cycle. One-time cleanups and optional per-visit or per-treatment services are separate charges. All selected charges are shown individually in this quote.</p>
         <p>Thank you for choosing Wise Waste Services!</p>
       </div>
 
@@ -501,7 +509,7 @@
     if (title) html += `<div class="quote-section-title">${title}</div>`;
     html += items.join('');
     if (totalLabel && totalValue !== null) {
-      html += `<div class="quote-total-row"><span>${totalLabel}</span><span>${totalValue}</span></div>`;
+      html += `<div class="quote-total-row"><span>${totalLabel}</span><span style="text-align: right;">${totalValue}</span></div>`;
     }
     html += `</div>`;
     return html;
@@ -541,7 +549,9 @@
     const prefSign = document.getElementById('pref-sign').checked;
     const prefTreats = document.getElementById('pref-treats').checked;
     const notes = document.getElementById('pref-notes').value.trim();
+    
     const promo10Off = document.getElementById('promo-10').checked;
+    const billingCycle = parseInt(document.getElementById('billing-cycle').value);
 
     let monthlyItems = [];
     let oneTimeItems = [];
@@ -565,8 +575,10 @@
         if (dogFreq === 'biweekly') { base = 54; extra = 11; freqLabel = 'Bi-Weekly'; visitsPerMonth = 2; }
         
         let price = base + (dogs > 2 ? (dogs - 2) * extra : 0);
+        let perVisitCost = price / visitsPerMonth;
         monthlyTotal += price;
-        monthlyItems.push(buildItemHtml(`Dog Waste Removal (${freqLabel})`, `${dogs} dog(s)`, formatMoney(price) + '/mo'));
+        
+        monthlyItems.push(buildItemHtml(`Dog Waste Removal (${freqLabel})`, `${dogs} dog(s) • (${formatMoney(perVisitCost)} / visit)`, formatMoney(price) + '/mo'));
       } else if (dogFreq === 'onetime') {
         let price = 35; 
         if (dogs > 2) warnings.push("Confirm base price for extra dogs prior to presenting as final.");
@@ -607,7 +619,8 @@
 
       if (isMonthly) {
         monthlyTotal += price;
-        monthlyItems.push(buildItemHtml(label, `${boxes} box(es)`, formatMoney(price) + '/mo'));
+        let perVisitCost = price / visitsPerMonth;
+        monthlyItems.push(buildItemHtml(label, `${boxes} box(es) • (${formatMoney(perVisitCost)} / visit)`, formatMoney(price) + '/mo'));
       } else {
         oneTimeTotal += price;
         oneTimeItems.push(buildItemHtml(label, `${boxes} box(es)`, formatMoney(price)));
@@ -642,42 +655,85 @@
       return;
     }
 
-    // 4. MONTHLY SECTION
-    html += buildSectionHtml("Recurring Monthly Services", monthlyItems, "Total Monthly Subscription", monthlyTotal > 0 ? formatMoney(monthlyTotal) + '/mo' : null);
+    // 4. MONTHLY / PREPAY SECTION
+    let monthlyTotalDisplay = null;
+    let cycleGross = monthlyTotal * billingCycle;
 
-    // 5. FIRST MONTH DYNAMIC BREAKDOWN
-    if (monthlyTotal > 0 && hasPromoFreeScoop && visitsPerMonth > 0) {
+    if (monthlyTotal > 0) {
+      if (visitsPerMonth > 0) {
+        let totalPerVisit = monthlyTotal / visitsPerMonth;
+        monthlyTotalDisplay = `
+          <div style="display:flex; flex-direction:column; align-items:flex-end;">
+            <div>${formatMoney(cycleGross)}${billingCycle === 1 ? '/mo' : ''}</div>
+            <div class="quote-item-desc" style="margin-top:2px; text-align:right;">(${formatMoney(totalPerVisit)} / visit)</div>
+          </div>
+        `;
+      } else {
+        monthlyTotalDisplay = `${formatMoney(cycleGross)}${billingCycle === 1 ? '/mo' : ''}`;
+      }
+    }
+
+    let subTitle = "Total Monthly Subscription";
+    if (billingCycle === 6) subTitle = "Total 6-Month Prepay";
+    if (billingCycle === 12) subTitle = "Total Annual Prepay";
+
+    html += buildSectionHtml("Recurring Services", monthlyItems, subTitle, monthlyTotalDisplay);
+
+    // 5. FIRST MONTH / DYNAMIC PREPAY BREAKDOWN
+    if (monthlyTotal > 0 && visitsPerMonth > 0) {
       let costPerVisit = monthlyTotal / visitsPerMonth;
-      let firstMonthTotal = monthlyTotal - costPerVisit;
-      let promoNotes = "First visit free";
-
+      
+      let discountAmt = 0;
+      let promoNotes = [];
+      
+      if (hasPromoFreeScoop) {
+        discountAmt += costPerVisit;
+        promoNotes.push("First visit free");
+      }
+      
       if (promo10Off) {
-        let discountAmt = monthlyTotal * 0.10;
-        firstMonthTotal -= discountAmt;
-        promoNotes += " + 10% off";
+        let tenPercent = monthlyTotal * 0.10;
+        discountAmt += tenPercent;
+        promoNotes.push("10% off 1st mo");
       }
 
-      html += `
-        <div class="first-month-box">
-          <strong style="font-size: 15px; display: block; margin-bottom: 2px;">First month: ${formatMoney(firstMonthTotal)} (${promoNotes})</strong>
-          <span style="font-size: 13px; color: var(--light);">Billed monthly (approx. ${visitsPerMonth} visits/mo). After that, ${formatMoney(monthlyTotal)} / mo.</span>
-        </div>
-      `;
+      let dueToday = cycleGross - discountAmt;
+      let notesStr = promoNotes.length > 0 ? ` (${promoNotes.join(' + ')})` : "";
+
+      if (billingCycle === 1) {
+        if (hasPromoFreeScoop || promo10Off) {
+          html += `
+            <div class="first-month-box">
+              <strong style="font-size: 15px; display: block; margin-bottom: 2px;">First month: ${formatMoney(dueToday)}${notesStr}</strong>
+              <span style="font-size: 13px; color: var(--light);">Billed monthly (approx. ${visitsPerMonth} visits/mo). After that, ${formatMoney(monthlyTotal)} / mo.</span>
+            </div>
+          `;
+        }
+      } else {
+        let cycleText = billingCycle === 6 ? "6 months" : "1 year";
+        html += `
+          <div class="first-month-box">
+            <strong style="font-size: 15px; display: block; margin-bottom: 2px;">Total Due Today: ${formatMoney(dueToday)}${notesStr}</strong>
+            <span style="font-size: 13px; color: var(--light);">Prepays your service for ${cycleText}. Renews at ${formatMoney(cycleGross)} every ${cycleText}.</span>
+          </div>
+        `;
+      }
     }
 
     // 6. REMAINDER OF QUOTE
     html += buildSectionHtml("One-Time Charges", oneTimeItems, "Total One-Time Charges", oneTimeTotal > 0 ? formatMoney(oneTimeTotal) : null);
     html += buildSectionHtml("Per-Visit / Per-Treatment Options", perVisitItems, null, null);
 
+    // PROMOTIONS & DISCOUNTS DISPLAY
     if (hasPromoFreeScoop || (promo10Off && monthlyTotal > 0)) {
       html += `<div class="quote-promo">`;
       if (hasPromoFreeScoop) {
-        html += `<div>🎁 <strong>First Scoop FREE Promo Applied!</strong> <br><span style="font-size:12.5px; font-weight:normal;">Does not reduce the regular monthly subscription rate shown above.</span></div>`;
+        html += `<div>🎁 <strong>First Scoop FREE Promo Applied!</strong> <br><span style="font-size:12.5px; font-weight:normal;">Does not reduce the regular renewal rate shown above.</span></div>`;
       }
       if (promo10Off && monthlyTotal > 0) {
         const discountAmt = monthlyTotal * 0.10;
         const mtString = hasPromoFreeScoop ? 'margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.2);' : '';
-        html += `<div style="${mtString}">💸 <strong>10% Off First Month: -${formatMoney(discountAmt)}</strong> <br><span style="font-size:12.5px; font-weight:normal;">Applied strictly to your first billing cycle.</span></div>`;
+        html += `<div style="${mtString}">💸 <strong>10% Off First Month: -${formatMoney(discountAmt)}</strong> <br><span style="font-size:12.5px; font-weight:normal;">Discount applied to today's total.</span></div>`;
       }
       html += `</div>`;
     }
@@ -714,6 +770,7 @@
     document.getElementById('pref-sign').checked = false;
     document.getElementById('pref-treats').checked = false;
     document.getElementById('promo-10').checked = false;
+    document.getElementById('billing-cycle').value = '1';
     renderQuote();
   }
 
