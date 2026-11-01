@@ -37,18 +37,19 @@ body {
   box-shadow: 0 10px 40px rgba(30, 44, 34, 0.05);
   position: relative;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 #ww-smart-pricing *, #ww-smart-pricing *:before, #ww-smart-pricing *:after {
   box-sizing: border-box;
 }
 
-/* CORNER MASCOT STYLING (Desktop) */
+/* CORNER MASCOT STYLING (Desktop: Moved further left by ~75px) */
 .ww-sp-corner-mascot {
   position: absolute;
-  top: 20px;
-  right: 25px;
-  width: 180px;
+  top: 45px;
+  left: -55px;
+  width: 315px;
   height: auto;
   object-fit: contain;
   pointer-events: none;
@@ -240,7 +241,7 @@ body {
 .ww-sp-row {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--ww-ink);
   border-bottom: 1px dashed #E7ECE7;
   padding-bottom: 4px;
@@ -255,6 +256,7 @@ body {
 .ww-sp-row-val {
   font-weight: 800;
   color: var(--ww-green-light);
+  text-align: right;
 }
 
 /* One-Time & Add-Ons Compact Grid */
@@ -346,7 +348,7 @@ body {
   #ww-smart-pricing { padding: 40px 20px; border-radius: 16px; }
   .ww-sp-title { font-size: 28px; }
   .ww-sp-quote-btn { width: 100%; }
-  .ww-sp-corner-mascot { width: 115px; top: 15px; right: -30px; }
+  .ww-sp-corner-mascot { width: 128px; top: 10px; left: -40px; }
 }
 </style>
 </head>
@@ -359,7 +361,7 @@ body {
   <div class="ww-sp-header">
     <div class="ww-sp-pill">Full Price Sheet</div>
     <h2 class="ww-sp-title">Detailed Pricing Options</h2>
-    <p class="ww-sp-desc">Enjoy crystal-clear, straightforward pricing with a single <strong>flat monthly rate</strong>—no extra fees per pet! Optional add-ons are completely up to you. Explore our flexible schedules and add-ons below to find the perfect fit for your home.</p>
+    <p class="ww-sp-desc">Enjoy crystal-clear, straightforward pricing with a single <strong>flat monthly rate</strong> covering unlimited dogs—no extra pet fees! Optional add-ons are completely up to you. Explore our flexible schedules below.</p>
   </div>
 
   <!-- RADIO INPUTS (Hidden logic) -->
@@ -378,36 +380,36 @@ body {
   <div id="ww-content-dog" class="ww-sp-content">
     <div class="ww-sp-card">
       <h3 class="ww-sp-freq">Bi-Weekly</h3>
-      <div class="ww-sp-base-text">Flat Rate (Any Number of Dogs)</div>
+      <div class="ww-sp-base-text">Flat Rate (Unlimited Dogs)</div>
       <div class="ww-sp-tiny-desc">Serviced every 2 weeks to maintain a tidy lawn.</div>
-      <div class="ww-sp-price-wrap"><div class="ww-sp-price">$54.00<span>/mo</span></div></div>
+      <div class="ww-sp-price-wrap"><div class="ww-sp-price">$65<span>/mo</span></div></div>
       <div class="ww-sp-breakdown">
         <div class="ww-sp-row"><span class="ww-sp-row-label">Service Frequency</span><span class="ww-sp-row-val">Every 2 Weeks</span></div>
-        <div class="ww-sp-row"><span class="ww-sp-row-label">Dog Limit</span><span class="ww-sp-row-val">No Dog Limit</span></div>
-        <div class="ww-sp-row"><span class="ww-sp-row-label">Disposal</span><span class="ww-sp-row-val">Free Bin Drop</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Dog Limit</span><span class="ww-sp-row-val">Unlimited Dogs</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Disposal</span><span class="ww-sp-row-val">In outdoor bin (Free)</span></div>
       </div>
     </div>
     <div class="ww-sp-card featured">
       <div class="ww-sp-badge">Most Popular</div>
       <h3 class="ww-sp-freq">Weekly</h3>
-      <div class="ww-sp-base-text">Flat Rate (Any Number of Dogs)</div>
+      <div class="ww-sp-base-text">Flat Rate (Unlimited Dogs)</div>
       <div class="ww-sp-tiny-desc">Our most popular choice for a consistently clean yard.</div>
-      <div class="ww-sp-price-wrap"><div class="ww-sp-price" style="color: var(--ww-green);">$65<span>/mo</span></div></div>
+      <div class="ww-sp-price-wrap"><div class="ww-sp-price" style="color: var(--ww-green);">$78<span>/mo</span></div></div>
       <div class="ww-sp-breakdown">
         <div class="ww-sp-row"><span class="ww-sp-row-label">Service Frequency</span><span class="ww-sp-row-val">Once Weekly</span></div>
-        <div class="ww-sp-row"><span class="ww-sp-row-label">Dog Limit</span><span class="ww-sp-row-val">No Dog Limit</span></div>
-        <div class="ww-sp-row"><span class="ww-sp-row-label">Disposal</span><span class="ww-sp-row-val">Free Bin Drop</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Dog Limit</span><span class="ww-sp-row-val">Unlimited Dogs</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Disposal</span><span class="ww-sp-row-val">In outdoor bin (Free)</span></div>
       </div>
     </div>
     <div class="ww-sp-card">
       <h3 class="ww-sp-freq">Twice-Weekly</h3>
-      <div class="ww-sp-base-text">Flat Rate (Any Number of Dogs)</div>
+      <div class="ww-sp-base-text">Flat Rate (Unlimited Dogs)</div>
       <div class="ww-sp-tiny-desc">Double the visits for heavy-traffic or multi-dog yards.</div>
-      <div class="ww-sp-price-wrap"><div class="ww-sp-price">$108<span>/mo</span></div></div>
+      <div class="ww-sp-price-wrap"><div class="ww-sp-price">$139<span>/mo</span></div></div>
       <div class="ww-sp-breakdown">
         <div class="ww-sp-row"><span class="ww-sp-row-label">Service Frequency</span><span class="ww-sp-row-val">2x Per Week</span></div>
-        <div class="ww-sp-row"><span class="ww-sp-row-label">Dog Limit</span><span class="ww-sp-row-val">No Dog Limit</span></div>
-        <div class="ww-sp-row"><span class="ww-sp-row-label">Disposal</span><span class="ww-sp-row-val">Free Bin Drop</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Dog Limit</span><span class="ww-sp-row-val">Unlimited Dogs</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Disposal</span><span class="ww-sp-row-val">In outdoor bin (Free)</span></div>
       </div>
     </div>
   </div>
@@ -456,10 +458,10 @@ body {
       <h3 class="ww-sp-freq">Bi-Weekly Bundle</h3>
       <div class="ww-sp-base-text">Dog Waste + Litter Boxes</div>
       <div class="ww-sp-tiny-desc">Combined every-2-weeks care for indoor and outdoor pets.</div>
-      <div class="ww-sp-price-wrap"><div class="ww-sp-price">$79<span>/mo</span></div><div style="font-size: 12px; color: #B28000; font-weight: 800; margin-top: 6px;">Saves $15/mo</div></div>
+      <div class="ww-sp-price-wrap"><div class="ww-sp-price">$90<span>/mo</span></div><div style="font-size: 12px; color: #B28000; font-weight: 800; margin-top: 6px;">Saves $15</div></div>
       <div class="ww-sp-breakdown">
         <div class="ww-sp-row"><span class="ww-sp-row-label">Frequency</span><span class="ww-sp-row-val">Every 2 Weeks</span></div>
-        <div class="ww-sp-row"><span class="ww-sp-row-label">Pet Limits</span><span class="ww-sp-row-val">Flat Rate (All Pets)</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Pet Limits</span><span class="ww-sp-row-val">Unlimited Dogs + Boxes</span></div>
       </div>
     </div>
     <div class="ww-sp-card featured">
@@ -467,20 +469,20 @@ body {
       <h3 class="ww-sp-freq">Weekly Bundle</h3>
       <div class="ww-sp-base-text">Dog Waste + Litter Boxes</div>
       <div class="ww-sp-tiny-desc">Complete weekly coverage for both your yard and litter boxes.</div>
-      <div class="ww-sp-price-wrap"><div class="ww-sp-price" style="color: var(--ww-green);">$99<span>/mo</span></div><div style="font-size: 13px; color: #B28000; font-weight: 800; margin-top: 6px;">Saves $21/mo</div></div>
+      <div class="ww-sp-price-wrap"><div class="ww-sp-price" style="color: var(--ww-green);">$112<span>/mo</span></div><div style="font-size: 13px; color: #B28000; font-weight: 800; margin-top: 6px;">Saves $21</div></div>
       <div class="ww-sp-breakdown">
         <div class="ww-sp-row"><span class="ww-sp-row-label">Frequency</span><span class="ww-sp-row-val">Once Weekly</span></div>
-        <div class="ww-sp-row"><span class="ww-sp-row-label">Pet Limits</span><span class="ww-sp-row-val">Flat Rate (All Pets)</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Pet Limits</span><span class="ww-sp-row-val">Unlimited Dogs + Boxes</span></div>
       </div>
     </div>
     <div class="ww-sp-card">
       <h3 class="ww-sp-freq">Twice-Weekly Bundle</h3>
       <div class="ww-sp-base-text">Dog Waste + Litter Boxes</div>
       <div class="ww-sp-tiny-desc">Maximum frequency service covering all pets twice a week.</div>
-      <div class="ww-sp-price-wrap"><div class="ww-sp-price">$175<span>/mo</span></div><div style="font-size: 12px; color: #B28000; font-weight: 800; margin-top: 6px;">Saves $28/mo</div></div>
+      <div class="ww-sp-price-wrap"><div class="ww-sp-price">$206<span>/mo</span></div><div style="font-size: 12px; color: #B28000; font-weight: 800; margin-top: 6px;">Saves $28</div></div>
       <div class="ww-sp-breakdown">
         <div class="ww-sp-row"><span class="ww-sp-row-label">Frequency</span><span class="ww-sp-row-val">2x Per Week</span></div>
-        <div class="ww-sp-row"><span class="ww-sp-row-label">Pet Limits</span><span class="ww-sp-row-val">Flat Rate (All Pets)</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Pet Limits</span><span class="ww-sp-row-val">Unlimited Dogs + Boxes</span></div>
       </div>
     </div>
   </div>
@@ -489,41 +491,12 @@ body {
   <div class="ww-sp-extras">
     <h3 class="ww-sp-extras-title">One-Time Cleanups & Add-Ons</h3>
     <div class="ww-sp-grid">
-      <div class="ww-sp-item"><div class="ww-sp-item-left"><h5>One-Time Yard Cleanup</h5><p>$50 min (covers 1st hour, then $50/hr)</p></div><div class="ww-sp-item-right">$50 <span>min</span></div></div>
+      <div class="ww-sp-item"><div class="ww-sp-item-left"><h5>One-Time Yard Cleanup</h5><p>$50 min (covers 1st hr, then $50/hr)</p></div><div class="ww-sp-item-right">$50 <span>min</span></div></div>
       <div class="ww-sp-item"><div class="ww-sp-item-left"><h5>One-Time Box Cleanup</h5><p>Flat rate for all boxes</p></div><div class="ww-sp-item-right">$35</div></div>
       <div class="ww-sp-item"><div class="ww-sp-item-left"><h5>One-Time Bundle</h5><p>Yard 1st hr + all boxes</p></div><div class="ww-sp-item-right">$69</div></div>
       <div class="ww-sp-item"><div class="ww-sp-item-left"><h5>🌿 Yard Fresh Treatment</h5><p>Base section (+$7/ea extra section)</p></div><div class="ww-sp-item-right">$10 <span>/visit</span></div></div>
-      <div class="ww-sp-item"><div class="ww-sp-item-left"><h5>🧼 Box Deep Clean</h5><p>1st Box ($15 each after)</p></div><div class="ww-sp-item-right">$25</div></div>
+      <div class="ww-sp-item"><div class="ww-sp-item-left"><h5>🧼 Box Deep Clean</h5><p>1st Box ($15 each additional)</p></div><div class="ww-sp-item-right">$25</div></div>
       <div class="ww-sp-item"><div class="ww-sp-item-left"><h5>📦 Litter Supply</h5><p>Standard clumping litter per box</p></div><div class="ww-sp-item-right">$10 <span>/visit</span></div></div>
     </div>
     <div style="text-align: center; margin-top: 15px; font-size: 13px; color: var(--ww-muted);">
-      <strong>Waste Haul-Away:</strong> Leave in your outdoor bin for free, or we haul it away for <strong>+$5/visit</strong> across all services.
-    </div>
-  </div>
-
-  <div class="ww-sp-cta-wrap">
-    <a href="#contact" class="ww-sp-quote-btn">Get Your Instant Quote 🪄</a>
-  </div>
-
-</div>
-
-<!-- Auto-Resize Auto-Height Script for GitHub Hosted Iframe -->
-<script>
-window.addEventListener('DOMContentLoaded', function() {
-  function sendHeight() {
-    var height = document.body.scrollHeight;
-    window.parent.postMessage({ type: 'ww-quote-height', height: height }, '*');
-  }
-  window.addEventListener('message', function(event) {
-    if (event.data && event.data.type === 'ww-quote-request-height') {
-      sendHeight();
-    }
-  });
-  sendHeight();
-  setTimeout(sendHeight, 200);
-  setTimeout(sendHeight, 600);
-});
-</script>
-
-</body>
-</html>
+      <strong>Waste Haul-Away:</strong> Leave in your outdoor
