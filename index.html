@@ -8,9 +8,6 @@
     /* Prevent mobile scroll anchoring jumps */
     body {
       overflow-anchor: none;
-      margin: 0;
-      padding: 0;
-      background: transparent;
     }
 
     #ww-quote {
@@ -30,24 +27,15 @@
       --radius-lg: 16px;
       --radius-md: 12px;
       --radius-sm: 9px;
-      
-      /* 100% Full-Bleed Edge-to-Edge Hack */
-      width: 100vw;
       position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-      
       font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
       color: var(--ink);
+      max-width: 680px;
+      margin: 0 auto;
       font-size: 15px;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
       overflow-anchor: none;
-      box-sizing: border-box;
-      padding: 30px 20px;
-      background: transparent;
     }
 
     #ww-quote * {
@@ -56,13 +44,6 @@
 
     #ww-quote .ww-hidden {
       display: none !important;
-    }
-
-    /* INNER CONTAINER CONSTRAINTS */
-    .ww-inner-wrap {
-      max-width: 680px;
-      margin: 0 auto;
-      width: 100%;
     }
 
     /* STEP WIZARD ANIMATIONS */
@@ -629,349 +610,347 @@
   </style>
 </head>
 
-<body>
+<body style="margin:0;padding:25px 20px;background:transparent;">
 
 <div id="ww-quote">
-  <div class="ww-inner-wrap">
 
-    <!-- SLIM TOP INTRO HEADER -->
-    <div id="ww-intro-block" style="background:#F4F7F4; border:1.5px solid #D5DFCE; border-radius:16px; padding:18px 20px; text-align:center; font-family:'Segoe UI',Arial,sans-serif; margin-bottom:18px;">
-      <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#3F6049; margin-bottom:4px;">
-        ✨ Free Instant Quote
-      </div>
-      <h2 style="margin:0 0 4px; font-size:20px; font-weight:800; color:#1E2C22;">
-        Ready for a spotless yard? Let's build your custom plan! ⏱️
-      </h2>
-      <p style="margin:0 auto; font-size:14px; line-height:1.5; color:#59655D;">
-        Select your services below to see your instant price. Questions? Call or text <a href="tel:9402470522" class="ww-phone-link">(940) 247-0522</a>
-      </p>
+  <!-- SLIM TOP INTRO HEADER -->
+  <div id="ww-intro-block" style="max-width:680px; margin:0 auto 18px; background:#F4F7F4; border:1.5px solid #D5DFCE; border-radius:16px; padding:18px 20px; text-align:center; font-family:'Segoe UI',Arial,sans-serif;">
+    <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#3F6049; margin-bottom:4px;">
+      ✨ Free Instant Quote
     </div>
+    <h2 style="margin:0 0 4px; font-size:20px; font-weight:800; color:#1E2C22;">
+      Ready for a spotless yard? Let's build your custom plan! ⏱️
+    </h2>
+    <p style="margin:0 auto; font-size:14px; line-height:1.5; color:#59655D;">
+      Select your services below to see your instant price. Questions? Call or text <a href="tel:9402470522" class="ww-phone-link">(940) 247-0522</a>
+    </p>
+  </div>
 
-    <!-- SERVICE TABS -->
-    <div class="ww-tabs" id="ww-tab-container" role="group">
-      <button type="button" class="ww-tab" id="ww-res-tab" aria-pressed="true">🏡 Residential</button>
-      <button type="button" class="ww-tab" id="ww-com-tab" aria-pressed="false">🏢 Commercial</button>
-    </div>
+  <!-- SERVICE TABS -->
+  <div class="ww-tabs" id="ww-tab-container" role="group">
+    <button type="button" class="ww-tab" id="ww-res-tab" aria-pressed="true">🏡 Residential</button>
+    <button type="button" class="ww-tab" id="ww-com-tab" aria-pressed="false">🏢 Commercial</button>
+  </div>
 
-    <!-- RESIDENTIAL WIZARD FLOW -->
-    <div id="ww-residential">
-      <form id="ww-residential-form" onsubmit="event.preventDefault();">
+  <!-- RESIDENTIAL WIZARD FLOW -->
+  <div id="ww-residential">
+    <form id="ww-residential-form" onsubmit="event.preventDefault();">
 
-        <!-- STEP 1: CONTACT -->
-        <div class="ww-step" id="ww-step-1">
-          <div class="ww-panel">
-            <h3>👤 Contact &amp; Service Address</h3>
-            <span class="ww-step-indicator">Step 1 of 4</span>
+      <!-- STEP 1: CONTACT -->
+      <div class="ww-step" id="ww-step-1">
+        <div class="ww-panel">
+          <h3>👤 Contact &amp; Service Address</h3>
+          <span class="ww-step-indicator">Step 1 of 4</span>
 
-            <label class="ww-label" for="ww-customer-name">Full name <span class="ww-required">*</span></label>
-            <input id="ww-customer-name" name="name" type="text" autocomplete="name" placeholder="Your full name">
+          <label class="ww-label" for="ww-customer-name">Full name <span class="ww-required">*</span></label>
+          <input id="ww-customer-name" name="name" type="text" autocomplete="name" placeholder="Your full name">
 
-            <div class="ww-grid">
-              <div>
-                <label class="ww-label" for="ww-customer-phone">Phone number <span class="ww-required">*</span></label>
-                <input id="ww-customer-phone" name="tel" type="tel" autocomplete="tel" placeholder="(940) 555-0123">
-                <div style="font-size: 14px; font-weight: 500; color: var(--muted); margin-top: 6px;">We won't spam your phone, just need it for the quote! 🥺</div>
-              </div>
-              <div>
-                <label class="ww-label" for="ww-customer-email">Email <span class="ww-muted">(optional)</span></label>
-                <input id="ww-customer-email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
-              </div>
+          <div class="ww-grid">
+            <div>
+              <label class="ww-label" for="ww-customer-phone">Phone number <span class="ww-required">*</span></label>
+              <input id="ww-customer-phone" name="tel" type="tel" autocomplete="tel" placeholder="(940) 555-0123">
+              <div style="font-size: 14px; font-weight: 500; color: var(--muted); margin-top: 6px;">We won't spam your phone, just need it for the quote! 🥺</div>
             </div>
-
-            <label class="ww-label" for="ww-customer-address">Service address <span class="ww-required">*</span></label>
-            <input id="ww-customer-address" name="street-address" type="text" autocomplete="street-address" placeholder="123 Main St, Decatur, TX 76234">
-
-            <div id="ww-err-1" class="ww-status-msg ww-hidden"></div>
-            
-            <div class="ww-nav-row">
-              <button type="button" class="ww-primary-btn" onclick="goToStep(2)">Next: Dog Waste Removal →</button>
+            <div>
+              <label class="ww-label" for="ww-customer-email">Email <span class="ww-muted">(optional)</span></label>
+              <input id="ww-customer-email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
             </div>
           </div>
+
+          <label class="ww-label" for="ww-customer-address">Service address <span class="ww-required">*</span></label>
+          <input id="ww-customer-address" name="street-address" type="text" autocomplete="street-address" placeholder="123 Main St, Decatur, TX 76234">
+
+          <div id="ww-err-1" class="ww-status-msg ww-hidden"></div>
+          
+          <div class="ww-nav-row">
+            <button type="button" class="ww-primary-btn" onclick="goToStep(2)">Next: Dog Waste Removal →</button>
+          </div>
         </div>
+      </div>
 
-        <!-- STEP 2: DOGS -->
-        <div class="ww-step ww-hidden" id="ww-step-2">
-          <div class="ww-panel">
-            <h3>🐕 Dog Waste Removal</h3>
-            <span class="ww-step-indicator">Step 2 of 4</span>
+      <!-- STEP 2: DOGS -->
+      <div class="ww-step ww-hidden" id="ww-step-2">
+        <div class="ww-panel">
+          <h3>🐕 Dog Waste Removal</h3>
+          <span class="ww-step-indicator">Step 2 of 4</span>
 
-            <label class="ww-label" for="ww-dog-frequency">Service frequency</label>
-            <select id="ww-dog-frequency" name="dog_frequency">
-              <option value="none">No dog waste service (Cat-only service)</option>
-              <option value="twice">Twice Weekly</option>
-              <option value="weekly" selected>Weekly (Most Popular)</option>
-              <option value="biweekly">Bi-Weekly (Every 2 Weeks)</option>
+          <label class="ww-label" for="ww-dog-frequency">Service frequency</label>
+          <select id="ww-dog-frequency" name="dog_frequency">
+            <option value="none">No dog waste service (Cat-only service)</option>
+            <option value="twice">Twice Weekly</option>
+            <option value="weekly" selected>Weekly (Most Popular)</option>
+            <option value="biweekly">Bi-Weekly (Every 2 Weeks)</option>
+            <option value="onetime">One-Time Cleanup</option>
+          </select>
+          <div id="ww-dog-desc" class="ww-service-desc ww-hidden"></div>
+
+          <div id="ww-dog-count-wrap" class="ww-sub-box">
+            <label class="ww-label" for="ww-dogs" style="margin-top:0;">Number of dogs <span style="font-size:12px; font-weight:normal; color:var(--muted);">(General info for our crew so we know what to expect!)</span></label>
+            <div class="ww-number">
+              <button type="button" data-step="-1" data-target="ww-dogs">−</button>
+              <input id="ww-dogs" name="dog_count" type="number" min="1" max="20" value="1" readonly>
+              <button type="button" data-step="1" data-target="ww-dogs">+</button>
+            </div>
+
+            <div id="ww-condition-wrap" class="ww-hidden" style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border);">
+              <label class="ww-label" for="ww-condition" style="margin-top:0;">Estimated cleanup time required</label>
+              <select id="ww-condition" name="yard_condition">
+                <option value="light">Up to 1 hour (Standard cleanup) — $50.00 base</option>
+                <option value="moderate">Up to 1.5 hours (Moderate buildup) — $75.00 est.</option>
+                <option value="heavy">Up to 2 hours (Heavy buildup) — $100.00 est.</option>
+                <option value="very">Over 2 hours (Severely neglected) — $125.00+ est.</option>
+              </select>
+              <div style="font-size: 13px; color: var(--muted); margin-top: 10px; line-height: 1.4;">
+                <em>One-time cleanups are $50 minimum (covers the first hour), then billed at $50/hour in 15-minute increments thereafter.</em>
+              </div>
+            </div>
+          </div>
+
+          <div class="ww-nav-row">
+            <button type="button" class="ww-secondary-btn" onclick="goToStep(1)">← Back</button>
+            <button type="button" class="ww-primary-btn" onclick="goToStep(3)">Next: Cat Litter Box →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: CATS -->
+      <div class="ww-step ww-hidden" id="ww-step-3">
+        <div class="ww-panel">
+          <h3>🐈 Cat Litter Box Service</h3>
+          <span class="ww-step-indicator">Step 3 of 4</span>
+
+          <div id="ww-cat-addon-mode">
+            <label class="ww-choice" style="margin-bottom:14px;">
+              <input type="checkbox" id="ww-cat-add-service" name="cat_add_service">
+              <span>
+                <strong id="ww-cat-addon-title">Add Routine Cat Litter Box Scooping (Weekly)</strong><br>
+                <span class="ww-muted" id="ww-cat-addon-text">Done during your scheduled outside dog service visits. Bundle &amp; Save!</span>
+              </span>
+            </label>
+          </div>
+
+          <div id="ww-cat-standalone-mode" class="ww-hidden">
+            <label class="ww-label" for="ww-cat-standalone-freq">Service frequency</label>
+            <select id="ww-cat-standalone-freq" name="cat_standalone_freq">
+              <option value="none">No cat litter service</option>
+              <option value="twice" selected>Twice-Weekly Service (Most Popular)</option>
+              <option value="weekly">Weekly Service</option>
+              <option value="biweekly">Bi-Weekly Service (Every 2 Weeks)</option>
               <option value="onetime">One-Time Cleanup</option>
             </select>
-            <div id="ww-dog-desc" class="ww-service-desc ww-hidden"></div>
-
-            <div id="ww-dog-count-wrap" class="ww-sub-box">
-              <label class="ww-label" for="ww-dogs" style="margin-top:0;">Number of dogs <span style="font-size:12px; font-weight:normal; color:var(--muted);">(General info for our crew so we know what to expect!)</span></label>
-              <div class="ww-number">
-                <button type="button" data-step="-1" data-target="ww-dogs">−</button>
-                <input id="ww-dogs" name="dog_count" type="number" min="1" max="20" value="1" readonly>
-                <button type="button" data-step="1" data-target="ww-dogs">+</button>
-              </div>
-
-              <div id="ww-condition-wrap" class="ww-hidden" style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border);">
-                <label class="ww-label" for="ww-condition" style="margin-top:0;">Estimated cleanup time required</label>
-                <select id="ww-condition" name="yard_condition">
-                  <option value="light">Up to 1 hour (Standard cleanup) — $50.00 base</option>
-                  <option value="moderate">Up to 1.5 hours (Moderate buildup) — $75.00 est.</option>
-                  <option value="heavy">Up to 2 hours (Heavy buildup) — $100.00 est.</option>
-                  <option value="very">Over 2 hours (Severely neglected) — $125.00+ est.</option>
-                </select>
-                <div style="font-size: 13px; color: var(--muted); margin-top: 10px; line-height: 1.4;">
-                  <em>One-time cleanups are $50 minimum (covers the first hour), then billed at $50/hour in 15-minute increments thereafter.</em>
-                </div>
-              </div>
-            </div>
-
-            <div class="ww-nav-row">
-              <button type="button" class="ww-secondary-btn" onclick="goToStep(1)">← Back</button>
-              <button type="button" class="ww-primary-btn" onclick="goToStep(3)">Next: Cat Litter Box →</button>
-            </div>
           </div>
-        </div>
 
-        <!-- STEP 3: CATS -->
-        <div class="ww-step ww-hidden" id="ww-step-3">
-          <div class="ww-panel">
-            <h3>🐈 Cat Litter Box Service</h3>
-            <span class="ww-step-indicator">Step 3 of 4</span>
+          <div id="ww-cat-desc" class="ww-service-desc ww-hidden" style="margin-bottom: 14px;">
+            Thorough cat litter box scooping, deodorizing, and area sweeping to keep your home fresh and odor-free.
+          </div>
 
-            <div id="ww-cat-addon-mode">
-              <label class="ww-choice" style="margin-bottom:14px;">
-                <input type="checkbox" id="ww-cat-add-service" name="cat_add_service">
+          <div id="ww-box-count-wrap" class="ww-sub-box ww-hidden">
+            <label class="ww-label" for="ww-boxes" style="margin-top:0;">Number of litter boxes <span style="font-size:12px; font-weight:normal; color:var(--muted);">(General info for our crew so we know what to expect!)</span></label>
+            <div class="ww-number">
+              <button type="button" data-step="-1" data-target="ww-boxes">−</button>
+              <input id="ww-boxes" name="box_count" type="number" min="1" max="20" value="1" readonly>
+              <button type="button" data-step="1" data-target="ww-boxes">+</button>
+            </div>
+
+            <!-- Deep Clean Option -->
+            <div style="margin-top:18px; padding-top:16px; border-top:1px solid var(--border);">
+              <label class="ww-choice" style="margin-bottom:12px;">
+                <input type="checkbox" id="ww-cat-deep-clean" name="cat_deep_clean">
                 <span>
-                  <strong id="ww-cat-addon-title">Add Routine Cat Litter Box Scooping (Weekly)</strong><br>
-                  <span class="ww-muted" id="ww-cat-addon-text">Done during your scheduled outside dog service visits. Bundle &amp; Save!</span>
+                  <strong>Occasional Litter Box Deep Clean (Wash &amp; Sanitize)</strong><br>
+                  <span class="ww-muted">Complete wash, sanitize, and fresh refill. <strong>$25 for 1st box, +$15 per extra box.</strong> (Charged at time of service)</span>
                 </span>
               </label>
             </div>
 
-            <div id="ww-cat-standalone-mode" class="ww-hidden">
-              <label class="ww-label" for="ww-cat-standalone-freq">Service frequency</label>
-              <select id="ww-cat-standalone-freq" name="cat_standalone_freq">
-                <option value="none">No cat litter service</option>
-                <option value="twice" selected>Twice-Weekly Service (Most Popular)</option>
-                <option value="weekly">Weekly Service</option>
-                <option value="biweekly">Bi-Weekly Service (Every 2 Weeks)</option>
-                <option value="onetime">One-Time Cleanup</option>
-              </select>
-            </div>
-
-            <div id="ww-cat-desc" class="ww-service-desc ww-hidden" style="margin-bottom: 14px;">
-              Thorough cat litter box scooping, deodorizing, and area sweeping to keep your home fresh and odor-free.
-            </div>
-
-            <div id="ww-box-count-wrap" class="ww-sub-box ww-hidden">
-              <label class="ww-label" for="ww-boxes" style="margin-top:0;">Number of litter boxes <span style="font-size:12px; font-weight:normal; color:var(--muted);">(General info for our crew so we know what to expect!)</span></label>
-              <div class="ww-number">
-                <button type="button" data-step="-1" data-target="ww-boxes">−</button>
-                <input id="ww-boxes" name="box_count" type="number" min="1" max="20" value="1" readonly>
-                <button type="button" data-step="1" data-target="ww-boxes">+</button>
-              </div>
-
-              <!-- Deep Clean Option -->
-              <div style="margin-top:18px; padding-top:16px; border-top:1px solid var(--border);">
-                <label class="ww-choice" style="margin-bottom:12px;">
-                  <input type="checkbox" id="ww-cat-deep-clean" name="cat_deep_clean">
-                  <span>
-                    <strong>Occasional Litter Box Deep Clean (Wash &amp; Sanitize)</strong><br>
-                    <span class="ww-muted">Complete wash, sanitize, and fresh refill. <strong>$25 for 1st box, +$15 per extra box.</strong> (Charged at time of service)</span>
-                  </span>
-                </label>
-              </div>
-
-              <!-- Litter Supply Add-on -->
-              <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">
-                <label class="ww-choice" style="margin-bottom:0;">
-                  <input type="checkbox" id="ww-cat-litter-supply" name="cat_litter_supply">
-                  <span>
-                    <strong>Litter Supply (+$10 per box / visit)</strong><br>
-                    <span class="ww-muted">Skip the heavy lifting! We supply standard clumping cat litter. (Charged at time of service)</span>
-                  </span>
-                </label>
-              </div>
-            </div>
-
-            <div class="ww-nav-row">
-              <button type="button" class="ww-secondary-btn" onclick="goToStep(2)">← Back</button>
-              <button type="button" class="ww-primary-btn" onclick="goToStep(4)">Next: Add-Ons & Preferences →</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- STEP 4: ADD-ONS & PREFERENCES -->
-        <div class="ww-step ww-hidden" id="ww-step-4">
-          <div class="ww-panel">
-            <h3>✨ Add-Ons &amp; Preferences</h3>
-            <span class="ww-step-indicator">Step 4 of 4</span>
-
-            <label class="ww-choice" style="margin-bottom:14px;">
-              <input type="checkbox" id="ww-haul-away" name="haul_away">
-              <span>
-                <strong>Haul the waste away with us (+$5 per visit)</strong><br>
-                <span class="ww-muted">By default, we double-bag the waste and leave it neatly in your outdoor trash bin for FREE. Check this box if you want us to take it away. (Charged at time of service)</span>
-              </span>
-            </label>
-
-            <label class="ww-choice" style="margin-bottom:14px; background: var(--cream);">
-              <input type="checkbox" id="ww-addon-yard-fresh" name="yard_fresh">
-              <span>
-                <strong>Yard Fresh Treatment (+$10 per visit)</strong><br>
-                <span class="ww-muted">A professional enzymatic spray that destroys urine odors and leaves your lawn smelling amazing (+$7 per extra yard section). Requires a working outdoor water spigot. (Charged at time of service)</span>
-              </span>
-            </label>
-
-            <div id="ww-yard-sections-box" class="ww-sub-box ww-hidden" style="margin-bottom: 14px; margin-top: -6px;">
-              <label class="ww-label" for="ww-sections" style="margin-top:0;">Number of yard sections</label>
-              <div class="ww-number">
-                <button type="button" data-step="-1" data-target="ww-sections">−</button>
-                <input id="ww-sections" name="yard_sections" type="number" min="1" max="20" value="1" readonly>
-                <button type="button" data-step="1" data-target="ww-sections">+</button>
-              </div>
-              <div style="font-size: 13px; color: var(--muted); margin-top: 10px; line-height: 1.4;">
-                <em>Note: Base rate covers 1 section (usually backyard). Extra sections are front yard or sides of house (both sides count as 1 combined section).</em>
-              </div>
-            </div>
-
-            <div style="background:var(--cream); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; margin-bottom:14px;">
-              <label class="ww-compact-check" style="margin-bottom:8px;">
-                <input type="checkbox" id="ww-yard-sign" name="yard_sign">
-                <span>May we place a small promotional yard sign in your yard? (Optional)</span>
-              </label>
-              <label class="ww-compact-check" style="margin-bottom:0;">
-                <input type="checkbox" id="ww-pet-treats" name="pet_treats">
-                <span>May we give your pet(s) a treat during our visit? 🦴</span>
+            <!-- Litter Supply Add-on -->
+            <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">
+              <label class="ww-choice" style="margin-bottom:0;">
+                <input type="checkbox" id="ww-cat-litter-supply" name="cat_litter_supply">
+                <span>
+                  <strong>Litter Supply (+$10 per box / visit)</strong><br>
+                  <span class="ww-muted">Skip the heavy lifting! We supply standard clumping cat litter. (Charged at time of service)</span>
+                </span>
               </label>
             </div>
-
-            <label class="ww-label" for="ww-extra-details">Additional notes <span class="ww-muted">(optional)</span></label>
-            <textarea id="ww-extra-details" name="extra_details" rows="3" placeholder="Gate codes, pet names, or special instructions..."></textarea>
-
-            <div id="ww-err-4" class="ww-status-msg ww-hidden"></div>
-
-            <div class="ww-nav-row">
-              <button type="button" class="ww-secondary-btn" onclick="goToStep(3)">← Back</button>
-              <button type="button" class="ww-primary-btn" onclick="showQuoteScreen()">See My Price 🪄</button>
-            </div>
           </div>
-        </div>
 
-      </form>
-
-      <!-- SCREEN 2 — REVIEW YOUR QUOTE -->
-      <div id="ww-screen-2" class="ww-step ww-hidden">
-        <div id="ww-screen-2-content">
-          <form onsubmit="event.preventDefault(); document.getElementById('ww-submit-quote-btn').click();">
-            
-            <h3 style="text-align:center; margin-bottom:16px;">📄 Your Custom Quote</h3>
-
-            <div class="ww-receipt-box" aria-live="polite">
-              <div class="ww-price-hero">
-                <span class="ww-price-eyebrow" id="ww-price-eyebrow">Total Monthly Rate</span>
-                <div class="ww-big-price" id="ww-display-per-visit">$78.00 / mo</div>
-                <div class="ww-big-sub" id="ww-display-billing-sub">First scoop FREE with recurring service!</div>
-              </div>
-
-              <!-- COMPETITOR-STYLE INTRO BREAKDOWN BOX -->
-              <div class="ww-intro-breakdown-box ww-hidden" id="ww-intro-breakdown-wrap">
-                <strong id="ww-intro-breakdown-text">First Month: $58.50 (First scoop free)</strong>
-                <span id="ww-intro-subtext" style="font-size: 12.5px; opacity: 0.9;">Billed monthly (approx. 4 visits/mo). Cancel anytime.</span>
-              </div>
-
-              <div id="ww-quote-lines"></div>
-
-              <div class="ww-free-banner ww-hidden" id="ww-free-offer-banner">
-                <strong>🎁 First Scoop is 100% Free!</strong>
-              </div>
-
-            </div>
-
-            <div id="ww-s2-error" class="ww-status-msg ww-hidden"></div>
-
-            <div class="ww-nav-row" style="flex-direction: column; gap:10px;">
-              <button type="button" class="ww-primary-btn" id="ww-submit-quote-btn" style="width:100%;">Submit Quote 🚀</button>
-              <button type="button" class="ww-secondary-btn" onclick="goToStep(1)" style="width:100%; border:none; background:transparent;">← Restart & Edit Selections</button>
-            </div>
-
-          </form>
+          <div class="ww-nav-row">
+            <button type="button" class="ww-secondary-btn" onclick="goToStep(2)">← Back</button>
+            <button type="button" class="ww-primary-btn" onclick="goToStep(4)">Next: Add-Ons & Preferences →</button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- COMMERCIAL SECTION -->
-    <form id="ww-commercial" class="ww-step ww-hidden" onsubmit="event.preventDefault(); document.getElementById('ww-submit-comm-quote').click();">
-      <div class="ww-panel">
-        <h3>🏢 Commercial Consultation</h3>
-        <p class="ww-muted" style="margin:0 0 16px;">Tailored waste management for communities, parks, and businesses across Wise County.</p>
+      <!-- STEP 4: ADD-ONS & PREFERENCES -->
+      <div class="ww-step ww-hidden" id="ww-step-4">
+        <div class="ww-panel">
+          <h3>✨ Add-Ons &amp; Preferences</h3>
+          <span class="ww-step-indicator">Step 4 of 4</span>
 
-        <div class="ww-grid">
-          <div>
-            <label class="ww-label" for="ww-comm-business">Property/Business Name <span class="ww-required">*</span></label>
-            <input id="ww-comm-business" name="business" type="text" placeholder="e.g., Oak Ridge Apartments">
+          <label class="ww-choice" style="margin-bottom:14px;">
+            <input type="checkbox" id="ww-haul-away" name="haul_away">
+            <span>
+              <strong>Haul the waste away with us (+$5 per visit)</strong><br>
+              <span class="ww-muted">By default, we double-bag the waste and leave it neatly in your outdoor trash bin for FREE. Check this box if you want us to take it away. (Charged at time of service)</span>
+            </span>
+          </label>
+
+          <label class="ww-choice" style="margin-bottom:14px; background: var(--cream);">
+            <input type="checkbox" id="ww-addon-yard-fresh" name="yard_fresh">
+            <span>
+              <strong>Yard Fresh Treatment (+$10 per visit)</strong><br>
+              <span class="ww-muted">A professional enzymatic spray that destroys urine odors and leaves your lawn smelling amazing (+$7 per extra yard section). Requires a working outdoor water spigot. (Charged at time of service)</span>
+            </span>
+          </label>
+
+          <div id="ww-yard-sections-box" class="ww-sub-box ww-hidden" style="margin-bottom: 14px; margin-top: -6px;">
+            <label class="ww-label" for="ww-sections" style="margin-top:0;">Number of yard sections</label>
+            <div class="ww-number">
+              <button type="button" data-step="-1" data-target="ww-sections">−</button>
+              <input id="ww-sections" name="yard_sections" type="number" min="1" max="20" value="1" readonly>
+              <button type="button" data-step="1" data-target="ww-sections">+</button>
+            </div>
+            <div style="font-size: 13px; color: var(--muted); margin-top: 10px; line-height: 1.4;">
+              <em>Note: Base rate covers 1 section (usually backyard). Extra sections are front yard or sides of house (both sides count as 1 combined section).</em>
+            </div>
           </div>
-          <div>
-            <label class="ww-label" for="ww-comm-name">Contact Person <span class="ww-required">*</span></label>
-            <input id="ww-comm-name" name="name" type="text" autocomplete="name" placeholder="Your full name">
+
+          <div style="background:var(--cream); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; margin-bottom:14px;">
+            <label class="ww-compact-check" style="margin-bottom:8px;">
+              <input type="checkbox" id="ww-yard-sign" name="yard_sign">
+              <span>May we place a small promotional yard sign in your yard? (Optional)</span>
+            </label>
+            <label class="ww-compact-check" style="margin-bottom:0;">
+              <input type="checkbox" id="ww-pet-treats" name="pet_treats">
+              <span>May we give your pet(s) a treat during our visit? 🦴</span>
+            </label>
           </div>
-        </div>
 
-        <label class="ww-label" for="ww-comm-address">Property Address <span class="ww-required">*</span></label>
-        <input id="ww-comm-address" name="street-address" type="text" autocomplete="street-address" placeholder="123 Main St, City, TX ZIP">
+          <label class="ww-label" for="ww-extra-details">Additional notes <span class="ww-muted">(optional)</span></label>
+          <textarea id="ww-extra-details" name="extra_details" rows="3" placeholder="Gate codes, pet names, or special instructions..."></textarea>
 
-        <label class="ww-label" for="ww-comm-type">Property Type <span class="ww-required">*</span></label>
-        <select id="ww-comm-type" name="property_type">
-          <option value="Apartment Community">Apartment Community</option>
-          <option value="HOA / Subdivision">HOA / Subdivision</option>
-          <option value="Veterinary Clinic">Veterinary Clinic</option>
-          <option value="RV Park / Campground">RV Park / Campground</option>
-          <option value="Dog Park / Public Park">Dog Park / Public Park</option>
-          <option value="Other">Other</option>
-        </select>
+          <div id="ww-err-4" class="ww-status-msg ww-hidden"></div>
 
-        <div class="ww-grid">
-          <div>
-            <label class="ww-label" for="ww-comm-phone">Phone Number <span class="ww-required">*</span></label>
-            <input id="ww-comm-phone" name="tel" type="tel" autocomplete="tel" placeholder="(940) 555-0123">
-            <div style="font-size: 14px; font-weight: 500; color: var(--muted); margin-top: 6px;">We won't spam your phone, just need it for the quote! 🥺</div>
+          <div class="ww-nav-row">
+            <button type="button" class="ww-secondary-btn" onclick="goToStep(3)">← Back</button>
+            <button type="button" class="ww-primary-btn" onclick="showQuoteScreen()">See My Price 🪄</button>
           </div>
-          <div>
-            <label class="ww-label" for="ww-comm-email">Email Address <span class="ww-muted">(optional)</span></label>
-            <input id="ww-comm-email" name="email" type="email" autocomplete="email" placeholder="name@company.com">
-          </div>
-        </div>
-
-        <label class="ww-label" for="ww-comm-notes">How can we help? <span class="ww-muted">(optional)</span></label>
-        <textarea id="ww-comm-notes" name="notes" rows="3" placeholder="Tell us about your property needs..."></textarea>
-
-        <div id="ww-comm-error" class="ww-status-msg ww-hidden"></div>
-        
-        <div class="ww-nav-row">
-          <button type="button" class="ww-primary-btn" id="ww-submit-comm-quote" style="width: 100%;">Send Request ✉️</button>
         </div>
       </div>
+
     </form>
 
-    <!-- CONFIRMATION SCREEN -->
-    <div id="ww-success-screen" class="ww-step ww-hidden">
-      <div class="ww-success-icon-wrap">
-        🎉
-      </div>
-      <h2 style="margin:0 0 10px; color:var(--ink);">You're all set!</h2>
-      <p style="color:var(--muted); max-width:460px; margin:0 auto 18px; font-size:16px;">
-        Thank you for choosing Wise Waste Services! We will contact you shortly to confirm your details and get your first visit on the schedule.
-      </p>
-      <div style="padding:16px; background:var(--cream); border-radius:12px; border:1px solid var(--border); display:inline-block;">
-        <p style="font-size:14.5px; color:var(--ink); margin:0;">
-          Need immediate help?<br>Call or text us at <a href="tel:+19402470522" class="ww-phone-link">(940) 247-0522</a>
-        </p>
+    <!-- SCREEN 2 — REVIEW YOUR QUOTE -->
+    <div id="ww-screen-2" class="ww-step ww-hidden">
+      <div id="ww-screen-2-content">
+        <form onsubmit="event.preventDefault(); document.getElementById('ww-submit-quote-btn').click();">
+          
+          <h3 style="text-align:center; margin-bottom:16px;">📄 Your Custom Quote</h3>
+
+          <div class="ww-receipt-box" aria-live="polite">
+            <div class="ww-price-hero">
+              <span class="ww-price-eyebrow" id="ww-price-eyebrow">Total Monthly Rate</span>
+              <div class="ww-big-price" id="ww-display-per-visit">$78.00 / mo</div>
+              <div class="ww-big-sub" id="ww-display-billing-sub">First scoop FREE with recurring service!</div>
+            </div>
+
+            <!-- COMPETITOR-STYLE INTRO BREAKDOWN BOX -->
+            <div class="ww-intro-breakdown-box ww-hidden" id="ww-intro-breakdown-wrap">
+              <strong id="ww-intro-breakdown-text">First Month: $58.50 (First scoop free)</strong>
+              <span id="ww-intro-subtext" style="font-size: 12.5px; opacity: 0.9;">Billed monthly (approx. 4 visits/mo). Cancel anytime.</span>
+            </div>
+
+            <div id="ww-quote-lines"></div>
+
+            <div class="ww-free-banner ww-hidden" id="ww-free-offer-banner">
+              <strong>🎁 First Scoop is 100% Free!</strong>
+            </div>
+
+          </div>
+
+          <div id="ww-s2-error" class="ww-status-msg ww-hidden"></div>
+
+          <div class="ww-nav-row" style="flex-direction: column; gap:10px;">
+            <button type="button" class="ww-primary-btn" id="ww-submit-quote-btn" style="width:100%;">Submit Quote 🚀</button>
+            <button type="button" class="ww-secondary-btn" onclick="goToStep(1)" style="width:100%; border:none; background:transparent;">← Restart & Edit Selections</button>
+          </div>
+
+        </form>
       </div>
     </div>
-
   </div>
+
+  <!-- COMMERCIAL SECTION -->
+  <form id="ww-commercial" class="ww-step ww-hidden" onsubmit="event.preventDefault(); document.getElementById('ww-submit-comm-quote').click();">
+    <div class="ww-panel">
+      <h3>🏢 Commercial Consultation</h3>
+      <p class="ww-muted" style="margin:0 0 16px;">Tailored waste management for communities, parks, and businesses across Wise County.</p>
+
+      <div class="ww-grid">
+        <div>
+          <label class="ww-label" for="ww-comm-business">Property/Business Name <span class="ww-required">*</span></label>
+          <input id="ww-comm-business" name="business" type="text" placeholder="e.g., Oak Ridge Apartments">
+        </div>
+        <div>
+          <label class="ww-label" for="ww-comm-name">Contact Person <span class="ww-required">*</span></label>
+          <input id="ww-comm-name" name="name" type="text" autocomplete="name" placeholder="Your full name">
+        </div>
+      </div>
+
+      <label class="ww-label" for="ww-comm-address">Property Address <span class="ww-required">*</span></label>
+      <input id="ww-comm-address" name="street-address" type="text" autocomplete="street-address" placeholder="123 Main St, City, TX ZIP">
+
+      <label class="ww-label" for="ww-comm-type">Property Type <span class="ww-required">*</span></label>
+      <select id="ww-comm-type" name="property_type">
+        <option value="Apartment Community">Apartment Community</option>
+        <option value="HOA / Subdivision">HOA / Subdivision</option>
+        <option value="Veterinary Clinic">Veterinary Clinic</option>
+        <option value="RV Park / Campground">RV Park / Campground</option>
+        <option value="Dog Park / Public Park">Dog Park / Public Park</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <div class="ww-grid">
+        <div>
+          <label class="ww-label" for="ww-comm-phone">Phone Number <span class="ww-required">*</span></label>
+          <input id="ww-comm-phone" name="tel" type="tel" autocomplete="tel" placeholder="(940) 555-0123">
+          <div style="font-size: 14px; font-weight: 500; color: var(--muted); margin-top: 6px;">We won't spam your phone, just need it for the quote! 🥺</div>
+        </div>
+        <div>
+          <label class="ww-label" for="ww-comm-email">Email Address <span class="ww-muted">(optional)</span></label>
+          <input id="ww-comm-email" name="email" type="email" autocomplete="email" placeholder="name@company.com">
+        </div>
+      </div>
+
+      <label class="ww-label" for="ww-comm-notes">How can we help? <span class="ww-muted">(optional)</span></label>
+      <textarea id="ww-comm-notes" name="notes" rows="3" placeholder="Tell us about your property needs..."></textarea>
+
+      <div id="ww-comm-error" class="ww-status-msg ww-hidden"></div>
+      
+      <div class="ww-nav-row">
+        <button type="button" class="ww-primary-btn" id="ww-submit-comm-quote" style="width: 100%;">Send Request ✉️</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- CONFIRMATION SCREEN -->
+  <div id="ww-success-screen" class="ww-step ww-hidden">
+    <div class="ww-success-icon-wrap">
+      🎉
+    </div>
+    <h2 style="margin:0 0 10px; color:var(--ink);">You're all set!</h2>
+    <p style="color:var(--muted); max-width:460px; margin:0 auto 18px; font-size:16px;">
+      Thank you for choosing Wise Waste Services! We will contact you shortly to confirm your details and get your first visit on the schedule.
+    </p>
+    <div style="padding:16px; background:var(--cream); border-radius:12px; border:1px solid var(--border); display:inline-block;">
+      <p style="font-size:14.5px; color:var(--ink); margin:0;">
+        Need immediate help?<br>Call or text us at <a href="tel:+19402470522" class="ww-phone-link">(940) 247-0522</a>
+      </p>
+    </div>
+  </div>
+
 </div>
 
 <script>
