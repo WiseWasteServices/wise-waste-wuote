@@ -1,1 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wise Waste Services Pricing</title>
+<style>
+/* =========================================
+ULTIMATE UX PRICING TABS (PURE CSS, NO JS)
+========================================= */
+body {
+  margin: 0;
+  padding: 10px;
+  background: transparent;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
 
+#ww-smart-pricing {
+  --ww-green: #263A2D;
+  --ww-green-light: #3F6049;
+  --ww-green-tint: #E5EEE5;
+  --ww-ink: #1E2C22;
+  --ww-muted: #59655D;
+  --ww-cream: #F4F7F4;
+  --ww-border: #D5DFCE;
+  --ww-white: #ffffff;
+  --ww-gold: #FFB800;
+
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  color: var(--ww-ink);
+  background: var(--ww-white);
+  border: 1.5px solid var(--ww-border);
+  border-radius: 24px;
+  padding: 50px 40px;
+  box-shadow: 0 10px 40px rgba(30, 44, 34, 0.05);
+  position: relative;
+  box-sizing: border-box;
+}
+
+#ww-smart-pricing *, #ww-smart-pricing *:before, #ww-smart-pricing *:after {
+  box-sizing: border-box;
+}
+
+/* CORNER MASCOT STYLING (Desktop) */
+.ww-sp-corner-mascot {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  width: 180px;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08));
+}
+
+/* Header & Intro */
+.ww-sp-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.ww-sp-pill {
+  display: inline-block;
+  background-color: var(--ww-green-tint);
+  color: var(--ww-green-light);
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 16px;
+  border: 1px solid var(--ww-border);
+}
+.ww-sp-title {
+  margin: 0 0 10px;
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--ww-ink);
+  letter-spacing: -0.5px;
+}
+.ww-sp-desc {
+  color: var(--ww-muted);
+  font-size: 16px;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* CSS Tab System Setup */
+.ww-sp-inputs {
+  display: none;
+}
+
+/* Tab Navigation Controls */
+.ww-sp-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  background: var(--ww-green-tint);
+  padding: 8px;
+  border-radius: 40px;
+  max-width: 650px;
+  margin: 0 auto 40px;
+  border: 1px solid var(--ww-border);
+}
+.ww-sp-tab-label {
+  flex: 1;
+  text-align: center;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ww-green-light);
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.ww-sp-tab-label:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Dynamic Tab Switching Logic */
+#ww-tab-dog:checked ~ .ww-sp-tabs label[for="ww-tab-dog"],
+#ww-tab-cat:checked ~ .ww-sp-tabs label[for="ww-tab-cat"],
+#ww-tab-bundle:checked ~ .ww-sp-tabs label[for="ww-tab-bundle"] {
+  background: var(--ww-white);
+  color: var(--ww-green);
+  box-shadow: 0 4px 15px rgba(30, 44, 34, 0.08);
+}
+
+#ww-tab-dog:checked ~ #ww-content-dog,
+#ww-tab-cat:checked ~ #ww-content-cat,
+#ww-tab-bundle:checked ~ #ww-content-bundle {
+  display: flex;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tab Content Areas */
+.ww-sp-content {
+  display: none;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+/* Pricing Cards */
+.ww-sp-card {
+  flex: 1;
+  min-width: 280px;
+  max-width: 340px;
+  background: var(--ww-white);
+  border: 1.5px solid var(--ww-border);
+  border-radius: 20px;
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 15px rgba(30, 44, 34, 0.03);
+  position: relative;
+}
+.ww-sp-card.featured {
+  border: 3px solid var(--ww-gold);
+  transform: scale(1.03);
+  box-shadow: 0 15px 35px rgba(30, 44, 34, 0.1);
+  z-index: 2;
+}
+.ww-sp-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ww-gold);
+  color: var(--ww-ink);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 16px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Card Typography */
+.ww-sp-freq {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ww-green);
+  margin: 0 0 2px;
+  text-align: center;
+}
+.ww-sp-base-text {
+  font-size: 13px;
+  color: var(--ww-muted);
+  text-align: center;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.ww-sp-tiny-desc {
+  font-size: 12px;
+  color: var(--ww-green-light);
+  text-align: center;
+  margin-bottom: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ww-sp-price-wrap {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--ww-border);
+}
+.ww-sp-price {
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--ww-ink);
+  line-height: 1;
+}
+.ww-sp-price span {
+  font-size: 16px;
+  color: var(--ww-muted);
+  font-weight: 600;
+}
+
+/* Mini Breakdown Tables inside Cards */
+.ww-sp-breakdown {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ww-sp-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--ww-ink);
+  border-bottom: 1px dashed #E7ECE7;
+  padding-bottom: 4px;
+}
+.ww-sp-row:last-child {
+  border-bottom: none;
+}
+.ww-sp-row-label {
+  font-weight: 600;
+  color: var(--ww-muted);
+}
+.ww-sp-row-val {
+  font-weight: 800;
+  color: var(--ww-green-light);
+}
+
+/* One-Time & Add-Ons Compact Grid */
+.ww-sp-extras {
+  background: var(--ww-cream);
+  border: 1.5px solid var(--ww-border);
+  border-radius: 20px;
+  padding: 30px;
+}
+.ww-sp-extras-title {
+  margin: 0 0 20px;
+  font-size: 22px;
+  font-weight: 800;
+  text-align: center;
+}
+.ww-sp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+}
+.ww-sp-item {
+  background: var(--ww-white);
+  padding: 15px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--ww-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ww-sp-item-left h5 {
+  margin: 0 0 2px;
+  font-size: 14.5px;
+  font-weight: 800;
+}
+.ww-sp-item-left p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--ww-muted);
+}
+.ww-sp-item-right {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ww-green);
+  text-align: right;
+  white-space: nowrap;
+}
+.ww-sp-item-right span {
+  font-size: 12px;
+  font-weight: normal;
+  color: var(--ww-muted);
+}
+
+/* Bottom CTA Button */
+.ww-sp-cta-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+.ww-sp-quote-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--ww-green);
+  color: var(--ww-white);
+  padding: 16px 36px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(38, 58, 45, 0.2);
+  transition: all 0.15s ease;
+}
+.ww-sp-quote-btn:hover {
+  background: #1d2d23;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(38, 58, 45, 0.28);
+}
+
+@media (max-width: 850px) {
+  .ww-sp-card.featured { transform: none; order: -1; }
+  .ww-sp-content { flex-direction: column; align-items: stretch; }
+  .ww-sp-card { max-width: 100%; }
+  .ww-sp-tabs { flex-direction: column; border-radius: 20px; }
+  .ww-sp-tab-label { border-radius: 15px; }
+}
+
+@media (max-width: 767px) {
+  #ww-smart-pricing { padding: 40px 20px; border-radius: 16px; }
+  .ww-sp-title { font-size: 28px; }
+  .ww-sp-quote-btn { width: 100%; }
+  .ww-sp-corner-mascot { width: 115px; top: 15px; right: -30px; }
+}
+</style>
+</head>
+<body>
+
+<div id="ww-smart-pricing">
+  <!-- CORNER MASCOT IMAGE -->
+  <img src="https://i.imgur.com/I41H1DK.png" alt="Mascot" class="ww-sp-corner-mascot">
+
+  <div class="ww-sp-header">
+    <div class="ww-sp-pill">Full Price Sheet</div>
+    <h2 class="ww-sp-title">Detailed Pricing Options</h2>
+    <p class="ww-sp-desc">Enjoy crystal-clear, straightforward pricing with a single <strong>flat monthly rate</strong>—no extra fees per pet! Optional add-ons are completely up to you. Explore our flexible schedules and add-ons below to find the perfect fit for your home.</p>
+  </div>
+
+  <!-- RADIO INPUTS (Hidden logic) -->
+  <input type="radio" name="ww-pricing-toggle" id="ww-tab-dog" class="ww-sp-inputs" checked>
+  <input type="radio" name="ww-pricing-toggle" id="ww-tab-cat" class="ww-sp-inputs">
+  <input type="radio" name="ww-pricing-toggle" id="ww-tab-bundle" class="ww-sp-inputs">
+
+  <!-- TAB NAVIGATION -->
+  <div class="ww-sp-tabs">
+    <label for="ww-tab-dog" class="ww-sp-tab-label">🐶 Dog Waste Removal</label>
+    <label for="ww-tab-cat" class="ww-sp-tab-label">🐱 Litter Box Cleaning</label>
+    <label for="ww-tab-bundle" class="ww-sp-tab-label">⭐ The Bundle Deal</label>
+  </div>
+
+  <!-- TAB 1: DOG WASTE REMOVAL -->
+  <div id="ww-content-dog" class="ww-sp-content">
+    <div class="ww-sp-card">
+      <h3 class="ww-sp-freq">Bi-Weekly</h3>
+      <div class="ww-sp-base-text">Flat Rate (Any Number of Dogs)</div>
+      <div class="ww-sp-tiny-desc">Serviced every 2 weeks to maintain a tidy lawn.</div>
+      <div class="ww-sp-price-wrap"><div class="ww-sp-price">$54.00<span>/mo</span></div></div>
+      <div class="ww-sp-breakdown">
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Service Frequency</span><span class="ww-sp-row-val">Every 2 Weeks</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Dog Limit</span><span class="ww-sp-row-val">No Dog Limit</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Disposal</span><span class="ww-sp-row-val">Free Bin Drop</span></div>
+      </div>
+    </div>
+    <div class="ww-sp-card featured">
+      <div class="ww-sp-badge">Most Popular</div>
+      <h3 class="ww-sp-freq">Weekly</h3>
+      <div class="ww-sp-base-text">Flat Rate (Any Number of Dogs)</div>
+      <div class="ww-sp-tiny-desc">Our most popular choice for a consistently clean yard.</div>
+      <div class="ww-sp-price-wrap"><div class="ww-sp-price" style="color: var(--ww-green);">$65<span>/mo</span></div></div>
+      <div class="ww-sp-breakdown">
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Service Frequency</span><span class="ww-sp-row-val">Once Weekly</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Dog Limit</span><span class="ww-sp-row-val">No Dog Limit</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Disposal</span><span class="ww-sp-row-val">Free Bin Drop</span></div>
+      </div>
+    </div>
+    <div class="ww-sp-card">
+      <h3 class="ww-sp-freq">Twice-Weekly</h3>
+      <div class="ww-sp-base-text">Flat Rate (Any Number of Dogs)</div>
+      <div class="ww-sp-tiny-desc">Double the visits for heavy-traffic or multi-dog yards.</div>
+      <div class="ww-sp-price-wrap"><div class="ww-sp-price">$108<span>/mo</span></div></div>
+      <div class="ww-sp-breakdown">
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Service Frequency</span><span class="ww-sp-row-val">2x Per Week</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Dog Limit</span><span class="ww-sp-row-val">No Dog Limit</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Disposal</span><span class="ww-sp-row-val">Free Bin Drop</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: CAT LITTER BOX CLEANING -->
+  <div id="ww-content-cat" class="ww-sp-content">
+    <div class="ww-sp-card">
+      <h3 class="ww-sp-freq" style="color:#5B4370;">Bi-Weekly</h3>
+      <div class="ww-sp-base-text">Flat Rate (Any Number of Boxes)</div>
+      <div class="ww-sp-tiny-desc">Maintains box freshness on a relaxed 2-week schedule.</div>
+      <div class="ww-sp-price-wrap"><div class="ww-sp-price">$40<span>/mo</span></div></div>
+      <div class="ww-sp-breakdown">
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Service Frequency</span><span class="ww-sp-row-val" style="color:#5B4370;">Every 2 Weeks</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Box Limit</span><span class="ww-sp-row-val" style="color:#5B4370;">No Box Limit</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Deodorizing</span><span class="ww-sp-row-val" style="color:#5B4370;">Included</span></div>
+      </div>
+    </div>
+    <div class="ww-sp-card featured" style="border-color: #5B4370;">
+      <div class="ww-sp-badge" style="background: #5B4370; color: white;">Cat Favorite</div>
+      <h3 class="ww-sp-freq" style="color:#5B4370;">Weekly</h3>
+      <div class="ww-sp-base-text">Flat Rate (Any Number of Boxes)</div>
+      <div class="ww-sp-tiny-desc">Routine weekly care to keep litter areas completely odor-free.</div>
+      <div class="ww-sp-price-wrap"><div class="ww-sp-price" style="color: #5B4370;">$55<span>/mo</span></div></div>
+      <div class="ww-sp-breakdown">
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Service Frequency</span><span class="ww-sp-row-val" style="color:#5B4370;">Once Weekly</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Box Limit</span><span class="ww-sp-row-val" style="color:#5B4370;">No Box Limit</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Deodorizing</span><span class="ww-sp-row-val" style="color:#5B4370;">Included</span></div>
+      </div>
+    </div>
+    <div class="ww-sp-card">
+      <h3 class="ww-sp-freq" style="color:#5B4370;">Twice-Weekly</h3>
+      <div class="ww-sp-base-text">Flat Rate (Any Number of Boxes)</div>
+      <div class="ww-sp-tiny-desc">Frequent cleaning ideal for multi-cat households.</div>
+      <div class="ww-sp-price-wrap"><div class="ww-sp-price">$95<span>/mo</span></div></div>
+      <div class="ww-sp-breakdown">
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Service Frequency</span><span class="ww-sp-row-val" style="color:#5B4370;">2x Per Week</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Box Limit</span><span class="ww-sp-row-val" style="color:#5B4370;">No Box Limit</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Deodorizing</span><span class="ww-sp-row-val" style="color:#5B4370;">Included</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: THE BUNDLE DEAL -->
+  <div id="ww-content-bundle" class="ww-sp-content">
+    <div class="ww-sp-card">
+      <h3 class="ww-sp-freq">Bi-Weekly Bundle</h3>
+      <div class="ww-sp-base-text">Dog Waste + Litter Boxes</div>
+      <div class="ww-sp-tiny-desc">Combined every-2-weeks care for indoor and outdoor pets.</div>
+      <div class="ww-sp-price-wrap"><div class="ww-sp-price">$79<span>/mo</span></div><div style="font-size: 12px; color: #B28000; font-weight: 800; margin-top: 6px;">Saves $15/mo</div></div>
+      <div class="ww-sp-breakdown">
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Frequency</span><span class="ww-sp-row-val">Every 2 Weeks</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Pet Limits</span><span class="ww-sp-row-val">Flat Rate (All Pets)</span></div>
+      </div>
+    </div>
+    <div class="ww-sp-card featured">
+      <div class="ww-sp-badge">Ultimate Value</div>
+      <h3 class="ww-sp-freq">Weekly Bundle</h3>
+      <div class="ww-sp-base-text">Dog Waste + Litter Boxes</div>
+      <div class="ww-sp-tiny-desc">Complete weekly coverage for both your yard and litter boxes.</div>
+      <div class="ww-sp-price-wrap"><div class="ww-sp-price" style="color: var(--ww-green);">$99<span>/mo</span></div><div style="font-size: 13px; color: #B28000; font-weight: 800; margin-top: 6px;">Saves $21/mo</div></div>
+      <div class="ww-sp-breakdown">
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Frequency</span><span class="ww-sp-row-val">Once Weekly</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Pet Limits</span><span class="ww-sp-row-val">Flat Rate (All Pets)</span></div>
+      </div>
+    </div>
+    <div class="ww-sp-card">
+      <h3 class="ww-sp-freq">Twice-Weekly Bundle</h3>
+      <div class="ww-sp-base-text">Dog Waste + Litter Boxes</div>
+      <div class="ww-sp-tiny-desc">Maximum frequency service covering all pets twice a week.</div>
+      <div class="ww-sp-price-wrap"><div class="ww-sp-price">$175<span>/mo</span></div><div style="font-size: 12px; color: #B28000; font-weight: 800; margin-top: 6px;">Saves $28/mo</div></div>
+      <div class="ww-sp-breakdown">
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Frequency</span><span class="ww-sp-row-val">2x Per Week</span></div>
+        <div class="ww-sp-row"><span class="ww-sp-row-label">Pet Limits</span><span class="ww-sp-row-val">Flat Rate (All Pets)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIVERSAL BOTTOM SECTION -->
+  <div class="ww-sp-extras">
+    <h3 class="ww-sp-extras-title">One-Time Cleanups & Add-Ons</h3>
+    <div class="ww-sp-grid">
+      <div class="ww-sp-item"><div class="ww-sp-item-left"><h5>One-Time Yard Cleanup</h5><p>$50 min (covers 1st hour, then $50/hr)</p></div><div class="ww-sp-item-right">$50 <span>min</span></div></div>
+      <div class="ww-sp-item"><div class="ww-sp-item-left"><h5>One-Time Box Cleanup</h5><p>Flat rate for all boxes</p></div><div class="ww-sp-item-right">$35</div></div>
+      <div class="ww-sp-item"><div class="ww-sp-item-left"><h5>One-Time Bundle</h5><p>Yard 1st hr + all boxes</p></div><div class="ww-sp-item-right">$69</div></div>
+      <div class="ww-sp-item"><div class="ww-sp-item-left"><h5>🌿 Yard Fresh Treatment</h5><p>Base section (+$7/ea extra section)</p></div><div class="ww-sp-item-right">$10 <span>/visit</span></div></div>
+      <div class="ww-sp-item"><div class="ww-sp-item-left"><h5>🧼 Box Deep Clean</h5><p>1st Box ($15 each after)</p></div><div class="ww-sp-item-right">$25</div></div>
+      <div class="ww-sp-item"><div class="ww-sp-item-left"><h5>📦 Litter Supply</h5><p>Standard clumping litter per box</p></div><div class="ww-sp-item-right">$10 <span>/visit</span></div></div>
+    </div>
+    <div style="text-align: center; margin-top: 15px; font-size: 13px; color: var(--ww-muted);">
+      <strong>Waste Haul-Away:</strong> Leave in your outdoor bin for free, or we haul it away for <strong>+$5/visit</strong> across all services.
+    </div>
+  </div>
+
+  <div class="ww-sp-cta-wrap">
+    <a href="#contact" class="ww-sp-quote-btn">Get Your Instant Quote 🪄</a>
+  </div>
+
+</div>
+
+<!-- Auto-Resize Auto-Height Script for GitHub Hosted Iframe -->
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+  function sendHeight() {
+    var height = document.body.scrollHeight;
+    window.parent.postMessage({ type: 'ww-quote-height', height: height }, '*');
+  }
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'ww-quote-request-height') {
+      sendHeight();
+    }
+  });
+  sendHeight();
+  setTimeout(sendHeight, 200);
+  setTimeout(sendHeight, 600);
+});
+</script>
+
+</body>
+</html>
