@@ -724,8 +724,8 @@
             <label class="ww-choice" style="margin-bottom:14px;">
               <input type="checkbox" id="ww-cat-add-service" name="cat_add_service">
               <span>
-                <strong id="ww-cat-addon-title">Add Routine Cat Litter Box Scooping (Weekly)</strong><br>
-                <span class="ww-muted" id="ww-cat-addon-text">Done during your scheduled outside dog service visits. Bundle &amp; Save!</span>
+                <strong id="ww-cat-addon-title">Have cats too? Add routine litter box scooping</strong><br>
+                <span class="ww-muted" id="ww-cat-addon-text">Done during your scheduled outside dog service visits. <strong>Bundle &amp; Save!</strong></span>
               </span>
             </label>
           </div>
@@ -759,7 +759,7 @@
                 <input type="checkbox" id="ww-cat-deep-clean" name="cat_deep_clean">
                 <span>
                   <strong>Occasional Litter Box Deep Clean (Wash &amp; Sanitize)</strong><br>
-                  <span class="ww-muted">Complete wash, sanitize, and fresh refill. <strong>$25 for 1st box, +$15 per extra box.</strong> (Charged at time of service)</span>
+                  <span class="ww-muted">Thorough wash, sanitizing, and fresh litter refill. $25 first box + $15 per additional box. Recommended every 2–3 weeks. Completely optional — just let us know when you'd like it done!<br>(Charged at time of service)</span>
                 </span>
               </label>
             </div>
@@ -1095,12 +1095,12 @@
       }
     }
     
-    if (quoteState.haulAway) servicesList.push('Waste Haul-Away (charged at time of service)');
-    if (quoteState.yardFreshAddon) servicesList.push('Add-On: Yard Fresh charged at time of service (' + quoteState.sections + ' section(s))');
+    if (quoteState.haulAway) servicesList.push('Waste Haul-Away (Charged at time of service)');
+    if (quoteState.yardFreshAddon) servicesList.push('Add-On: Yard Fresh Charged at time of service (' + quoteState.sections + ' section(s))');
     
     const combinedNotes = (userNotes ? userNotes + '\n\n' : '') + '--- PREFERENCES ---\n' + 'Yard Sign Permitted: ' + yardSign + '\n' +
       'Pet Treats Permitted: ' + petTreats + '\n\n' + '--- QUOTE SUMMARY ---\n' + 'Displayed Rate: ' + quoteState.perVisitText + '\n' +
-      'Waste Haul-Away (charged at time of service): ' + (quoteState.haulAway ? 'Yes' : 'No') + '\n' + 'Breakdown: ' + quoteState.breakdownSummary;
+      'Waste Haul-Away (Charged at time of service): ' + (quoteState.haulAway ? 'Yes' : 'No') + '\n' + 'Breakdown: ' + quoteState.breakdownSummary;
 
     const payload = {
       leadType: 'partial',
@@ -1191,19 +1191,19 @@
     const catAddonText = $('ww-cat-addon-text');
     if (catAddonTitle && catAddonText) {
         if (dogFreq === 'weekly') {
-            catAddonTitle.innerHTML = 'Add Routine Cat Litter Box Scooping (Weekly)';
-            catAddonText.innerHTML = 'Done during your scheduled outside dog service visits. Bundle &amp; Save!';
+            catAddonTitle.innerHTML = 'Have cats too? Add routine litter box scooping (Weekly)';
+            catAddonText.innerHTML = 'Done during your scheduled outside dog service visits. <strong>Bundle &amp; Save!</strong>';
         } else if (dogFreq === 'twice') {
-            catAddonTitle.innerHTML = 'Add Routine Cat Litter Box Scooping (Twice-Weekly)';
-            catAddonText.innerHTML = 'Done during your scheduled outside dog service visits. Bundle &amp; Save!';
+            catAddonTitle.innerHTML = 'Have cats too? Add routine litter box scooping (Twice-Weekly)';
+            catAddonText.innerHTML = 'Done during your scheduled outside dog service visits. <strong>Bundle &amp; Save!</strong>';
         } else if (dogFreq === 'biweekly') {
-            catAddonTitle.innerHTML = 'Add Routine Cat Litter Box Scooping (Bi-Weekly)';
-            catAddonText.innerHTML = 'Done during your scheduled outside dog service visits. Bundle &amp; Save!';
+            catAddonTitle.innerHTML = 'Have cats too? Add routine litter box scooping (Bi-Weekly)';
+            catAddonText.innerHTML = 'Done during your scheduled outside dog service visits. <strong>Bundle &amp; Save!</strong>';
         } else if (dogFreq === 'onetime') {
-            catAddonTitle.innerHTML = 'Add One-Time Cat Litter Box Scooping';
-            catAddonText.innerHTML = 'Done during your scheduled outside dog service visit. Bundle &amp; Save!';
+            catAddonTitle.innerHTML = 'Have cats too? Add one-time litter box scooping';
+            catAddonText.innerHTML = 'Done during your scheduled outside dog service visit. <strong>Bundle &amp; Save!</strong>';
         } else {
-            catAddonTitle.innerHTML = 'Add Routine Cat Litter Box Scooping';
+            catAddonTitle.innerHTML = 'Have cats too? Add routine litter box scooping';
             catAddonText.innerHTML = 'Done during your scheduled outside dog service visits.';
         }
     }
@@ -1511,12 +1511,12 @@
       }
     }
     
-    if (quoteState.haulAway) servicesList.push('Waste Haul-Away (charged at time of service)');
-    if (quoteState.yardFreshAddon) servicesList.push('Add-On: Yard Fresh charged at time of service (' + quoteState.sections + ' section(s))');
+    if (quoteState.haulAway) servicesList.push('Waste Haul-Away (Charged at time of service)');
+    if (quoteState.yardFreshAddon) servicesList.push('Add-On: Yard Fresh Charged at time of service (' + quoteState.sections + ' section(s))');
 
     const combinedNotes = (userNotes ? userNotes + '\n\n' : '') + '--- PREFERENCES ---\n' + 'Yard Sign Permitted: ' + yardSign + '\n' +
       'Pet Treats Permitted: ' + petTreats + '\n\n' + '--- QUOTE SUMMARY ---\n' + 'Displayed Rate: ' + quoteState.perVisitText + '\n' +
-      'Waste Haul-Away (charged at time of service): ' + (quoteState.haulAway ? 'Yes' : 'No') + '\n' + 'Breakdown: ' + quoteState.breakdownSummary;
+      'Waste Haul-Away (Charged at time of service): ' + (quoteState.haulAway ? 'Yes' : 'No') + '\n' + 'Breakdown: ' + quoteState.breakdownSummary;
 
     const payload = {
       leadType: 'final',
