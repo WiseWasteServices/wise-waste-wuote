@@ -677,7 +677,7 @@
 
           <label class="ww-label" for="ww-dog-frequency">Service frequency</label>
           <select id="ww-dog-frequency" name="dog_frequency">
-            <option value="none">No dog waste service (Cat-only service)</option>
+            <option value="none">No dog waste service</option>
             <option value="twice">Twice Weekly</option>
             <option value="weekly" selected>Weekly (Most Popular)</option>
             <option value="biweekly">Bi-Weekly (Every 2 Weeks)</option>
@@ -733,8 +733,8 @@
           <div id="ww-cat-standalone-mode" class="ww-hidden">
             <label class="ww-label" for="ww-cat-standalone-freq">Service frequency</label>
             <select id="ww-cat-standalone-freq" name="cat_standalone_freq">
-              <option value="none">No cat litter service</option>
-              <option value="twice" selected>Twice-Weekly Service (Most Popular)</option>
+              <option value="none" selected>No cat litter service</option>
+              <option value="twice">Twice-Weekly Service (Most Popular)</option>
               <option value="weekly">Weekly Service</option>
               <option value="biweekly">Bi-Weekly Service (Every 2 Weeks)</option>
               <option value="onetime">One-Time Cleanup</option>
@@ -800,8 +800,9 @@
           <label class="ww-choice" style="margin-bottom:14px; background: var(--cream);">
             <input type="checkbox" id="ww-addon-yard-fresh" name="yard_fresh">
             <span>
-              <strong>Yard Fresh Treatment (+$10 per visit)</strong><br>
+              <strong id="ww-yard-fresh-title">Yard Fresh Treatment ($25 standalone)</strong><br>
               <span class="ww-muted">A professional enzymatic spray that destroys urine odors and leaves your lawn smelling amazing (+$7 per extra yard section). Requires a working outdoor water spigot. (Charged at time of service)</span>
+              <span id="ww-yard-fresh-savings-notice" style="display: block; margin-top: 6px; font-size: 13px; font-weight: 700; color: #3F6049;">💡 Save $15! Choose any recurring service to drop this to just $10/visit.</span>
             </span>
           </label>
 
@@ -851,15 +852,15 @@
 
           <div class="ww-receipt-box" aria-live="polite">
             <div class="ww-price-hero">
-              <span class="ww-price-eyebrow" id="ww-price-eyebrow">Total Monthly Rate</span>
-              <div class="ww-big-price" id="ww-display-per-visit">$78.00 / mo</div>
-              <div class="ww-big-sub" id="ww-display-billing-sub">First scoop FREE with recurring service!</div>
+              <span class="ww-price-eyebrow" id="ww-price-eyebrow">Total Rate</span>
+              <div class="ww-big-price" id="ww-display-per-visit">$0.00</div>
+              <div class="ww-big-sub" id="ww-display-billing-sub"></div>
             </div>
 
             <!-- COMPETITOR-STYLE INTRO BREAKDOWN BOX -->
             <div class="ww-intro-breakdown-box ww-hidden" id="ww-intro-breakdown-wrap">
-              <strong id="ww-intro-breakdown-text">First Month: $58.50 (First scoop free)</strong>
-              <span id="ww-intro-subtext" style="font-size: 12.5px; opacity: 0.9;">Billed monthly (approx. 4 visits/mo). Cancel anytime.</span>
+              <strong id="ww-intro-breakdown-text"></strong>
+              <span id="ww-intro-subtext" style="font-size: 12.5px; opacity: 0.9;"></span>
             </div>
 
             <div id="ww-quote-lines"></div>
@@ -989,6 +990,31 @@
   window.addEventListener('load', scheduleHeightReport);
   window.addEventListener('resize', scheduleHeightReport);
 
+  /* DYNAMIC YARD FRESH LABEL UPDATER */
+  function updateYardFreshLabel() {
+    const dogFreq = $('ww-dog-frequency').value;
+    const catAddChecked = $('ww-cat-add-service').checked;
+    const catStandaloneFreq = $('ww-cat-standalone-freq').value;
+
+    const hasRecurringDog = dogFreq === 'weekly' || dogFreq === 'twice' || dogFreq === 'biweekly';
+    const hasRecurringCat = (dogFreq !== 'none' && catAddChecked && (dogFreq === 'weekly' || dogFreq === 'twice' || dogFreq === 'biweekly')) ||
+                            (dogFreq === 'none' && catStandaloneFreq !== 'none' && catStandaloneFreq !== 'onetime');
+    const hasRecurringService = hasRecurringDog || hasRecurringCat;
+
+    const titleEl = $('ww-yard-fresh-title');
+    const noticeEl = $('ww-yard-fresh-savings-notice');
+
+    if (titleEl && noticeEl) {
+      if (hasRecurringService) {
+        titleEl.textContent = 'Yard Fresh Treatment ($10 recurring add-on)';
+        noticeEl.style.display = 'none';
+      } else {
+        titleEl.textContent = 'Yard Fresh Treatment ($25 standalone)';
+        noticeEl.style.display = 'block';
+      }
+    }
+  }
+
   /* MULTI-STEP WIZARD LOGIC */
   window.goToStep = function(targetStep) {
     if (targetStep === 2) {
@@ -1002,6 +1028,10 @@
       if (phoneDigits.length < 10) { $('ww-err-1').textContent = 'Please enter a valid 10-digit phone number.'; show('ww-err-1', true); return; }
       if (email && !$('ww-customer-email').checkValidity()) { $('ww-err-1').textContent = 'Please enter a valid email address.'; show('ww-err-1', true); return; }
       if (!address) { $('ww-err-1').textContent = 'Please enter your service address.'; show('ww-err-1', true); return; }
+    }
+
+    if (targetStep === 4) {
+      updateYardFreshLabel();
     }
 
     [1, 2, 3, 4].forEach(i => show('ww-step-' + i, false));
@@ -1096,7 +1126,7 @@
     }
     
     if (quoteState.haulAway) servicesList.push('Waste Haul-Away (Charged at time of service)');
-    if (quoteState.yardFreshAddon) servicesList.push('Add-On: Yard Fresh Charged at time of service (' + quoteState.sections + ' section(s))');
+    if (quoteState.yardFreshAddon) servicesList.push('Yard Fresh Treatment (' + quoteState.sections + ' section(s))');
     
     const combinedNotes = (userNotes ? userNotes + '\n\n' : '') + '--- PREFERENCES ---\n' + 'Yard Sign Permitted: ' + yardSign + '\n' +
       'Pet Treats Permitted: ' + petTreats + '\n\n' + '--- QUOTE SUMMARY ---\n' + 'Displayed Rate: ' + quoteState.perVisitText + '\n' +
@@ -1123,11 +1153,12 @@
     const dogFreq = $('ww-dog-frequency').value;
     const catAddChecked = $('ww-cat-add-service').checked;
     const catStandaloneFreq = $('ww-cat-standalone-freq').value;
+    const yardFreshChecked = $('ww-addon-yard-fresh').checked;
 
     const hasCatService = (dogFreq !== 'none' && catAddChecked) || (dogFreq === 'none' && catStandaloneFreq !== 'none');
 
-    if (dogFreq === 'none' && !hasCatService) {
-      $('ww-err-4').textContent = 'Please select at least one service (Dog Waste Removal or Cat Litter Box Service).';
+    if (dogFreq === 'none' && !hasCatService && !yardFreshChecked) {
+      $('ww-err-4').textContent = 'Please select at least one service (Dog Waste Removal, Cat Litter Box Service, or Yard Fresh Treatment).';
       show('ww-err-4', true);
       return;
     }
@@ -1291,12 +1322,12 @@
     const hasCat = (hasDog && catAddChecked) || (!hasDog && catStandaloneFreq !== 'none');
     const isRecurringCatOnly = (!hasDog && hasCat && (catStandaloneFreq === 'weekly' || catStandaloneFreq === 'twice' || catStandaloneFreq === 'biweekly'));
 
-    // Show free scoop banner if recurring dog OR recurring standalone cat service
-    show('ww-free-offer-banner', isRecurringDog || isRecurringCatOnly);
-    
     const yardFreshAddon = $('ww-addon-yard-fresh').checked;
     const sections = getNum('ww-sections');
 
+    // Show free scoop banner if recurring dog OR recurring standalone cat service
+    show('ww-free-offer-banner', isRecurringDog || isRecurringCatOnly);
+    
     let summaryLinesHtml = [];
     let breakdownTextLines = [];
 
@@ -1412,9 +1443,18 @@
     }
 
     if (yardFreshAddon) {
-      let costPerVisit = 10 + 7 * (sections - 1);
-      summaryLinesHtml.push(renderLine('Yard Fresh (' + sections + ' section' + (sections > 1 ? 's' : '') + ')', 'Deodorizing spray application', '+' + money(costPerVisit) + ' / visit', 'charged at time of service'));
-      breakdownTextLines.push('Add-On: Yard Fresh (' + sections + ' section(s)): +' + money(costPerVisit) + ' / visit (charged at time of service)');
+      const anyRecurring = isRecurringDog || isRecurringCatOnly;
+      if (anyRecurring) {
+        let costPerVisit = 10 + 7 * (sections - 1);
+        summaryLinesHtml.push(renderLine('Yard Fresh Treatment (' + sections + ' section' + (sections > 1 ? 's' : '') + ')', 'Recurring enzymatic spray add-on', '+' + money(costPerVisit) + ' / visit', 'charged at time of service'));
+        breakdownTextLines.push('Add-On: Yard Fresh Recurring (' + sections + ' section(s)): +' + money(costPerVisit) + ' / visit (charged at time of service)');
+      } else {
+        // Standalone or one-time yard fresh: $25 base + $7 per extra section
+        let standaloneYardFreshTotal = 25 + 7 * (sections - 1);
+        totalOneTime += standaloneYardFreshTotal;
+        summaryLinesHtml.push(renderLine('Yard Fresh Treatment (' + sections + ' section' + (sections > 1 ? 's' : '') + ')', 'Stand-alone one-time spray', money(standaloneYardFreshTotal)));
+        breakdownTextLines.push('Yard Fresh Treatment Standalone (' + sections + ' section(s)): ' + money(standaloneYardFreshTotal));
+      }
     }
 
     if (haulAway) {
@@ -1450,7 +1490,7 @@
         } else {
             $('ww-display-billing-sub').textContent = 'First scoop FREE with recurring service!';
         }
-    } else if (isOneTimeDog || (!hasDog && hasCat && catStandaloneFreq === 'onetime')) {
+    } else if (totalOneTime > 0) {
       $('ww-price-eyebrow').textContent = 'Estimated Total';
       show('ww-intro-breakdown-wrap', false);
       
@@ -1461,7 +1501,7 @@
       } else {
          $('ww-display-per-visit').textContent = money(totalDisplay);
       }
-      $('ww-display-billing-sub').textContent = 'One-time cleanup service • No ongoing charges';
+      $('ww-display-billing-sub').textContent = 'One-time service • No ongoing charges';
     } else {
       $('ww-price-eyebrow').textContent = 'Your Quote'; 
       $('ww-display-per-visit').textContent = '$0.00';
@@ -1512,7 +1552,7 @@
     }
     
     if (quoteState.haulAway) servicesList.push('Waste Haul-Away (Charged at time of service)');
-    if (quoteState.yardFreshAddon) servicesList.push('Add-On: Yard Fresh Charged at time of service (' + quoteState.sections + ' section(s))');
+    if (quoteState.yardFreshAddon) servicesList.push('Yard Fresh Treatment (' + quoteState.sections + ' section(s))');
 
     const combinedNotes = (userNotes ? userNotes + '\n\n' : '') + '--- PREFERENCES ---\n' + 'Yard Sign Permitted: ' + yardSign + '\n' +
       'Pet Treats Permitted: ' + petTreats + '\n\n' + '--- QUOTE SUMMARY ---\n' + 'Displayed Rate: ' + quoteState.perVisitText + '\n' +
