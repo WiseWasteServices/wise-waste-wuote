@@ -144,8 +144,21 @@
     .ww-sub-box { background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-top: 14px; }
 
     /* Live Quote Pane */
-    .ww-quote-pane .ww-panel { background: var(--green); color: #ffffff; border: none; }
+    .ww-quote-pane .ww-panel { background: var(--green); color: #ffffff; border: none; position: relative; }
     .ww-quote-pane h3 { color: #ffffff; border-bottom-color: rgba(255,255,255,0.2); }
+    
+    .quote-id-badge {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: rgba(255,255,255,0.15);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
     .quote-section { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed rgba(255,255,255,0.2); }
     .quote-section:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
     .quote-section-title { font-size: 12px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; color: var(--light); margin-bottom: 10px; }
@@ -160,6 +173,28 @@
     .quote-promo { background: rgba(255,255,255,0.15); padding: 12px; border-radius: 6px; font-weight: 700; font-size: 14px; display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
     .first-month-box { background: rgba(213,223,206,0.15); border: 1px solid rgba(213,223,206,0.3); border-radius: 8px; padding: 12px; margin-top: -4px; margin-bottom: 16px; text-align: center; }
 
+    /* INTERNAL COMMISSION BOX STYLING (LIVE VIEW) */
+    .internal-comm-box {
+      margin-top: 20px;
+      border: 1.5px dashed #81c784;
+      background: rgba(129, 199, 132, 0.1);
+      padding: 16px;
+      border-radius: 8px;
+    }
+    .internal-comm-box .quote-section-title {
+      color: #81c784;
+      border-bottom: 1px dashed rgba(129, 199, 132, 0.3);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    .internal-comm-box .quote-total-row {
+      color: #81c784;
+      border-top: 1px dashed rgba(129, 199, 132, 0.3);
+      padding-top: 10px;
+      margin-top: 12px;
+    }
+
     /* Buttons */
     .ww-btn-group { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
     @media (min-width: 600px) { .ww-btn-group.row { flex-direction: row; } }
@@ -172,10 +207,14 @@
     .btn-primary:hover { background: #ffffff; transform: translateY(-1px); }
     .btn-outline { background: transparent; border-color: var(--light); color: #ffffff; }
     .btn-outline:hover { background: rgba(255,255,255,0.1); }
+    .btn-outline-dark { background: transparent; border: 1.5px solid var(--border-strong); color: var(--muted); }
+    .btn-outline-dark:hover { background: #fff; border-color: var(--green); color: var(--green); }
     .btn-danger { background: transparent; border-color: var(--danger); color: var(--danger); }
     .btn-danger:hover { background: var(--danger-bg); }
 
     .sales-tool-box { background: #fdfaf2; border: 1px solid #ebdcb8; border-radius: var(--radius-md); padding: 16px; margin-top: 20px; }
+    .commission-box { background: #f2f9f4; border: 1.5px dashed #4caf50; border-radius: var(--radius-sm); padding: 16px; margin-top: 16px; text-align: center; color: #2e7d32; font-weight: 700; font-size: 18px; }
+    .commission-breakdown { font-size: 12.5px; font-weight: 500; color: #4caf50; margin-top: 4px; }
 
     /* Image Modal (For Mobile Screenshot) */
     #img-modal {
@@ -196,8 +235,10 @@
       .no-print, .ww-builder, .ww-btn-group, .ww-header { display: none !important; }
       .ww-container { display: block; max-width: 100%; margin: 0; padding: 0; }
       .ww-quote-pane { width: 100%; max-width: 100%; position: static; flex: none; margin: 0; padding: 0; }
-      .ww-quote-pane .ww-panel { background: #ffffff !important; color: #000 !important; box-shadow: none; border: none; padding: 0; margin: 0; }
-      .ww-quote-pane h3 { color: var(--green) !important; border-bottom: 2px solid var(--green) !important; }
+      .ww-quote-pane .ww-panel { background: #ffffff !important; color: #000 !important; box-shadow: none; border: none; padding: 0; margin: 0; position: relative; }
+      .ww-quote-pane h3 { color: var(--green) !important; border-bottom: 2px solid var(--green) !important; padding-right: 150px; }
+      .quote-id-badge { background: #f4f7f4 !important; color: var(--green) !important; border: 1px solid var(--border); }
+      
       .quote-section { border-bottom: 1px solid #ddd !important; }
       .quote-section-title { color: #555 !important; }
       .quote-item-desc { color: #555 !important; }
@@ -214,14 +255,26 @@
       .print-customer { margin-bottom: 20px; font-size: 14px; }
       .print-customer div { margin-bottom: 4px; }
       .print-footer { margin-top: 30px; font-size: 12px; color: #555; border-top: 1px solid #ddd; padding-top: 10px; }
+      
+      /* Preferences & Notes override for print */
+      .quote-section.prefs-section { border-top: 1px dashed #ccc !important; }
+      .prefs-content { color: #333 !important; }
+
+      /* Commission Box overrides for Print */
+      .internal-comm-box { background: #f2f9f4 !important; border: 2px dashed #2e7d32 !important; margin-top: 30px; }
+      .internal-comm-box .quote-section-title { color: #2e7d32 !important; border-bottom: 1px dashed #a5d6a7 !important; }
+      .internal-comm-box .quote-total-row { color: #2e7d32 !important; border-top: 1px dashed #a5d6a7 !important; }
+      .internal-comm-box .quote-item-desc { color: #2e7d32 !important; opacity: 0.8; }
     }
 
     .screenshot-mode .no-print, .screenshot-mode .ww-builder, .screenshot-mode .ww-header { display: none !important; }
     .screenshot-mode { background: #ffffff !important; padding: 20px !important; }
     .screenshot-mode .ww-container { display: block; max-width: 800px; margin: 0 auto; padding: 0; }
     .screenshot-mode .ww-quote-pane { width: 100%; position: static; }
-    .screenshot-mode .ww-quote-pane .ww-panel { background: #ffffff !important; color: #000 !important; box-shadow: none; border: none; padding: 20px; margin: 0; }
-    .screenshot-mode .ww-quote-pane h3 { color: var(--green) !important; border-bottom: 2px solid var(--green) !important; }
+    .screenshot-mode .ww-quote-pane .ww-panel { background: #ffffff !important; color: #000 !important; box-shadow: none; border: none; padding: 20px; margin: 0; position: relative;}
+    .screenshot-mode .ww-quote-pane h3 { color: var(--green) !important; border-bottom: 2px solid var(--green) !important; padding-right: 150px;}
+    .screenshot-mode .quote-id-badge { background: #f4f7f4 !important; color: var(--green) !important; border: 1px solid var(--border); }
+    
     .screenshot-mode .quote-section { border-bottom: 1px solid #ddd !important; }
     .screenshot-mode .quote-section-title { color: #555 !important; }
     .screenshot-mode .quote-item-desc { color: #555 !important; }
@@ -238,6 +291,16 @@
     .screenshot-mode .print-customer { margin-bottom: 20px; font-size: 14px; }
     .screenshot-mode .print-customer div { margin-bottom: 4px; }
     .screenshot-mode .print-footer { margin-top: 30px; font-size: 12px; color: #555; border-top: 1px solid #ddd; padding-top: 10px; }
+
+    /* Preferences & Notes override for Screenshot */
+    .screenshot-mode .quote-section.prefs-section { border-top: 1px dashed #ccc !important; }
+    .screenshot-mode .prefs-content { color: #333 !important; }
+
+    /* Commission Box overrides for Screenshot */
+    .screenshot-mode .internal-comm-box { background: #f2f9f4 !important; border: 2px dashed #2e7d32 !important; margin-top: 30px; }
+    .screenshot-mode .internal-comm-box .quote-section-title { color: #2e7d32 !important; border-bottom: 1px dashed #a5d6a7 !important; }
+    .screenshot-mode .internal-comm-box .quote-total-row { color: #2e7d32 !important; border-top: 1px dashed #a5d6a7 !important; }
+    .screenshot-mode .internal-comm-box .quote-item-desc { color: #2e7d32 !important; opacity: 0.8; }
   </style>
 </head>
 <body>
@@ -313,7 +376,7 @@
           <input type="checkbox" id="cat-add-bundled">
           <span>
             <strong id="cat-bundled-title">Add Bundled Litter Box Scooping (Unlimited Boxes - Flat Rate)</strong>
-            <span class="ww-muted">Performed during scheduled dog service visits. Bundle & Save!</span>
+            <span class="ww-muted" id="cat-bundled-desc">Performed <strong style="color: var(--ink);">Weekly</strong> during scheduled dog service visits. Bundle & Save!</span>
           </span>
         </label>
       </div>
@@ -419,7 +482,14 @@
         <div style="font-size:13.5px; color:var(--muted); margin-top:8px; padding-left:32px;">Applies a 10% discount to the first month's equivalent value.</div>
       </div>
 
+      <!-- COMMISSION DISPLAY BOX (FRONTEND ONLY) -->
+      <div id="commission-display" class="commission-box ww-hidden">
+        Estimated Commission: <span id="comm-total">$0.00</span>
+        <div class="commission-breakdown" id="comm-breakdown">35% base + 25% add-ons</div>
+      </div>
+
       <div class="ww-btn-group row" style="margin-top: 24px;">
+        <button id="btn-toggle-comm" class="btn btn-outline-dark" onclick="toggleCommission()" style="flex:1;">Switch to Internal View</button>
         <button class="btn btn-danger" onclick="resetForm()" style="flex:1;">Reset All Fields</button>
       </div>
     </div>
@@ -429,6 +499,9 @@
   <div class="ww-quote-pane">
     <div class="ww-panel" id="quote-panel">
       
+      <!-- Auto-Generated Quote ID -->
+      <div id="quote-id-display" class="quote-id-badge"></div>
+
       <!-- Print Header -->
       <div class="print-only print-header">
         <h1>Wise Waste Services</h1>
@@ -436,17 +509,30 @@
       </div>
       
       <div class="print-only print-customer" id="print-cust-details"></div>
+      
       <h3 id="quote-title">📄 Customer Quote</h3>
+      
       <div id="quote-content"></div>
 
       <div class="print-only print-footer">
-        <p><strong>Note:</strong> Subscription charges are recurring based on the selected billing cycle. One-time cleanups and optional per-visit or per-treatment services are separate charges. All selected charges are shown individually in this quote.</p>
-        <p>Thank you for choosing Wise Waste Services!</p>
+        <div id="footer-customer">
+          <p><strong>Note:</strong> Subscription charges are recurring based on the selected billing cycle. One-time cleanups and optional per-visit or per-treatment services are separate charges. All selected charges are shown individually in this quote.</p>
+          <p>Thank you for choosing Wise Waste Services!</p>
+        </div>
+        <div id="footer-internal" class="ww-hidden">
+          <p><strong>INTERNAL USE ONLY:</strong> Do not distribute this raw breakdown to customers. Commission calculations and specific internal route notes are for backend tracking only.</p>
+        </div>
       </div>
 
       <div class="ww-btn-group no-print" id="action-buttons">
-        <button class="btn btn-primary" onclick="window.print()">🖨️ Desktop Print / PDF</button>
-        <button class="btn btn-outline" id="btn-mobile-save" onclick="generateScreenshot()" style="background: var(--light); color: var(--green);">📱 Save Image (Mobile)</button>
+        <div class="ww-btn-group row" style="margin-top:0;">
+          <button class="btn btn-primary" onclick="window.print()" style="flex:1;">🖨️ Print / PDF</button>
+          <button class="btn btn-outline" id="btn-mobile-save" onclick="generateScreenshot()" style="background: var(--light); color: var(--green); flex:1;">📱 Save Image</button>
+        </div>
+        <div class="ww-btn-group row" style="margin-top:0;">
+          <button class="btn btn-outline-dark" onclick="sendSMS()" style="flex:1;">💬 Text Quote</button>
+          <button class="btn btn-outline-dark" onclick="sendEmail()" style="flex:1;">✉️ Email Quote</button>
+        </div>
       </div>
     </div>
   </div>
@@ -460,6 +546,15 @@
 </div>
 
 <script>
+  // Global Vars
+  let currentTotalCommission = 0;
+  let commissionVisible = false;
+  let currentQuoteTextForMessaging = "";
+  
+  // Generate random 4-digit Quote ID on page load
+  const quoteID = Math.floor(1000 + Math.random() * 9000);
+  document.getElementById('quote-id-display').innerText = `Ref: WWS-${quoteID}`;
+
   const inputs = document.querySelectorAll('input, select, textarea');
   inputs.forEach(input => {
     input.addEventListener('input', renderQuote);
@@ -485,12 +580,23 @@
     document.getElementById('dog-condition-wrap').classList.toggle('ww-hidden', dogFreq !== 'onetime');
 
     const catBundledTitle = document.getElementById('cat-bundled-title');
-    if (dogFreq === 'weekly' || dogFreq === 'twice' || dogFreq === 'biweekly') {
+    const catBundledDesc = document.getElementById('cat-bundled-desc');
+    
+    if (dogFreq === 'weekly') {
       catBundledTitle.innerText = 'Add Bundled Litter Box Scooping (Unlimited Boxes - Flat Rate)';
+      catBundledDesc.innerHTML = 'Performed <strong style="color: var(--ink);">Weekly</strong> during scheduled dog service visits. Bundle & Save!';
+    } else if (dogFreq === 'twice') {
+      catBundledTitle.innerText = 'Add Bundled Litter Box Scooping (Unlimited Boxes - Flat Rate)';
+      catBundledDesc.innerHTML = 'Performed <strong style="color: var(--ink);">Twice-Weekly</strong> during scheduled dog service visits. Bundle & Save!';
+    } else if (dogFreq === 'biweekly') {
+      catBundledTitle.innerText = 'Add Bundled Litter Box Scooping (Unlimited Boxes - Flat Rate)';
+      catBundledDesc.innerHTML = 'Performed <strong style="color: var(--ink);">Bi-Weekly</strong> during scheduled dog service visits. Bundle & Save!';
     } else if (dogFreq === 'onetime') {
       catBundledTitle.innerText = 'Add Bundled One-Time Litter Scooping ($35 flat)';
+      catBundledDesc.innerHTML = 'Performed during one-time dog service visit.';
     } else {
       catBundledTitle.innerText = 'Add Bundled Litter Box Scooping (Unlimited Boxes - Flat Rate)';
+      catBundledDesc.innerHTML = 'Performed during scheduled dog service visits. Bundle & Save!';
     }
 
     if (dogFreq === 'none') {
@@ -505,7 +611,6 @@
     
     document.getElementById('yard-sections-wrap').classList.toggle('ww-hidden', !document.getElementById('addon-yard-fresh').checked);
 
-    // Update Yard Fresh description label dynamically based on whether recurring service is selected
     const hasRecurringDog = dogFreq === 'weekly' || dogFreq === 'twice' || dogFreq === 'biweekly';
     const hasRecurringCat = (dogFreq !== 'none' && isCatBundledChecked && (dogFreq === 'weekly' || dogFreq === 'twice' || dogFreq === 'biweekly')) ||
                             (dogFreq === 'none' && catStandaloneFreq !== 'none' && catStandaloneFreq !== 'onetime');
@@ -515,6 +620,11 @@
     } else {
       yardFreshTitle.innerText = 'Yard Fresh Odor Treatment ($25 standalone, +$7/extra section)';
     }
+  }
+
+  function toggleCommission() {
+    commissionVisible = !commissionVisible;
+    renderQuote();
   }
 
   function formatMoney(num) { return '$' + parseFloat(num).toFixed(2); }
@@ -547,6 +657,28 @@
     updateVisibility();
     const content = document.getElementById('quote-content');
     const printCustDetails = document.getElementById('print-cust-details');
+    const btnToggle = document.getElementById('btn-toggle-comm');
+
+    // UI Updates for Customer vs Internal View State
+    if (commissionVisible) {
+        document.getElementById('quote-title').innerText = "📄 Internal Sales Summary";
+        document.getElementById('footer-customer').classList.add('ww-hidden');
+        document.getElementById('footer-internal').classList.remove('ww-hidden');
+        
+        btnToggle.innerText = "Switch to Customer View";
+        btnToggle.classList.remove('btn-outline-dark');
+        btnToggle.classList.add('btn-danger');
+        btnToggle.style.background = 'var(--danger-bg)';
+    } else {
+        document.getElementById('quote-title').innerText = "📄 Customer Quote";
+        document.getElementById('footer-customer').classList.remove('ww-hidden');
+        document.getElementById('footer-internal').classList.add('ww-hidden');
+        
+        btnToggle.innerText = "Switch to Internal View";
+        btnToggle.classList.add('btn-outline-dark');
+        btnToggle.classList.remove('btn-danger');
+        btnToggle.style.background = 'transparent';
+    }
 
     const custName = document.getElementById('cust-name').value.trim();
     const custPhone = document.getElementById('cust-phone').value.trim();
@@ -590,7 +722,7 @@
 
     let monthlyTotal = 0;
     let oneTimeTotal = 0;
-    let visitsPerMonth = 0;
+    let perVisitAddonTotal = 0;
 
     const hasDog = dogFreq !== 'none';
     const isRecurringDog = dogFreq === 'weekly' || dogFreq === 'twice' || dogFreq === 'biweekly';
@@ -603,54 +735,52 @@
 
     // --- MASTER PRICING LOGIC --- //
     
-    // RECURRING BUNDLED (Dog + Cat)
     if (isRecurringDog && hasCat) {
         hasPromoFreeScoop = true;
         let price = 0;
+        let weeklyVisitsMultiplier = 0;
         if (dogFreq === 'weekly') {
             price = 112;
-            visitsPerMonth = 4;
+            weeklyVisitsMultiplier = 1;
         } else if (dogFreq === 'twice') {
             price = 206;
-            visitsPerMonth = 8;
+            weeklyVisitsMultiplier = 2;
         } else if (dogFreq === 'biweekly') {
             price = 90;
-            visitsPerMonth = 2;
+            weeklyVisitsMultiplier = 0.5;
         }
         
-        let perVisitCost = price / visitsPerMonth;
+        let perVisitCost = (price * 12) / (52 * weeklyVisitsMultiplier);
         monthlyTotal += price;
-        monthlyItems.push(buildItemHtml(`Dog + Cat Service Bundle (${freqLabelMap[dogFreq]})`, `Unlimited dogs & boxes • (${formatMoney(perVisitCost)} / visit)`, formatMoney(price) + '/mo'));
+        monthlyItems.push(buildItemHtml(`Dog + Cat Service Bundle (${freqLabelMap[dogFreq]})`, `For ${dogs} dog(s) and ${boxes} box(es) • (${formatMoney(perVisitCost)} / visit)`, formatMoney(price) + '/mo'));
         
     } 
-    // RECURRING DOG ONLY
     else if (isRecurringDog && !hasCat) {
         hasPromoFreeScoop = true;
         let price = 0;
+        let weeklyVisitsMultiplier = 0;
         if (dogFreq === 'weekly') {
             price = 78;
-            visitsPerMonth = 4;
+            weeklyVisitsMultiplier = 1;
         } else if (dogFreq === 'twice') {
             price = 139;
-            visitsPerMonth = 8;
+            weeklyVisitsMultiplier = 2;
         } else if (dogFreq === 'biweekly') {
             price = 65;
-            visitsPerMonth = 2;
+            weeklyVisitsMultiplier = 0.5;
         }
         
-        let perVisitCost = price / visitsPerMonth;
+        let perVisitCost = (price * 12) / (52 * weeklyVisitsMultiplier);
         monthlyTotal += price;
-        monthlyItems.push(buildItemHtml(`Dog Waste Removal (${freqLabelMap[dogFreq]})`, `Unlimited dogs • (${formatMoney(perVisitCost)} / visit)`, formatMoney(price) + '/mo'));
+        monthlyItems.push(buildItemHtml(`Dog Waste Removal (${freqLabelMap[dogFreq]})`, `For ${dogs} dog(s) • (${formatMoney(perVisitCost)} / visit)`, formatMoney(price) + '/mo'));
     }
     
-    // ONE-TIME BUNDLED (Dog + Cat)
     else if (isOneTimeDog && hasCat) {
         let baseOneTimeCatPrice = 35; 
-        
         if (dogCondition === 'light') { 
             let price = 69; 
             oneTimeTotal += price;
-            oneTimeItems.push(buildItemHtml(`Dog + Cat One-Time Bundle`, `Yard 1st hr + all boxes`, formatMoney(price) + ' base'));
+            oneTimeItems.push(buildItemHtml(`Dog + Cat One-Time Bundle`, `For ${dogs} dog(s) and ${boxes} box(es) • Yard 1st hr`, formatMoney(price) + ' base'));
         } else {
             let dogPrice = 0, condDesc = '';
             if (dogCondition === 'moderate') { dogPrice = 75; condDesc = 'Up to 1.5 hrs yard'; }
@@ -659,11 +789,10 @@
             
             let price = dogPrice + baseOneTimeCatPrice; 
             oneTimeTotal += price;
-            oneTimeItems.push(buildItemHtml(`Dog + Cat One-Time Bundle`, `${condDesc} + all boxes`, formatMoney(price) + ' est.'));
+            oneTimeItems.push(buildItemHtml(`Dog + Cat One-Time Bundle`, `For ${dogs} dog(s) and ${boxes} box(es) • ${condDesc}`, formatMoney(price) + ' est.'));
         }
     }
     
-    // ONE-TIME DOG ONLY
     else if (isOneTimeDog && !hasCat) {
         let price = 0, condDesc = '', suffix = '';
         if (dogCondition === 'light') { price = 50; condDesc = 'Covers 1st hr, then $50/hr'; suffix = ' min'; }
@@ -672,36 +801,34 @@
         else if (dogCondition === 'very') { price = 125; condDesc = 'Over 2 hrs'; suffix = '+ est.'; }
         
         oneTimeTotal += price;
-        oneTimeItems.push(buildItemHtml(`One-Time Yard Cleanup`, `${condDesc}`, formatMoney(price) + suffix));
+        oneTimeItems.push(buildItemHtml(`One-Time Yard Cleanup`, `For ${dogs} dog(s) • ${condDesc}`, formatMoney(price) + suffix));
     }
     
-    // RECURRING CAT ONLY (Standalone)
     else if (!hasDog && hasCat && isRecurringCatOnly) {
         hasPromoFreeScoop = true;
         let price = 0;
+        let weeklyVisitsMultiplier = 0;
         if (catFreq === 'weekly') {
             price = 55;
-            visitsPerMonth = 4;
+            weeklyVisitsMultiplier = 1;
         } else if (catFreq === 'twice') {
             price = 95;
-            visitsPerMonth = 8;
+            weeklyVisitsMultiplier = 2;
         } else if (catFreq === 'biweekly') {
             price = 40;
-            visitsPerMonth = 2;
+            weeklyVisitsMultiplier = 0.5;
         }
         
-        let perVisitCost = price / visitsPerMonth;
+        let perVisitCost = (price * 12) / (52 * weeklyVisitsMultiplier);
         monthlyTotal += price;
-        monthlyItems.push(buildItemHtml(`Litter Box Cleaning (${freqLabelMap[catFreq]})`, `Unlimited boxes • (${formatMoney(perVisitCost)} / visit)`, formatMoney(price) + '/mo'));
+        monthlyItems.push(buildItemHtml(`Litter Box Cleaning (${freqLabelMap[catFreq]})`, `For ${boxes} box(es) • (${formatMoney(perVisitCost)} / visit)`, formatMoney(price) + '/mo'));
     }
     
-    // ONE-TIME CAT ONLY (Standalone)
     else if (!hasDog && hasCat && catFreq === 'onetime') {
         let price = 35;
         oneTimeTotal += price;
-        oneTimeItems.push(buildItemHtml(`One-Time Box Cleanup`, `Flat rate for all boxes`, formatMoney(price)));
+        oneTimeItems.push(buildItemHtml(`One-Time Box Cleanup`, `For ${boxes} box(es) • Flat rate`, formatMoney(price)));
     }
-
 
     // ADD-ONS
     if (hasCat && deepClean) {
@@ -712,6 +839,7 @@
 
     if (hasCat && litterSupply) {
       let lsPrice = 10;
+      perVisitAddonTotal += lsPrice;
       perVisitItems.push(buildItemHtml("Litter Supply", `Standard clumping litter per box`, formatMoney(lsPrice) + ' / visit'));
     }
 
@@ -720,13 +848,16 @@
       let baseRate = hasRecurringService ? 10 : 25;
       let yfPrice = baseRate + (yardSections > 1 ? (yardSections - 1) * 7 : 0);
       if (hasRecurringService) {
+        perVisitAddonTotal += yfPrice;
         perVisitItems.push(buildItemHtml("Yard Fresh Treatment (Recurring Add-On)", `${yardSections} section(s)`, formatMoney(yfPrice) + ' / visit'));
       } else {
+        oneTimeTotal += yfPrice;
         oneTimeItems.push(buildItemHtml("Yard Fresh Treatment (Standalone)", `${yardSections} section(s)`, formatMoney(yfPrice) + ' flat'));
       }
     }
 
     if (haulAway) {
+      perVisitAddonTotal += 5;
       perVisitItems.push(buildItemHtml("Waste Haul-Away", "Off-site disposal", formatMoney(5) + ' / visit'));
     }
 
@@ -735,6 +866,7 @@
     if (dogFreq === 'none' && catFreq === 'none' && !yardFresh && !haulAway && !deepClean) {
       html += `<div class="quote-item"><em>Please select a service to generate a quote.</em></div>`;
       content.innerHTML = html;
+      currentQuoteTextForMessaging = "";
       return;
     }
 
@@ -748,10 +880,27 @@
     
     let prepayDiscountAmt = cycleGrossBase * prepayDiscountRate;
     let cycleGrossDiscounted = cycleGrossBase - prepayDiscountAmt;
+    
+    // UPDATE COMMISSION CALCULATION 
+    let commBase = cycleGrossDiscounted * 0.35;
+    let commAddon = (oneTimeTotal + perVisitAddonTotal) * 0.25;
+    currentTotalCommission = commBase + commAddon;
+    let cycleTextComm = billingCycle === 1 ? '1 mo' : (billingCycle === 6 ? '6 mos' : '1 yr');
 
     if (monthlyTotal > 0) {
-      if (visitsPerMonth > 0) {
-        let totalPerVisit = monthlyTotal / visitsPerMonth;
+      let weeklyVisits = 0;
+      if (isRecurringDog) {
+          if (dogFreq === 'weekly') weeklyVisits = 1;
+          else if (dogFreq === 'twice') weeklyVisits = 2;
+          else if (dogFreq === 'biweekly') weeklyVisits = 0.5;
+      } else if (isRecurringCatOnly) {
+          if (catFreq === 'weekly') weeklyVisits = 1;
+          else if (catFreq === 'twice') weeklyVisits = 2;
+          else if (catFreq === 'biweekly') weeklyVisits = 0.5;
+      }
+      
+      if (weeklyVisits > 0) {
+        let totalPerVisit = (monthlyTotal * 12) / (52 * weeklyVisits);
         monthlyTotalDisplay = `
           <div style="display:flex; flex-direction:column; align-items:flex-end;">
             <div>${formatMoney(cycleGrossDiscounted)}${billingCycle === 1 ? '/mo' : ''}</div>
@@ -770,8 +919,20 @@
     html += buildSectionHtml("Recurring Services", monthlyItems, subTitle, monthlyTotalDisplay);
 
     // 5. FIRST MONTH / DYNAMIC PREPAY BREAKDOWN
-    if (monthlyTotal > 0 && visitsPerMonth > 0) {
-      let costPerVisit = monthlyTotal / visitsPerMonth;
+    if (monthlyTotal > 0) {
+      let weeklyVisits = 0;
+      if (isRecurringDog) {
+          if (dogFreq === 'weekly') weeklyVisits = 1;
+          else if (dogFreq === 'twice') weeklyVisits = 2;
+          else if (dogFreq === 'biweekly') weeklyVisits = 0.5;
+      } else if (isRecurringCatOnly) {
+          if (catFreq === 'weekly') weeklyVisits = 1;
+          else if (catFreq === 'twice') weeklyVisits = 2;
+          else if (catFreq === 'biweekly') weeklyVisits = 0.5;
+      }
+      
+      let costPerVisit = (monthlyTotal * 12) / (52 * weeklyVisits);
+      let monthlyVisitsApprox = (weeklyVisits * 52) / 12;
       
       let extraDiscountsAmt = 0;
       let promoNotes = [];
@@ -795,7 +956,7 @@
           html += `
             <div class="first-month-box">
               <strong style="font-size: 15px; display: block; margin-bottom: 2px;">First month: ${formatMoney(dueToday)}${notesStr}</strong>
-              <span style="font-size: 13px; color: var(--light);">Billed monthly (approx. ${visitsPerMonth} visits/mo). After that, ${formatMoney(monthlyTotal)} / mo.</span>
+              <span style="font-size: 13px; color: var(--light);">Billed monthly (approx. ${monthlyVisitsApprox.toFixed(1)} visits/mo). After that, ${formatMoney(monthlyTotal)} / mo.</span>
             </div>
           `;
         }
@@ -839,18 +1000,72 @@
 
     warnings.forEach(w => { html += `<div class="quote-warning">⚠️ ${w}</div>`; });
 
+    // SHOW NOTES AND PREFERENCES IN BOTH VIEWS
     if (prefSign || prefTreats || notes) {
-      html += `<div class="quote-section" style="margin-top:20px; border-top:1px dashed rgba(255,255,255,0.2); padding-top:16px;">
+      html += `<div class="quote-section prefs-section" style="margin-top:20px; border-top:1px dashed rgba(255,255,255,0.2); padding-top:16px;">
         <div class="quote-section-title">Customer Preferences & Notes</div>
-        <div style="font-size:13.5px; line-height:1.5;">
+        <div class="prefs-content" style="font-size:13.5px; line-height:1.5;">
           ${prefSign ? '<div>• Promotional yard sign permitted</div>' : ''}
           ${prefTreats ? '<div>• Pet treats permitted</div>' : ''}
-          ${notes ? `<div style="margin-top:6px;"><strong>Notes:</strong><br><span style="white-space:pre-wrap;">${notes}</span></div>` : ''}
+          ${notes ? `<div style="margin-top:6px;"><strong>Route Notes:</strong><br><span style="white-space:pre-wrap;">${notes}</span></div>` : ''}
         </div>
       </div>`;
     }
 
+    // INTERNAL COMMISSION APPENDED DIRECTLY TO THE QUOTE OUTPUT (CONTROLLED BY TOGGLE)
+    if (commissionVisible && (commBase > 0 || commAddon > 0)) {
+      html += `<div class="internal-comm-box">
+        <div class="quote-section-title">Internal: Commission Breakdown</div>`;
+      
+      if (commBase > 0) {
+        html += buildItemHtml("Base Commission (35%)", `Based on ${cycleTextComm} recurring total`, formatMoney(commBase));
+      }
+      if (commAddon > 0) {
+        html += buildItemHtml("Add-On Commission (25%)", "First-time & per-visit add-ons", formatMoney(commAddon));
+      }
+      
+      html += `<div class="quote-total-row">
+        <span>Total Estimated Commission</span>
+        <span style="text-align: right;">${formatMoney(currentTotalCommission)}</span>
+      </div>`;
+      html += `</div>`;
+    }
+
     content.innerHTML = html;
+
+    // --- BUILD TEXT SUMMARY FOR SMS/EMAIL ---
+    let displayName = custName ? custName : 'there';
+    let textSummary = `Hi ${displayName},\n\nHere is your custom quote from Wise Waste Services (Ref #WWS-${quoteID}):\n\n`;
+    
+    if (monthlyTotal > 0) {
+        textSummary += `• Recurring Subscription: ${formatMoney(cycleGrossDiscounted)}`;
+        textSummary += (billingCycle === 1) ? " / month\n" : ` / ${billingCycle === 6 ? '6 months' : '1 year'}\n`;
+    }
+    if (oneTimeTotal > 0) {
+        textSummary += `• One-Time Charges: ${formatMoney(oneTimeTotal)}\n`;
+    }
+    if (perVisitAddonTotal > 0) {
+        textSummary += `• Per-Visit Add-Ons: ${formatMoney(perVisitAddonTotal)} / visit\n`;
+    }
+    
+    textSummary += `\nLet us know if you have any questions or if you'd like to get on the schedule!\n\n- Wise Waste Services\n(940) 247-0522\nwisewastetx.com`;
+    
+    currentQuoteTextForMessaging = textSummary;
+  }
+
+  function sendSMS() {
+    const phone = document.getElementById('cust-phone').value.replace(/\D/g,'');
+    if (!currentQuoteTextForMessaging) return alert("Please select a service first.");
+    const url = `sms:${phone}?&body=${encodeURIComponent(currentQuoteTextForMessaging)}`;
+    window.location.href = url;
+  }
+
+  function sendEmail() {
+    const email = document.getElementById('cust-email').value;
+    if (!currentQuoteTextForMessaging) return alert("Please select a service first.");
+    const subject = `Your Quote from Wise Waste Services (WWS-${quoteID})`;
+    const url = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(currentQuoteTextForMessaging)}`;
+    window.location.href = url;
   }
 
   function resetForm() {
@@ -871,6 +1086,7 @@
     document.getElementById('pref-treats').checked = false;
     document.getElementById('promo-10').checked = false;
     document.getElementById('billing-cycle').value = '1';
+    commissionVisible = false;
     renderQuote();
   }
 
