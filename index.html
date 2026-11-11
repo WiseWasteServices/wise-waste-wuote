@@ -377,6 +377,37 @@
       transform: none;
     }
 
+    /* BRAND GREEN BUTTON + WARM GOLD GLOW EFFECT */
+    #ww-quote .ww-final-glow-btn {
+      background: var(--green) !important;
+      border-color: var(--green) !important;
+      font-size: 17px !important;
+      letter-spacing: 0.3px;
+      /* Warm gold glowing aura shadow */
+      box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.4), 0 6px 20px rgba(212, 175, 55, 0.35) !important;
+      animation: wwGoldGlowPulse 2.5s infinite ease-in-out;
+    }
+
+    @keyframes wwGoldGlowPulse {
+      0% {
+        box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3), 0 6px 16px rgba(212, 175, 55, 0.3);
+      }
+      50% {
+        box-shadow: 0 0 0 7px rgba(212, 175, 55, 0.55), 0 8px 24px rgba(212, 175, 55, 0.5);
+      }
+      100% {
+        box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3), 0 6px 16px rgba(212, 175, 55, 0.3);
+      }
+    }
+
+    #ww-quote .ww-final-glow-btn:hover:not(:disabled) {
+      background: var(--green-hover) !important;
+      border-color: var(--green-hover) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 0 0 6px rgba(212, 175, 55, 0.6), 0 10px 26px rgba(212, 175, 55, 0.6) !important;
+      animation: none;
+    }
+
     #ww-quote .ww-secondary-btn {
       flex: 1;
       min-height: 54px;
@@ -658,8 +689,20 @@
             </div>
           </div>
 
-          <label class="ww-label" for="ww-customer-address">Service address <span class="ww-required">*</span></label>
-          <input id="ww-customer-address" name="street-address" type="text" autocomplete="street-address" placeholder="123 Main St, Decatur, TX 76234">
+          <!-- SPLIT ADDRESS FIELDS -->
+          <label class="ww-label" for="ww-customer-street">Street address <span class="ww-required">*</span></label>
+          <input id="ww-customer-street" name="street-address" type="text" autocomplete="address-line1" placeholder="123 Main St">
+
+          <div class="ww-grid" style="margin-top: 14px;">
+            <div>
+              <label class="ww-label" for="ww-customer-city">City <span class="ww-required">*</span></label>
+              <input id="ww-customer-city" name="city" type="text" autocomplete="address-level2" value="Decatur" placeholder="Decatur">
+            </div>
+            <div>
+              <label class="ww-label" for="ww-customer-zip">ZIP code <span class="ww-required">*</span></label>
+              <input id="ww-customer-zip" name="postal-code" type="text" autocomplete="postal-code" placeholder="76234">
+            </div>
+          </div>
 
           <div id="ww-err-1" class="ww-status-msg ww-hidden"></div>
           
@@ -874,7 +917,8 @@
           <div id="ww-s2-error" class="ww-status-msg ww-hidden"></div>
 
           <div class="ww-nav-row" style="flex-direction: column; gap:10px;">
-            <button type="button" class="ww-primary-btn" id="ww-submit-quote-btn" style="width:100%;">Submit Quote 🚀</button>
+            <!-- BRAND GREEN BUTTON + GOLD GLOW EFFECT -->
+            <button type="button" class="ww-primary-btn ww-final-glow-btn" id="ww-submit-quote-btn" style="width:100%;">Submit Quote 🚀</button>
             <button type="button" class="ww-secondary-btn" onclick="goToStep(1)" style="width:100%; border:none; background:transparent;">← Restart & Edit Selections</button>
           </div>
 
@@ -900,10 +944,22 @@
         </div>
       </div>
 
-      <label class="ww-label" for="ww-comm-address">Property Address <span class="ww-required">*</span></label>
-      <input id="ww-comm-address" name="street-address" type="text" autocomplete="street-address" placeholder="123 Main St, City, TX ZIP">
+      <!-- COMM SPLIT ADDRESS -->
+      <label class="ww-label" for="ww-comm-street">Property Street Address <span class="ww-required">*</span></label>
+      <input id="ww-comm-street" name="street-address" type="text" autocomplete="address-line1" placeholder="123 Main St">
 
-      <label class="ww-label" for="ww-comm-type">Property Type <span class="ww-required">*</span></label>
+      <div class="ww-grid" style="margin-top: 14px;">
+        <div>
+          <label class="ww-label" for="ww-comm-city">City <span class="ww-required">*</span></label>
+          <input id="ww-comm-city" name="city" type="text" autocomplete="address-level2" value="Decatur" placeholder="Decatur">
+        </div>
+        <div>
+          <label class="ww-label" for="ww-comm-zip">ZIP Code <span class="ww-required">*</span></label>
+          <input id="ww-comm-zip" name="postal-code" type="text" autocomplete="postal-code" placeholder="76234">
+        </div>
+      </div>
+
+      <label class="ww-label" for="ww-comm-type" style="margin-top: 14px;">Property Type <span class="ww-required">*</span></label>
       <select id="ww-comm-type" name="property_type">
         <option value="Apartment Community">Apartment Community</option>
         <option value="HOA / Subdivision">HOA / Subdivision</option>
@@ -931,7 +987,8 @@
       <div id="ww-comm-error" class="ww-status-msg ww-hidden"></div>
       
       <div class="ww-nav-row">
-        <button type="button" class="ww-primary-btn" id="ww-submit-comm-quote" style="width: 100%;">Send Request ✉️</button>
+        <!-- COMMERCIAL GOLD GLOW BUTTON -->
+        <button type="button" class="ww-primary-btn ww-final-glow-btn" id="ww-submit-comm-quote" style="width: 100%;">Send Request ✉️</button>
       </div>
     </div>
   </form>
@@ -990,6 +1047,21 @@
   window.addEventListener('load', scheduleHeightReport);
   window.addEventListener('resize', scheduleHeightReport);
 
+  /* FORMAT 1-LINER ADDRESS HELPER */
+  function getFormattedAddress(streetId, cityId, zipId) {
+    const street = $(streetId).value.trim();
+    const city = $(cityId).value.trim();
+    const zip = $(zipId).value.trim();
+    
+    let parts = [];
+    if (street) parts.push(street);
+    if (city) parts.push(city);
+    if (zip) {
+      parts.push('TX ' + zip);
+    }
+    return parts.join(', ');
+  }
+
   /* DYNAMIC YARD FRESH LABEL UPDATER */
   function updateYardFreshLabel() {
     const dogFreq = $('ww-dog-frequency').value;
@@ -1022,12 +1094,14 @@
       const name = $('ww-customer-name').value.trim();
       const phoneDigits = $('ww-customer-phone').value.replace(/\D/g, '');
       const email = $('ww-customer-email').value.trim();
-      const address = $('ww-customer-address').value.trim();
+      const street = $('ww-customer-street').value.trim();
+      const city = $('ww-customer-city').value.trim();
+      const zip = $('ww-customer-zip').value.trim();
 
       if (!name) { $('ww-err-1').textContent = 'Please enter your full name.'; show('ww-err-1', true); return; }
       if (phoneDigits.length < 10) { $('ww-err-1').textContent = 'Please enter a valid 10-digit phone number.'; show('ww-err-1', true); return; }
       if (email && !$('ww-customer-email').checkValidity()) { $('ww-err-1').textContent = 'Please enter a valid email address.'; show('ww-err-1', true); return; }
-      if (!address) { $('ww-err-1').textContent = 'Please enter your service address.'; show('ww-err-1', true); return; }
+      if (!street || !city || !zip) { $('ww-err-1').textContent = 'Please complete your street address, city, and ZIP code.'; show('ww-err-1', true); return; }
     }
 
     if (targetStep === 4) {
@@ -1104,12 +1178,12 @@
     const name = $('ww-customer-name').value.trim();
     const phone = $('ww-customer-phone').value.trim();
     const email = $('ww-customer-email').value.trim();
-    const address = $('ww-customer-address').value.trim();
+    const address = getFormattedAddress('ww-customer-street', 'ww-customer-city', 'ww-customer-zip');
     const userNotes = $('ww-extra-details').value.trim();
     const yardSign = $('ww-yard-sign').checked ? 'Yes' : 'No';
     const petTreats = $('ww-pet-treats').checked ? 'Yes' : 'No';
     const dogsCount = getNum('ww-dogs');
-    const boxesCount = getNum('ww-boxes');
+    const boxesCount = quoteState.hasCat ? getNum('ww-boxes') : 0;
     
     const servicesList = [];
     const isRecDog = quoteState.dogFreq === 'weekly' || quoteState.dogFreq === 'twice' || quoteState.dogFreq === 'biweekly';
@@ -1136,13 +1210,13 @@
       leadType: 'partial',
       name: name, address: address, phone: phone, contactMethod: email ? 'Text / Phone / Email' : 'Text / Phone', email: email,
       contactTime: 'Anytime', customerType: 'Residential', services: servicesList.join(', '), dogs: String(dogsCount),
-      dogFrequency: quoteState.dogFreq, boxes: String(boxesCount), litterFrequency: quoteState.catMode, initial: 'No (First Scoop Free Promo)',
+      dogFrequency: quoteState.dogFreq, boxes: quoteState.hasCat ? String(boxesCount) : '0', litterFrequency: quoteState.hasCat ? quoteState.catMode : 'None', initial: 'No (First Scoop Free Promo)',
       onetime: quoteState.dogFreq === 'onetime' ? 'Yes' : 'No', onetimeDogs: quoteState.dogFreq === 'onetime' ? String(dogsCount) : '0',
       condition: quoteState.condition, fresh: quoteState.yardFreshAddon ? 'Yes' : 'No', sections: String(quoteState.sections),
       deepClean: quoteState.catDeepClean ? 'Yes' : 'No', deepBoxes: quoteState.catDeepClean ? String(boxesCount) : '0', 
       haulAway: quoteState.haulAway ? 'Yes' : 'No', perVisitPrice: quoteState.perVisitText,
-      firstTotal: quoteState.perVisitText, dogPrice: quoteState.dogPriceText, catPrice: quoteState.catPriceText, dogBilling: quoteState.dogBillingText,
-      catBilling: quoteState.catBillingText, yardSign: yardSign, petTreats: petTreats, notes: combinedNotes, website: ''
+      firstTotal: quoteState.perVisitText, dogPrice: quoteState.dogPriceText, catPrice: quoteState.hasCat ? quoteState.catPriceText : '$0.00', dogBilling: quoteState.dogBillingText,
+      catBilling: quoteState.hasCat ? quoteState.catBillingText : 'No cat litter service', yardSign: yardSign, petTreats: petTreats, notes: combinedNotes, website: ''
     };
 
     fetch(QUOTE_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ payload: JSON.stringify(payload) }) }).catch(()=>{});
@@ -1530,12 +1604,12 @@
     const name = $('ww-customer-name').value.trim();
     const phone = $('ww-customer-phone').value.trim();
     const email = $('ww-customer-email').value.trim();
-    const address = $('ww-customer-address').value.trim();
+    const address = getFormattedAddress('ww-customer-street', 'ww-customer-city', 'ww-customer-zip');
     const userNotes = $('ww-extra-details').value.trim();
     const yardSign = $('ww-yard-sign').checked ? 'Yes' : 'No';
     const petTreats = $('ww-pet-treats').checked ? 'Yes' : 'No';
     const dogsCount = getNum('ww-dogs');
-    const boxesCount = getNum('ww-boxes');
+    const boxesCount = quoteState.hasCat ? getNum('ww-boxes') : 0;
     
     const servicesList = [];
     const isRecDog = quoteState.dogFreq === 'weekly' || quoteState.dogFreq === 'twice' || quoteState.dogFreq === 'biweekly';
@@ -1562,13 +1636,13 @@
       leadType: 'final',
       name: name, address: address, phone: phone, contactMethod: email ? 'Text / Phone / Email' : 'Text / Phone', email: email,
       contactTime: 'Anytime', customerType: 'Residential', services: servicesList.join(', '), dogs: String(dogsCount),
-      dogFrequency: quoteState.dogFreq, boxes: String(boxesCount), litterFrequency: quoteState.catMode, initial: 'No (First Scoop Free Promo)',
+      dogFrequency: quoteState.dogFreq, boxes: quoteState.hasCat ? String(boxesCount) : '0', litterFrequency: quoteState.hasCat ? quoteState.catMode : 'None', initial: 'No (First Scoop Free Promo)',
       onetime: quoteState.dogFreq === 'onetime' ? 'Yes' : 'No', onetimeDogs: quoteState.dogFreq === 'onetime' ? String(dogsCount) : '0',
       condition: quoteState.condition, fresh: quoteState.yardFreshAddon ? 'Yes' : 'No', sections: String(quoteState.sections),
       deepClean: quoteState.catDeepClean ? 'Yes' : 'No', deepBoxes: quoteState.catDeepClean ? String(boxesCount) : '0', 
       haulAway: quoteState.haulAway ? 'Yes' : 'No', perVisitPrice: quoteState.perVisitText,
-      firstTotal: quoteState.perVisitText, dogPrice: quoteState.dogPriceText, catPrice: quoteState.catPriceText, dogBilling: quoteState.dogBillingText,
-      catBilling: quoteState.catBillingText, yardSign: yardSign, petTreats: petTreats, notes: combinedNotes, website: ''
+      firstTotal: quoteState.perVisitText, dogPrice: quoteState.dogPriceText, catPrice: quoteState.hasCat ? quoteState.catPriceText : '$0.00', dogBilling: quoteState.dogBillingText,
+      catBilling: quoteState.hasCat ? quoteState.catBillingText : 'No cat litter service', yardSign: yardSign, petTreats: petTreats, notes: combinedNotes, website: ''
     };
 
     show('ww-s2-error', false);
@@ -1598,12 +1672,12 @@
 
     const businessName = $('ww-comm-business').value.trim();
     const contactName = $('ww-comm-name').value.trim();
-    const propertyAddress = $('ww-comm-address').value.trim();
+    const propertyAddress = getFormattedAddress('ww-comm-street', 'ww-comm-city', 'ww-comm-zip');
     const phone = $('ww-comm-phone').value.trim();
     const email = $('ww-comm-email').value.trim();
 
     if (!businessName || !contactName || !propertyAddress || !phone) {
-      $('ww-comm-error').textContent = 'Please complete your business name, contact name, property address, and phone number.';
+      $('ww-comm-error').textContent = 'Please complete your business name, contact name, property address, city, ZIP code, and phone number.';
       show('ww-comm-error', true); scheduleHeightReport(); return;
     }
     if (email && !$('ww-comm-email').checkValidity()) {
