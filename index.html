@@ -36,6 +36,8 @@
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
       overflow-anchor: none;
+      overflow: hidden; /* Prevents sparkles from tricking height calculations */
+      padding-bottom: 20px; /* Small buffer */
     }
 
     #ww-quote * {
@@ -1011,6 +1013,9 @@
 
 </div>
 
+<!-- OFFICIAL IFRAME RESIZER COMPANION SCRIPT -->
+<script src="https://cdn.jsdelivr.net/npm/iframe-resizer@4.3.9/js/iframeResizer.contentWindow.min.js"></script>
+
 <script>
 (function() {
   const root = document.getElementById('ww-quote');
@@ -1023,42 +1028,6 @@
     const el = $(id); 
     if(el) el.classList.toggle('ww-hidden', !visible); 
   };
-
-  /* NEW AGGRESSIVE HEIGHT REPORTER */
-  let heightReportPending = false;
-  function reportCalculatorHeight() {
-    heightReportPending = false;
-    if (window.parent === window) return;
-    
-    // Measure the ENTIRE document height, not just the form
-    const body = document.body;
-    const html = document.documentElement;
-    const height = Math.max(
-      body.scrollHeight, body.offsetHeight, 
-      html.clientHeight, html.scrollHeight, html.offsetHeight
-    );
-    
-    // Send the true height + a 50px safety buffer to guarantee no cut-offs
-    window.parent.postMessage({ type: 'ww-quote-height', height: height + 50 }, '*');
-  }
-  
-  function scheduleHeightReport() {
-    if (heightReportPending) return;
-    heightReportPending = true;
-    requestAnimationFrame(function() { requestAnimationFrame(reportCalculatorHeight); });
-  }
-
-  window.addEventListener('message', function(event) {
-    if (event.source !== window.parent) return;
-    if (!event.data || event.data.type !== 'ww-quote-request-height') return;
-    scheduleHeightReport();
-  });
-
-  window.addEventListener('load', scheduleHeightReport);
-  window.addEventListener('resize', scheduleHeightReport);
-
-  // Push the height update automatically every half-second just to be safe
-  setInterval(scheduleHeightReport, 500);
 
   /* FORMAT 1-LINER ADDRESS HELPER */
   function getFormattedAddress(streetId, cityId, zipId) {
@@ -1128,9 +1097,9 @@
     show('ww-step-' + targetStep, true);
 
     // Send postMessage to parent frame to scroll up
-    window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-    
-    scheduleHeightReport();
+    if ('parentIFrame' in window) {
+      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
+    }
   };
 
   /* UNIFIED BURST EFFECTS */
@@ -1261,9 +1230,9 @@
     setTimeout(fireSparkles, 100); 
 
     // Send postMessage to parent frame to scroll up
-    window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-    
-    scheduleHeightReport();
+    if ('parentIFrame' in window) {
+      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
+    }
   };
 
   const money = function(n) { return n.toLocaleString('en-US', { style: 'currency', currency: 'USD' }); };
@@ -1288,7 +1257,6 @@
     goToStep(1);
     $('ww-res-tab').setAttribute('aria-pressed', 'true');
     $('ww-com-tab').setAttribute('aria-pressed', 'false');
-    scheduleHeightReport();
   });
 
   $('ww-com-tab').addEventListener('click', function() {
@@ -1296,7 +1264,6 @@
     show('ww-commercial', true);
     $('ww-res-tab').setAttribute('aria-pressed', 'false');
     $('ww-com-tab').setAttribute('aria-pressed', 'true');
-    scheduleHeightReport();
   });
 
   function updateScreen1Visibility() {
@@ -1349,20 +1316,17 @@
 
     show('ww-dog-count-wrap', dogFreq !== 'none');
     show('ww-condition-wrap', dogFreq === 'onetime');
-    scheduleHeightReport();
   }
 
   $('ww-dog-frequency').addEventListener('change', updateScreen1Visibility);
   $('ww-cat-add-service').addEventListener('change', function() {
     show('ww-box-count-wrap', this.checked);
     show('ww-cat-desc', this.checked);
-    scheduleHeightReport();
   });
   $('ww-cat-standalone-freq').addEventListener('change', function() {
     const active = (this.value !== 'none');
     show('ww-box-count-wrap', active);
     show('ww-cat-desc', active);
-    scheduleHeightReport();
   });
 
   root.querySelectorAll('[data-step]').forEach(function(btn) {
@@ -1375,14 +1339,12 @@
       const step = parseInt(btn.getAttribute('data-step'), 10) || 0;
       field.value = Math.max(min, Math.min(max, (parseInt(field.value, 10) || min) + step));
       if (!$('ww-screen-2').classList.contains('ww-hidden')) calculateAndRenderQuote();
-      scheduleHeightReport();
     });
   });
 
   $('ww-addon-yard-fresh').addEventListener('change', function() {
     show('ww-yard-sections-box', this.checked);
     calculateAndRenderQuote();
-    scheduleHeightReport();
   });
 
   function renderLine(title, desc, priceText, subPriceText) {
@@ -1672,15 +1634,16 @@
     setTimeout(fireConfetti, 100);
 
     // Send postMessage to parent frame to scroll up to success screen
-    window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-    scheduleHeightReport();
+    if ('parentIFrame' in window) {
+      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
+    }
 
     fetch(QUOTE_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ payload: JSON.stringify(payload) }) })
       .catch((error) => {
         show('ww-success-screen', false); show('ww-screen-2', true);
         this.disabled = false; this.textContent = 'Submit Quote 🚀';
         $('ww-s2-error').textContent = 'We could not submit your quote right now. Please try again or call/text us at (940) 247-0522.';
-        show('ww-s2-error', true); scheduleHeightReport();
+        show('ww-s2-error', true);
       });
   });
 
@@ -1697,11 +1660,11 @@
 
     if (!businessName || !contactName || !propertyAddress || !phone) {
       $('ww-comm-error').textContent = 'Please complete your business name, contact name, property address, city, ZIP code, and phone number.';
-      show('ww-comm-error', true); scheduleHeightReport(); return;
+      show('ww-comm-error', true); return;
     }
     if (email && !$('ww-comm-email').checkValidity()) {
       $('ww-comm-error').textContent = 'Please enter a valid email address or leave it blank.';
-      show('ww-comm-error', true); scheduleHeightReport(); return;
+      show('ww-comm-error', true); return;
     }
 
     const payload = {
@@ -1719,20 +1682,20 @@
     setTimeout(fireConfetti, 100);
     
     // Send postMessage to parent frame to scroll up to success screen
-    window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-    scheduleHeightReport();
+    if ('parentIFrame' in window) {
+      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
+    }
 
     fetch(QUOTE_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ payload: JSON.stringify(payload) }) })
       .catch(function() {
         show('ww-success-screen', false); show('ww-commercial', true);
         commBtn.disabled = false; commBtn.textContent = 'Send Request ✉️';
         $('ww-comm-error').textContent = 'We could not send your request. Please try again or call (940) 247-0522.';
-        show('ww-comm-error', true); scheduleHeightReport();
+        show('ww-comm-error', true);
       });
   });
 
   updateScreen1Visibility();
-  scheduleHeightReport();
 })();
 </script>
 
