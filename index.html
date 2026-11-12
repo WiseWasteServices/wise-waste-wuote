@@ -36,8 +36,6 @@
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
       overflow-anchor: none;
-      overflow: hidden; /* Prevents sparkles from tricking height calculations */
-      padding-bottom: 20px; /* Small buffer */
     }
 
     #ww-quote * {
@@ -1013,9 +1011,6 @@
 
 </div>
 
-<!-- OFFICIAL IFRAME RESIZER COMPANION SCRIPT -->
-<script src="https://cdn.jsdelivr.net/npm/iframe-resizer@4.3.9/js/iframeResizer.contentWindow.min.js"></script>
-
 <script>
 (function() {
   const root = document.getElementById('ww-quote');
@@ -1028,6 +1023,26 @@
     const el = $(id); 
     if(el) el.classList.toggle('ww-hidden', !visible); 
   };
+
+  /* NATIVE MUTATION OBSERVER HEIGHT REPORTER */
+  function reportHeight() {
+    if (window.parent === window) return;
+    // Measure the true height of the page
+    const height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    window.parent.postMessage({ type: 'ww-quote-height', height: height }, '*');
+  }
+
+  // Run when page loads or resizes
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+
+  // NATIVE OBSERVER: Instantly fires anytime an element changes on the page
+  const observer = new MutationObserver(reportHeight);
+  observer.observe(document.body, { childList: true, subtree: true, attributes: true, characterData: true });
+
+  // Backup heartbeat every 1 second just in case
+  setInterval(reportHeight, 1000);
+
 
   /* FORMAT 1-LINER ADDRESS HELPER */
   function getFormattedAddress(streetId, cityId, zipId) {
@@ -1097,9 +1112,7 @@
     show('ww-step-' + targetStep, true);
 
     // Send postMessage to parent frame to scroll up
-    if ('parentIFrame' in window) {
-      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-    }
+    window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
   };
 
   /* UNIFIED BURST EFFECTS */
@@ -1230,9 +1243,7 @@
     setTimeout(fireSparkles, 100); 
 
     // Send postMessage to parent frame to scroll up
-    if ('parentIFrame' in window) {
-      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-    }
+    window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
   };
 
   const money = function(n) { return n.toLocaleString('en-US', { style: 'currency', currency: 'USD' }); };
@@ -1634,9 +1645,7 @@
     setTimeout(fireConfetti, 100);
 
     // Send postMessage to parent frame to scroll up to success screen
-    if ('parentIFrame' in window) {
-      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-    }
+    window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
 
     fetch(QUOTE_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ payload: JSON.stringify(payload) }) })
       .catch((error) => {
@@ -1682,9 +1691,7 @@
     setTimeout(fireConfetti, 100);
     
     // Send postMessage to parent frame to scroll up to success screen
-    if ('parentIFrame' in window) {
-      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-    }
+    window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
 
     fetch(QUOTE_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ payload: JSON.stringify(payload) }) })
       .catch(function() {
