@@ -36,7 +36,6 @@
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
       overflow-anchor: none;
-      padding-bottom: 20px; /* Safety padding inside the frame */
     }
 
     #ww-quote * {
@@ -625,19 +624,29 @@
       text-decoration: underline;
     }
 
+    /* --- THE NEW TIGHTENED MOBILE CSS --- */
     @media (max-width: 640px) {
-      body { padding: 15px 5px !important; }
-      #ww-quote .ww-panel, #ww-screen-2-content { padding: 18px 14px; margin-bottom: 12px; }
-      #ww-quote .ww-grid { grid-template-columns: 1fr; gap: 0; }
-      #ww-quote h2 { font-size: 24px; }
-      #ww-quote .ww-big-price { font-size: 30px; }
-      #ww-quote select, #ww-quote input:not([type="checkbox"]):not([type="radio"]), #ww-quote textarea { font-size: 16px; }
-      #ww-quote .ww-number { max-width: 100%; }
-      #ww-quote .ww-receipt-box { padding: 14px 12px; }
-      #ww-quote .ww-summary-line { font-size: 13.5px; gap: 10px; }
-      #ww-quote .ww-summary-title, #ww-quote .ww-summary-price { font-size: 13.5px; }
-      #ww-quote .ww-nav-row { flex-direction: column-reverse; }
-      #ww-quote .ww-secondary-btn, #ww-quote .ww-primary-btn { width: 100%; flex: none; }
+      body { padding: 10px 5px !important; }
+      #ww-quote { font-size: 14px; }
+      #ww-intro-block { padding: 12px !important; margin-bottom: 12px !important;}
+      #ww-quote .ww-panel, #ww-screen-2-content { padding: 14px 12px; margin-bottom: 10px; }
+      #ww-quote .ww-grid { grid-template-columns: 1fr; gap: 8px; }
+      #ww-quote h2 { font-size: 17px !important; }
+      #ww-quote h3 { font-size: 16px; margin-bottom: 2px; }
+      #ww-quote .ww-step-indicator { margin-bottom: 12px; }
+      #ww-quote .ww-label { margin: 10px 0 4px; font-size: 13.5px; }
+      #ww-quote select, #ww-quote input:not([type="checkbox"]):not([type="radio"]) { min-height: 40px; font-size: 16px; padding: 6px 10px;}
+      #ww-quote textarea { min-height: 60px; font-size: 16px; }
+      #ww-quote .ww-number button { height: 38px; font-size: 18px; }
+      #ww-quote .ww-number input { min-height: 38px; }
+      #ww-quote .ww-choice { padding: 10px; margin-bottom: 8px !important; }
+      #ww-quote .ww-compact-check { font-size: 13px; margin-bottom: 6px; }
+      #ww-quote .ww-big-price { font-size: 26px; }
+      #ww-quote .ww-receipt-box { padding: 12px 10px; margin-bottom: 14px; }
+      #ww-quote .ww-summary-line { font-size: 13px; gap: 8px; padding: 6px 0; }
+      #ww-quote .ww-summary-title, #ww-quote .ww-summary-price { font-size: 13px; }
+      #ww-quote .ww-nav-row { flex-direction: column-reverse; margin-top: 12px; gap: 8px; }
+      #ww-quote .ww-secondary-btn, #ww-quote .ww-primary-btn { width: 100%; flex: none; min-height: 44px; padding: 8px; font-size: 15px; }
     }
   </style>
 </head>
@@ -1001,7 +1010,7 @@
     </div>
     <h2 style="margin:0 0 10px; color:var(--ink);">You're all set!</h2>
     <p style="color:var(--muted); max-width:460px; margin:0 auto 18px; font-size:16px;">
-      Thank you for choosing Wise Scoopers! We will contact you shortly to confirm your details and get your first visit on the schedule.
+      Thank you for choosing Wise Waste Services! We will contact you shortly to confirm your details and get your first visit on the schedule.
     </p>
     <div style="padding:16px; background:var(--cream); border-radius:12px; border:1px solid var(--border); display:inline-block;">
       <p style="font-size:14.5px; color:var(--ink); margin:0;">
@@ -1025,17 +1034,28 @@
     if(el) el.classList.toggle('ww-hidden', !visible); 
   };
 
-  /* NATIVE RESIZE OBSERVER (Bulletproof Height Reporter) */
-  if (window.parent !== window && 'ResizeObserver' in window) {
-    const observer = new ResizeObserver(entries => {
-      for (let entry of entries) {
-        // Send exactly the size of the #ww-quote box to Carrd
-        window.parent.postMessage({ type: 'ww-quote-height', height: entry.contentRect.height }, '*');
-      }
-    });
-    // Watch only the quote container
-    observer.observe(root);
+  /* HEIGHT REPORTER */
+  let heightReportPending = false;
+  function reportCalculatorHeight() {
+    heightReportPending = false;
+    if (window.parent === window) return;
+    const height = Math.ceil(root.getBoundingClientRect().height + 30);
+    window.parent.postMessage({ type: 'ww-quote-height', height: height }, '*');
   }
+  function scheduleHeightReport() {
+    if (heightReportPending) return;
+    heightReportPending = true;
+    requestAnimationFrame(function() { requestAnimationFrame(reportCalculatorHeight); });
+  }
+
+  window.addEventListener('message', function(event) {
+    if (event.source !== window.parent) return;
+    if (!event.data || event.data.type !== 'ww-quote-request-height') return;
+    scheduleHeightReport();
+  });
+
+  window.addEventListener('load', scheduleHeightReport);
+  window.addEventListener('resize', scheduleHeightReport);
 
   /* FORMAT 1-LINER ADDRESS HELPER */
   function getFormattedAddress(streetId, cityId, zipId) {
@@ -1104,8 +1124,8 @@
 
     show('ww-step-' + targetStep, true);
 
-    // Send postMessage to parent frame to scroll up
-    window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
+    try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {}
+    scheduleHeightReport();
   };
 
   /* UNIFIED BURST EFFECTS */
@@ -1235,10 +1255,8 @@
     
     setTimeout(fireSparkles, 100); 
 
-    // Send postMessage to parent frame to scroll up
-    if ('parentIFrame' in window) {
-      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-    }
+    try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {}
+    scheduleHeightReport();
   };
 
   const money = function(n) { return n.toLocaleString('en-US', { style: 'currency', currency: 'USD' }); };
@@ -1263,6 +1281,7 @@
     goToStep(1);
     $('ww-res-tab').setAttribute('aria-pressed', 'true');
     $('ww-com-tab').setAttribute('aria-pressed', 'false');
+    scheduleHeightReport();
   });
 
   $('ww-com-tab').addEventListener('click', function() {
@@ -1270,6 +1289,7 @@
     show('ww-commercial', true);
     $('ww-res-tab').setAttribute('aria-pressed', 'false');
     $('ww-com-tab').setAttribute('aria-pressed', 'true');
+    scheduleHeightReport();
   });
 
   function updateScreen1Visibility() {
@@ -1322,17 +1342,20 @@
 
     show('ww-dog-count-wrap', dogFreq !== 'none');
     show('ww-condition-wrap', dogFreq === 'onetime');
+    scheduleHeightReport();
   }
 
   $('ww-dog-frequency').addEventListener('change', updateScreen1Visibility);
   $('ww-cat-add-service').addEventListener('change', function() {
     show('ww-box-count-wrap', this.checked);
     show('ww-cat-desc', this.checked);
+    scheduleHeightReport();
   });
   $('ww-cat-standalone-freq').addEventListener('change', function() {
     const active = (this.value !== 'none');
     show('ww-box-count-wrap', active);
     show('ww-cat-desc', active);
+    scheduleHeightReport();
   });
 
   root.querySelectorAll('[data-step]').forEach(function(btn) {
@@ -1345,12 +1368,14 @@
       const step = parseInt(btn.getAttribute('data-step'), 10) || 0;
       field.value = Math.max(min, Math.min(max, (parseInt(field.value, 10) || min) + step));
       if (!$('ww-screen-2').classList.contains('ww-hidden')) calculateAndRenderQuote();
+      scheduleHeightReport();
     });
   });
 
   $('ww-addon-yard-fresh').addEventListener('change', function() {
     show('ww-yard-sections-box', this.checked);
     calculateAndRenderQuote();
+    scheduleHeightReport();
   });
 
   function renderLine(title, desc, priceText, subPriceText) {
@@ -1639,17 +1664,14 @@
     
     setTimeout(fireConfetti, 100);
 
-    // Send postMessage to parent frame to scroll up to success screen
-    if ('parentIFrame' in window) {
-      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-    }
+    scheduleHeightReport();
 
     fetch(QUOTE_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ payload: JSON.stringify(payload) }) })
       .catch((error) => {
         show('ww-success-screen', false); show('ww-screen-2', true);
         this.disabled = false; this.textContent = 'Submit Quote 🚀';
         $('ww-s2-error').textContent = 'We could not submit your quote right now. Please try again or call/text us at (940) 247-0522.';
-        show('ww-s2-error', true);
+        show('ww-s2-error', true); scheduleHeightReport();
       });
   });
 
@@ -1666,11 +1688,11 @@
 
     if (!businessName || !contactName || !propertyAddress || !phone) {
       $('ww-comm-error').textContent = 'Please complete your business name, contact name, property address, city, ZIP code, and phone number.';
-      show('ww-comm-error', true); return;
+      show('ww-comm-error', true); scheduleHeightReport(); return;
     }
     if (email && !$('ww-comm-email').checkValidity()) {
       $('ww-comm-error').textContent = 'Please enter a valid email address or leave it blank.';
-      show('ww-comm-error', true); return;
+      show('ww-comm-error', true); scheduleHeightReport(); return;
     }
 
     const payload = {
@@ -1687,21 +1709,19 @@
     
     setTimeout(fireConfetti, 100);
     
-    // Send postMessage to parent frame to scroll up to success screen
-    if ('parentIFrame' in window) {
-      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-    }
+    scheduleHeightReport();
 
     fetch(QUOTE_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ payload: JSON.stringify(payload) }) })
       .catch(function() {
         show('ww-success-screen', false); show('ww-commercial', true);
         commBtn.disabled = false; commBtn.textContent = 'Send Request ✉️';
         $('ww-comm-error').textContent = 'We could not send your request. Please try again or call (940) 247-0522.';
-        show('ww-comm-error', true);
+        show('ww-comm-error', true); scheduleHeightReport();
       });
   });
 
   updateScreen1Visibility();
+  scheduleHeightReport();
 })();
 </script>
 
