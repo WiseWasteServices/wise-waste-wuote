@@ -1,878 +1,1793 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Instant Quote | Wise Waste Services</title>
+
   <style>
+
     /* Prevent mobile scroll anchoring jumps */
+
     body {
+
       overflow-anchor: none;
+
     }
+
+
 
     #ww-quote {
+
       --green: #263A2D;
+
       --green-hover: #1d2d23;
+
       --green-soft: #eef3ee;
+
       --light: #D5DFCE;
+
       --cream: #F4F7F4;
+
       --ink: #1E2C22;
+
       --muted: #647267;
+
       --border: #cfdbd0;
+
       --border-strong: #b0c2b2;
+
       --danger: #9b3028;
+
       --danger-bg: #fdf2f1;
+
       --shadow-sm: 0 2px 8px rgba(30, 44, 34, 0.05);
+
       --shadow-md: 0 8px 24px rgba(30, 44, 34, 0.08);
+
       --radius-lg: 16px;
+
       --radius-md: 12px;
+
       --radius-sm: 9px;
+
       position: relative;
+
       font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+
       color: var(--ink);
+
       max-width: 680px;
+
       margin: 0 auto;
+
       font-size: 15px;
+
       line-height: 1.5;
+
       -webkit-font-smoothing: antialiased;
+
       padding-bottom: 20px;
+
     }
+
+
 
     #ww-quote * { box-sizing: border-box; }
+
     #ww-quote .ww-hidden { display: none !important; }
 
+
+
     /* UNIFIED POP ANIMATION (For both Sparkles & Confetti) */
+
     .ww-celebration {
+
       position: absolute; pointer-events: none; z-index: 50; font-size: 28px;
+
       user-select: none; opacity: 0; animation: ww-pop 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+
     }
+
     @keyframes ww-pop {
+
       0% { opacity: 0; transform: translate(0, 0) scale(0.2) rotate(0deg); }
+
       15% { opacity: 1; transform: translate(calc(var(--tx) * 0.6), calc(var(--ty) * 0.3 - 80px)) scale(1.3) rotate(calc(var(--rot) * 0.3)); }
+
       80% { opacity: 1; transform: translate(var(--tx), calc(var(--ty) * 0.8 + 120px)) scale(1) rotate(calc(var(--rot) * 0.8)); }
+
       100% { opacity: 0; transform: translate(var(--tx), calc(var(--ty) + 200px)) scale(0.5) rotate(var(--rot)); }
+
     }
+
+
 
     /* MAIN PANELS & CARDS */
+
     #ww-quote .ww-panel {
+
       background: #ffffff; border: 1px solid var(--border); border-radius: var(--radius-lg);
+
       padding: 24px; margin: 0 0 16px; box-shadow: var(--shadow-sm); position: relative; overflow: hidden;
+
     }
+
+
 
     /* SEGMENTED TABS */
+
     #ww-quote .ww-tabs {
+
       display: grid; grid-template-columns: 1fr 1fr; gap: 6px; max-width: 440px; margin: 0 auto 20px;
+
       background: var(--cream); padding: 5px; border-radius: 10px; border: 1px solid var(--border);
+
     }
+
     #ww-quote .ww-tab {
+
       display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px;
+
       padding: 8px 12px; border: none; border-radius: 7px; background: transparent; color: var(--muted);
+
       font: inherit; font-size: 14.5px; font-weight: 700; cursor: pointer; transition: all 0.15s ease;
+
     }
+
     #ww-quote .ww-tab[aria-pressed="true"] { background: var(--green); color: #ffffff; box-shadow: 0 2px 6px rgba(38, 58, 45, 0.2); }
 
+
+
     /* SECTION HEADINGS & DIVIDERS */
+
     #ww-quote .ww-divider { border: 0; height: 1px; background: var(--border); margin: 24px 0; }
+
     #ww-quote h3 { font-size: 19px; font-weight: 800; color: var(--green); margin: 0 0 16px; display: flex; align-items: center; gap: 8px; }
+
     #ww-quote .ww-muted { color: var(--muted); font-size: 13.5px; line-height: 1.45; }
+
     
+
     .ww-service-desc {
+
       margin-top: 10px; padding: 12px 16px; background: #eef3ee; border-left: 4px solid var(--green);
+
       font-size: 14px; color: var(--ink); border-radius: 0 6px 6px 0; line-height: 1.5;
+
     }
+
+
 
     /* LABELS & FORM CONTROLS */
+
     #ww-quote .ww-label { display: block; font-weight: 600; color: var(--ink); margin: 14px 0 6px; font-size: 14.5px; }
+
     #ww-quote .ww-label:first-of-type { margin-top: 0; }
+
     #ww-quote .ww-required { color: var(--danger); font-weight: 700; }
+
     
+
     #ww-quote select, #ww-quote input:not([type="checkbox"]):not([type="radio"]), #ww-quote textarea {
+
       width: 100%; min-height: 48px; border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm);
+
       padding: 10px 14px; background-color: #ffffff; color: var(--ink); font: inherit; font-size: 15px; transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
     }
+
     #ww-quote select {
+
       appearance: none; -webkit-appearance: none;
+
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23263A2D' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+
       background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; cursor: pointer;
+
     }
+
     #ww-quote select:focus, #ww-quote input:not([type="checkbox"]):not([type="radio"]):focus, #ww-quote textarea:focus {
+
       outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(213, 223, 206, 0.75);
+
     }
+
     #ww-quote textarea { min-height: 80px; resize: vertical; }
+
     #ww-quote .ww-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
     #ww-quote .ww-sub-box { background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-top: 14px; }
 
+
+
     /* STEPPER CONTROLS */
+
     #ww-quote .ww-number { display: grid; grid-template-columns: 46px minmax(0, 1fr) 46px; gap: 8px; align-items: center; max-width: 200px; }
+
     #ww-quote .ww-number button {
+
       height: 46px; border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); background: #ffffff; font-size: 20px;
+
       font-weight: 700; color: var(--green); cursor: pointer; display: flex; align-items: center; justify-content: center; user-select: none; transition: all 0.1s ease;
+
     }
+
     #ww-quote .ww-number button:hover { background: var(--light); border-color: var(--green); }
+
     #ww-quote .ww-number input { text-align: center; font-weight: 700; font-size: 16px; min-height: 46px; }
 
+
+
     /* CHECKBOX CARDS */
+
     #ww-quote input[type="checkbox"] { width: 18px; min-height: 18px; height: 18px; accent-color: var(--green); margin: 1px 12px 0 0; flex-shrink: 0; cursor: pointer; }
+
     #ww-quote .ww-choice { display: flex; align-items: flex-start; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: var(--radius-md); background: #ffffff; cursor: pointer; transition: all 0.15s ease; }
+
     #ww-quote .ww-choice:hover { border-color: var(--green); background: #fafcfa; }
+
     #ww-quote .ww-choice:has(input:checked) { border-color: var(--green); background: var(--cream); }
+
     #ww-quote .ww-choice span { flex: 1; }
+
     #ww-quote .ww-choice strong { color: var(--ink); font-size: 15px; }
 
+
+
     /* COMPACT CHECKBOX */
+
     #ww-quote .ww-compact-check { display: flex; align-items: center; font-size: 14px; font-weight: 600; color: var(--ink); cursor: pointer; margin-bottom: 10px; user-select: none; }
+
     #ww-quote .ww-compact-check:hover { color: var(--green); }
 
+
+
     /* BUTTONS */
+
     #ww-quote .ww-primary-btn {
+
       width: 100%; min-height: 54px; padding: 14px 20px; border: 2px solid var(--green); border-radius: var(--radius-md);
+
       background: var(--green); color: #ffffff; font: inherit; font-size: 16px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 14px rgba(38, 58, 45, 0.18); transition: all 0.15s ease; margin-top: 14px;
+
     }
+
     #ww-quote .ww-primary-btn:hover:not(:disabled) { background: var(--green-hover); border-color: var(--green-hover); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(38, 58, 45, 0.22); }
+
     #ww-quote .ww-primary-btn:disabled { opacity: 0.65; cursor: wait; transform: none; }
 
+
+
     #ww-quote .ww-final-glow-btn {
+
       background: var(--green) !important; border-color: var(--green) !important; font-size: 17px !important; letter-spacing: 0.3px;
+
       box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.4), 0 6px 20px rgba(212, 175, 55, 0.35) !important; animation: wwGoldGlowPulse 2.5s infinite ease-in-out;
+
     }
+
     @keyframes wwGoldGlowPulse {
+
       0%, 100% { box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3), 0 6px 16px rgba(212, 175, 55, 0.3); }
+
       50% { box-shadow: 0 0 0 7px rgba(212, 175, 55, 0.55), 0 8px 24px rgba(212, 175, 55, 0.5); }
+
     }
+
     #ww-quote .ww-final-glow-btn:hover:not(:disabled) {
+
       transform: translateY(-2px); box-shadow: 0 0 0 6px rgba(212, 175, 55, 0.6), 0 10px 26px rgba(212, 175, 55, 0.6) !important; animation: none;
+
     }
+
+
 
     #ww-quote .ww-status-msg { font-size: 14px; font-weight: 600; margin: 14px 0 0; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--danger-bg); color: var(--danger); border: 1px solid #ebccd1; }
 
-    /* NATIVE HTML DIALOG MODAL (The Popup Screen) */
-    #ww-quote .ww-modal {
-      border: none; padding: 0; background: transparent;
-      margin: auto; max-width: 600px; width: 95%;
-      overflow: visible; outline: none; z-index: 10000;
-    }
-    #ww-quote .ww-modal::backdrop {
-      background: rgba(30, 44, 34, 0.85);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-    }
-    #ww-quote .ww-modal-box {
-      background: #ffffff; border-radius: var(--radius-lg);
-      padding: 30px 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-      position: relative; text-align: center;
-    }
-    #ww-quote .ww-modal-box .ww-success-icon-wrap {
-      width: 70px; height: 70px; border-radius: 50%; background: var(--green-soft); border: 2px solid var(--light);
-      display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 32px;
-    }
 
-    /* QUOTE DISPLAY BOX (Inside Modal) */
-    #ww-quote-reveal-area { margin: 20px 0; position: relative; }
-    #ww-quote .ww-receipt-box { background: var(--green); color: #ffffff; border-radius: var(--radius-lg); padding: 20px 22px; box-shadow: var(--shadow-sm); text-align: left; }
+
+    /* QUOTE DISPLAY BOX */
+
+    #ww-quote-reveal-area { margin-top: 24px; padding-top: 24px; border-top: 2px dashed var(--border-strong); position: relative; }
+
+    #ww-quote .ww-receipt-box { background: var(--green); color: #ffffff; border-radius: var(--radius-lg); padding: 20px 22px; margin-bottom: 20px; box-shadow: var(--shadow-sm); }
+
     #ww-quote .ww-price-hero { text-align: center; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); }
+
     #ww-quote .ww-price-eyebrow { display: inline-block; background: rgba(213, 223, 206, 0.18); color: var(--light); border-radius: 999px; padding: 4px 14px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+
     #ww-quote .ww-big-price { font-size: 36px; font-weight: 800; line-height: 1.1; color: #ffffff; font-variant-numeric: tabular-nums; }
+
     #ww-quote .ww-big-sub { color: var(--light); font-size: 13.5px; margin-top: 4px; }
+
     
+
     #ww-quote .ww-summary-line { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); gap: 16px; font-size: 14px; }
+
     #ww-quote .ww-summary-line:last-child { border-bottom: none; padding-bottom: 0; }
+
     #ww-quote .ww-summary-title { font-weight: 700; color: #ffffff; font-size: 14px; word-break: normal; overflow-wrap: break-word; }
+
     #ww-quote .ww-summary-desc { font-size: 12.5px; color: var(--light); margin-top: 2px; }
+
     #ww-quote .ww-summary-price { font-weight: 700; color: #ffffff; white-space: nowrap; text-align: right; font-size: 14px; flex-shrink: 0; }
 
+
+
     #ww-quote .ww-intro-breakdown-box { background: rgba(213, 223, 206, 0.16); border: 1px solid rgba(213, 223, 206, 0.35); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 14px; font-size: 13.5px; line-height: 1.45; color: #ffffff; text-align: center; }
+
     #ww-quote .ww-intro-breakdown-box strong { display: block; margin-bottom: 2px; font-size: 14.5px; }
+
     #ww-quote .ww-free-banner { background: rgba(213, 223, 206, 0.14); border: 1px solid rgba(213, 223, 206, 0.35); border-radius: var(--radius-md); padding: 12px 14px; margin-top: 14px; font-size: 13.5px; line-height: 1.45; color: #ffffff; text-align: center; }
+
     #ww-quote .ww-free-banner strong { display: block; margin-bottom: 0; font-size: 15px; letter-spacing: 0.3px; }
+
+
+
+    /* SUCCESS SCREEN */
+
+    #ww-success-screen { text-align: center; padding: 50px 24px; overflow: hidden; }
+
+    #ww-success-screen .ww-success-icon-wrap { width: 76px; height: 76px; border-radius: 50%; background: var(--green-soft); border: 2px solid var(--light); display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 18px; font-size: 34px; }
+
     
+
     .ww-phone-link { color: #3F6049; text-decoration: none; font-weight: 800; transition: color 0.2s ease; }
+
     .ww-phone-link:hover { color: #1E2C22; text-decoration: underline; }
 
-    .ww-close-modal-btn {
-      background: transparent; border: 1px solid var(--border-strong); color: var(--muted);
-      border-radius: var(--radius-sm); padding: 10px 20px; font-size: 14px; font-weight: 700;
-      cursor: pointer; margin-top: 10px; transition: all 0.2s ease;
-    }
-    .ww-close-modal-btn:hover { background: #f0f0f0; color: var(--ink); }
+
 
     /* MOBILE TWEAKS */
+
     @media (max-width: 640px) {
+
       body { padding: 10px 5px !important; }
+
       #ww-quote { font-size: 14px; }
+
       #ww-intro-block { padding: 12px !important; margin-bottom: 12px !important;}
+
       #ww-quote .ww-panel { padding: 16px 14px; margin-bottom: 10px; }
+
       #ww-quote .ww-grid { grid-template-columns: 1fr; gap: 8px; }
+
       #ww-quote h2 { font-size: 17px !important; }
+
       #ww-quote h3 { font-size: 16px; margin-bottom: 12px; }
+
       #ww-quote .ww-label { margin: 10px 0 4px; font-size: 13.5px; }
+
       #ww-quote select, #ww-quote input:not([type="checkbox"]):not([type="radio"]) { min-height: 40px; font-size: 16px; padding: 6px 10px;}
+
       #ww-quote textarea { min-height: 60px; font-size: 16px; }
+
       #ww-quote .ww-number button { height: 38px; font-size: 18px; }
+
       #ww-quote .ww-number input { min-height: 38px; }
+
       #ww-quote .ww-choice { padding: 10px; margin-bottom: 8px !important; }
+
       #ww-quote .ww-compact-check { font-size: 13px; margin-bottom: 6px; }
+
       #ww-quote .ww-big-price { font-size: 26px; }
-      #ww-quote .ww-modal-box { padding: 24px 16px; }
-      #ww-quote .ww-receipt-box { padding: 12px 10px; }
+
+      #ww-quote .ww-receipt-box { padding: 12px 10px; margin-bottom: 14px; }
+
       #ww-quote .ww-summary-line { font-size: 13px; gap: 8px; padding: 6px 0; }
+
       #ww-quote .ww-summary-title, #ww-quote .ww-summary-price { font-size: 13px; }
+
       #ww-quote .ww-primary-btn { width: 100%; flex: none; min-height: 44px; padding: 8px; font-size: 15px; }
+
     }
+
   </style>
+
 </head>
+
+
 
 <body style="margin:0;padding:25px 20px;background:transparent;">
 
+
+
 <div id="ww-quote">
+
   <!-- SLIM TOP INTRO HEADER -->
+
   <div id="ww-intro-block" style="max-width:680px; margin:0 auto 18px; background:#F4F7F4; border:1.5px solid #D5DFCE; border-radius:16px; padding:18px 20px; text-align:center; font-family:'Segoe UI',Arial,sans-serif;">
+
     <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#3F6049; margin-bottom:4px;">
+
       ✨ Free Instant Quote
+
     </div>
+
     <h2 style="margin:0 0 4px; font-size:20px; font-weight:800; color:#1E2C22;">
+
       Ready for a spotless yard? Let's build your custom plan! ⏱️
+
     </h2>
+
     <p style="margin:0 auto; font-size:14px; line-height:1.5; color:#59655D;">
+
       Select your services below to see your instant price. Questions? Call or text <a href="tel:9402470522" class="ww-phone-link">(940) 247-0522</a>
+
     </p>
+
   </div>
+
+
 
   <!-- SERVICE TABS -->
+
   <div class="ww-tabs" id="ww-tab-container" role="group">
+
     <button type="button" class="ww-tab" id="ww-res-tab" aria-pressed="true">🏡 Residential</button>
+
     <button type="button" class="ww-tab" id="ww-com-tab" aria-pressed="false">🏢 Commercial</button>
+
   </div>
 
+
+
   <!-- RESIDENTIAL SINGLE-PAGE FORM -->
+
   <form id="ww-residential" class="ww-panel" onsubmit="event.preventDefault();">
+
     
+
     <!-- STEP 1: CONTACT -->
+
     <h3>👤 Contact &amp; Service Address</h3>
+
     <label class="ww-label" for="ww-customer-name">Full name <span class="ww-required">*</span></label>
+
     <input id="ww-customer-name" name="name" type="text" autocomplete="name" placeholder="Your full name">
+
     <div class="ww-grid">
+
       <div>
+
         <label class="ww-label" for="ww-customer-phone">Phone number <span class="ww-required">*</span></label>
+
         <input id="ww-customer-phone" name="tel" type="tel" autocomplete="tel" placeholder="(940) 555-0123">
+
         <div style="font-size: 14px; font-weight: 500; color: var(--muted); margin-top: 6px;">We won't spam your phone, just need it for the quote! 🥺</div>
+
       </div>
+
       <div>
+
         <label class="ww-label" for="ww-customer-email">Email <span class="ww-muted">(optional)</span></label>
+
         <input id="ww-customer-email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+
       </div>
-    </div>
-    <label class="ww-label" for="ww-customer-street">Street address <span class="ww-required">*</span></label>
-    <input id="ww-customer-street" name="street-address" type="text" autocomplete="address-line1" placeholder="123 Main St">
-    <div class="ww-grid" style="margin-top: 14px;">
-      <div>
-        <label class="ww-label" for="ww-customer-city">City <span class="ww-required">*</span></label>
-        <input id="ww-customer-city" name="city" type="text" autocomplete="address-level2" value="Decatur" placeholder="Decatur">
-      </div>
-      <div>
-        <label class="ww-label" for="ww-customer-zip">ZIP code <span class="ww-required">*</span></label>
-        <input id="ww-customer-zip" name="postal-code" type="text" autocomplete="postal-code" placeholder="76234">
-      </div>
+
     </div>
 
+    <label class="ww-label" for="ww-customer-street">Street address <span class="ww-required">*</span></label>
+
+    <input id="ww-customer-street" name="street-address" type="text" autocomplete="address-line1" placeholder="123 Main St">
+
+    <div class="ww-grid" style="margin-top: 14px;">
+
+      <div>
+
+        <label class="ww-label" for="ww-customer-city">City <span class="ww-required">*</span></label>
+
+        <input id="ww-customer-city" name="city" type="text" autocomplete="address-level2" value="Decatur" placeholder="Decatur">
+
+      </div>
+
+      <div>
+
+        <label class="ww-label" for="ww-customer-zip">ZIP code <span class="ww-required">*</span></label>
+
+        <input id="ww-customer-zip" name="postal-code" type="text" autocomplete="postal-code" placeholder="76234">
+
+      </div>
+
+    </div>
+
+
+
     <hr class="ww-divider">
+
+
 
     <!-- STEP 2: DOGS -->
+
     <h3>🐕 Dog Waste Removal</h3>
+
     <label class="ww-label" for="ww-dog-frequency">Service frequency</label>
+
     <select id="ww-dog-frequency" name="dog_frequency">
+
       <option value="none">No dog waste service</option>
+
       <option value="twice">Twice Weekly</option>
+
       <option value="weekly" selected>Weekly (Most Popular)</option>
+
       <option value="biweekly">Bi-Weekly (Every 2 Weeks)</option>
+
       <option value="onetime">One-Time Cleanup</option>
+
     </select>
+
     <div id="ww-dog-desc" class="ww-service-desc ww-hidden"></div>
 
+
+
     <div id="ww-dog-count-wrap" class="ww-sub-box">
+
       <label class="ww-label" for="ww-dogs" style="margin-top:0;">Number of dogs <span style="font-size:12px; font-weight:normal; color:var(--muted);">(General info for our crew so we know what to expect!)</span></label>
+
       <div class="ww-number">
+
         <button type="button" data-step="-1" data-target="ww-dogs">−</button>
+
         <input id="ww-dogs" name="dog_count" type="number" min="1" max="20" value="1" readonly>
+
         <button type="button" data-step="1" data-target="ww-dogs">+</button>
+
       </div>
+
+
 
       <div id="ww-condition-wrap" class="ww-hidden" style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border);">
+
         <label class="ww-label" for="ww-condition" style="margin-top:0;">Estimated cleanup time required</label>
+
         <select id="ww-condition" name="yard_condition">
+
           <option value="light">Up to 1 hour (Standard cleanup) — $50.00 base</option>
+
           <option value="moderate">Up to 1.5 hours (Moderate buildup) — $75.00 est.</option>
+
           <option value="heavy">Up to 2 hours (Heavy buildup) — $100.00 est.</option>
+
           <option value="very">Over 2 hours (Severely neglected) — $125.00+ est.</option>
+
         </select>
+
         <div style="font-size: 13px; color: var(--muted); margin-top: 10px; line-height: 1.4;">
+
           <em>One-time cleanups are $50 minimum (covers the first hour), then billed at $50/hour in 15-minute increments thereafter.</em>
+
         </div>
+
       </div>
+
     </div>
 
+
+
     <hr class="ww-divider">
+
+
 
     <!-- STEP 3: CATS -->
+
     <h3>🐈 Cat Litter Box Service</h3>
+
     <div id="ww-cat-addon-mode">
+
       <label class="ww-choice" style="margin-bottom:14px;">
+
         <input type="checkbox" id="ww-cat-add-service" name="cat_add_service">
+
         <span>
+
           <strong id="ww-cat-addon-title">Have cats too? Add routine litter box scooping</strong><br>
+
           <span class="ww-muted" id="ww-cat-addon-text">Done during your scheduled outside dog service visits. <strong>Bundle &amp; Save!</strong></span>
+
         </span>
+
       </label>
+
     </div>
+
+
 
     <div id="ww-cat-standalone-mode" class="ww-hidden">
+
       <label class="ww-label" for="ww-cat-standalone-freq">Service frequency</label>
+
       <select id="ww-cat-standalone-freq" name="cat_standalone_freq">
+
         <option value="none" selected>No cat litter service</option>
+
         <option value="twice">Twice-Weekly Service (Most Popular)</option>
+
         <option value="weekly">Weekly Service</option>
+
         <option value="biweekly">Bi-Weekly Service (Every 2 Weeks)</option>
+
         <option value="onetime">One-Time Cleanup</option>
+
       </select>
+
     </div>
+
+
 
     <div id="ww-cat-desc" class="ww-service-desc ww-hidden" style="margin-bottom: 14px;">
+
       Thorough cat litter box scooping, deodorizing, and area sweeping to keep your home fresh and odor-free.
+
     </div>
+
+
 
     <div id="ww-box-count-wrap" class="ww-sub-box ww-hidden">
+
       <label class="ww-label" for="ww-boxes" style="margin-top:0;">Number of litter boxes <span style="font-size:12px; font-weight:normal; color:var(--muted);">(General info for our crew so we know what to expect!)</span></label>
+
       <div class="ww-number">
+
         <button type="button" data-step="-1" data-target="ww-boxes">−</button>
+
         <input id="ww-boxes" name="box_count" type="number" min="1" max="20" value="1" readonly>
+
         <button type="button" data-step="1" data-target="ww-boxes">+</button>
+
       </div>
+
+
 
       <div style="margin-top:18px; padding-top:16px; border-top:1px solid var(--border);">
+
         <label class="ww-choice" style="margin-bottom:12px;">
+
           <input type="checkbox" id="ww-cat-deep-clean" name="cat_deep_clean">
+
           <span>
+
             <strong>Occasional Litter Box Deep Clean (Wash &amp; Sanitize)</strong><br>
+
             <span class="ww-muted">Thorough wash, sanitizing, and fresh litter refill. $25 first box + $15 per additional box. Recommended every 2–3 weeks. Completely optional — just let us know when you'd like it done!<br>(Charged at time of service)</span>
+
           </span>
+
         </label>
+
       </div>
 
+
+
       <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">
+
         <label class="ww-choice" style="margin-bottom:0;">
+
           <input type="checkbox" id="ww-cat-litter-supply" name="cat_litter_supply">
+
           <span>
+
             <strong>Litter Supply (+$10 per box / visit)</strong><br>
+
             <span class="ww-muted">Skip the heavy lifting! We supply standard clumping cat litter. (Charged at time of service)</span>
+
           </span>
+
         </label>
+
       </div>
+
     </div>
+
+
 
     <hr class="ww-divider">
 
+
+
     <!-- STEP 4: ADD-ONS & PREFERENCES -->
+
     <h3>✨ Add-Ons &amp; Preferences</h3>
+
     <label class="ww-choice" style="margin-bottom:14px;">
+
       <input type="checkbox" id="ww-haul-away" name="haul_away">
+
       <span>
+
         <strong>Haul the waste away with us (+$5 per visit)</strong><br>
+
         <span class="ww-muted">By default, we double-bag the waste and leave it neatly in your outdoor trash bin for FREE. Check this box if you want us to take it away. (Charged at time of service)</span>
+
       </span>
+
     </label>
+
+
 
     <label class="ww-choice" style="margin-bottom:14px; background: var(--cream);">
+
       <input type="checkbox" id="ww-addon-yard-fresh" name="yard_fresh">
+
       <span>
+
         <strong id="ww-yard-fresh-title">Yard Fresh Treatment ($25 standalone)</strong><br>
+
         <span class="ww-muted">A professional enzymatic spray that destroys urine odors and leaves your lawn smelling amazing (+$7 per extra yard section). Requires a working outdoor water spigot. (Charged at time of service)</span>
+
         <span id="ww-yard-fresh-savings-notice" style="display: block; margin-top: 6px; font-size: 13px; font-weight: 700; color: #3F6049;">💡 Save $15! Choose any recurring service to drop this to just $10/visit.</span>
+
       </span>
+
     </label>
 
+
+
     <div id="ww-yard-sections-box" class="ww-sub-box ww-hidden" style="margin-bottom: 14px; margin-top: -6px;">
+
       <label class="ww-label" for="ww-sections" style="margin-top:0;">Number of yard sections</label>
+
       <div class="ww-number">
+
         <button type="button" data-step="-1" data-target="ww-sections">−</button>
+
         <input id="ww-sections" name="yard_sections" type="number" min="1" max="20" value="1" readonly>
+
         <button type="button" data-step="1" data-target="ww-sections">+</button>
+
       </div>
+
       <div style="font-size: 13px; color: var(--muted); margin-top: 10px; line-height: 1.4;">
+
         <em>Note: Base rate covers 1 section (usually backyard). Extra sections are front yard or sides of house (both sides count as 1 combined section).</em>
+
       </div>
+
     </div>
+
+
 
     <div style="background:var(--cream); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; margin-bottom:14px;">
+
       <label class="ww-compact-check" style="margin-bottom:8px;">
+
         <input type="checkbox" id="ww-yard-sign" name="yard_sign">
+
         <span>May we place a small promotional yard sign in your yard? (Optional)</span>
+
       </label>
+
       <label class="ww-compact-check" style="margin-bottom:0;">
+
         <input type="checkbox" id="ww-pet-treats" name="pet_treats">
+
         <span>May we give your pet(s) a treat during our visit? 🦴</span>
+
       </label>
+
     </div>
+
+
 
     <label class="ww-label" for="ww-extra-details">Additional notes <span class="ww-muted">(optional)</span></label>
+
     <textarea id="ww-extra-details" name="extra_details" rows="3" placeholder="Gate codes, pet names, or special instructions..."></textarea>
 
-    <!-- ERROR & SUBMIT CTA -->
+
+
+    <!-- ERROR & REVEAL CTA -->
+
     <div id="ww-err-main" class="ww-status-msg ww-hidden"></div>
-    <button type="button" id="ww-reveal-btn" class="ww-primary-btn ww-final-glow-btn" onclick="showQuoteScreen()">See My Price &amp; Submit 🪄</button>
+
+    <button type="button" id="ww-reveal-btn" class="ww-primary-btn ww-final-glow-btn" onclick="showQuoteScreen()">See My Price 🪄</button>
+
+
+
+    <!-- LIVE QUOTE BOX -->
+
+    <div id="ww-quote-reveal-area" class="ww-hidden">
+
+      <div class="ww-receipt-box" aria-live="polite">
+
+        <div class="ww-price-hero">
+
+          <span class="ww-price-eyebrow" id="ww-price-eyebrow">Total Rate</span>
+
+          <div class="ww-big-price" id="ww-display-per-visit">$0.00</div>
+
+          <div class="ww-big-sub" id="ww-display-billing-sub"></div>
+
+        </div>
+
+
+
+        <div class="ww-intro-breakdown-box ww-hidden" id="ww-intro-breakdown-wrap">
+
+          <strong id="ww-intro-breakdown-text"></strong>
+
+          <span id="ww-intro-subtext" style="font-size: 12.5px; opacity: 0.9;"></span>
+
+        </div>
+
+
+
+        <div id="ww-quote-lines"></div>
+
+
+
+        <div class="ww-free-banner ww-hidden" id="ww-free-offer-banner">
+
+          <strong>🎁 First Scoop is 100% Free!</strong>
+
+        </div>
+
+      </div>
+
+      
+
+      <div id="ww-s2-error" class="ww-status-msg ww-hidden" style="margin-bottom:14px;"></div>
+
+      <button type="button" class="ww-primary-btn" id="ww-submit-quote-btn">Submit Custom Quote 🚀</button>
+
+    </div>
+
   </form>
+
+
 
   <!-- COMMERCIAL SECTION -->
+
   <form id="ww-commercial" class="ww-panel ww-hidden" onsubmit="event.preventDefault(); document.getElementById('ww-submit-comm-quote').click();">
+
     <h3>🏢 Commercial Consultation</h3>
+
     <p class="ww-muted" style="margin:0 0 16px;">Tailored waste management for communities, parks, and businesses across Wise County.</p>
 
+
+
     <div class="ww-grid">
+
       <div>
+
         <label class="ww-label" for="ww-comm-business">Property/Business Name <span class="ww-required">*</span></label>
+
         <input id="ww-comm-business" name="business" type="text" placeholder="e.g., Oak Ridge Apartments">
+
       </div>
+
       <div>
+
         <label class="ww-label" for="ww-comm-name">Contact Person <span class="ww-required">*</span></label>
+
         <input id="ww-comm-name" name="name" type="text" autocomplete="name" placeholder="Your full name">
+
       </div>
+
     </div>
+
+
 
     <label class="ww-label" for="ww-comm-street">Property Street Address <span class="ww-required">*</span></label>
+
     <input id="ww-comm-street" name="street-address" type="text" autocomplete="address-line1" placeholder="123 Main St">
 
+
+
     <div class="ww-grid" style="margin-top: 14px;">
+
       <div>
+
         <label class="ww-label" for="ww-comm-city">City <span class="ww-required">*</span></label>
+
         <input id="ww-comm-city" name="city" type="text" autocomplete="address-level2" value="Decatur" placeholder="Decatur">
+
       </div>
+
       <div>
+
         <label class="ww-label" for="ww-comm-zip">ZIP Code <span class="ww-required">*</span></label>
+
         <input id="ww-comm-zip" name="postal-code" type="text" autocomplete="postal-code" placeholder="76234">
+
       </div>
+
     </div>
+
+
 
     <label class="ww-label" for="ww-comm-type" style="margin-top: 14px;">Property Type <span class="ww-required">*</span></label>
+
     <select id="ww-comm-type" name="property_type">
+
       <option value="Apartment Community">Apartment Community</option>
+
       <option value="HOA / Subdivision">HOA / Subdivision</option>
+
       <option value="Veterinary Clinic">Veterinary Clinic</option>
+
       <option value="RV Park / Campground">RV Park / Campground</option>
+
       <option value="Dog Park / Public Park">Dog Park / Public Park</option>
+
       <option value="Other">Other</option>
+
     </select>
 
+
+
     <div class="ww-grid">
+
       <div>
+
         <label class="ww-label" for="ww-comm-phone">Phone Number <span class="ww-required">*</span></label>
+
         <input id="ww-comm-phone" name="tel" type="tel" autocomplete="tel" placeholder="(940) 555-0123">
+
         <div style="font-size: 14px; font-weight: 500; color: var(--muted); margin-top: 6px;">We won't spam your phone, just need it for the quote! 🥺</div>
+
       </div>
+
       <div>
+
         <label class="ww-label" for="ww-comm-email">Email Address <span class="ww-muted">(optional)</span></label>
+
         <input id="ww-comm-email" name="email" type="email" autocomplete="email" placeholder="name@company.com">
+
       </div>
+
     </div>
+
+
 
     <label class="ww-label" for="ww-comm-notes">How can we help? <span class="ww-muted">(optional)</span></label>
+
     <textarea id="ww-comm-notes" name="notes" rows="3" placeholder="Tell us about your property needs..."></textarea>
 
+
+
     <div id="ww-comm-error" class="ww-status-msg ww-hidden"></div>
+
     <button type="button" class="ww-primary-btn ww-final-glow-btn" id="ww-submit-comm-quote" style="margin-top: 24px;">Send Request ✉️</button>
+
   </form>
 
-  <!-- NATIVE HTML DIALOG MODAL (The Popup Screen) -->
-  <dialog id="ww-success-modal" class="ww-modal">
-    <div class="ww-modal-box">
-      <div class="ww-success-icon-wrap">🎉</div>
-      <h2 style="margin:0 0 10px; color:var(--ink);">You're all set!</h2>
-      <p style="color:var(--muted); max-width:460px; margin:0 auto 10px; font-size:15px;">
-        Thank you for choosing Wise Waste Services! We received your quote request and will contact you shortly to confirm your details.
+
+
+  <!-- CONFIRMATION SCREEN -->
+
+  <div id="ww-success-screen" class="ww-panel ww-hidden">
+
+    <div class="ww-success-icon-wrap">🎉</div>
+
+    <h2 style="margin:0 0 10px; color:var(--ink);">You're all set!</h2>
+
+    <p style="color:var(--muted); max-width:460px; margin:0 auto 18px; font-size:16px;">
+
+      Thank you for choosing Wise Waste Services! We will contact you shortly to confirm your details and get your first visit on the schedule.
+
+    </p>
+
+    <div style="padding:16px; background:var(--cream); border-radius:12px; border:1px solid var(--border); display:inline-block;">
+
+      <p style="font-size:14.5px; color:var(--ink); margin:0;">
+
+        Need immediate help?<br>Call or text us at <a href="tel:+19402470522" class="ww-phone-link">(940) 247-0522</a>
+
       </p>
 
-      <!-- LIVE QUOTE BOX -->
-      <div id="ww-quote-reveal-area">
-        <div class="ww-receipt-box">
-          <div class="ww-price-hero">
-            <span class="ww-price-eyebrow" id="ww-price-eyebrow">Total Rate</span>
-            <div class="ww-big-price" id="ww-display-per-visit">$0.00</div>
-            <div class="ww-big-sub" id="ww-display-billing-sub"></div>
-          </div>
-
-          <div class="ww-intro-breakdown-box ww-hidden" id="ww-intro-breakdown-wrap">
-            <strong id="ww-intro-breakdown-text"></strong>
-            <span id="ww-intro-subtext" style="font-size: 12.5px; opacity: 0.9;"></span>
-          </div>
-
-          <div id="ww-quote-lines"></div>
-
-          <div class="ww-free-banner ww-hidden" id="ww-free-offer-banner">
-            <strong>🎁 First Scoop is 100% Free!</strong>
-          </div>
-        </div>
-      </div>
-
-      <div style="padding:16px; background:var(--cream); border-radius:12px; border:1px solid var(--border); display:inline-block; margin-bottom:10px;">
-        <p style="font-size:14px; color:var(--ink); margin:0;">
-          Need immediate help?<br>Call or text us at <a href="tel:+19402470522" class="ww-phone-link">(940) 247-0522</a>
-        </p>
-      </div>
-      
-      <br>
-      <button class="ww-close-modal-btn" onclick="document.getElementById('ww-success-modal').close()">Close Panel</button>
     </div>
-  </dialog>
+
+  </div>
+
+
 
 </div>
 
+
+
 <script>
+
 (function() {
+
   const root = document.getElementById('ww-quote');
+
   if (!root || root.dataset.ready) return;
+
   root.dataset.ready = '1';
 
+
+
   const QUOTE_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyCDemM3MYGckMTXnyBD02ssiY8KYMmqSIFAY5j0-w8iJcuT-gmUWsr8V1mjMGOtp2rDw/exec';
+
   const $ = function(id) { return document.getElementById(id); };
+
   const show = function(id, visible) { const el = $(id); if(el) el.classList.toggle('ww-hidden', !visible); };
 
-  /* NATIVE RESIZE OBSERVER */
+
+
+  let quoteRevealed = false;
+
+
+
+  /* NATIVE RESIZE OBSERVER (For Carrd Height) */
+
   function reportHeight() {
+
     if (window.parent !== window) {
+
       const height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+
       window.parent.postMessage({ type: 'ww-quote-height', height: height }, '*');
+
     }
+
   }
+
   window.addEventListener('load', reportHeight);
+
   window.addEventListener('resize', reportHeight);
+
   if ('ResizeObserver' in window) {
+
     new ResizeObserver(reportHeight).observe(root);
+
   }
+
   setInterval(reportHeight, 1000);
 
+
+
   /* HELPERS */
+
   const getFormattedAddress = (s, c, z) => [$(s).value.trim(), $(c).value.trim(), $(z).value.trim() ? 'TX ' + $(z).value.trim() : ''].filter(Boolean).join(', ');
+
   const money = n => n.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
   const getNum = id => { const el = $(id); return !el ? 1 : Math.max(1, Math.min(20, parseInt(el.value, 10) || 1)); };
 
+
+
   /* PHONE FORMATTING */
+
   function formatPhoneNumber(e) {
+
     let digits = e.target.value.replace(/\D/g, '');
+
     if (digits.length === 11 && digits.startsWith('1')) digits = digits.slice(1);
+
     let x = digits.slice(0, 10).match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+
     if(x) e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+
   }
+
   ['input', 'change'].forEach(evt => {
+
     $('ww-customer-phone').addEventListener(evt, formatPhoneNumber);
+
     $('ww-comm-phone').addEventListener(evt, formatPhoneNumber);
+
   });
+
+
 
   /* TABS */
+
   $('ww-res-tab').addEventListener('click', () => { show('ww-residential', true); show('ww-commercial', false); $('ww-res-tab').setAttribute('aria-pressed', 'true'); $('ww-com-tab').setAttribute('aria-pressed', 'false'); });
+
   $('ww-com-tab').addEventListener('click', () => { show('ww-residential', false); show('ww-commercial', true); $('ww-res-tab').setAttribute('aria-pressed', 'false'); $('ww-com-tab').setAttribute('aria-pressed', 'true'); });
 
+
+
   /* DYNAMIC VISIBILITY & LIVE UPDATES */
+
   function updateDynamicVisibility() {
+
     const dogFreq = $('ww-dog-frequency').value;
+
     const catAddChecked = $('ww-cat-add-service').checked;
+
     const catStandaloneFreq = $('ww-cat-standalone-freq').value;
 
+
+
     const dogDesc = $('ww-dog-desc');
+
     if (dogFreq === 'weekly' || dogFreq === 'twice' || dogFreq === 'biweekly') { 
+
       dogDesc.innerHTML = 'Thorough removal of dog waste throughout the yard, bagging and disposal, and a final check to leave your yard clean.'; 
+
       show('ww-dog-desc', true); 
+
     }
+
     else if (dogFreq === 'onetime') { 
+
       dogDesc.innerHTML = 'A single, thorough cleaning to completely reset your yard and remove all visible waste.'; 
+
       show('ww-dog-desc', true); 
+
     }
+
     else { show('ww-dog-desc', false); }
 
+
+
     const hasRecurringDog = dogFreq === 'weekly' || dogFreq === 'twice' || dogFreq === 'biweekly';
+
     const hasRecurringCat = (dogFreq !== 'none' && catAddChecked && hasRecurringDog) || (dogFreq === 'none' && catStandaloneFreq !== 'none' && catStandaloneFreq !== 'onetime');
+
     
+
     const catAddonTitle = $('ww-cat-addon-title');
+
     const catAddonText = $('ww-cat-addon-text');
+
     if (catAddonTitle && catAddonText) {
+
         if (dogFreq === 'weekly') {
+
             catAddonTitle.innerHTML = 'Have cats too? Add routine litter box scooping (Weekly)';
+
             catAddonText.innerHTML = 'Done during your scheduled outside dog service visits. <strong>Bundle &amp; Save!</strong>';
+
         } else if (dogFreq === 'twice') {
+
             catAddonTitle.innerHTML = 'Have cats too? Add routine litter box scooping (Twice-Weekly)';
+
             catAddonText.innerHTML = 'Done during your scheduled outside dog service visits. <strong>Bundle &amp; Save!</strong>';
+
         } else if (dogFreq === 'biweekly') {
+
             catAddonTitle.innerHTML = 'Have cats too? Add routine litter box scooping (Bi-Weekly)';
+
             catAddonText.innerHTML = 'Done during your scheduled outside dog service visits. <strong>Bundle &amp; Save!</strong>';
+
         } else if (dogFreq === 'onetime') {
+
             catAddonTitle.innerHTML = 'Have cats too? Add one-time litter box scooping';
+
             catAddonText.innerHTML = 'Done during your scheduled outside dog service visit. <strong>Bundle &amp; Save!</strong>';
+
         } else {
+
             catAddonTitle.innerHTML = 'Have cats too? Add routine litter box scooping';
+
             catAddonText.innerHTML = 'Done during your scheduled outside dog service visits.';
+
         }
+
     }
+
+
 
     if ($('ww-yard-fresh-title')) {
+
       if (hasRecurringDog || hasRecurringCat) {
+
         $('ww-yard-fresh-title').textContent = 'Yard Fresh Treatment ($10 recurring add-on)';
+
         $('ww-yard-fresh-savings-notice').style.display = 'none';
+
       } else {
+
         $('ww-yard-fresh-title').textContent = 'Yard Fresh Treatment ($25 standalone)';
+
         $('ww-yard-fresh-savings-notice').style.display = 'block';
+
       }
+
     }
+
+
 
     let hasCatServiceActive = false;
+
     if (dogFreq === 'none') {
+
       show('ww-cat-addon-mode', false); show('ww-cat-standalone-mode', true);
+
       hasCatServiceActive = (catStandaloneFreq !== 'none');
+
     } else {
+
       show('ww-cat-addon-mode', true); show('ww-cat-standalone-mode', false);
+
       hasCatServiceActive = catAddChecked;
+
     }
+
     show('ww-box-count-wrap', hasCatServiceActive);
+
     show('ww-cat-desc', hasCatServiceActive);
+
     show('ww-dog-count-wrap', dogFreq !== 'none');
+
     show('ww-condition-wrap', dogFreq === 'onetime');
+
+
+
+    // LIVE UPDATE QUOTE IF ALREADY REVEALED
+
+    if (quoteRevealed) calculateAndRenderQuote();
+
   }
+
+
+
+  // Bind dynamic visibility to inputs
 
   $('ww-dog-frequency').addEventListener('change', updateDynamicVisibility);
+
   $('ww-cat-add-service').addEventListener('change', updateDynamicVisibility);
+
   $('ww-cat-standalone-freq').addEventListener('change', updateDynamicVisibility);
-  $('ww-addon-yard-fresh').addEventListener('change', function() { show('ww-yard-sections-box', this.checked); });
+
+  $('ww-addon-yard-fresh').addEventListener('change', function() { show('ww-yard-sections-box', this.checked); if (quoteRevealed) calculateAndRenderQuote(); });
+
   
+
+  // Bind +/- steppers
+
   root.querySelectorAll('[data-step]').forEach(btn => {
+
     btn.addEventListener('click', () => {
+
       const field = $(btn.getAttribute('data-target'));
+
       if (!field) return;
+
       field.value = Math.max(field.min || 1, Math.min(field.max || 20, (parseInt(field.value) || 1) + parseInt(btn.getAttribute('data-step'))));
+
+      if (quoteRevealed) calculateAndRenderQuote();
+
     });
+
   });
+
+
+
+  // Ensure normal inputs update quote if visible
+
+  root.querySelectorAll('input, select').forEach(el => {
+
+    el.addEventListener('change', () => { if (quoteRevealed) calculateAndRenderQuote(); });
+
+  });
+
+
 
   /* MATH & RENDERING */
+
   let quoteState = {};
+
   function calculateAndRenderQuote() {
+
     const dogFreq = $('ww-dog-frequency').value, dogs = getNum('ww-dogs'), condition = $('ww-condition').value;
+
     const boxes = getNum('ww-boxes'), haulAway = $('ww-haul-away').checked, catLitterSupply = $('ww-cat-litter-supply').checked, catDeepClean = $('ww-cat-deep-clean').checked;
+
     
+
     const hasDog = dogFreq !== 'none', isRecDog = dogFreq === 'weekly' || dogFreq === 'twice' || dogFreq === 'biweekly', isOneTimeDog = dogFreq === 'onetime';
+
     const catAdd = $('ww-cat-add-service').checked, catStand = $('ww-cat-standalone-freq').value;
+
     const hasCat = (hasDog && catAdd) || (!hasDog && catStand !== 'none');
+
     const isRecCat = (!hasDog && hasCat && (catStand === 'weekly' || catStand === 'twice' || catStand === 'biweekly'));
+
     
+
     const yardFresh = $('ww-addon-yard-fresh').checked, sections = getNum('ww-sections');
+
     
+
     show('ww-free-offer-banner', isRecDog || isRecCat);
+
     
+
     let html = [], txt = [], monthly = 0, onetime = 0, dogTxt = '', catTxt = '';
+
     const map = { twice: 'Twice Weekly', weekly: 'Weekly', biweekly: 'Bi-Weekly', onetime: 'One-Time Cleanup' };
+
     
+
     const line = (t, d, p, s) => `<div class="ww-summary-line"><div class="ww-summary-title-wrap"><div class="ww-summary-title">${t}</div>${d ? `<div class="ww-summary-desc">${d}</div>` : ''}</div><div class="ww-summary-price"><div>${p}</div>${s ? `<div style="font-size: 11px; color: var(--light); font-weight: normal; margin-top: 2px; white-space: nowrap;">${s}</div>` : ''}</div></div>`;
 
+
+
+    // 1. RECURRING BUNDLED (Dog + Cat)
+
     if (isRecDog && hasCat) {
+
       monthly = dogFreq === 'weekly' ? 112 : dogFreq === 'twice' ? 206 : 90;
+
       dogTxt = map[dogFreq] + ' Bundle (Includes Cat Service)';
+
       html.push(line('Dog + Cat Service Bundle', map[dogFreq], money(monthly) + ' / mo')); 
+
       txt.push('Combined Bundle (' + map[dogFreq] + '): ' + dogTxt);
+
     } 
+
+    // 2. RECURRING DOG ONLY
+
     else if (isRecDog && !hasCat) {
+
       monthly = dogFreq === 'weekly' ? 78 : dogFreq === 'twice' ? 139 : 65;
+
       dogTxt = map[dogFreq] + ' • First visit free';
+
       html.push(line(`Dog Waste Removal (${dogs} dog${dogs>1?'s':''})`, map[dogFreq], money(monthly) + ' / mo')); 
+
       txt.push('Dog Service (' + map[dogFreq] + ', ' + dogs + ' dog(s)): ' + dogTxt);
+
     }
+
+    // 3. ONE-TIME BUNDLED (Dog + Cat)
+
     else if (isOneTimeDog && hasCat) {
+
       if (condition === 'light') { 
+
         onetime = 69; 
+
         html.push(line('Dog + Cat One-Time Bundle', 'Up to 1 hr yard', money(onetime)+' base')); 
+
         txt.push('One-Time Bundle (' + condition + '): ' + money(onetime));
+
       } else {
+
         onetime = (condition === 'moderate' ? 75 : condition === 'heavy' ? 100 : 125) + 35;
+
         let cDesc = condition === 'moderate' ? 'Up to 1.5 hrs yard' : condition === 'heavy' ? 'Up to 2 hrs yard' : '2+ hrs yard';
+
         html.push(line('Dog + Cat One-Time Bundle', cDesc, money(onetime)+' est.'));
+
         txt.push('One-Time Bundle (' + condition + '): ' + money(onetime) + ' est.');
+
       }
+
     }
+
+    // 4. ONE-TIME DOG ONLY
+
     else if (isOneTimeDog && !hasCat) {
+
       onetime = condition === 'light' ? 50 : condition === 'moderate' ? 75 : condition === 'heavy' ? 100 : 125;
+
       let e = condition === 'light' ? ' base' : ' est.';
+
       let cDesc = condition === 'light' ? 'One-Time Cleanup (Up to 1 hr)' : condition === 'moderate' ? 'One-Time Cleanup (Up to 1.5 hrs)' : condition === 'heavy' ? 'One-Time Cleanup (Up to 2 hrs)' : 'One-Time Cleanup (Over 2 hrs)';
+
       dogTxt = 'One-Time Cleanup (' + money(onetime) + e + ')';
+
       html.push(line(`Dog Waste Removal (${dogs} dog${dogs>1?'s':''})`, cDesc, money(onetime) + e)); 
+
       txt.push('One-Time Dog Cleanup (' + dogs + ' dog(s), ' + condition + '): ' + money(onetime) + e);
+
     }
+
+    // 5. RECURRING CAT ONLY
+
     else if (!hasDog && hasCat && isRecCat) {
+
       monthly = catStand === 'weekly' ? 55 : catStand === 'twice' ? 95 : 40;
+
       catTxt = 'Standalone ' + map[catStand] + ' • First visit free';
+
       html.push(line('Cat Litter Box Service', map[catStand], money(monthly) + ' / mo')); 
+
       txt.push('Standalone Cat Service (' + map[catStand] + '): ' + money(monthly) + '/mo');
+
     }
+
+    // 6. ONE-TIME CAT ONLY
+
     else if (!hasDog && hasCat && catStand === 'onetime') {
+
       onetime = 35; 
+
       catTxt = 'One-Time Standalone Cat Service (' + money(onetime) + ')';
+
       html.push(line('Cat Litter Box Service', 'One-Time Cat Cleanup', money(onetime))); 
+
       txt.push('Standalone Cat Service (One-Time): ' + money(onetime));
+
     }
+
+
 
     if (hasCat && catDeepClean) { 
+
       let c = 25 + 15 * Math.max(0, boxes - 1); 
+
       html.push(line(`Litter Box Deep Clean (${boxes} box${boxes>1?'es':''})`, 'Wash, sanitize & refill', '+'+money(c), 'charged at time of service')); 
+
       txt.push('Add-On: Litter Box Deep Clean (' + boxes + ' box(es)): +' + money(c) + ' (charged at time of service)'); 
+
     }
+
     if (hasCat && catLitterSupply) { 
+
       let c = 10 * boxes; 
+
       html.push(line(`Litter Supply (${boxes} box${boxes>1?'es':''})`, '$10.00 / visit per box', '+'+money(c)+'/ visit', 'charged at time of service')); 
+
       txt.push('Add-On: Litter Supply: +' + money(c) + ' / visit (charged at time of service)'); 
+
     }
+
     if (yardFresh) {
+
       if (isRecDog || isRecCat) { 
+
         let c = 10 + 7 * (sections - 1); 
+
         html.push(line(`Yard Fresh Treatment (${sections} section${sections>1?'s':''})`, 'Recurring enzymatic spray add-on', '+'+money(c)+'/ visit', 'charged at time of service')); 
+
         txt.push('Add-On: Yard Fresh Recurring (' + sections + ' section(s)): +' + money(c) + ' / visit (charged at time of service)'); 
+
       } else { 
+
         let c = 25 + 7 * (sections - 1); onetime += c; 
+
         html.push(line(`Yard Fresh Treatment (${sections} section${sections>1?'s':''})`, 'Stand-alone one-time spray', money(c))); 
+
         txt.push('Yard Fresh Treatment Standalone (' + sections + ' section(s)): ' + money(c)); 
+
       }
+
     }
+
     if (haulAway) { 
+
       html.push(line('Waste Haul-Away', 'Off-site disposal', '+$5.00 / visit', 'charged at time of service')); 
+
       txt.push('Waste Haul-Away: Yes (+$5.00/visit charged at time of service)'); 
+
     }
+
+
+
+    // DISPLAY UPDATE
 
     if (isRecDog || isRecCat) {
+
       $('ww-price-eyebrow').textContent = 'Total Monthly Rate'; 
+
       $('ww-display-per-visit').textContent = money(monthly) + ' / mo';
+
       let vpm = (dogFreq === 'twice' || catStand === 'twice') ? 8 : (dogFreq === 'biweekly' || catStand === 'biweekly') ? 2 : 4;
+
       let first = monthly - (monthly / vpm);
+
       $('ww-intro-breakdown-text').textContent = `First month: ${money(first)} (First visit free)`;
+
       $('ww-intro-subtext').textContent = `Billed monthly (approx. ${vpm} visits/mo). After that, ${money(monthly)} / mo.`;
+
       show('ww-intro-breakdown-wrap', true);
+
       $('ww-display-billing-sub').textContent = (isRecDog && hasCat) ? 'First combined visit free!' : 'First scoop FREE with recurring service!';
+
     } else if (onetime > 0) {
+
       $('ww-price-eyebrow').textContent = 'Estimated Total'; 
+
       show('ww-intro-breakdown-wrap', false);
+
       $('ww-display-per-visit').textContent = money(onetime) + (condition !== 'light' && isOneTimeDog ? '+' : '');
+
       $('ww-display-billing-sub').textContent = 'One-time service • No ongoing charges';
+
     } else { 
+
       $('ww-price-eyebrow').textContent = 'Your Quote'; 
+
       $('ww-display-per-visit').textContent = '$0.00'; 
+
       $('ww-display-billing-sub').textContent = ''; 
+
       show('ww-intro-breakdown-wrap', false); 
+
     }
+
+
 
     $('ww-quote-lines').innerHTML = html.join('');
+
     
+
     quoteState = {
+
       dogFreq: dogFreq, dogs: dogs, condition: isOneTimeDog ? condition : '', 
+
       catMode: hasDog ? (catAdd ? 'Add-on during dog visits' : 'None') : catStand,
+
       boxes: hasCat ? boxes : 0, hasCat: hasCat, haulAway: haulAway, yardFreshAddon: yardFresh, 
+
       sections: yardFresh ? sections : 1, catLitterSupply: catLitterSupply, catDeepClean: catDeepClean,
+
       perVisitText: $('ww-display-per-visit').textContent, 
+
       dogPriceText: isRecDog ? money(monthly) + '/mo' : (isOneTimeDog ? money(onetime) : '$0.00'), 
+
       catPriceText: hasCat ? money(monthly||onetime) + (isRecDog||isRecCat ? '/mo' : '') : '$0.00',
+
       dogBillingText: dogTxt, catBillingText: catTxt, breakdownSummary: txt.join(' | ')
+
     };
+
   }
 
-  /* BURST & POPUP (FULL PARENT WINDOW OVERLAY) */
-  window.showQuoteScreen = function() {
-    show('ww-err-main', false);
-    const btn = $('ww-reveal-btn');
-    const n = $('ww-customer-name').value.trim(), p = $('ww-customer-phone').value.replace(/\D/g, ''), s = $('ww-customer-street').value.trim(), c = $('ww-customer-city').value.trim(), z = $('ww-customer-zip').value.trim();
-    if (!n) { $('ww-err-main').textContent = 'Please enter your full name.'; show('ww-err-main', true); return; }
-    if (p.length < 10) { $('ww-err-main').textContent = 'Please enter a valid 10-digit phone number.'; show('ww-err-main', true); return; }
-    if (!s || !c || !z) { $('ww-err-main').textContent = 'Please complete your street address, city, and ZIP code.'; show('ww-err-main', true); return; }
-    
-    if ($('ww-dog-frequency').value === 'none' && !$('ww-cat-add-service').checked && $('ww-cat-standalone-freq').value === 'none' && !$('ww-addon-yard-fresh').checked) {
-      $('ww-err-main').textContent = 'Please select at least one service (Dog Waste Removal, Cat Litter Box Service, or Yard Fresh Treatment).'; 
-      show('ww-err-main', true); return;
-    }
 
-    if (btn) { btn.disabled = true; btn.textContent = 'Quote Submitted ✓'; }
 
-    // 1. Calculate the Quote
-    calculateAndRenderQuote();
-    
-    // 2. LAUNCH LOCAL POPUP
-    const modal = $('ww-success-modal');
-    if(modal.showModal) modal.showModal();
+  /* BURST & REVEAL */
 
-    // 3. BREAK OUT OF IFRAME TO DARKEN PARENT PAGE (Full Screen Mobile Fix)
-    if (window.parent !== window) {
-      window.parent.postMessage({ 
-        type: 'ww-show-fullscreen-popup', 
-        html: modal.innerHTML, 
-        price: quoteState.perVisitText,
-        billing: $('ww-display-billing-sub').textContent,
-        lines: $('ww-quote-lines').innerHTML
-      }, '*');
-    }
+  function fireSparkles() {
 
-    // 4. Fire Confetti
-    const sc = modal.querySelector('.ww-modal-box');
-    for(let i = 0; i < 25; i++) {
-      let el = document.createElement('div'); el.className = 'ww-celebration'; el.textContent = ['🎉', '🎊', '🥳', '🎈', '✨', '🙌'][Math.floor(Math.random() * 6)];
-      el.style.left = '50%'; el.style.top = '40px';
+    const box = $('ww-quote-reveal-area'); if(!box) return;
+
+    const e = ['✨','⭐','✨'];
+
+    for(let i = 0; i < 20; i++) {
+
+      let el = document.createElement('div'); el.className = 'ww-celebration'; el.textContent = e[Math.floor(Math.random() * e.length)];
+
+      el.style.left = '50%'; el.style.top = '20px';
+
       el.style.setProperty('--tx', (Math.random() - 0.5) * 450 + 'px'); el.style.setProperty('--ty', (Math.random() - 0.5) * 300 + 'px'); el.style.setProperty('--rot', (Math.random() - 0.5) * 720 + 'deg');
+
       el.style.animationDelay = (Math.random() * 0.2) + 's';
-      sc.appendChild(el); setTimeout(() => el.remove(), 3500);
+
+      box.appendChild(el); setTimeout(() => el.remove(), 3500);
+
     }
+
+  }
+
+
+
+  window.showQuoteScreen = function() {
+
+    show('ww-err-main', false);
+
+    const n = $('ww-customer-name').value.trim(), p = $('ww-customer-phone').value.replace(/\D/g, ''), s = $('ww-customer-street').value.trim(), c = $('ww-customer-city').value.trim(), z = $('ww-customer-zip').value.trim();
+
+    if (!n) { $('ww-err-main').textContent = 'Please enter your full name.'; show('ww-err-main', true); return; }
+
+    if (p.length < 10) { $('ww-err-main').textContent = 'Please enter a valid 10-digit phone number.'; show('ww-err-main', true); return; }
+
+    if (!s || !c || !z) { $('ww-err-main').textContent = 'Please complete your street address, city, and ZIP code.'; show('ww-err-main', true); return; }
+
     
-    // 5. Send ONE FINAL Notification payload
+
+    if ($('ww-dog-frequency').value === 'none' && !$('ww-cat-add-service').checked && $('ww-cat-standalone-freq').value === 'none' && !$('ww-addon-yard-fresh').checked) {
+
+      $('ww-err-main').textContent = 'Please select at least one service (Dog Waste Removal, Cat Litter Box Service, or Yard Fresh Treatment).'; 
+
+      show('ww-err-main', true); return;
+
+    }
+
+
+
+    quoteRevealed = true;
+
+    calculateAndRenderQuote();
+
+    show('ww-quote-reveal-area', true);
+
+    show('ww-reveal-btn', false); // Hide the "See My Price" button since the form is now live
+
+    
+
+    setTimeout(fireSparkles, 50);
+
+    
+
+    // Smooth scroll down to the quote box
+
+    $('ww-quote-reveal-area').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    
+
+    // Send partial lead in background
+
     const yardSign = $('ww-yard-sign').checked ? 'Yes' : 'No';
+
     const petTreats = $('ww-pet-treats').checked ? 'Yes' : 'No';
+
     const userNotes = $('ww-extra-details').value.trim();
+
     const combinedNotes = (userNotes ? userNotes + '\n\n' : '') + '--- PREFERENCES ---\n' + 'Yard Sign Permitted: ' + yardSign + '\n' +
+
       'Pet Treats Permitted: ' + petTreats + '\n\n' + '--- QUOTE SUMMARY ---\n' + 'Displayed Rate: ' + quoteState.perVisitText + '\n' +
+
       'Waste Haul-Away (Charged at time of service): ' + (quoteState.haulAway ? 'Yes' : 'No') + '\n' + 'Breakdown: ' + quoteState.breakdownSummary;
 
+
+
     const payload = { 
-      leadType: 'final',
-      name: n, phone: $('ww-customer-phone').value, email: $('ww-customer-email').value, 
-      address: getFormattedAddress('ww-customer-street', 'ww-customer-city', 'ww-customer-zip'), contactMethod: $('ww-customer-email').value.trim() ? 'Text / Phone / Email' : 'Text / Phone', contactTime: 'Anytime', customerType: 'Residential',
+
+      leadType: 'partial', name: n, phone: $('ww-customer-phone').value, email: $('ww-customer-email').value, 
+
+      contactMethod: $('ww-customer-email').value.trim() ? 'Text / Phone / Email' : 'Text / Phone', contactTime: 'Anytime', customerType: 'Residential',
+
+      address: getFormattedAddress('ww-customer-street', 'ww-customer-city', 'ww-customer-zip'), 
+
       dogFrequency: quoteState.dogFreq, dogs: String(quoteState.dogs), condition: quoteState.condition, 
+
       litterFrequency: quoteState.catMode, boxes: String(quoteState.boxes), deepClean: quoteState.catDeepClean ? 'Yes':'No', 
+
       fresh: quoteState.yardFreshAddon ? 'Yes':'No', sections: String(quoteState.sections), haulAway: quoteState.haulAway ? 'Yes':'No',
+
       perVisitPrice: quoteState.perVisitText, firstTotal: quoteState.perVisitText, dogPrice: quoteState.dogPriceText, catPrice: quoteState.catPriceText,
-      dogBilling: quoteState.dogBillingText, catBilling: quoteState.catBillingText,
+
       yardSign: yardSign, petTreats: petTreats, notes: combinedNotes, website: '', initial: 'No (First Scoop Free Promo)', onetime: quoteState.dogFreq === 'onetime' ? 'Yes' : 'No', onetimeDogs: quoteState.dogFreq === 'onetime' ? String(quoteState.dogs) : '0'
+
     };
+
     fetch(QUOTE_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ payload: JSON.stringify(payload) }) }).catch(()=>{});
+
   };
 
-  /* COMMERCIAL SUBMISSION */
-  const commBtn = $('ww-submit-comm-quote');
-  commBtn.addEventListener('click', function() {
-    if (commBtn.disabled) return;
-    show('ww-comm-error', false);
-    const b = $('ww-comm-business').value.trim(), n = $('ww-comm-name').value.trim(), p = $('ww-comm-phone').value.trim(), s = $('ww-comm-street').value.trim();
-    if (!b || !n || !p || !s) { $('ww-comm-error').textContent = 'Please complete your business name, contact name, property address, city, ZIP code, and phone number.'; show('ww-comm-error', true); return; }
-    if ($('ww-comm-email').value.trim() && !$('ww-comm-email').checkValidity()) { $('ww-comm-error').textContent = 'Please enter a valid email address or leave it blank.'; show('ww-comm-error', true); return; }
 
-    this.disabled = true; this.textContent = 'Quote Submitted ✓';
+
+  /* FINAL SUBMISSION */
+
+  $('ww-submit-quote-btn').addEventListener('click', function() {
+
+    if (this.disabled) return;
+
+    this.disabled = true; this.textContent = 'Submitting Quote...';
+
+    show('ww-residential', false); show('ww-success-screen', true);
+
     
-    const modal = $('ww-success-modal');
-    $('ww-quote-reveal-area').style.display = 'none'; 
-    if(modal.showModal) modal.showModal();
-    
-    const sc = modal.querySelector('.ww-modal-box');
-    for(let i = 0; i < 25; i++) {
+
+    // Confetti on success
+
+    const s = $('ww-success-screen');
+
+    for(let i = 0; i < 20; i++) {
+
       let el = document.createElement('div'); el.className = 'ww-celebration'; el.textContent = ['🎉', '🎊', '🥳', '🎈', '✨', '🙌'][Math.floor(Math.random() * 6)];
+
       el.style.left = '50%'; el.style.top = '40px';
+
       el.style.setProperty('--tx', (Math.random() - 0.5) * 450 + 'px'); el.style.setProperty('--ty', (Math.random() - 0.5) * 300 + 'px'); el.style.setProperty('--rot', (Math.random() - 0.5) * 720 + 'deg');
+
       el.style.animationDelay = (Math.random() * 0.2) + 's';
-      sc.appendChild(el); setTimeout(() => el.remove(), 3500);
+
+      s.appendChild(el); setTimeout(() => el.remove(), 3500);
+
     }
 
-    const payload = { 
-      leadType: 'final', name: n, address: b + ' (' + getFormattedAddress('ww-comm-street', 'ww-comm-city', 'ww-comm-zip') + ')', phone: p, email: $('ww-comm-email').value, contactMethod: $('ww-comm-email').value.trim() ? 'email' : 'phone', contactTime: 'Anytime',
-      customerType: 'Commercial - ' + $('ww-comm-type').value, services: 'Commercial Quote Requested', dogs: '0', dogFrequency: 'none', boxes: '0', litterFrequency: 'none', initial: 'No', onetime: 'No', onetimeDogs: '0', condition: '', fresh: 'No', sections: '0', deepClean: 'No', deepBoxes: '0',
-      firstTotal: 'Custom Quote', dogPrice: 'Custom Quote', catPrice: 'Custom Quote', dogBilling: '', catBilling: '', yardSign: 'no', petTreats: 'N/A', notes: $('ww-comm-notes').value.trim(), website: '' 
+    
+
+    if (window.parent !== window) window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
+
+    
+
+    const yardSign = $('ww-yard-sign').checked ? 'Yes' : 'No';
+
+    const petTreats = $('ww-pet-treats').checked ? 'Yes' : 'No';
+
+    const userNotes = $('ww-extra-details').value.trim();
+
+    const combinedNotes = (userNotes ? userNotes + '\n\n' : '') + '--- PREFERENCES ---\n' + 'Yard Sign Permitted: ' + yardSign + '\n' +
+
+      'Pet Treats Permitted: ' + petTreats + '\n\n' + '--- QUOTE SUMMARY ---\n' + 'Displayed Rate: ' + quoteState.perVisitText + '\n' +
+
+      'Waste Haul-Away (Charged at time of service): ' + (quoteState.haulAway ? 'Yes' : 'No') + '\n' + 'Breakdown: ' + quoteState.breakdownSummary;
+
+
+
+    const payload = {
+
+      leadType: 'final', name: $('ww-customer-name').value.trim(), phone: $('ww-customer-phone').value, email: $('ww-customer-email').value,
+
+      address: getFormattedAddress('ww-customer-street', 'ww-customer-city', 'ww-customer-zip'), contactMethod: $('ww-customer-email').value.trim() ? 'Text / Phone / Email' : 'Text / Phone', contactTime: 'Anytime', customerType: 'Residential',
+
+      dogFrequency: quoteState.dogFreq, dogs: String(quoteState.dogs), condition: quoteState.condition, 
+
+      litterFrequency: quoteState.catMode, boxes: String(quoteState.boxes), deepClean: quoteState.catDeepClean ? 'Yes':'No', 
+
+      fresh: quoteState.yardFreshAddon ? 'Yes':'No', sections: String(quoteState.sections), haulAway: quoteState.haulAway ? 'Yes':'No',
+
+      perVisitPrice: quoteState.perVisitText, firstTotal: quoteState.perVisitText, dogPrice: quoteState.dogPriceText, catPrice: quoteState.catPriceText,
+
+      dogBilling: quoteState.dogBillingText, catBilling: quoteState.catBillingText,
+
+      yardSign: yardSign, petTreats: petTreats, notes: combinedNotes, website: '', initial: 'No (First Scoop Free Promo)', onetime: quoteState.dogFreq === 'onetime' ? 'Yes' : 'No', onetimeDogs: quoteState.dogFreq === 'onetime' ? String(quoteState.dogs) : '0'
+
     };
+
     fetch(QUOTE_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ payload: JSON.stringify(payload) }) }).catch(()=>{});
+
   });
 
+
+
+  /* COMMERCIAL SUBMISSION */
+
+  const commBtn = $('ww-submit-comm-quote');
+
+  commBtn.addEventListener('click', function() {
+
+    if (commBtn.disabled) return;
+
+    show('ww-comm-error', false);
+
+    const b = $('ww-comm-business').value.trim(), n = $('ww-comm-name').value.trim(), p = $('ww-comm-phone').value.trim(), s = $('ww-comm-street').value.trim();
+
+    if (!b || !n || !p || !s) { $('ww-comm-error').textContent = 'Please complete your business name, contact name, property address, city, ZIP code, and phone number.'; show('ww-comm-error', true); return; }
+
+    if ($('ww-comm-email').value.trim() && !$('ww-comm-email').checkValidity()) { $('ww-comm-error').textContent = 'Please enter a valid email address or leave it blank.'; show('ww-comm-error', true); return; }
+
+
+
+    this.disabled = true; this.textContent = 'Submitting...';
+
+    show('ww-commercial', false); show('ww-success-screen', true); 
+
+    if (window.parent !== window) window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
+
+    
+
+    // Confetti on success
+
+    const sc = $('ww-success-screen');
+
+    for(let i = 0; i < 20; i++) {
+
+      let el = document.createElement('div'); el.className = 'ww-celebration'; el.textContent = ['🎉', '🎊', '🥳', '🎈', '✨', '🙌'][Math.floor(Math.random() * 6)];
+
+      el.style.left = '50%'; el.style.top = '40px';
+
+      el.style.setProperty('--tx', (Math.random() - 0.5) * 450 + 'px'); el.style.setProperty('--ty', (Math.random() - 0.5) * 300 + 'px'); el.style.setProperty('--rot', (Math.random() - 0.5) * 720 + 'deg');
+
+      el.style.animationDelay = (Math.random() * 0.2) + 's';
+
+      sc.appendChild(el); setTimeout(() => el.remove(), 3500);
+
+    }
+
+
+
+    const payload = { 
+
+      leadType: 'final', name: n, address: b + ' (' + getFormattedAddress('ww-comm-street', 'ww-comm-city', 'ww-comm-zip') + ')', phone: p, email: $('ww-comm-email').value, contactMethod: $('ww-comm-email').value.trim() ? 'email' : 'phone', contactTime: 'Anytime',
+
+      customerType: 'Commercial - ' + $('ww-comm-type').value, services: 'Commercial Quote Requested', dogs: '0', dogFrequency: 'none', boxes: '0', litterFrequency: 'none', initial: 'No', onetime: 'No', onetimeDogs: '0', condition: '', fresh: 'No', sections: '0', deepClean: 'No', deepBoxes: '0',
+
+      firstTotal: 'Custom Quote', dogPrice: 'Custom Quote', catPrice: 'Custom Quote', dogBilling: '', catBilling: '', yardSign: 'no', petTreats: 'N/A', notes: $('ww-comm-notes').value.trim(), website: '' 
+
+    };
+
+    fetch(QUOTE_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ payload: JSON.stringify(payload) }) }).catch(()=>{});
+
+  });
+
+
+
   updateDynamicVisibility();
+
 })();
+
 </script>
 
+
+
 </body>
-</html>
+
+</html> 
