@@ -421,7 +421,7 @@
       text-align: center;
     }
 
-    /* IN-FRAME RECEIPT CARD (FITS 100% WITHOUT SCROLLING) */
+    /* IN-FRAME RECEIPT CARD */
     .ww-quote-success-header {
       text-align: center;
       margin-bottom: 6px;
@@ -442,14 +442,14 @@
       background: var(--green);
       color: #ffffff;
       border-radius: 12px;
-      padding: 11px 14px;
+      padding: 12px 14px;
       margin-bottom: 6px;
     }
 
     .ww-price-hero {
       text-align: center;
-      padding-bottom: 6px;
-      margin-bottom: 6px;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     }
 
@@ -466,34 +466,51 @@
     }
 
     .ww-big-price {
-      font-size: 26px;
+      font-size: 27px;
       font-weight: 800;
       line-height: 1.1;
       color: #ffffff;
-      margin-top: 2px;
+      margin-top: 3px;
+      font-variant-numeric: tabular-nums;
     }
 
     .ww-big-sub {
       color: var(--light);
       font-size: 11px;
-      margin-top: 1px;
+      margin-top: 2px;
     }
 
+    /* UNIFIED PROMO & FIRST-MONTH BOX */
     .ww-intro-breakdown-box {
       background: rgba(213, 223, 206, 0.16);
       border: 1px solid rgba(213, 223, 206, 0.35);
       border-radius: 8px;
-      padding: 5px 8px;
-      margin-bottom: 6px;
+      padding: 7px 10px;
+      margin-bottom: 8px;
       font-size: 11px;
-      line-height: 1.3;
+      line-height: 1.35;
       color: #ffffff;
       text-align: center;
+    }
+
+    .ww-promo-headline {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #ffffff;
+      padding-bottom: 4px;
+      margin-bottom: 4px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      letter-spacing: 0.2px;
     }
 
     .ww-intro-breakdown-box strong {
       display: block;
       font-size: 12px;
+    }
+
+    /* DEDICATED SERVICES & ADD-ONS SECTION */
+    .ww-services-section {
+      padding-top: 2px;
     }
 
     .ww-summary-line {
@@ -510,17 +527,6 @@
     .ww-summary-title { font-weight: 700; color: #ffffff; }
     .ww-summary-desc { font-size: 10.5px; color: var(--light); margin-left: 4px; }
     .ww-summary-price { font-weight: 700; color: #ffffff; white-space: nowrap; text-align: right; flex-shrink: 0; }
-
-    .ww-free-banner {
-      background: rgba(213, 223, 206, 0.14);
-      border: 1px solid rgba(213, 223, 206, 0.35);
-      border-radius: 7px;
-      padding: 5px 8px;
-      margin-top: 6px;
-      font-size: 11.5px;
-      color: #ffffff;
-      text-align: center;
-    }
 
     /* CONFETTI ANIMATION */
     .ww-celebration {
@@ -759,29 +765,29 @@
           <textarea id="ww-extra-details" name="extra_details" placeholder="Gate codes, pet names, or special instructions..."></textarea>
         </div>
 
-        <!-- STEP 5: IN-FRAME FINAL QUOTE RECEIPT (Zero scrolling!) -->
+        <!-- STEP 5: IN-FRAME FINAL QUOTE RECEIPT -->
         <div id="ww-step-5" class="ww-step-view ww-hidden">
           <div class="ww-quote-success-header">
             <span class="ww-success-badge">🎉 You're All Set! Request Received</span>
           </div>
 
           <div class="ww-receipt-box" aria-live="polite">
+            <!-- TOP PRICE HERO -->
             <div class="ww-price-hero">
               <span class="ww-price-eyebrow" id="ww-price-eyebrow">Total Monthly Rate</span>
               <div class="ww-big-price" id="ww-display-per-visit">$0.00</div>
               <div class="ww-big-sub" id="ww-display-billing-sub"></div>
             </div>
 
+            <!-- UNIFIED PROMO & FIRST-MONTH SECTION -->
             <div class="ww-intro-breakdown-box ww-hidden" id="ww-intro-breakdown-wrap">
+              <div class="ww-promo-headline" id="ww-free-offer-banner">🎁 First Scoop is 100% Free!</div>
               <strong id="ww-intro-breakdown-text"></strong>
               <span id="ww-intro-subtext"></span>
             </div>
 
-            <div id="ww-quote-lines"></div>
-
-            <div class="ww-free-banner ww-hidden" id="ww-free-offer-banner">
-              <strong>🎁 First Scoop is 100% Free!</strong>
-            </div>
+            <!-- DEDICATED SERVICES & ADD-ONS SECTION BELOW -->
+            <div class="ww-services-section" id="ww-quote-lines"></div>
           </div>
 
           <div style="padding:7px 10px; background:var(--cream); border-radius:8px; border:1px solid var(--border); text-align:center; font-size:12px;">
@@ -908,9 +914,9 @@
   window.addEventListener('load', reportFixedHeight);
   window.addEventListener('resize', reportFixedHeight);
 
-  /* HELPERS */
+  /* CURRENCY FORMATTER ($78.00 format) */
   const getFormattedAddress = (s, c, z) => [$(s).value.trim(), $(c).value.trim(), $(z).value.trim() ? 'TX ' + $(z).value.trim() : ''].filter(Boolean).join(', ');
-  const money = n => n.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+  const money = n => Math.round(n).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
   const getNum = id => { const el = $(id); return !el ? 1 : Math.max(1, Math.min(20, parseInt(el.value, 10) || 1)); };
 
   /* PHONE FORMATTING */
@@ -1116,7 +1122,7 @@
     });
   });
 
-  /* EXACT MATH & QUOTE RENDERING */
+  /* UNIFIED PROMO BOX + DEDICATED SERVICES & ADD-ONS SECTION */
   function calculateAndRenderQuote() {
     const dogFreq = $('ww-dog-frequency').value, dogs = getNum('ww-dogs'), condition = $('ww-condition').value;
     const boxes = getNum('ww-boxes'), haulAway = $('ww-haul-away').checked, catLitterSupply = $('ww-cat-litter-supply').checked, catDeepClean = $('ww-cat-deep-clean').checked;
@@ -1127,26 +1133,25 @@
     const isRecCat = (!hasDog && hasCat && (catStand === 'weekly' || catStand === 'twice' || catStand === 'biweekly'));
     const yardFresh = $('ww-addon-yard-fresh').checked, sections = getNum('ww-sections');
 
-    show('ww-free-offer-banner', isRecDog || isRecCat);
-
     let html = [], txt = [], monthly = 0, onetime = 0, dogTxt = '', catTxt = '';
+    let firstMonthTotal = 0, perVisitRate = 0;
     const map = { twice: 'Twice Weekly', weekly: 'Weekly', biweekly: 'Bi-Weekly', onetime: 'One-Time Cleanup' };
 
     const line = (t, d, p) => `<div class="ww-summary-line"><div><span class="ww-summary-title">${t}</span>${d ? `<span class="ww-summary-desc">(${d})</span>` : ''}</div><div class="ww-summary-price">${p}</div></div>`;
 
-    // 1. RECURRING BUNDLED (Dog + Cat)
+    // 1. RECURRING BUNDLED (Dog + Cat Combo)
     if (isRecDog && hasCat) {
       monthly = dogFreq === 'weekly' ? 112 : dogFreq === 'twice' ? 206 : 90;
       dogTxt = map[dogFreq] + ' Bundle (Includes Cat Service)';
       html.push(line('Dog + Cat Bundle', map[dogFreq], money(monthly) + '/mo'));
-      txt.push('Combined Bundle (' + map[dogFreq] + '): ' + dogTxt);
+      txt.push('Combined Bundle (' + map[dogFreq] + '): ' + money(monthly) + '/mo');
     }
     // 2. RECURRING DOG ONLY
     else if (isRecDog && !hasCat) {
       monthly = dogFreq === 'weekly' ? 78 : dogFreq === 'twice' ? 139 : 65;
       dogTxt = map[dogFreq] + ' • First visit free';
       html.push(line(`Dog Service (${dogs} dog${dogs > 1 ? 's' : ''})`, map[dogFreq], money(monthly) + '/mo'));
-      txt.push('Dog Service (' + map[dogFreq] + ', ' + dogs + ' dog(s)): ' + dogTxt);
+      txt.push('Dog Service (' + map[dogFreq] + ', ' + dogs + ' dog(s)): ' + money(monthly) + '/mo');
     }
     // 3. ONE-TIME BUNDLED (Dog + Cat)
     else if (isOneTimeDog && hasCat) {
@@ -1213,19 +1218,28 @@
     }
 
     if (isRecDog || isRecCat) {
+      const activeFreq = isRecDog ? dogFreq : catStand;
+      const visitsPerYear = activeFreq === 'twice' ? 104 : activeFreq === 'biweekly' ? 26 : 52;
+      const vpm = activeFreq === 'twice' ? 8 : activeFreq === 'biweekly' ? 2 : 4;
+      perVisitRate = Math.round((monthly * 12) / visitsPerYear);
+      firstMonthTotal = monthly - perVisitRate;
+
       $('ww-price-eyebrow').textContent = 'Total Monthly Rate';
       $('ww-display-per-visit').textContent = money(monthly) + ' / mo';
-      let vpm = (dogFreq === 'twice' || catStand === 'twice') ? 8 : (dogFreq === 'biweekly' || catStand === 'biweekly') ? 2 : 4;
-      let first = monthly - (monthly / vpm);
-      $('ww-intro-breakdown-text').textContent = `First month: ${money(first)} (First visit free)`;
+      $('ww-display-billing-sub').textContent = (isRecDog && hasCat) ? 'First combined visit free!' : 'First scoop FREE with recurring service!';
+
+      $('ww-free-offer-banner').textContent = '🎁 First Scoop is 100% Free!';
+      $('ww-intro-breakdown-text').textContent = `First month: ${money(firstMonthTotal)} (First visit free)`;
       $('ww-intro-subtext').textContent = `Billed monthly (~${vpm} visits/mo). Then ${money(monthly)}/mo.`;
       show('ww-intro-breakdown-wrap', true);
-      $('ww-display-billing-sub').textContent = (isRecDog && hasCat) ? 'First combined visit free!' : 'First scoop FREE with recurring service!';
+
+      txt.push(`First Month Promo: ${money(firstMonthTotal)} (First visit free)`);
     } else if (onetime > 0) {
       $('ww-price-eyebrow').textContent = 'Estimated Total';
       show('ww-intro-breakdown-wrap', false);
       $('ww-display-per-visit').textContent = money(onetime) + (condition !== 'light' && isOneTimeDog ? '+' : '');
       $('ww-display-billing-sub').textContent = 'One-time service • No ongoing charges';
+      firstMonthTotal = onetime;
     }
 
     $('ww-quote-lines').innerHTML = html.join('');
@@ -1236,6 +1250,7 @@
       boxes: hasCat ? boxes : 0, hasCat, haulAway, yardFreshAddon: yardFresh,
       sections: yardFresh ? sections : 1, catLitterSupply, catDeepClean,
       perVisitText: $('ww-display-per-visit').textContent,
+      firstMonthText: (isRecDog || isRecCat) ? `${money(firstMonthTotal)} (First visit free, then ${money(monthly)}/mo)` : $('ww-display-per-visit').textContent,
       dogPriceText: isRecDog ? money(monthly) + '/mo' : (isOneTimeDog ? money(onetime) : '$0.00'),
       catPriceText: hasCat ? money(monthly || onetime) + (isRecDog || isRecCat ? '/mo' : '') : '$0.00',
       dogBillingText: dogTxt, catBillingText: catTxt, breakdownSummary: txt.join(' | ')
@@ -1264,6 +1279,7 @@
       const combinedNotes = (userNotes ? userNotes + '\n\n' : '') +
         '--- PREFERENCES ---\nYard Sign Permitted: ' + yardSign + '\nPet Treats Permitted: ' + petTreats +
         '\n\n--- QUOTE SUMMARY ---\nDisplayed Rate: ' + quoteState.perVisitText +
+        '\nFirst Month Rate: ' + quoteState.firstMonthText +
         '\nWaste Haul-Away (Charged at time of service): ' + (quoteState.haulAway ? 'Yes' : 'No') +
         '\nBreakdown: ' + quoteState.breakdownSummary;
 
@@ -1286,7 +1302,7 @@
         sections: String(quoteState.sections),
         haulAway: quoteState.haulAway ? 'Yes' : 'No',
         perVisitPrice: quoteState.perVisitText,
-        firstTotal: quoteState.perVisitText,
+        firstTotal: quoteState.firstMonthText,
         dogPrice: quoteState.dogPriceText,
         catPrice: quoteState.catPriceText,
         dogBilling: quoteState.dogBillingText,
