@@ -145,7 +145,7 @@
 
     #ww-quote .ww-status-msg { font-size: 14px; font-weight: 600; margin: 14px 0 0; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--danger-bg); color: var(--danger); border: 1px solid #ebccd1; }
 
-    /* QUOTE DISPLAY BOX (Moved to Success Screen) */
+    /* QUOTE DISPLAY BOX */
     #ww-quote-reveal-area { margin: 20px 0 24px; position: relative; }
     #ww-quote .ww-receipt-box { background: var(--green); color: #ffffff; border-radius: var(--radius-lg); padding: 20px 22px; box-shadow: var(--shadow-sm); text-align: left; }
     #ww-quote .ww-price-hero { text-align: center; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); }
@@ -517,21 +517,40 @@
   }
   setInterval(reportHeight, 1000);
 
-  /* JUMP TO TOP HACK (For iOS Safari Iframes) */
+  /* THE IOS IFRAME HACK KITCHEN SINK */
   function jumpToTop() {
-    const topTarget = $('ww-quote');
-    topTarget.setAttribute('tabindex', '-1');
-    topTarget.style.outline = 'none';
-    
-    // Slight delay gives the browser time to register that the form is hidden
-    // before we force it to look at the top element
+    // We use a 150ms delay to give the iPhone time to repaint the screen 
+    // and realize the long form is gone before we force the jump.
     setTimeout(() => {
-      window.scrollTo(0, 0); // Scrols the iframe itself if needed
-      topTarget.focus({ preventScroll: false }); // FORCES the parent iPhone browser to scroll up to this element
+      // 1. Standard iframe scroll
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+
+      // 2. The iOS Anchor Hack
+      let iOSAnchor = document.getElementById('ios-jump');
+      if (!iOSAnchor) {
+        iOSAnchor = document.createElement('a');
+        iOSAnchor.id = 'ios-jump';
+        iOSAnchor.href = '#ww-quote';
+        iOSAnchor.style.position = 'absolute';
+        iOSAnchor.style.top = '0';
+        iOSAnchor.style.opacity = '0';
+        document.body.appendChild(iOSAnchor);
+      }
+      iOSAnchor.click();
+
+      // 3. scrollIntoView (MUST be 'auto', 'smooth' is broken on iOS iframes)
+      const topTarget = document.getElementById('ww-quote');
+      if (topTarget && topTarget.scrollIntoView) {
+        topTarget.scrollIntoView({ behavior: 'auto', block: 'start' });
+      }
       
-      // Still send the postMessage backup just in case you ever use it
-      if (window.parent !== window) window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-    }, 50);
+      // 4. Fallback for parent page
+      if (window.parent !== window) {
+        window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
+      }
+    }, 150);
   }
 
   /* HELPERS */
