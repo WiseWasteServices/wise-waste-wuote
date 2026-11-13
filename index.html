@@ -137,9 +137,6 @@
 </head>
 <body>
 <div id="ww-quote">
-  <!-- INVISIBLE TOP FOCUS ANCHOR FOR IOS SAFARI -->
-  <button type="button" id="ww-top-anchor" aria-hidden="true" tabindex="-1" style="position:absolute;top:0;left:0;width:1px;height:1px;opacity:0;border:0;padding:0;background:transparent;pointer-events:none;"></button>
-
   <!-- SLIM TOP INTRO HEADER -->
   <div id="ww-intro-block" style="max-width:680px; margin:0 auto 18px; background:#F4F7F4; border:1.5px solid #D5DFCE; border-radius:16px; padding:18px 20px; text-align:center; font-family:'Segoe UI',Arial,sans-serif;">
     <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#3F6049; margin-bottom:4px;">✨ Free Instant Quote</div>
@@ -359,9 +356,9 @@
   const $ = id => document.getElementById(id);
   const show = (id, vis) => { const el = $(id); if (el) el.classList.toggle('ww-hidden', !vis); };
 
-  let heightLock = false, lastHeight = 0;
+  let heightLock = false, lastHeight = 0, localRafId = null;
 
-  /* HEIGHT REPORTER (Measures #ww-quote directly & pauses during scroll so iOS never cancels the slide) */
+  /* HEIGHT REPORTER */
   function reportHeight(force) {
     if (heightLock && !force) return;
     if (window.parent !== window) {
@@ -377,66 +374,35 @@
   if ('ResizeObserver' in window) new ResizeObserver(() => reportHeight(false)).observe(root);
   setInterval(() => reportHeight(false), 1000);
 
-  /* BULLETPROOF ALL-PLATFORM SMOOTH SLIDE TO TOP */
-  function smoothSlideWindow( win, targetY, duration ) {
-    try {
-      const startY = win.pageYOffset || win.document.documentElement.scrollTop || win.document.body.scrollTop || 0;
-      const diff = targetY - startY;
-      if (Math.abs(diff) < 4) return;
-      const startTime = performance.now();
-      function step(now) {
-        const elapsed = now - startTime;
-        const t = Math.min(1, elapsed / duration);
-        const ease = 1 - Math.pow(1 - t, 3); // Cubic ease-out
-        win.scrollTo(0, Math.round(startY + diff * ease));
-        if (t < 1) win.requestAnimationFrame(step);
+  /* CONFLICT-FREE SMOOTH UPWARD SLIDE */
+  function smoothSlideLocal(targetY, duration) {
+    if (localRafId) cancelAnimationFrame(localRafId);
+    const docEl = document.documentElement, bodyEl = document.body;
+    const startY = window.pageYOffset || docEl.scrollTop || bodyEl.scrollTop || 0;
+    const diff = targetY - startY;
+    if (Math.abs(diff) < 4) return;
+
+    // Disable CSS scroll-behavior: smooth during JS animation so iOS Safari never freezes
+    docEl.style.setProperty('scroll-behavior', 'auto', 'important');
+    bodyEl.style.setProperty('scroll-behavior', 'auto', 'important');
+
+    const startTime = performance.now();
+    function step(now) {
+      const t = Math.min(1, (now - startTime) / duration);
+      const ease = 1 - Math.pow(1 - t, 3);
+      const nextY = Math.round(startY + diff * ease);
+      window.scrollTo(0, nextY);
+      docEl.scrollTop = nextY;
+      bodyEl.scrollTop = nextY;
+      if (t < 1) {
+        localRafId = requestAnimationFrame(step);
+      } else {
+        localRafId = null;
+        docEl.style.removeProperty('scroll-behavior');
+        bodyEl.style.removeProperty('scroll-behavior');
       }
-      win.requestAnimationFrame(step);
-    } catch (e) {}
-  }
-
-  function slideToTop() {
-    // 1. Pause iframe height resize for 750ms so CSS height transitions never abort iOS smooth scroll
-    heightLock = true;
-
-    // 2. Release iOS keyboard/input viewport lock
-    if (document.activeElement && typeof document.activeElement.blur === 'function') {
-      document.activeElement.blur();
     }
-
-    // 3. Synchronous iOS WebKit focus-scroll trigger on top anchor
-    const anchor = $('ww-top-anchor');
-    if (anchor) {
-      try { anchor.focus({ preventScroll: false }); } catch (e) { anchor.focus(); }
-    }
-
-    // 4. Send parent postMessage for cross-origin iframe embeds (Carrd) before height changes
-    if (window.parent !== window) {
-      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-      setTimeout(() => window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*'), 60);
-      setTimeout(() => window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*'), 220);
-    }
-
-    // 5. Direct rAF upward slide for Inline Carrd / Desktop / Same-Origin Iframe
-    const rect = root.getBoundingClientRect();
-    const curScroll = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    const localTarget = Math.max(0, rect.top + curScroll - 16);
-    smoothSlideWindow(window, localTarget, 450);
-
-    try {
-      if (window.parent !== window && window.frameElement) {
-        const pWin = window.parent;
-        const fRect = window.frameElement.getBoundingClientRect();
-        const pScroll = pWin.pageYOffset || pWin.document.documentElement.scrollTop || 0;
-        smoothSlideWindow(pWin, Math.max(0, fRect.top + pScroll - 20), 450);
-      }
-    } catch (e) {}
-
-    // 6. Unlock height after upward slide completes
-    setTimeout(() => {
-      heightLock = false;
-      reportHeight(true);
-    }, 750);
+    localRafId = requestAnimationFrame(step);
   }
 
   const getFormattedAddress = (s, c, z) => [$(s).value.trim(), $(c).value.trim(), $(z).value.trim() ? 'TX ' + $(z).value.trim() : ''].filter(Boolean).join(', ');
@@ -641,14 +607,38 @@
 
     if (btn) { btn.disabled = true; btn.textContent = 'Calculating...'; }
 
+    // 1. Freeze height BEFORE hiding form so iOS Safari never aborts scroll due to layout collapse
+    heightLock = true;
+    root.style.minHeight = root.offsetHeight + 'px';
+
+    // 2. Dismiss iOS keyboard if open
+    if (document.activeElement && typeof document.activeElement.blur === 'function') {
+      document.activeElement.blur();
+    }
+
+    // 3. Swap to Quote Screen at the top of the container
     calculateAndRenderQuote();
     show('ww-residential', false);
     show('ww-success-screen', true);
 
-    // Slide smoothly to the top on all platforms (iOS, Android, Desktop)
-    slideToTop();
+    // 4. Trigger SINGLE upward slide (both Parent Carrd Iframe & Standalone/Inline modes)
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
+    }
+    const curScroll = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    if (curScroll > 4) {
+      const rect = root.getBoundingClientRect();
+      smoothSlideLocal(Math.max(0, Math.round(rect.top + curScroll - 16)), 450);
+    }
 
-    // Confetti & Sparkles burst
+    // 5. Release height lock after the 450ms upward slide finishes
+    setTimeout(() => {
+      root.style.minHeight = '';
+      heightLock = false;
+      reportHeight(true);
+    }, 550);
+
+    // 6. Confetti & Sparkles burst
     const sc = $('ww-success-screen');
     for (let i = 0; i < 20; i++) {
       let el = document.createElement('div'); el.className = 'ww-celebration';
@@ -661,6 +651,7 @@
       sc.appendChild(el); setTimeout(() => el.remove(), 3500);
     }
 
+    // 7. Send single final notification to Pushover webhook
     const yardSign = $('ww-yard-sign').checked ? 'Yes' : 'No';
     const petTreats = $('ww-pet-treats').checked ? 'Yes' : 'No';
     const userNotes = $('ww-extra-details').value.trim();
