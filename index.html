@@ -145,9 +145,9 @@
 
     #ww-quote .ww-status-msg { font-size: 14px; font-weight: 600; margin: 14px 0 0; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--danger-bg); color: var(--danger); border: 1px solid #ebccd1; }
 
-    /* QUOTE DISPLAY BOX */
-    #ww-quote-reveal-area { margin-top: 24px; padding-top: 24px; border-top: 2px dashed var(--border-strong); position: relative; }
-    #ww-quote .ww-receipt-box { background: var(--green); color: #ffffff; border-radius: var(--radius-lg); padding: 20px 22px; margin-bottom: 20px; box-shadow: var(--shadow-sm); }
+    /* QUOTE DISPLAY BOX (Moved to Success Screen) */
+    #ww-quote-reveal-area { margin: 20px 0 24px; position: relative; }
+    #ww-quote .ww-receipt-box { background: var(--green); color: #ffffff; border-radius: var(--radius-lg); padding: 20px 22px; box-shadow: var(--shadow-sm); text-align: left; }
     #ww-quote .ww-price-hero { text-align: center; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); }
     #ww-quote .ww-price-eyebrow { display: inline-block; background: rgba(213, 223, 206, 0.18); color: var(--light); border-radius: 999px; padding: 4px 14px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
     #ww-quote .ww-big-price { font-size: 36px; font-weight: 800; line-height: 1.1; color: #ffffff; font-variant-numeric: tabular-nums; }
@@ -165,7 +165,7 @@
     #ww-quote .ww-free-banner strong { display: block; margin-bottom: 0; font-size: 15px; letter-spacing: 0.3px; }
 
     /* SUCCESS SCREEN */
-    #ww-success-screen { text-align: center; padding: 50px 24px; overflow: hidden; }
+    #ww-success-screen { text-align: center; padding: 40px 24px; overflow: hidden; }
     #ww-success-screen .ww-success-icon-wrap { width: 76px; height: 76px; border-radius: 50%; background: var(--green-soft); border: 2px solid var(--light); display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 18px; font-size: 34px; }
     
     .ww-phone-link { color: #3F6049; text-decoration: none; font-weight: 800; transition: color 0.2s ease; }
@@ -188,7 +188,7 @@
       #ww-quote .ww-choice { padding: 10px; margin-bottom: 8px !important; }
       #ww-quote .ww-compact-check { font-size: 13px; margin-bottom: 6px; }
       #ww-quote .ww-big-price { font-size: 26px; }
-      #ww-quote .ww-receipt-box { padding: 12px 10px; margin-bottom: 14px; }
+      #ww-quote .ww-receipt-box { padding: 12px 10px; }
       #ww-quote .ww-summary-line { font-size: 13px; gap: 8px; padding: 6px 0; }
       #ww-quote .ww-summary-title, #ww-quote .ww-summary-price { font-size: 13px; }
       #ww-quote .ww-primary-btn { width: 100%; flex: none; min-height: 44px; padding: 8px; font-size: 15px; }
@@ -390,34 +390,9 @@
     <label class="ww-label" for="ww-extra-details">Additional notes <span class="ww-muted">(optional)</span></label>
     <textarea id="ww-extra-details" name="extra_details" rows="3" placeholder="Gate codes, pet names, or special instructions..."></textarea>
 
-    <!-- ERROR & REVEAL CTA -->
+    <!-- ERROR & SUBMIT CTA -->
     <div id="ww-err-main" class="ww-status-msg ww-hidden"></div>
-    <button type="button" id="ww-reveal-btn" class="ww-primary-btn ww-final-glow-btn" onclick="showQuoteScreen()">See My Price 🪄</button>
-
-    <!-- LIVE QUOTE BOX -->
-    <div id="ww-quote-reveal-area" class="ww-hidden">
-      <div class="ww-receipt-box" aria-live="polite">
-        <div class="ww-price-hero">
-          <span class="ww-price-eyebrow" id="ww-price-eyebrow">Total Rate</span>
-          <div class="ww-big-price" id="ww-display-per-visit">$0.00</div>
-          <div class="ww-big-sub" id="ww-display-billing-sub"></div>
-        </div>
-
-        <div class="ww-intro-breakdown-box ww-hidden" id="ww-intro-breakdown-wrap">
-          <strong id="ww-intro-breakdown-text"></strong>
-          <span id="ww-intro-subtext" style="font-size: 12.5px; opacity: 0.9;"></span>
-        </div>
-
-        <div id="ww-quote-lines"></div>
-
-        <div class="ww-free-banner ww-hidden" id="ww-free-offer-banner">
-          <strong>🎁 First Scoop is 100% Free!</strong>
-        </div>
-      </div>
-      
-      <div id="ww-s2-error" class="ww-status-msg ww-hidden" style="margin-bottom:14px;"></div>
-      <button type="button" class="ww-primary-btn" id="ww-submit-quote-btn">Submit Custom Quote 🚀</button>
-    </div>
+    <button type="button" id="ww-reveal-btn" class="ww-primary-btn ww-final-glow-btn" onclick="showQuoteScreen()">See My Price &amp; Submit 🪄</button>
   </form>
 
   <!-- COMMERCIAL SECTION -->
@@ -479,13 +454,36 @@
     <button type="button" class="ww-primary-btn ww-final-glow-btn" id="ww-submit-comm-quote" style="margin-top: 24px;">Send Request ✉️</button>
   </form>
 
-  <!-- CONFIRMATION SCREEN -->
+  <!-- CONFIRMATION / QUOTE SCREEN -->
   <div id="ww-success-screen" class="ww-panel ww-hidden">
     <div class="ww-success-icon-wrap">🎉</div>
     <h2 style="margin:0 0 10px; color:var(--ink);">You're all set!</h2>
-    <p style="color:var(--muted); max-width:460px; margin:0 auto 18px; font-size:16px;">
-      Thank you for choosing Wise Waste Services! We will contact you shortly to confirm your details and get your first visit on the schedule.
+    <p style="color:var(--muted); max-width:460px; margin:0 auto 10px; font-size:16px;">
+      Thank you for choosing Wise Waste Services! We received your quote request and will contact you shortly to confirm your details.
     </p>
+
+    <!-- LIVE QUOTE BOX -->
+    <div id="ww-quote-reveal-area">
+      <div class="ww-receipt-box" aria-live="polite">
+        <div class="ww-price-hero">
+          <span class="ww-price-eyebrow" id="ww-price-eyebrow">Total Rate</span>
+          <div class="ww-big-price" id="ww-display-per-visit">$0.00</div>
+          <div class="ww-big-sub" id="ww-display-billing-sub"></div>
+        </div>
+
+        <div class="ww-intro-breakdown-box ww-hidden" id="ww-intro-breakdown-wrap">
+          <strong id="ww-intro-breakdown-text"></strong>
+          <span id="ww-intro-subtext" style="font-size: 12.5px; opacity: 0.9;"></span>
+        </div>
+
+        <div id="ww-quote-lines"></div>
+
+        <div class="ww-free-banner ww-hidden" id="ww-free-offer-banner">
+          <strong>🎁 First Scoop is 100% Free!</strong>
+        </div>
+      </div>
+    </div>
+
     <div style="padding:16px; background:var(--cream); border-radius:12px; border:1px solid var(--border); display:inline-block;">
       <p style="font-size:14.5px; color:var(--ink); margin:0;">
         Need immediate help?<br>Call or text us at <a href="tel:+19402470522" class="ww-phone-link">(940) 247-0522</a>
@@ -505,8 +503,6 @@
   const $ = function(id) { return document.getElementById(id); };
   const show = function(id, visible) { const el = $(id); if(el) el.classList.toggle('ww-hidden', !visible); };
 
-  let quoteRevealed = false;
-
   /* NATIVE RESIZE OBSERVER (For Carrd Height) */
   function reportHeight() {
     if (window.parent !== window) {
@@ -520,6 +516,23 @@
     new ResizeObserver(reportHeight).observe(root);
   }
   setInterval(reportHeight, 1000);
+
+  /* JUMP TO TOP HACK (For iOS Safari Iframes) */
+  function jumpToTop() {
+    const topTarget = $('ww-quote');
+    topTarget.setAttribute('tabindex', '-1');
+    topTarget.style.outline = 'none';
+    
+    // Slight delay gives the browser time to register that the form is hidden
+    // before we force it to look at the top element
+    setTimeout(() => {
+      window.scrollTo(0, 0); // Scrols the iframe itself if needed
+      topTarget.focus({ preventScroll: false }); // FORCES the parent iPhone browser to scroll up to this element
+      
+      // Still send the postMessage backup just in case you ever use it
+      if (window.parent !== window) window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
+    }, 50);
+  }
 
   /* HELPERS */
   const getFormattedAddress = (s, c, z) => [$(s).value.trim(), $(c).value.trim(), $(z).value.trim() ? 'TX ' + $(z).value.trim() : ''].filter(Boolean).join(', ');
@@ -605,16 +618,13 @@
     show('ww-cat-desc', hasCatServiceActive);
     show('ww-dog-count-wrap', dogFreq !== 'none');
     show('ww-condition-wrap', dogFreq === 'onetime');
-
-    // LIVE UPDATE QUOTE IF ALREADY REVEALED
-    if (quoteRevealed) calculateAndRenderQuote();
   }
 
   // Bind dynamic visibility to inputs
   $('ww-dog-frequency').addEventListener('change', updateDynamicVisibility);
   $('ww-cat-add-service').addEventListener('change', updateDynamicVisibility);
   $('ww-cat-standalone-freq').addEventListener('change', updateDynamicVisibility);
-  $('ww-addon-yard-fresh').addEventListener('change', function() { show('ww-yard-sections-box', this.checked); if (quoteRevealed) calculateAndRenderQuote(); });
+  $('ww-addon-yard-fresh').addEventListener('change', function() { show('ww-yard-sections-box', this.checked); });
   
   // Bind +/- steppers
   root.querySelectorAll('[data-step]').forEach(btn => {
@@ -622,13 +632,7 @@
       const field = $(btn.getAttribute('data-target'));
       if (!field) return;
       field.value = Math.max(field.min || 1, Math.min(field.max || 20, (parseInt(field.value) || 1) + parseInt(btn.getAttribute('data-step'))));
-      if (quoteRevealed) calculateAndRenderQuote();
     });
-  });
-
-  // Ensure normal inputs update quote if visible
-  root.querySelectorAll('input, select').forEach(el => {
-    el.addEventListener('change', () => { if (quoteRevealed) calculateAndRenderQuote(); });
   });
 
   /* MATH & RENDERING */
@@ -651,21 +655,18 @@
     
     const line = (t, d, p, s) => `<div class="ww-summary-line"><div class="ww-summary-title-wrap"><div class="ww-summary-title">${t}</div>${d ? `<div class="ww-summary-desc">${d}</div>` : ''}</div><div class="ww-summary-price"><div>${p}</div>${s ? `<div style="font-size: 11px; color: var(--light); font-weight: normal; margin-top: 2px; white-space: nowrap;">${s}</div>` : ''}</div></div>`;
 
-    // 1. RECURRING BUNDLED (Dog + Cat)
     if (isRecDog && hasCat) {
       monthly = dogFreq === 'weekly' ? 112 : dogFreq === 'twice' ? 206 : 90;
       dogTxt = map[dogFreq] + ' Bundle (Includes Cat Service)';
       html.push(line('Dog + Cat Service Bundle', map[dogFreq], money(monthly) + ' / mo')); 
       txt.push('Combined Bundle (' + map[dogFreq] + '): ' + dogTxt);
     } 
-    // 2. RECURRING DOG ONLY
     else if (isRecDog && !hasCat) {
       monthly = dogFreq === 'weekly' ? 78 : dogFreq === 'twice' ? 139 : 65;
       dogTxt = map[dogFreq] + ' • First visit free';
       html.push(line(`Dog Waste Removal (${dogs} dog${dogs>1?'s':''})`, map[dogFreq], money(monthly) + ' / mo')); 
       txt.push('Dog Service (' + map[dogFreq] + ', ' + dogs + ' dog(s)): ' + dogTxt);
     }
-    // 3. ONE-TIME BUNDLED (Dog + Cat)
     else if (isOneTimeDog && hasCat) {
       if (condition === 'light') { 
         onetime = 69; 
@@ -678,7 +679,6 @@
         txt.push('One-Time Bundle (' + condition + '): ' + money(onetime) + ' est.');
       }
     }
-    // 4. ONE-TIME DOG ONLY
     else if (isOneTimeDog && !hasCat) {
       onetime = condition === 'light' ? 50 : condition === 'moderate' ? 75 : condition === 'heavy' ? 100 : 125;
       let e = condition === 'light' ? ' base' : ' est.';
@@ -687,14 +687,12 @@
       html.push(line(`Dog Waste Removal (${dogs} dog${dogs>1?'s':''})`, cDesc, money(onetime) + e)); 
       txt.push('One-Time Dog Cleanup (' + dogs + ' dog(s), ' + condition + '): ' + money(onetime) + e);
     }
-    // 5. RECURRING CAT ONLY
     else if (!hasDog && hasCat && isRecCat) {
       monthly = catStand === 'weekly' ? 55 : catStand === 'twice' ? 95 : 40;
       catTxt = 'Standalone ' + map[catStand] + ' • First visit free';
       html.push(line('Cat Litter Box Service', map[catStand], money(monthly) + ' / mo')); 
       txt.push('Standalone Cat Service (' + map[catStand] + '): ' + money(monthly) + '/mo');
     }
-    // 6. ONE-TIME CAT ONLY
     else if (!hasDog && hasCat && catStand === 'onetime') {
       onetime = 35; 
       catTxt = 'One-Time Standalone Cat Service (' + money(onetime) + ')';
@@ -728,7 +726,6 @@
       txt.push('Waste Haul-Away: Yes (+$5.00/visit charged at time of service)'); 
     }
 
-    // DISPLAY UPDATE
     if (isRecDog || isRecCat) {
       $('ww-price-eyebrow').textContent = 'Total Monthly Rate'; 
       $('ww-display-per-visit').textContent = money(monthly) + ' / mo';
@@ -764,21 +761,10 @@
     };
   }
 
-  /* BURST & REVEAL */
-  function fireSparkles() {
-    const box = $('ww-quote-reveal-area'); if(!box) return;
-    const e = ['✨','⭐','✨'];
-    for(let i = 0; i < 20; i++) {
-      let el = document.createElement('div'); el.className = 'ww-celebration'; el.textContent = e[Math.floor(Math.random() * e.length)];
-      el.style.left = '50%'; el.style.top = '20px';
-      el.style.setProperty('--tx', (Math.random() - 0.5) * 450 + 'px'); el.style.setProperty('--ty', (Math.random() - 0.5) * 300 + 'px'); el.style.setProperty('--rot', (Math.random() - 0.5) * 720 + 'deg');
-      el.style.animationDelay = (Math.random() * 0.2) + 's';
-      box.appendChild(el); setTimeout(() => el.remove(), 3500);
-    }
-  }
-
+  /* BURST & FINAL SUBMISSION */
   window.showQuoteScreen = function() {
     show('ww-err-main', false);
+    const btn = $('ww-reveal-btn');
     const n = $('ww-customer-name').value.trim(), p = $('ww-customer-phone').value.replace(/\D/g, ''), s = $('ww-customer-street').value.trim(), c = $('ww-customer-city').value.trim(), z = $('ww-customer-zip').value.trim();
     if (!n) { $('ww-err-main').textContent = 'Please enter your full name.'; show('ww-err-main', true); return; }
     if (p.length < 10) { $('ww-err-main').textContent = 'Please enter a valid 10-digit phone number.'; show('ww-err-main', true); return; }
@@ -789,17 +775,29 @@
       show('ww-err-main', true); return;
     }
 
-    quoteRevealed = true;
+    if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
+
+    // 1. Calculate the Quote
     calculateAndRenderQuote();
-    show('ww-quote-reveal-area', true);
-    show('ww-reveal-btn', false); // Hide the "See My Price" button since the form is now live
+
+    // 2. Hide form, show success screen
+    show('ww-residential', false); 
+    show('ww-success-screen', true);
     
-    setTimeout(fireSparkles, 50);
+    // 3. FAKE PAGE RELOAD JUMP (Fixes the iPhone issue)
+    jumpToTop();
+
+    // 4. Fire Confetti
+    const sc = $('ww-success-screen');
+    for(let i = 0; i < 20; i++) {
+      let el = document.createElement('div'); el.className = 'ww-celebration'; el.textContent = ['🎉', '🎊', '🥳', '🎈', '✨', '🙌'][Math.floor(Math.random() * 6)];
+      el.style.left = '50%'; el.style.top = '40px';
+      el.style.setProperty('--tx', (Math.random() - 0.5) * 450 + 'px'); el.style.setProperty('--ty', (Math.random() - 0.5) * 300 + 'px'); el.style.setProperty('--rot', (Math.random() - 0.5) * 720 + 'deg');
+      el.style.animationDelay = (Math.random() * 0.2) + 's';
+      sc.appendChild(el); setTimeout(() => el.remove(), 3500);
+    }
     
-    // Smooth scroll down to the quote box
-    $('ww-quote-reveal-area').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    
-    // Send partial lead in background
+    // 5. Send ONE FINAL Notification payload
     const yardSign = $('ww-yard-sign').checked ? 'Yes' : 'No';
     const petTreats = $('ww-pet-treats').checked ? 'Yes' : 'No';
     const userNotes = $('ww-extra-details').value.trim();
@@ -808,45 +806,8 @@
       'Waste Haul-Away (Charged at time of service): ' + (quoteState.haulAway ? 'Yes' : 'No') + '\n' + 'Breakdown: ' + quoteState.breakdownSummary;
 
     const payload = { 
-      leadType: 'partial', name: n, phone: $('ww-customer-phone').value, email: $('ww-customer-email').value, 
-      contactMethod: $('ww-customer-email').value.trim() ? 'Text / Phone / Email' : 'Text / Phone', contactTime: 'Anytime', customerType: 'Residential',
-      address: getFormattedAddress('ww-customer-street', 'ww-customer-city', 'ww-customer-zip'), 
-      dogFrequency: quoteState.dogFreq, dogs: String(quoteState.dogs), condition: quoteState.condition, 
-      litterFrequency: quoteState.catMode, boxes: String(quoteState.boxes), deepClean: quoteState.catDeepClean ? 'Yes':'No', 
-      fresh: quoteState.yardFreshAddon ? 'Yes':'No', sections: String(quoteState.sections), haulAway: quoteState.haulAway ? 'Yes':'No',
-      perVisitPrice: quoteState.perVisitText, firstTotal: quoteState.perVisitText, dogPrice: quoteState.dogPriceText, catPrice: quoteState.catPriceText,
-      yardSign: yardSign, petTreats: petTreats, notes: combinedNotes, website: '', initial: 'No (First Scoop Free Promo)', onetime: quoteState.dogFreq === 'onetime' ? 'Yes' : 'No', onetimeDogs: quoteState.dogFreq === 'onetime' ? String(quoteState.dogs) : '0'
-    };
-    fetch(QUOTE_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ payload: JSON.stringify(payload) }) }).catch(()=>{});
-  };
-
-  /* FINAL SUBMISSION */
-  $('ww-submit-quote-btn').addEventListener('click', function() {
-    if (this.disabled) return;
-    this.disabled = true; this.textContent = 'Submitting Quote...';
-    show('ww-residential', false); show('ww-success-screen', true);
-    
-    // Confetti on success
-    const s = $('ww-success-screen');
-    for(let i = 0; i < 20; i++) {
-      let el = document.createElement('div'); el.className = 'ww-celebration'; el.textContent = ['🎉', '🎊', '🥳', '🎈', '✨', '🙌'][Math.floor(Math.random() * 6)];
-      el.style.left = '50%'; el.style.top = '40px';
-      el.style.setProperty('--tx', (Math.random() - 0.5) * 450 + 'px'); el.style.setProperty('--ty', (Math.random() - 0.5) * 300 + 'px'); el.style.setProperty('--rot', (Math.random() - 0.5) * 720 + 'deg');
-      el.style.animationDelay = (Math.random() * 0.2) + 's';
-      s.appendChild(el); setTimeout(() => el.remove(), 3500);
-    }
-    
-    if (window.parent !== window) window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
-    
-    const yardSign = $('ww-yard-sign').checked ? 'Yes' : 'No';
-    const petTreats = $('ww-pet-treats').checked ? 'Yes' : 'No';
-    const userNotes = $('ww-extra-details').value.trim();
-    const combinedNotes = (userNotes ? userNotes + '\n\n' : '') + '--- PREFERENCES ---\n' + 'Yard Sign Permitted: ' + yardSign + '\n' +
-      'Pet Treats Permitted: ' + petTreats + '\n\n' + '--- QUOTE SUMMARY ---\n' + 'Displayed Rate: ' + quoteState.perVisitText + '\n' +
-      'Waste Haul-Away (Charged at time of service): ' + (quoteState.haulAway ? 'Yes' : 'No') + '\n' + 'Breakdown: ' + quoteState.breakdownSummary;
-
-    const payload = {
-      leadType: 'final', name: $('ww-customer-name').value.trim(), phone: $('ww-customer-phone').value, email: $('ww-customer-email').value,
+      leadType: 'final',
+      name: n, phone: $('ww-customer-phone').value, email: $('ww-customer-email').value, 
       address: getFormattedAddress('ww-customer-street', 'ww-customer-city', 'ww-customer-zip'), contactMethod: $('ww-customer-email').value.trim() ? 'Text / Phone / Email' : 'Text / Phone', contactTime: 'Anytime', customerType: 'Residential',
       dogFrequency: quoteState.dogFreq, dogs: String(quoteState.dogs), condition: quoteState.condition, 
       litterFrequency: quoteState.catMode, boxes: String(quoteState.boxes), deepClean: quoteState.catDeepClean ? 'Yes':'No', 
@@ -856,7 +817,7 @@
       yardSign: yardSign, petTreats: petTreats, notes: combinedNotes, website: '', initial: 'No (First Scoop Free Promo)', onetime: quoteState.dogFreq === 'onetime' ? 'Yes' : 'No', onetimeDogs: quoteState.dogFreq === 'onetime' ? String(quoteState.dogs) : '0'
     };
     fetch(QUOTE_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ payload: JSON.stringify(payload) }) }).catch(()=>{});
-  });
+  };
 
   /* COMMERCIAL SUBMISSION */
   const commBtn = $('ww-submit-comm-quote');
@@ -868,10 +829,14 @@
     if ($('ww-comm-email').value.trim() && !$('ww-comm-email').checkValidity()) { $('ww-comm-error').textContent = 'Please enter a valid email address or leave it blank.'; show('ww-comm-error', true); return; }
 
     this.disabled = true; this.textContent = 'Submitting...';
-    show('ww-commercial', false); show('ww-success-screen', true); 
-    if (window.parent !== window) window.parent.postMessage({ type: 'ww-quote-scroll-top' }, '*');
     
-    // Confetti on success
+    // Hide form, show success screen
+    show('ww-commercial', false); 
+    show('ww-success-screen', true); 
+    
+    // FAKE PAGE RELOAD JUMP
+    jumpToTop();
+    
     const sc = $('ww-success-screen');
     for(let i = 0; i < 20; i++) {
       let el = document.createElement('div'); el.className = 'ww-celebration'; el.textContent = ['🎉', '🎊', '🥳', '🎈', '✨', '🙌'][Math.floor(Math.random() * 6)];
