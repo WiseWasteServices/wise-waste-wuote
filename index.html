@@ -145,16 +145,16 @@
 
     #ww-quote .ww-status-msg { font-size: 14px; font-weight: 600; margin: 14px 0 0; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--danger-bg); color: var(--danger); border: 1px solid #ebccd1; }
 
-    /* NATIVE HTML MODAL POPUP */
+    /* NATIVE HTML DIALOG MODAL (The Popup Screen) */
     #ww-quote .ww-modal {
       border: none; padding: 0; background: transparent;
       margin: auto; max-width: 600px; width: 95%;
       overflow: visible; outline: none; z-index: 10000;
     }
     #ww-quote .ww-modal::backdrop {
-      background: rgba(30, 44, 34, 0.8);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      background: rgba(30, 44, 34, 0.85);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
     }
     #ww-quote .ww-modal-box {
       background: #ffffff; border-radius: var(--radius-lg);
@@ -772,7 +772,7 @@
     };
   }
 
-  /* BURST & POPUP (THE FIX) */
+  /* BURST & POPUP (FULL PARENT WINDOW OVERLAY) */
   window.showQuoteScreen = function() {
     show('ww-err-main', false);
     const btn = $('ww-reveal-btn');
@@ -791,18 +791,22 @@
     // 1. Calculate the Quote
     calculateAndRenderQuote();
     
-    // 2. LAUNCH THE NATIVE POPUP
-    // Notice we do NOT hide the main form! This is what fixes the iPhone bug.
-    // The modal just hovers cleanly right over the screen.
+    // 2. LAUNCH LOCAL POPUP
     const modal = $('ww-success-modal');
-    if(modal.showModal) {
-      modal.showModal();
-    } else {
-      // Fallback just in case an extremely old browser doesn't know showModal
-      show('ww-success-modal', true);
+    if(modal.showModal) modal.showModal();
+
+    // 3. BREAK OUT OF IFRAME TO DARKEN PARENT PAGE (Full Screen Mobile Fix)
+    if (window.parent !== window) {
+      window.parent.postMessage({ 
+        type: 'ww-show-fullscreen-popup', 
+        html: modal.innerHTML, 
+        price: quoteState.perVisitText,
+        billing: $('ww-display-billing-sub').textContent,
+        lines: $('ww-quote-lines').innerHTML
+      }, '*');
     }
 
-    // 3. Fire Confetti INSIDE the popup so it hovers perfectly over the dim background
+    // 4. Fire Confetti
     const sc = modal.querySelector('.ww-modal-box');
     for(let i = 0; i < 25; i++) {
       let el = document.createElement('div'); el.className = 'ww-celebration'; el.textContent = ['🎉', '🎊', '🥳', '🎈', '✨', '🙌'][Math.floor(Math.random() * 6)];
@@ -812,7 +816,7 @@
       sc.appendChild(el); setTimeout(() => el.remove(), 3500);
     }
     
-    // 4. Send ONE FINAL Notification payload
+    // 5. Send ONE FINAL Notification payload
     const yardSign = $('ww-yard-sign').checked ? 'Yes' : 'No';
     const petTreats = $('ww-pet-treats').checked ? 'Yes' : 'No';
     const userNotes = $('ww-extra-details').value.trim();
@@ -845,15 +849,9 @@
 
     this.disabled = true; this.textContent = 'Quote Submitted ✓';
     
-    // 1. Hide the Commercial Form quote block but keep the panel
     const modal = $('ww-success-modal');
-    $('ww-quote-reveal-area').style.display = 'none'; // Hide the receipt box since it's a custom quote
-    
-    if(modal.showModal) {
-      modal.showModal();
-    } else {
-      show('ww-success-modal', true);
-    }
+    $('ww-quote-reveal-area').style.display = 'none'; 
+    if(modal.showModal) modal.showModal();
     
     const sc = modal.querySelector('.ww-modal-box');
     for(let i = 0; i < 25; i++) {
