@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Instant Quote | Wise Waste Services</title>
+  <title>Instant Quote | Wise Scoopers</title>
   <style>
     * {
       box-sizing: border-box;
@@ -528,6 +528,15 @@
     .ww-summary-desc { font-size: 10.5px; color: var(--light); margin-left: 4px; }
     .ww-summary-price { font-weight: 700; color: #ffffff; white-space: nowrap; text-align: right; flex-shrink: 0; }
 
+    .ww-step-5-footer-note {
+      padding: 7px 10px;
+      background: var(--cream);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      text-align: center;
+      font-size: 12px;
+    }
+
     /* CONFETTI ANIMATION */
     .ww-celebration {
       position: absolute;
@@ -544,6 +553,248 @@
       15% { opacity: 1; transform: translate(calc(var(--tx) * 0.6), calc(var(--ty) * 0.3 - 50px)) scale(1.2) rotate(calc(var(--rot) * 0.3)); }
       80% { opacity: 1; transform: translate(var(--tx), calc(var(--ty) * 0.8 + 80px)) scale(1) rotate(calc(var(--rot) * 0.8)); }
       100% { opacity: 0; transform: translate(var(--tx), calc(var(--ty) + 140px)) scale(0.5) rotate(var(--rot)); }
+    }
+
+    /* =====================================================================
+       DESKTOP / WEB SCALING (768px and wider) — Mobile (<768px) untouched
+       ===================================================================== */
+    @media (min-width: 768px) {
+      #ww-quote {
+        max-width: 760px;
+        padding: 10px;
+      }
+
+      .ww-app-shell {
+        height: 680px;
+        border-radius: 22px;
+      }
+
+      .ww-app-header {
+        padding: 14px 24px 12px;
+      }
+
+      .ww-header-top {
+        margin-bottom: 10px;
+      }
+
+      .ww-brand-badge {
+        font-size: 12px;
+        padding: 4px 12px;
+      }
+
+      .ww-phone-pill {
+        font-size: 13.5px;
+        padding: 4px 12px;
+      }
+
+      .ww-tabs {
+        gap: 6px;
+        padding: 4px;
+        border-radius: 11px;
+        margin-bottom: 10px;
+      }
+
+      .ww-tab {
+        height: 34px;
+        font-size: 14px;
+      }
+
+      .ww-step-bar {
+        gap: 8px;
+      }
+
+      .ww-step-pill {
+        font-size: 12.5px;
+        padding: 5px 4px;
+        border-radius: 8px;
+      }
+
+      .ww-app-body {
+        padding: 20px 26px;
+      }
+
+      .ww-step-title {
+        font-size: 19px;
+        margin-bottom: 4px;
+      }
+
+      .ww-step-sub {
+        font-size: 14px;
+        margin-bottom: 14px;
+      }
+
+      .ww-label {
+        font-size: 14px;
+        margin: 12px 0 5px;
+      }
+
+      .ww-muted {
+        font-size: 13px;
+      }
+
+      #ww-quote select,
+      #ww-quote input:not([type="checkbox"]):not([type="radio"]) {
+        height: 44px;
+        padding: 8px 14px;
+        border-radius: 10px;
+        font-size: 16px;
+      }
+
+      #ww-quote textarea {
+        height: 64px;
+        padding: 10px 14px;
+        border-radius: 10px;
+        font-size: 15.5px;
+      }
+
+      .ww-grid-2,
+      .ww-grid-city-zip {
+        gap: 14px;
+      }
+
+      .ww-sub-box {
+        padding: 14px 16px;
+        border-radius: 12px;
+        margin-top: 12px;
+      }
+
+      .ww-service-desc {
+        margin-top: 10px;
+        padding: 10px 14px;
+        font-size: 13.5px;
+      }
+
+      .ww-number {
+        grid-template-columns: 40px 52px 40px;
+        gap: 6px;
+      }
+
+      .ww-number button {
+        height: 40px;
+        font-size: 19px;
+        border-radius: 9px;
+      }
+
+      .ww-number input {
+        height: 40px !important;
+        font-size: 16px !important;
+      }
+
+      #ww-quote input[type="checkbox"] {
+        width: 19px;
+        height: 19px;
+        margin: 2px 11px 0 0;
+      }
+
+      .ww-choice {
+        padding: 12px 15px;
+        border-radius: 11px;
+        margin-bottom: 10px;
+      }
+
+      .ww-choice strong {
+        font-size: 14.5px;
+        margin-bottom: 2px;
+      }
+
+      .ww-compact-check {
+        padding: 10px 14px;
+        font-size: 13.5px;
+        border-radius: 10px;
+      }
+
+      .ww-app-footer {
+        padding: 12px 24px;
+      }
+
+      .ww-footer-btns {
+        gap: 12px;
+      }
+
+      .ww-btn-back {
+        height: 48px;
+        padding: 0 20px;
+        font-size: 15px;
+        border-radius: 11px;
+      }
+
+      .ww-primary-btn {
+        height: 48px;
+        font-size: 16px;
+        border-radius: 11px;
+      }
+
+      .ww-status-msg {
+        font-size: 13px;
+        padding: 7px 12px;
+        margin-bottom: 8px;
+      }
+
+      .ww-quote-success-header {
+        margin-bottom: 10px;
+      }
+
+      .ww-success-badge {
+        font-size: 13px;
+        padding: 4px 14px;
+      }
+
+      .ww-receipt-box {
+        padding: 18px 22px;
+        border-radius: 15px;
+        margin-bottom: 10px;
+      }
+
+      .ww-price-hero {
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+      }
+
+      .ww-price-eyebrow {
+        font-size: 11.5px;
+        padding: 3px 12px;
+      }
+
+      .ww-big-price {
+        font-size: 34px;
+        margin-top: 5px;
+      }
+
+      .ww-big-sub {
+        font-size: 13px;
+        margin-top: 4px;
+      }
+
+      .ww-intro-breakdown-box {
+        padding: 10px 14px;
+        margin-bottom: 12px;
+        font-size: 13px;
+        border-radius: 10px;
+      }
+
+      .ww-promo-headline {
+        font-size: 14.5px;
+        padding-bottom: 6px;
+        margin-bottom: 6px;
+      }
+
+      .ww-intro-breakdown-box strong {
+        font-size: 14px;
+      }
+
+      .ww-summary-line {
+        padding: 6px 0;
+        font-size: 13.5px;
+      }
+
+      .ww-summary-desc {
+        font-size: 12.5px;
+      }
+
+      .ww-step-5-footer-note {
+        padding: 10px 14px;
+        font-size: 13.5px;
+      }
     }
   </style>
 </head>
@@ -790,7 +1041,7 @@
             <div class="ww-services-section" id="ww-quote-lines"></div>
           </div>
 
-          <div style="padding:7px 10px; background:var(--cream); border-radius:8px; border:1px solid var(--border); text-align:center; font-size:12px;">
+          <div class="ww-step-5-footer-note">
             We'll reach out shortly! Questions? Call/text <a href="tel:+19402470522" style="color:#3F6049; font-weight:800; text-decoration:none;">(940) 247-0522</a>
           </div>
         </div>
@@ -862,7 +1113,7 @@
         <div style="font-size:38px; margin-bottom:8px;">🎉</div>
         <h2 style="margin:0 0 6px; font-size:19px; color:var(--ink);">Commercial Request Sent!</h2>
         <p style="color:var(--muted); max-width:400px; margin:0 auto 16px; font-size:13.5px;">
-          Thank you for choosing Wise Waste Services! We will contact you shortly to discuss your property.
+          Thank you for choosing Wise Scoopers! We will contact you shortly to discuss your property.
         </p>
         <div style="padding:12px; background:var(--cream); border-radius:10px; border:1px solid var(--border); display:inline-block; font-size:13px;">
           Call or text us anytime at <a href="tel:+19402470522" style="color:#3F6049; font-weight:800; text-decoration:none;">(940) 247-0522</a>
@@ -902,15 +1153,17 @@
   const show = (id, visible) => { const el = $(id); if (el) el.classList.toggle('ww-hidden', !visible); };
 
   let currentStep = 1;
-  let leadSent = false;
+  let quoteViewCount = 0;
   let quoteState = {};
 
-  /* CONSTANT FIXED HEIGHT REPORTER (575px) */
+  /* RESPONSIVE FIXED HEIGHT REPORTER (575px mobile / 700px desktop) */
   function reportFixedHeight() {
     if (window.parent !== window) {
-      window.parent.postMessage({ type: 'ww-quote-height', height: 575 }, '*');
+      const targetHeight = window.innerWidth >= 768 ? 700 : 575;
+      window.parent.postMessage({ type: 'ww-quote-height', height: targetHeight }, '*');
     }
   }
+  reportFixedHeight();
   window.addEventListener('load', reportFixedHeight);
   window.addEventListener('resize', reportFixedHeight);
 
@@ -1257,7 +1510,7 @@
     };
   }
 
-  /* SINGLE SUBMIT BUTTON ("See My Price 🪄") */
+  /* SUBMIT BUTTON ("See My Price 🪄") - FIRES EVERY TIME */
   $('ww-reveal-btn').addEventListener('click', () => {
     show('ww-err-main', false);
 
@@ -1271,57 +1524,58 @@
     goToStep(5);
     fireCelebration();
 
-    if (!leadSent) {
-      leadSent = true;
-      const yardSign = $('ww-yard-sign').checked ? 'Yes' : 'No';
-      const petTreats = $('ww-pet-treats').checked ? 'Yes' : 'No';
-      const userNotes = $('ww-extra-details').value.trim();
-      const combinedNotes = (userNotes ? userNotes + '\n\n' : '') +
-        '--- PREFERENCES ---\nYard Sign Permitted: ' + yardSign + '\nPet Treats Permitted: ' + petTreats +
-        '\n\n--- QUOTE SUMMARY ---\nDisplayed Rate: ' + quoteState.perVisitText +
-        '\nFirst Month Rate: ' + quoteState.firstMonthText +
-        '\nWaste Haul-Away (Charged at time of service): ' + (quoteState.haulAway ? 'Yes' : 'No') +
-        '\nBreakdown: ' + quoteState.breakdownSummary;
+    quoteViewCount += 1;
+    const viewTag = quoteViewCount > 1 ? `[UPDATED QUOTE - VIEW #${quoteViewCount}]\n` : '';
 
-      const payload = {
-        leadType: 'final',
-        name: $('ww-customer-name').value.trim(),
-        phone: $('ww-customer-phone').value,
-        email: $('ww-customer-email').value,
-        address: getFormattedAddress('ww-customer-street', 'ww-customer-city', 'ww-customer-zip'),
-        contactMethod: $('ww-customer-email').value.trim() ? 'Text / Phone / Email' : 'Text / Phone',
-        contactTime: 'Anytime',
-        customerType: 'Residential',
-        dogFrequency: quoteState.dogFreq,
-        dogs: String(quoteState.dogs),
-        condition: quoteState.condition,
-        litterFrequency: quoteState.catMode,
-        boxes: String(quoteState.boxes),
-        deepClean: quoteState.catDeepClean ? 'Yes' : 'No',
-        fresh: quoteState.yardFreshAddon ? 'Yes' : 'No',
-        sections: String(quoteState.sections),
-        haulAway: quoteState.haulAway ? 'Yes' : 'No',
-        perVisitPrice: quoteState.perVisitText,
-        firstTotal: quoteState.firstMonthText,
-        dogPrice: quoteState.dogPriceText,
-        catPrice: quoteState.catPriceText,
-        dogBilling: quoteState.dogBillingText,
-        catBilling: quoteState.catBillingText,
-        yardSign,
-        petTreats,
-        notes: combinedNotes,
-        website: '',
-        initial: 'No (First Scoop Free Promo)',
-        onetime: quoteState.dogFreq === 'onetime' ? 'Yes' : 'No',
-        onetimeDogs: quoteState.dogFreq === 'onetime' ? String(quoteState.dogs) : '0'
-      };
+    const yardSign = $('ww-yard-sign').checked ? 'Yes' : 'No';
+    const petTreats = $('ww-pet-treats').checked ? 'Yes' : 'No';
+    const userNotes = $('ww-extra-details').value.trim();
+    const combinedNotes = viewTag + (userNotes ? userNotes + '\n\n' : '') +
+      '--- PREFERENCES ---\nYard Sign Permitted: ' + yardSign + '\nPet Treats Permitted: ' + petTreats +
+      '\n\n--- QUOTE SUMMARY ---\nDisplayed Rate: ' + quoteState.perVisitText +
+      '\nFirst Month Rate: ' + quoteState.firstMonthText +
+      '\nWaste Haul-Away (Charged at time of service): ' + (quoteState.haulAway ? 'Yes' : 'No') +
+      '\nBreakdown: ' + quoteState.breakdownSummary;
 
-      fetch(QUOTE_ENDPOINT, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: new URLSearchParams({ payload: JSON.stringify(payload) })
-      }).catch(() => {});
-    }
+    const payload = {
+      leadType: 'final',
+      quoteAttempt: quoteViewCount,
+      name: $('ww-customer-name').value.trim(),
+      phone: $('ww-customer-phone').value,
+      email: $('ww-customer-email').value,
+      address: getFormattedAddress('ww-customer-street', 'ww-customer-city', 'ww-customer-zip'),
+      contactMethod: $('ww-customer-email').value.trim() ? 'Text / Phone / Email' : 'Text / Phone',
+      contactTime: 'Anytime',
+      customerType: 'Residential',
+      dogFrequency: quoteState.dogFreq,
+      dogs: String(quoteState.dogs),
+      condition: quoteState.condition,
+      litterFrequency: quoteState.catMode,
+      boxes: String(quoteState.boxes),
+      deepClean: quoteState.catDeepClean ? 'Yes' : 'No',
+      fresh: quoteState.yardFreshAddon ? 'Yes' : 'No',
+      sections: String(quoteState.sections),
+      haulAway: quoteState.haulAway ? 'Yes' : 'No',
+      perVisitPrice: quoteState.perVisitText,
+      firstTotal: quoteState.firstMonthText,
+      dogPrice: quoteState.dogPriceText,
+      catPrice: quoteState.catPriceText,
+      dogBilling: quoteState.dogBillingText,
+      catBilling: quoteState.catBillingText,
+      yardSign,
+      petTreats,
+      notes: combinedNotes,
+      website: '',
+      initial: 'No (First Scoop Free Promo)',
+      onetime: quoteState.dogFreq === 'onetime' ? 'Yes' : 'No',
+      onetimeDogs: quoteState.dogFreq === 'onetime' ? String(quoteState.dogs) : '0'
+    };
+
+    fetch(QUOTE_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: new URLSearchParams({ payload: JSON.stringify(payload) })
+    }).catch(() => {});
   });
 
   /* COMMERCIAL SUBMISSION */
