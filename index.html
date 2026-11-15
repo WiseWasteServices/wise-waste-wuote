@@ -40,7 +40,7 @@
 
     #ww-quote .ww-hidden { display: none !important; }
 
-    /* FIXED-HEIGHT NON-SCROLLING APP CARD */
+    /* FIXED-HEIGHT APP CARD */
     .ww-app-shell {
       background: #ffffff;
       border: 1.5px solid var(--border);
@@ -150,10 +150,12 @@
       color: #ffffff;
     }
 
-    /* NON-SCROLLING STAGE BODY */
+    /* STAGE BODY (SCROLL-SAFE ON MOBILE EXPANSION) */
     .ww-app-body {
       flex: 1;
-      overflow: hidden;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
       padding: 12px 14px;
       display: flex;
       flex-direction: column;
@@ -234,6 +236,35 @@
       height: 48px;
       resize: none;
       line-height: 1.3;
+    }
+
+    /* STEP 4 COMPACT FIT ON MOBILE WHEN ALL OPTIONS EXPAND */
+    @media (max-width: 767px) {
+      #ww-step-4 .ww-step-title {
+        margin-bottom: 5px;
+      }
+      #ww-step-4 .ww-choice {
+        padding: 6px 9px;
+        margin-bottom: 5px;
+      }
+      #ww-step-4 .ww-sub-box {
+        padding: 6px 9px;
+        margin: 0 0 5px;
+      }
+      #ww-step-4 .ww-number {
+        grid-template-columns: 30px 38px 30px;
+      }
+      #ww-step-4 .ww-number button,
+      #ww-step-4 .ww-number input {
+        height: 30px !important;
+      }
+      #ww-step-4 .ww-compact-check {
+        padding: 5px 8px;
+      }
+      #ww-step-4 textarea {
+        height: 40px;
+        padding: 5px 9px;
+      }
     }
 
     /* 2-COLUMN MOBILE GRIDS TO PREVENT VERTICAL BLOAT */
@@ -1212,6 +1243,8 @@
 
     currentStep = step;
     [1, 2, 3, 4, 5].forEach(s => show('ww-step-' + s, s === step));
+    const vp = $('ww-viewport');
+    if (vp) vp.scrollTop = 0;
 
     [1, 2, 3, 4].forEach(i => {
       const pill = $('ww-pill-' + i);
