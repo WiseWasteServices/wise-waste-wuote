@@ -57,7 +57,7 @@
     .ww-app-header {
       background: var(--cream);
       border-bottom: 1px solid var(--border);
-      padding: 10px 14px 8px;
+      padding: 9px 14px 8px;
       flex-shrink: 0;
     }
 
@@ -65,29 +65,40 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: nowrap;
+      gap: 6px;
       margin-bottom: 6px;
     }
 
     .ww-brand-badge {
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 800;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
       color: #3F6049;
       background: #e3ece4;
-      padding: 3px 9px;
+      padding: 3px 8px;
       border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .ww-phone-pill {
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 800;
       color: var(--green);
       text-decoration: none;
       background: #ffffff;
       border: 1px solid var(--border);
-      padding: 2px 9px;
+      padding: 3px 8px;
       border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 375px) {
+      .ww-brand-badge { font-size: 9px; padding: 3px 6px; letter-spacing: 0.3px; }
+      .ww-phone-pill { font-size: 10.5px; padding: 3px 7px; }
     }
 
     /* RESIDENTIAL / COMMERCIAL TABS */
@@ -98,13 +109,13 @@
       background: #e4ece4;
       padding: 3px;
       border-radius: 9px;
-      margin-bottom: 6px;
+      margin-bottom: 7px;
     }
 
     .ww-tab {
       border: none;
       border-radius: 7px;
-      height: 28px;
+      height: 27px;
       font: inherit;
       font-size: 12.5px;
       font-weight: 700;
@@ -119,35 +130,109 @@
       box-shadow: 0 1px 4px rgba(38, 58, 45, 0.2);
     }
 
-    /* 4-STEP MICRO PROGRESS BAR */
-    .ww-step-bar {
+    /* ANIMATED 4-STEP TRACK + FINISH LINE */
+    .ww-step-track {
+      position: relative;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, 1fr) auto;
+      align-items: center;
       gap: 4px;
+      padding: 2px 0;
+    }
+
+    .ww-track-rail {
+      position: absolute;
+      left: 10%;
+      right: 34px;
+      top: 50%;
+      height: 3px;
+      background: #dbe5dc;
+      transform: translateY(-50%);
+      border-radius: 999px;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .ww-track-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--green);
+      transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .ww-step-pill {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 2px;
+      position: relative;
+      z-index: 2;
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 4px 3px;
       text-align: center;
-      border-radius: 6px;
+      border-radius: 999px;
       background: #ffffff;
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       color: var(--muted);
       user-select: none;
+      white-space: nowrap;
+      transition: all 0.25s ease;
     }
 
     .ww-step-pill.active {
-      background: var(--green-soft);
+      background: var(--green);
+      border-color: var(--green);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(38, 58, 45, 0.28);
+      animation: wwActiveTabBounce 1.8s infinite ease-in-out;
+    }
+
+    .ww-step-pill.active::before {
+      content: "🐾 ";
+      display: inline-block;
+      animation: wwPawWiggle 1.2s infinite ease-in-out;
+    }
+
+    .ww-step-pill.done {
+      background: #e3ece4;
       border-color: var(--green);
       color: var(--green);
     }
 
-    .ww-step-pill.done {
+    .ww-finish-flag {
+      position: relative;
+      z-index: 2;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      user-select: none;
+      transition: all 0.3s ease;
+    }
+
+    .ww-finish-flag.reached {
       background: var(--green);
-      border-color: var(--green);
-      color: #ffffff;
+      border-color: #E6C86E;
+      box-shadow: 0 0 0 3px rgba(230, 200, 110, 0.45);
+      animation: wwFlagCelebrate 0.7s ease-out;
+    }
+
+    @keyframes wwActiveTabBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+
+    @keyframes wwPawWiggle {
+      0%, 100% { transform: rotate(-10deg) scale(1); }
+      50% { transform: rotate(12deg) scale(1.15); }
+    }
+
+    @keyframes wwFlagCelebrate {
+      0% { transform: scale(0.7) rotate(-20deg); }
+      60% { transform: scale(1.25) rotate(12deg); }
+      100% { transform: scale(1) rotate(0deg); }
     }
 
     /* STAGE BODY (SCROLL-SAFE ON MOBILE EXPANSION) */
@@ -156,7 +241,7 @@
       overflow-y: auto;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
-      padding: 12px 14px;
+      padding: 10px 14px;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -172,7 +257,7 @@
     }
 
     .ww-step-title {
-      font-size: 15.5px;
+      font-size: 15px;
       font-weight: 800;
       color: var(--green);
       margin: 0 0 2px;
@@ -182,9 +267,9 @@
     }
 
     .ww-step-sub {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--muted);
-      margin: 0 0 8px;
+      margin: 0 0 7px;
     }
 
     /* ULTRA-COMPACT FORM CONTROLS (16px font prevents iOS zoom) */
@@ -192,22 +277,22 @@
       display: block;
       font-weight: 600;
       color: var(--ink);
-      margin: 7px 0 3px;
-      font-size: 12.5px;
+      margin: 6px 0 2px;
+      font-size: 12px;
     }
 
     .ww-label:first-of-type { margin-top: 0; }
     .ww-required { color: var(--danger); font-weight: 700; }
-    .ww-muted { color: var(--muted); font-size: 11.5px; line-height: 1.3; }
+    .ww-muted { color: var(--muted); font-size: 11px; line-height: 1.3; }
 
     #ww-quote select,
     #ww-quote input:not([type="checkbox"]):not([type="radio"]),
     #ww-quote textarea {
       width: 100%;
-      height: 38px;
+      height: 36px;
       border: 1.5px solid var(--border-strong);
       border-radius: 8px;
-      padding: 6px 10px;
+      padding: 5px 10px;
       background-color: #ffffff;
       color: var(--ink);
       font: inherit;
@@ -219,8 +304,8 @@
       -webkit-appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%23263A2D' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
-      background-position: right 10px center;
-      padding-right: 30px;
+      background-position: right 9px center;
+      padding-right: 28px;
       cursor: pointer;
     }
 
@@ -233,9 +318,33 @@
     }
 
     #ww-quote textarea {
-      height: 48px;
+      height: 46px;
       resize: none;
       line-height: 1.3;
+    }
+
+    /* COMPACT REFERRAL DETAIL FOLLOW-UP */
+    .ww-ref-detail-wrap {
+      margin-top: 6px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: 8px;
+      padding: 6px 8px;
+      animation: wwSlideIn 0.15s ease-out;
+    }
+
+    .ww-ref-detail-wrap label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 3px;
+    }
+
+    .ww-ref-detail-wrap input {
+      height: 33px !important;
+      padding: 4px 9px !important;
     }
 
     /* STEP 4 COMPACT FIT ON MOBILE WHEN ALL OPTIONS EXPAND */
@@ -271,13 +380,13 @@
     .ww-grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 7px;
     }
 
     .ww-grid-city-zip {
       display: grid;
       grid-template-columns: 1.3fr 0.7fr;
-      gap: 8px;
+      gap: 7px;
     }
 
     .ww-sub-box {
@@ -473,14 +582,14 @@
       background: var(--green);
       color: #ffffff;
       border-radius: 12px;
-      padding: 12px 14px;
+      padding: 11px 14px;
       margin-bottom: 6px;
     }
 
     .ww-price-hero {
       text-align: center;
-      padding-bottom: 8px;
-      margin-bottom: 8px;
+      padding-bottom: 7px;
+      margin-bottom: 7px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     }
 
@@ -497,7 +606,7 @@
     }
 
     .ww-big-price {
-      font-size: 27px;
+      font-size: 26px;
       font-weight: 800;
       line-height: 1.1;
       color: #ffffff;
@@ -525,7 +634,7 @@
     }
 
     .ww-promo-headline {
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 800;
       color: #ffffff;
       padding-bottom: 4px;
@@ -537,6 +646,34 @@
     .ww-intro-breakdown-box strong {
       display: block;
       font-size: 12px;
+    }
+
+    /* NOTICEABLE "HOW BILLING WORKS" BUTTON */
+    .ww-breakdown-trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 8px;
+      background: #ffffff;
+      color: var(--green);
+      border: 1.5px solid #E6C86E;
+      border-radius: 999px;
+      padding: 6px 15px;
+      font: inherit;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.28);
+      transition: transform 0.1s ease, background 0.15s ease;
+    }
+
+    .ww-breakdown-trigger:hover {
+      background: var(--light);
+    }
+
+    .ww-breakdown-trigger:active {
+      transform: scale(0.97);
     }
 
     /* DEDICATED SERVICES & ADD-ONS SECTION */
@@ -566,6 +703,125 @@
       border: 1px solid var(--border);
       text-align: center;
       font-size: 12px;
+    }
+
+    /* SIMPLE BILLING & ADD-ONS POPUP MODAL */
+    .ww-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(24, 36, 28, 0.72);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      z-index: 200;
+      animation: wwFadeIn 0.15s ease-out;
+    }
+
+    @keyframes wwFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .ww-modal-card {
+      background: #ffffff;
+      border: 2px solid var(--green);
+      border-radius: 16px;
+      width: 100%;
+      max-height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .ww-modal-hd {
+      background: var(--green);
+      color: #ffffff;
+      padding: 11px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .ww-modal-hd h4 {
+      margin: 0;
+      font-size: 14.5px;
+      font-weight: 800;
+    }
+
+    .ww-modal-x {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: #ffffff;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .ww-modal-body {
+      padding: 13px 15px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      font-size: 12.5px;
+      line-height: 1.45;
+      color: var(--ink);
+    }
+
+    .ww-simple-point {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--green);
+      border-radius: 9px;
+      padding: 9px 11px;
+    }
+
+    .ww-simple-point.warn {
+      background: #FFFDF5;
+      border-color: #E2CE9B;
+      border-left-color: #C68B17;
+    }
+
+    .ww-point-title {
+      display: block;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 3px;
+    }
+
+    .ww-simple-point.warn .ww-point-title {
+      color: #7A4B00;
+    }
+
+    .ww-simple-point p {
+      margin: 0;
+      display: block;
+    }
+
+    .ww-simple-point strong {
+      display: inline;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .ww-modal-ft {
+      padding: 9px 14px;
+      background: var(--cream);
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
     }
 
     /* CONFETTI ANIMATION */
@@ -630,14 +886,23 @@
         font-size: 14px;
       }
 
-      .ww-step-bar {
+      .ww-step-track {
         gap: 8px;
+      }
+
+      .ww-track-rail {
+        right: 40px;
       }
 
       .ww-step-pill {
         font-size: 12.5px;
-        padding: 5px 4px;
-        border-radius: 8px;
+        padding: 6px 6px;
+      }
+
+      .ww-finish-flag {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
       }
 
       .ww-app-body {
@@ -676,6 +941,20 @@
         padding: 10px 14px;
         border-radius: 10px;
         font-size: 15.5px;
+      }
+
+      .ww-ref-detail-wrap {
+        margin-top: 10px;
+        padding: 10px 14px;
+      }
+
+      .ww-ref-detail-wrap label {
+        font-size: 13px;
+        margin-bottom: 5px;
+      }
+
+      .ww-ref-detail-wrap input {
+        height: 40px !important;
       }
 
       .ww-grid-2,
@@ -813,6 +1092,12 @@
         font-size: 14px;
       }
 
+      .ww-breakdown-trigger {
+        font-size: 13px;
+        padding: 7px 18px;
+        margin-top: 9px;
+      }
+
       .ww-summary-line {
         padding: 6px 0;
         font-size: 13.5px;
@@ -825,6 +1110,28 @@
       .ww-step-5-footer-note {
         padding: 10px 14px;
         font-size: 13.5px;
+      }
+
+      .ww-modal-backdrop {
+        padding: 24px;
+      }
+
+      .ww-modal-card {
+        max-width: 520px;
+      }
+
+      .ww-modal-hd h4 {
+        font-size: 16px;
+      }
+
+      .ww-modal-body {
+        padding: 16px 20px;
+        font-size: 13.5px;
+        gap: 11px;
+      }
+
+      .ww-point-title {
+        font-size: 14.5px;
       }
     }
   </style>
@@ -847,12 +1154,14 @@
         <button type="button" class="ww-tab" id="ww-com-tab" aria-pressed="false">🏢 Commercial</button>
       </div>
 
-      <!-- 4-STEP PROGRESS BAR -->
-      <div class="ww-step-bar" id="ww-step-bar">
+      <!-- ANIMATED 4-STEP PROGRESS TRACK + FINISH LINE -->
+      <div class="ww-step-track" id="ww-step-bar">
+        <div class="ww-track-rail"><div class="ww-track-fill" id="ww-track-fill"></div></div>
         <div class="ww-step-pill active" id="ww-pill-1">1. Info</div>
         <div class="ww-step-pill" id="ww-pill-2">2. Dogs</div>
         <div class="ww-step-pill" id="ww-pill-3">3. Cats</div>
         <div class="ww-step-pill" id="ww-pill-4">4. Extras</div>
+        <div class="ww-finish-flag" id="ww-finish-flag" title="Your Instant Quote">🏁</div>
       </div>
     </div>
 
@@ -867,17 +1176,14 @@
           <h3 class="ww-step-title">👤 Contact &amp; Service Address</h3>
           <p class="ww-step-sub">We never spam your phone—just need it for your quote! 🥺</p>
 
-          <label class="ww-label" for="ww-customer-name">Full name <span class="ww-required">*</span></label>
-          <input id="ww-customer-name" name="name" type="text" autocomplete="name" placeholder="Your full name">
-
           <div class="ww-grid-2">
+            <div>
+              <label class="ww-label" for="ww-customer-name">Full name <span class="ww-required">*</span></label>
+              <input id="ww-customer-name" name="name" type="text" autocomplete="name" placeholder="Your full name">
+            </div>
             <div>
               <label class="ww-label" for="ww-customer-phone">Phone <span class="ww-required">*</span></label>
               <input id="ww-customer-phone" name="tel" type="tel" autocomplete="tel" placeholder="(940) 555-0123">
-            </div>
-            <div>
-              <label class="ww-label" for="ww-customer-email">Email <span class="ww-muted">(opt)</span></label>
-              <input id="ww-customer-email" name="email" type="email" autocomplete="email" placeholder="you@email.com">
             </div>
           </div>
 
@@ -893,6 +1199,37 @@
               <label class="ww-label" for="ww-customer-zip">ZIP <span class="ww-required">*</span></label>
               <input id="ww-customer-zip" name="postal-code" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="76234">
             </div>
+          </div>
+
+          <div class="ww-grid-2">
+            <div>
+              <label class="ww-label" for="ww-customer-email">Email <span class="ww-muted">(opt)</span></label>
+              <input id="ww-customer-email" name="email" type="email" autocomplete="email" placeholder="you@email.com">
+            </div>
+            <div>
+              <label class="ww-label" for="ww-referral-source">How'd you hear of us?</label>
+              <select id="ww-referral-source" name="referral_source">
+                <option value="">Select (Optional)</option>
+                <option value="Facebook">Facebook</option>
+                <option value="Facebook Community Group">Facebook Community Group</option>
+                <option value="Nextdoor">Nextdoor</option>
+                <option value="Google Search">Google Search</option>
+                <option value="Google Maps">Google Maps</option>
+                <option value="Friend or Family Referral">Friend or Family Referral</option>
+                <option value="Business Referral / Partner">Business Referral / Partner</option>
+                <option value="Door Hanger">Door Hanger</option>
+                <option value="Flyer">Flyer</option>
+                <option value="Business Card">Business Card</option>
+                <option value="Local Event / Vendor Booth">Local Event / Vendor Booth</option>
+                <option value="Repeat Customer">Repeat Customer</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="ww-ref-detail-wrap" class="ww-ref-detail-wrap ww-hidden">
+            <label for="ww-referral-detail" id="ww-ref-detail-label">Extra details (optional)</label>
+            <input id="ww-referral-detail" name="referral_detail" type="text" placeholder="Tell us who referred you...">
           </div>
         </div>
 
@@ -983,7 +1320,7 @@
               <input type="checkbox" id="ww-cat-deep-clean" name="cat_deep_clean">
               <span>
                 <strong>Occasional Deep Clean ($25 1st box + $15 extra)</strong>
-                <span class="ww-muted">Wash, sanitize &amp; fresh refill. Charged at time of service.</span>
+                <span class="ww-muted">Wash, sanitize &amp; fresh refill. Charged per service.</span>
               </span>
             </label>
 
@@ -991,7 +1328,7 @@
               <input type="checkbox" id="ww-cat-litter-supply" name="cat_litter_supply">
               <span>
                 <strong>Litter Supply (+$10 per box / visit)</strong>
-                <span class="ww-muted">We supply clumping litter. Charged at time of service.</span>
+                <span class="ww-muted">We supply clumping litter. Charged per visit.</span>
               </span>
             </label>
           </div>
@@ -1012,7 +1349,7 @@
           <label class="ww-choice" style="background: var(--cream);">
             <input type="checkbox" id="ww-addon-yard-fresh" name="yard_fresh">
             <span>
-              <strong id="ww-yard-fresh-title">Yard Fresh Treatment ($10 recurring add-on)</strong>
+              <strong id="ww-yard-fresh-title">Yard Fresh Treatment ($10/visit add-on)</strong>
               <span class="ww-muted">Enzymatic odor spray (+$7/extra section). Needs spigot.</span>
               <span id="ww-yard-fresh-savings-notice" style="display:none; font-size:11px; font-weight:700; color:#3F6049;">💡 Save $15 with any recurring service ($10/visit)!</span>
             </span>
@@ -1056,16 +1393,21 @@
           <div class="ww-receipt-box" aria-live="polite">
             <!-- TOP PRICE HERO -->
             <div class="ww-price-hero">
-              <span class="ww-price-eyebrow" id="ww-price-eyebrow">Total Monthly Rate</span>
+              <span class="ww-price-eyebrow" id="ww-price-eyebrow">Base Monthly Rate</span>
               <div class="ww-big-price" id="ww-display-per-visit">$0.00</div>
               <div class="ww-big-sub" id="ww-display-billing-sub"></div>
             </div>
 
-            <!-- UNIFIED PROMO & FIRST-MONTH SECTION -->
+            <!-- UNIFIED PROMO & FIRST-MONTH BOX -->
             <div class="ww-intro-breakdown-box ww-hidden" id="ww-intro-breakdown-wrap">
               <div class="ww-promo-headline" id="ww-free-offer-banner">🎁 First Scoop is 100% Free!</div>
               <strong id="ww-intro-breakdown-text"></strong>
               <span id="ww-intro-subtext"></span>
+              <div>
+                <button type="button" class="ww-breakdown-trigger" id="ww-open-breakdown-btn">
+                  💳 How Billing Works
+                </button>
+              </div>
             </div>
 
             <!-- DEDICATED SERVICES & ADD-ONS SECTION BELOW -->
@@ -1170,6 +1512,35 @@
       </div>
     </div>
 
+    <!-- SIMPLE BILLING & ADD-ONS POPUP MODAL -->
+    <div class="ww-modal-backdrop ww-hidden" id="ww-breakdown-modal" role="dialog" aria-modal="true" aria-labelledby="ww-modal-title">
+      <div class="ww-modal-card">
+        <div class="ww-modal-hd">
+          <h4 id="ww-modal-title">💳 How Billing Works</h4>
+          <button type="button" class="ww-modal-x" id="ww-close-breakdown-x" aria-label="Close">&times;</button>
+        </div>
+        <div class="ww-modal-body">
+          <div class="ww-simple-point">
+            <span class="ww-point-title">1. 🎁 Your First Scoop Is FREE!</span>
+            <p>Your first cleanup is free! Your discounted first month is paid upfront before service begins. Regular monthly billing starts with your second month.</p>
+          </div>
+
+          <div class="ww-simple-point warn">
+            <span class="ww-point-title">2. ⚡ Add-On Services</span>
+            <p>Optional extras like Yard Fresh, Waste Haul-Away, Litter Supply, and Deep Cleans are priced <strong>per visit</strong> and billed separately after service is completed. We'll charge your card on file or send you an invoice. Want to include extras in your monthly billing? Just ask!</p>
+          </div>
+
+          <div class="ww-simple-point">
+            <span class="ww-point-title">3. 🛡️ Our Satisfaction Guarantee</span>
+            <p>Not happy with a cleanup? Just let us know! If we miss something or something isn't right, we'll come back and make it right at no additional charge.</p>
+          </div>
+        </div>
+        <div class="ww-modal-ft">
+          <button type="button" class="ww-primary-btn" id="ww-close-breakdown-btn" style="height:38px; font-size:13.5px;">Got It!</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1215,6 +1586,54 @@
     $('ww-comm-phone').addEventListener(evt, formatPhoneNumber);
   });
 
+  /* REFERRAL SOURCE SMART FOLLOW-UP INPUT */
+  const REFERRAL_PROMPTS = {
+    'Business Referral / Partner': {
+      label: 'Which business or employee referred you? ($20 Partner Thank-You)',
+      placeholder: 'e.g., Decatur Bark & Bath — Kayla'
+    },
+    'Friend or Family Referral': {
+      label: 'Who referred you? (Optional)',
+      placeholder: 'Friend or neighbor name'
+    },
+    'Facebook Community Group': {
+      label: 'Which Facebook group did you see us in? (Optional)',
+      placeholder: 'e.g., Wise County Small Businesses'
+    },
+    'Local Event / Vendor Booth': {
+      label: 'Which local event did we meet at? (Optional)',
+      placeholder: 'Event name or town'
+    },
+    'Door Hanger': {
+      label: 'Street or neighborhood (Optional)',
+      placeholder: 'Where you received our door hanger'
+    },
+    'Flyer': {
+      label: 'Where did you spot our flyer? (Optional)',
+      placeholder: 'Business or bulletin board location'
+    },
+    'Business Card': {
+      label: 'Where did you pick up our card? (Optional)',
+      placeholder: 'Business or person who gave it to you'
+    }
+  };
+
+  $('ww-referral-source').addEventListener('change', function() {
+    const val = this.value;
+    if (!val) {
+      show('ww-ref-detail-wrap', false);
+      $('ww-referral-detail').value = '';
+      return;
+    }
+    const cfg = REFERRAL_PROMPTS[val] || {
+      label: `Extra details for ${val} (Optional)`,
+      placeholder: 'Any extra info you want to share...'
+    };
+    $('ww-ref-detail-label').textContent = cfg.label;
+    $('ww-referral-detail').placeholder = cfg.placeholder;
+    show('ww-ref-detail-wrap', true);
+  });
+
   /* CONFETTI IN-FRAME BURST */
   function fireCelebration() {
     const shell = $('ww-shell');
@@ -1234,7 +1653,23 @@
     }
   }
 
-  /* 4-STEP NAVIGATION */
+  /* MODAL OPEN / CLOSE HANDLERS */
+  function openBreakdownModal() {
+    show('ww-breakdown-modal', true);
+  }
+
+  function closeBreakdownModal() {
+    show('ww-breakdown-modal', false);
+  }
+
+  $('ww-open-breakdown-btn').addEventListener('click', openBreakdownModal);
+  $('ww-close-breakdown-x').addEventListener('click', closeBreakdownModal);
+  $('ww-close-breakdown-btn').addEventListener('click', closeBreakdownModal);
+  $('ww-breakdown-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeBreakdownModal();
+  });
+
+  /* 4-STEP NAVIGATION + PROGRESS TRACK ANIMATION */
   function goToStep(step) {
     show('ww-err-main', false);
     if (document.activeElement && typeof document.activeElement.blur === 'function') {
@@ -1252,6 +1687,16 @@
       if (step === 5 || i < step) pill.classList.add('done');
       else if (i === step) pill.classList.add('active');
     });
+
+    const fillEl = $('ww-track-fill');
+    const flagEl = $('ww-finish-flag');
+    if (fillEl) {
+      const pctMap = { 1: '12%', 2: '40%', 3: '68%', 4: '92%', 5: '100%' };
+      fillEl.style.width = pctMap[step] || '0%';
+    }
+    if (flagEl) {
+      flagEl.classList.toggle('reached', step === 5);
+    }
 
     if (step === 1) {
       show('ww-back-btn', false);
@@ -1371,7 +1816,7 @@
 
     if ($('ww-yard-fresh-title')) {
       if (hasRecurringDog || hasRecurringCat) {
-        $('ww-yard-fresh-title').textContent = 'Yard Fresh Treatment ($10 recurring add-on)';
+        $('ww-yard-fresh-title').textContent = 'Yard Fresh Treatment ($10/visit add-on)';
         $('ww-yard-fresh-savings-notice').style.display = 'none';
       } else {
         $('ww-yard-fresh-title').textContent = 'Yard Fresh Treatment ($25 standalone)';
@@ -1420,7 +1865,7 @@
     const yardFresh = $('ww-addon-yard-fresh').checked, sections = getNum('ww-sections');
 
     let html = [], txt = [], monthly = 0, onetime = 0, dogTxt = '', catTxt = '';
-    let firstMonthTotal = 0, perVisitRate = 0;
+    let firstMonthTotal = 0, perVisitRate = 0, vpm = 4;
     const map = { twice: 'Twice Weekly', weekly: 'Weekly', biweekly: 'Bi-Weekly', onetime: 'One-Time Cleanup' };
 
     const line = (t, d, p) => `<div class="ww-summary-line"><div><span class="ww-summary-title">${t}</span>${d ? `<span class="ww-summary-desc">(${d})</span>` : ''}</div><div class="ww-summary-price">${p}</div></div>`;
@@ -1506,11 +1951,11 @@
     if (isRecDog || isRecCat) {
       const activeFreq = isRecDog ? dogFreq : catStand;
       const visitsPerYear = activeFreq === 'twice' ? 104 : activeFreq === 'biweekly' ? 26 : 52;
-      const vpm = activeFreq === 'twice' ? 8 : activeFreq === 'biweekly' ? 2 : 4;
+      vpm = activeFreq === 'twice' ? 8 : activeFreq === 'biweekly' ? 2 : 4;
       perVisitRate = Math.round((monthly * 12) / visitsPerYear);
       firstMonthTotal = monthly - perVisitRate;
 
-      $('ww-price-eyebrow').textContent = 'Total Monthly Rate';
+      $('ww-price-eyebrow').textContent = 'Base Monthly Rate';
       $('ww-display-per-visit').textContent = money(monthly) + ' / mo';
       $('ww-display-billing-sub').textContent = (isRecDog && hasCat) ? 'First combined visit free!' : 'First scoop FREE with recurring service!';
 
@@ -1562,9 +2007,14 @@
 
     const yardSign = $('ww-yard-sign').checked ? 'Yes' : 'No';
     const petTreats = $('ww-pet-treats').checked ? 'Yes' : 'No';
+    const refSource = $('ww-referral-source').value;
+    const refDetail = $('ww-referral-detail').value.trim();
+    const refLine = refSource ? `${refSource}${refDetail ? ' (' + refDetail + ')' : ''}` : 'Not specified';
+
     const userNotes = $('ww-extra-details').value.trim();
     const combinedNotes = viewTag + (userNotes ? userNotes + '\n\n' : '') +
-      '--- PREFERENCES ---\nYard Sign Permitted: ' + yardSign + '\nPet Treats Permitted: ' + petTreats +
+      '--- REFERRAL & PREFERENCES ---\nReferral Source: ' + refLine +
+      '\nYard Sign Permitted: ' + yardSign + '\nPet Treats Permitted: ' + petTreats +
       '\n\n--- QUOTE SUMMARY ---\nDisplayed Rate: ' + quoteState.perVisitText +
       '\nFirst Month Rate: ' + quoteState.firstMonthText +
       '\nWaste Haul-Away (Charged at time of service): ' + (quoteState.haulAway ? 'Yes' : 'No') +
@@ -1580,6 +2030,8 @@
       contactMethod: $('ww-customer-email').value.trim() ? 'Text / Phone / Email' : 'Text / Phone',
       contactTime: 'Anytime',
       customerType: 'Residential',
+      referralSource: refSource,
+      referralDetail: refDetail,
       dogFrequency: quoteState.dogFreq,
       dogs: String(quoteState.dogs),
       condition: quoteState.condition,
@@ -1659,6 +2111,7 @@
     }).catch(() => {});
   });
 
+  goToStep(1);
   updateDynamicVisibility();
 })();
 </script>
