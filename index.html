@@ -836,10 +836,10 @@
     }
 
     @keyframes ww-pop {
-      0% { opacity: 0; transform: translate(0, 0) scale(0.2) rotate(0deg); }
-      15% { opacity: 1; transform: translate(calc(var(--tx) * 0.6), calc(var(--ty) * 0.3 - 50px)) scale(1.2) rotate(calc(var(--rot) * 0.3)); }
-      80% { opacity: 1; transform: translate(var(--tx), calc(var(--ty) * 0.8 + 80px)) scale(1) rotate(calc(var(--rot) * 0.8)); }
-      100% { opacity: 0; transform: translate(var(--tx), calc(var(--ty) + 140px)) scale(0.5) rotate(var(--rot)); }
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.2) rotate(0deg); }
+      15% { opacity: 1; transform: translate(calc(-50% + var(--tx) * 0.6), calc(-50% + var(--ty) * 0.3 - 45px)) scale(1.2) rotate(calc(var(--rot) * 0.3)); }
+      80% { opacity: 1; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty) * 0.8 + 75px)) scale(1) rotate(calc(var(--rot) * 0.8)); }
+      100% { opacity: 0; transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty) + 135px)) scale(0.5) rotate(var(--rot)); }
     }
 
     /* =====================================================================
@@ -1634,18 +1634,31 @@
     show('ww-ref-detail-wrap', true);
   });
 
-  /* CONFETTI IN-FRAME BURST */
+  /* CONFETTI IN-FRAME BURST CENTERED ON THE BIG MONTHLY PRICE */
   function fireCelebration() {
     const shell = $('ww-shell');
+    const priceEl = $('ww-display-per-visit');
     const icons = ['🎉', '🎊', '🥳', '✨', '⭐', '🙌'];
+
+    let originX = '50%';
+    let originY = '185px';
+    if (shell && priceEl) {
+      const shellRect = shell.getBoundingClientRect();
+      const priceRect = priceEl.getBoundingClientRect();
+      if (priceRect.width > 0 && priceRect.height > 0) {
+        originX = (priceRect.left - shellRect.left + priceRect.width / 2) + 'px';
+        originY = (priceRect.top - shellRect.top + priceRect.height / 2) + 'px';
+      }
+    }
+
     for (let i = 0; i < 18; i++) {
       let el = document.createElement('div');
       el.className = 'ww-celebration';
       el.textContent = icons[Math.floor(Math.random() * icons.length)];
-      el.style.left = '50%';
-      el.style.top = '70px';
+      el.style.left = originX;
+      el.style.top = originY;
       el.style.setProperty('--tx', (Math.random() - 0.5) * 340 + 'px');
-      el.style.setProperty('--ty', (Math.random() - 0.5) * 220 + 'px');
+      el.style.setProperty('--ty', (Math.random() - 0.5) * 200 + 'px');
       el.style.setProperty('--rot', (Math.random() - 0.5) * 720 + 'deg');
       el.style.animationDelay = (Math.random() * 0.15) + 's';
       shell.appendChild(el);
@@ -2000,7 +2013,7 @@
 
     calculateAndRenderQuote();
     goToStep(5);
-    fireCelebration();
+    requestAnimationFrame(fireCelebration);
 
     quoteViewCount += 1;
     const viewTag = quoteViewCount > 1 ? `[UPDATED QUOTE - VIEW #${quoteViewCount}]\n` : '';
@@ -2086,7 +2099,7 @@
     show('ww-commercial', false);
     show('ww-com-footer', false);
     show('ww-comm-success', true);
-    fireCelebration();
+    requestAnimationFrame(fireCelebration);
 
     const payload = {
       leadType: 'final',
